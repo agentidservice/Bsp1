@@ -1,1 +1,853 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Conar Friseur</title>
 
+  <!-- Google Font für moderne Welcome Message -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- n8n Pflicht-CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" />
+
+  <style>
+    :root {
+      /* Website */
+      --page-bg: #0b0c10;
+      --page-text: #ffffff;
+
+      /* Chat - Glassmorphism Base */
+      --chat-bg: rgba(18, 20, 26, 0.85);
+      --chat-bg-solid: #12141a;
+      --chat-border: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.12);
+      --glass-shine: rgba(255, 255, 255, 0.05);
+
+      /* Barber Colors */
+      --barber-blue: #2563eb;
+      --barber-blue-light: #3b82f6;
+      --barber-red: #dc2626;
+      --barber-white: #ffffff;
+
+      /* Bubbles */
+      --bubble-bot: rgba(40, 44, 52, 0.7);
+      --bubble-bot-border: rgba(255, 255, 255, 0.1);
+      --bubble-user: linear-gradient(135deg, var(--barber-blue) 0%, var(--barber-blue-light) 100%);
+      --bubble-user-border: rgba(59, 130, 246, 0.3);
+
+      /* Text */
+      --text: #ffffff;
+      --text-muted: rgba(255, 255, 255, 0.55);
+
+      /* Input */
+      --input-bg: rgba(255, 255, 255, 0.04);
+      --input-border: rgba(255, 255, 255, 0.1);
+      --input-focus: rgba(37, 99, 235, 0.4);
+
+      /* Shadows */
+      --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.4);
+      --shadow-strong: 0 25px 60px rgba(0, 0, 0, 0.6);
+
+      /* Layout */
+      --gap: 20px;
+      --chat-width: min(380px, 90vw);
+      --chat-height: min(600px, 80vh);
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--page-bg);
+      color: var(--page-text);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 56px 18px 120px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(34px, 4.2vw, 56px);
+      letter-spacing: -0.02em;
+    }
+
+    p {
+      margin: 0;
+      color: rgba(255,255,255,.65);
+      line-height: 1.6;
+      max-width: 60ch;
+    }
+
+    /* =========================
+       n8n Widget: Modern Glassmorphism
+       ========================= */
+
+    #n8n-chat, #n8n-chat * {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+    }
+
+    /* Zeilenumbrüche */
+    #n8n-chat .chat-message,
+    #n8n-chat .chat-message * {
+      white-space: pre-line !important;
+    }
+
+    /* Wrapper Position */
+    #n8n-chat .chat-window-wrapper {
+      position: fixed !important;
+      right: var(--gap) !important;
+      bottom: var(--gap) !important;
+      left: auto !important;
+      z-index: 9999 !important;
+    }
+
+    /* Window - Glassmorphism */
+    #n8n-chat .chat-window {
+      width: var(--chat-width) !important;
+      height: var(--chat-height) !important;
+      max-width: calc(100vw - (var(--gap) * 2)) !important;
+      max-height: calc(100vh - (var(--gap) * 2)) !important;
+      border-radius: var(--radius-lg) !important;
+      overflow: hidden !important;
+      box-shadow: var(--shadow-strong) !important;
+      border: 1px solid var(--glass-border) !important;
+      background: var(--chat-bg) !important;
+      backdrop-filter: blur(20px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+      color: var(--text) !important;
+      position: relative !important;
+    }
+
+    /* Subtle top shine effect */
+    #n8n-chat .chat-window::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255,255,255,0.2) 50%, 
+        transparent 100%);
+      z-index: 10;
+    }
+
+    /* Header aus */
+    #n8n-chat .chat-header {
+      display: none !important;
+    }
+
+    /* Chat Body Background */
+    #n8n-chat main.chat-layout.chat-wrapper,
+    #n8n-chat .chat-layout,
+    #n8n-chat .chat-wrapper,
+    #n8n-chat .chat-body,
+    #n8n-chat .chat-messages-list,
+    #n8n-chat .chat-messages,
+    #n8n-chat .chat-footer {
+      background: transparent !important;
+      background-color: transparent !important;
+      color: var(--text) !important;
+    }
+
+    /* =========================
+       Message Bubbles
+       ========================= */
+
+    /* Bot Bubbles - Glassmorphism */
+    #n8n-chat .chat-message,
+    #n8n-chat .chat-message--bot {
+      background: var(--bubble-bot) !important;
+      backdrop-filter: blur(10px) !important;
+      -webkit-backdrop-filter: blur(10px) !important;
+      color: var(--text) !important;
+      border: 1px solid var(--bubble-bot-border) !important;
+      border-radius: var(--radius-md) var(--radius-md) var(--radius-md) 6px !important;
+      font-size: 14px !important;
+      line-height: 1.5 !important;
+      padding: 12px 16px !important;
+      max-width: 85% !important;
+      box-shadow: var(--shadow-soft) !important;
+    }
+
+    /* User Bubbles - Blue Gradient */
+    #n8n-chat .chat-message--user {
+      background: var(--bubble-user) !important;
+      backdrop-filter: none !important;
+      color: var(--barber-white) !important;
+      border: 1px solid var(--bubble-user-border) !important;
+      border-radius: var(--radius-md) var(--radius-md) 6px var(--radius-md) !important;
+      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3) !important;
+    }
+
+    /* =========================
+       Input Area
+       ========================= */
+    #n8n-chat .chat-input,
+    #n8n-chat .chat-input form,
+    #n8n-chat .chat-input > div,
+    #n8n-chat .chat-input > form > div {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      flex-wrap: nowrap !important;
+    }
+
+    #n8n-chat .chat-input {
+      background: rgba(0, 0, 0, 0.3) !important;
+      backdrop-filter: blur(10px) !important;
+      -webkit-backdrop-filter: blur(10px) !important;
+      border-top: 1px solid var(--glass-border) !important;
+      padding: 14px 16px !important;
+      gap: 12px !important;
+    }
+
+    #n8n-chat .chat-input form {
+      width: 100% !important;
+      gap: 12px !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    #n8n-chat .chat-input textarea,
+    #n8n-chat .chat-input input[type="text"] {
+      flex: 1 1 auto !important;
+      width: auto !important;
+      min-width: 0 !important;
+      background: var(--input-bg) !important;
+      color: var(--text) !important;
+      border: 1px solid var(--input-border) !important;
+      border-radius: var(--radius-sm) !important;
+      outline: none !important;
+      min-height: 44px !important;
+      max-height: 88px !important;
+      padding: 12px 16px !important;
+      font-size: 14px !important;
+      resize: none !important;
+      margin: 0 !important;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+    }
+
+    #n8n-chat .chat-input textarea:focus,
+    #n8n-chat .chat-input input[type="text"]:focus {
+      border-color: var(--barber-blue) !important;
+      box-shadow: 0 0 0 3px var(--input-focus) !important;
+    }
+
+    #n8n-chat .chat-input textarea::placeholder,
+    #n8n-chat .chat-input input::placeholder {
+      color: var(--text-muted) !important;
+    }
+
+    /* Send Button */
+    #n8n-chat .chat-input button,
+    #n8n-chat .chat-input-send-button,
+    #n8n-chat .chat-input button[type="submit"] {
+      flex: 0 0 auto !important;
+      order: 2 !important;
+      background: var(--bubble-user) !important;
+      border: none !important;
+      border-radius: var(--radius-sm) !important;
+      width: 44px !important;
+      height: 44px !important;
+      min-width: 44px !important;
+      min-height: 44px !important;
+      max-width: 44px !important;
+      max-height: 44px !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      cursor: pointer !important;
+      transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3) !important;
+    }
+
+    #n8n-chat .chat-input button:hover {
+      transform: translateY(-1px) !important;
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4) !important;
+    }
+
+    #n8n-chat .chat-input button:active {
+      transform: translateY(0) !important;
+    }
+
+    #n8n-chat .chat-input button svg,
+    #n8n-chat .chat-input-send-button svg {
+      width: 18px !important;
+      height: 18px !important;
+      fill: #fff !important;
+      stroke: #fff !important;
+    }
+
+    /* Powered by n8n ausblenden */
+    #n8n-chat .chat-footer .powered-by,
+    #n8n-chat .chat-footer a[href*="n8n"] {
+      display: none !important;
+    }
+
+    /* =========================
+       Floating Button
+       ========================= */
+    #n8n-chat .chat-window-toggle {
+      width: 60px !important;
+      height: 60px !important;
+      border-radius: 50% !important;
+      background: linear-gradient(135deg, var(--chat-bg-solid) 0%, rgba(30, 34, 44, 1) 100%) !important;
+      border: 1px solid var(--glass-border) !important;
+      box-shadow: var(--shadow-strong) !important;
+      position: relative !important;
+      color: #fff !important;
+      transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    }
+
+    #n8n-chat .chat-window-toggle:hover {
+      transform: scale(1.05) !important;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7) !important;
+    }
+
+    #n8n-chat .chat-window-toggle svg,
+    #n8n-chat .chat-window-toggle img {
+      display: none !important;
+    }
+
+    #n8n-chat .chat-window-toggle::after {
+      content: "💈";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    /* =========================
+       Overlay: Menu + Back Button
+       ========================= */
+    .cf-overlay {
+      position: absolute;
+      inset: 0;
+      padding: 32px 24px 24px;
+      background: linear-gradient(180deg, 
+        rgba(18, 20, 26, 0.95) 0%, 
+        rgba(18, 20, 26, 0.85) 100%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 50;
+      display: none;
+      flex-direction: column;
+    }
+
+    .cf-overlay.is-open {
+      display: flex;
+    }
+
+    /* Welcome Text - Modern Typography */
+    .cf-welcome {
+      background: transparent !important;
+      border: none !important;
+      padding: 0 !important;
+      margin-bottom: 8px;
+    }
+
+    .cf-welcome-title {
+      font-family: 'Playfair Display', serif !important;
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 6px 0;
+      letter-spacing: -0.02em;
+    }
+
+    .cf-welcome-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* Barber Stripe Accent */
+    .cf-barber-stripe {
+      display: flex;
+      gap: 4px;
+      margin: 20px 0 28px 0;
+    }
+
+    .cf-barber-stripe span {
+      height: 3px;
+      border-radius: 2px;
+      flex: 1;
+    }
+
+    .cf-barber-stripe span:nth-child(1) { background: var(--barber-blue); }
+    .cf-barber-stripe span:nth-child(2) { background: var(--barber-white); opacity: 0.8; }
+    .cf-barber-stripe span:nth-child(3) { background: var(--barber-red); }
+
+    /* Menu Options */
+    .cf-options {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      justify-content: center;
+      padding: 0 4px;
+    }
+
+    .cf-option {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      padding: 20px 20px;
+      text-align: left;
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 1.3;
+      color: var(--text);
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .cf-option:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .cf-option:active {
+      transform: translateY(0);
+    }
+
+    .cf-option-icon {
+      font-size: 22px;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      flex-shrink: 0;
+    }
+
+    .cf-option-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .cf-option-label {
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .cf-option-desc {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    /* Back Button */
+    .cf-back {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: none;
+      place-items: center;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      cursor: pointer;
+      user-select: none;
+      z-index: 60;
+      transition: all 0.2s ease;
+    }
+
+    .cf-back.is-open {
+      display: grid;
+    }
+
+    .cf-back:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .cf-back svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    /* Input im Menü ausblenden */
+    #n8n-chat.cf-menu-open .chat-input {
+      display: none !important;
+    }
+
+    #n8n-chat.cf-menu-open .chat-body {
+      padding-bottom: 16px !important;
+    }
+
+    /* =========================
+       Mobile Responsive
+       ========================= */
+    @media (max-width: 768px) {
+      :root {
+        --gap: 12px;
+        --chat-width: 100vw;
+        --chat-height: 100vh;
+      }
+
+      #n8n-chat .chat-window-wrapper {
+        right: 12px !important;
+        bottom: 12px !important;
+      }
+
+      #n8n-chat .chat-window {
+        width: calc(100vw - 24px) !important;
+        height: calc(100vh - 100px) !important;
+        border-radius: var(--radius-lg) !important;
+      }
+
+      #n8n-chat .chat-message {
+        max-width: 88% !important;
+      }
+
+      .cf-overlay {
+        padding: 28px 20px 20px;
+      }
+
+      .cf-welcome-title {
+        font-size: 24px;
+      }
+
+      .cf-option {
+        padding: 16px;
+      }
+
+      .cf-option-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+      }
+    }
+
+    /* =========================
+       Animations
+       ========================= */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .cf-overlay.is-open .cf-welcome,
+    .cf-overlay.is-open .cf-barber-stripe,
+    .cf-overlay.is-open .cf-options {
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    .cf-overlay.is-open .cf-barber-stripe {
+      animation-delay: 0.05s;
+    }
+
+    .cf-overlay.is-open .cf-options {
+      animation-delay: 0.1s;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <h1>Conar Friseur</h1>
+    <p>Termine buchen / ändern / stornieren direkt im Chat unten rechts.</p>
+  </div>
+
+  <script type="module">
+    import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
+
+    const WEBHOOK_BASE = "https://seidel1502.app.n8n.cloud/webhook/conar-chat";
+
+    const buildWebhookUrl = (mode) => {
+      const separator = WEBHOOK_BASE.includes("?") ? "&" : "?";
+      return `${WEBHOOK_BASE}${separator}mode=${encodeURIComponent(mode)}`;
+    };
+
+    const getInitialMessage = (mode) => {
+      const messages = {
+        info: "ℹ️ Hi! Ich gebe dir folgende Infos zu Conar Friseur 😊\n• Öffnungszeiten\n• Leistungen & Haarschnitte\n• Unsere Friseure\n• Terminbuchung",
+        jason: "✂️ Hi, ich bin Jason 😊\nFang gerne mit deinem gewünschten Datum an!🤗",
+        elina: "✂️ Hi, ich bin Elina 😊\nFang gerne mit deinem gewünschten Datum an!🤗"
+      };
+      return messages[mode] || messages.elina;
+    };
+
+    let currentMode = null;
+    let reopenAfterInit = false;
+
+    const destroyChat = () => {
+      const root = document.getElementById("n8n-chat");
+      if (root) root.remove();
+    };
+
+    const forceOpenWindow = () => {
+      const toggle = document.querySelector("#n8n-chat .chat-window-toggle");
+      const win = document.querySelector("#n8n-chat .chat-window");
+      if (toggle && (!win || win.offsetParent === null)) {
+        toggle.click();
+      }
+    };
+
+    // =============================
+    // FIX: JSON parsen + Gänsefüßchen entfernen
+    // =============================
+    const cleanBotMessage = (text) => {
+      if (typeof text !== 'string') return text;
+      
+      let cleaned = text.trim();
+      
+      if (cleaned.startsWith('{') && cleaned.endsWith('}')) {
+        try {
+          const parsed = JSON.parse(cleaned);
+          if (parsed.reply) {
+            cleaned = parsed.reply;
+          } else if (parsed.output) {
+            cleaned = parsed.output;
+          } else if (parsed.text) {
+            cleaned = parsed.text;
+          } else if (parsed.message) {
+            cleaned = parsed.message;
+          }
+        } catch (e) {
+          const replyMatch = cleaned.match(/"reply"\s*:\s*"((?:[^"\\]|\\.)*)"/);
+          if (replyMatch) {
+            cleaned = replyMatch[1].replace(/\\"/g, '"').replace(/\\n/g, '\n');
+          }
+        }
+      }
+      
+      cleaned = cleaned.replace(/^["„"']+|["„"']+$/g, '').trim();
+      
+      return cleaned;
+    };
+
+    const processMessages = () => {
+      const messages = document.querySelectorAll('#n8n-chat .chat-message--bot');
+      messages.forEach(msg => {
+        if (msg.dataset.cleaned === 'true') return;
+        
+        const textContainer = msg.querySelector('.chat-message-text') || msg;
+        const originalText = textContainer.textContent || textContainer.innerText;
+        const cleanedText = cleanBotMessage(originalText);
+        
+        if (cleanedText !== originalText) {
+          textContainer.textContent = cleanedText;
+        }
+        
+        msg.dataset.cleaned = 'true';
+      });
+    };
+
+    const startMessageObserver = () => {
+      const observer = new MutationObserver(() => {
+        processMessages();
+      });
+      
+      const tryObserve = () => {
+        const chatBody = document.querySelector('#n8n-chat .chat-body, #n8n-chat .chat-messages');
+        if (chatBody) {
+          observer.observe(chatBody, { childList: true, subtree: true, characterData: true });
+          processMessages();
+          return true;
+        }
+        return false;
+      };
+
+      if (!tryObserve()) {
+        const initObserver = new MutationObserver(() => {
+          if (tryObserve()) initObserver.disconnect();
+        });
+        initObserver.observe(document.body, { childList: true, subtree: true });
+      }
+    };
+
+    // =============================
+    // FIX: Placeholder überschreiben
+    // =============================
+    const fixPlaceholder = () => {
+      const inputs = document.querySelectorAll('#n8n-chat .chat-input textarea, #n8n-chat .chat-input input[type="text"]');
+      inputs.forEach(input => {
+        if (input.placeholder !== 'Nachricht schreiben…') {
+          input.placeholder = 'Nachricht schreiben…';
+        }
+      });
+      return inputs.length > 0;
+    };
+
+    const startPlaceholderFix = () => {
+      setInterval(fixPlaceholder, 500);
+      
+      const observer = new MutationObserver(fixPlaceholder);
+      observer.observe(document.body, { childList: true, subtree: true });
+    };
+
+    const initChat = (modeOrNull) => {
+      destroyChat();
+
+      const webhookUrl = modeOrNull ? buildWebhookUrl(modeOrNull) : WEBHOOK_BASE;
+
+      createChat({
+        webhookUrl,
+        mode: "window",
+        chatInputKey: "chatInput",
+        chatInputPlaceholder: "Nachricht schreiben…",
+        chatOutputKey: "reply",
+        showWelcomeScreen: false,
+        initialMessages: modeOrNull ? [getInitialMessage(modeOrNull)] : [],
+      });
+
+      attachOverlay(modeOrNull);
+      
+      setTimeout(() => {
+        startMessageObserver();
+        startPlaceholderFix();
+      }, 100);
+
+      if (reopenAfterInit) {
+        reopenAfterInit = false;
+        let tries = 0;
+        const interval = setInterval(() => {
+          tries++;
+          const toggle = document.querySelector("#n8n-chat .chat-window-toggle");
+          if (toggle) forceOpenWindow();
+          if (toggle || tries >= 15) clearInterval(interval);
+        }, 50);
+      }
+    };
+
+    const attachOverlay = (modeOrNull) => {
+      const tryAttach = () => {
+        const win = document.querySelector("#n8n-chat .chat-window");
+        const body = document.querySelector("#n8n-chat .chat-body");
+        const input = document.querySelector("#n8n-chat .chat-input");
+
+        if (!win || !body || !input) return false;
+
+        let back = win.querySelector(".cf-back");
+        if (!back) {
+          back = document.createElement("div");
+          back.className = "cf-back";
+          back.title = "Zurück zum Menü";
+          back.innerHTML = `<svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>`;
+          back.addEventListener("click", () => {
+            currentMode = null;
+            reopenAfterInit = true;
+            initChat(null);
+          });
+          win.appendChild(back);
+        }
+
+        let overlay = win.querySelector(".cf-overlay");
+        if (!overlay) {
+          overlay = document.createElement("div");
+          overlay.className = "cf-overlay";
+
+          overlay.innerHTML = `
+            <div class="cf-welcome">
+              <h2 class="cf-welcome-title">Willkommen bei Conar 💈</h2>
+              <p class="cf-welcome-subtitle">Dein Barber in der Nachbarschaft.<br>Wie können wir dir helfen?</p>
+            </div>
+            <div class="cf-barber-stripe">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="cf-options">
+              <div class="cf-option" data-mode="info">
+                <span class="cf-option-icon">ℹ️</span>
+                <span class="cf-option-text">
+                  <span class="cf-option-label">Infos zum Salon</span>
+                  <span class="cf-option-desc">Öffnungszeiten, Preise & mehr</span>
+                </span>
+              </div>
+              <div class="cf-option" data-mode="jason">
+                <span class="cf-option-icon">✂️</span>
+                <span class="cf-option-text">
+                  <span class="cf-option-label">Termin bei Jason</span>
+                  <span class="cf-option-desc">Jetzt einen Slot reservieren</span>
+                </span>
+              </div>
+              <div class="cf-option" data-mode="elina">
+                <span class="cf-option-icon">✂️</span>
+                <span class="cf-option-text">
+                  <span class="cf-option-label">Termin bei Elina</span>
+                  <span class="cf-option-desc">Jetzt einen Slot reservieren</span>
+                </span>
+              </div>
+            </div>
+          `;
+
+          overlay.querySelectorAll(".cf-option").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+
+              const mode = btn.getAttribute("data-mode");
+              currentMode = mode;
+              reopenAfterInit = true;
+              initChat(mode);
+            });
+          });
+
+          win.appendChild(overlay);
+        }
+
+        const inMenu = !modeOrNull;
+        const root = document.getElementById("n8n-chat");
+
+        root?.classList.toggle("cf-menu-open", inMenu);
+        overlay.classList.toggle("is-open", inMenu);
+        back.classList.toggle("is-open", !inMenu);
+        overlay.style.pointerEvents = inMenu ? "auto" : "none";
+
+        return true;
+      };
+
+      if (tryAttach()) return;
+
+      const observer = new MutationObserver(() => {
+        if (tryAttach()) observer.disconnect();
+      });
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+    };
+
+    initChat(null);
+  </script>
+</body>
+</html>
