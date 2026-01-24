@@ -12,17 +12,12 @@
 
   <style>
     :root {
-      /* Website */
       --page-bg: #0a0b0d;
       --page-text: #ffffff;
-
-      /* Shared */
       --glass-border: rgba(255, 255, 255, 0.12);
       --shadow-strong: 0 25px 60px rgba(0, 0, 0, 0.6);
       --text: #ffffff;
       --text-muted: rgba(255, 255, 255, 0.55);
-
-      /* Layout */
       --gap: 20px;
       --radius-lg: 24px;
       --radius-md: 16px;
@@ -41,9 +36,7 @@
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
     }
 
-    /* =========================
-       Agentic Solutions Header
-       ========================= */
+    /* Agentic Solutions Header */
     .agentic-header {
       position: fixed;
       top: 0;
@@ -99,7 +92,6 @@
       font-size: 14px;
       font-weight: 600;
       color: var(--text);
-      letter-spacing: -0.01em;
     }
 
     .agentic-badge-subtitle {
@@ -107,9 +99,7 @@
       color: var(--text-muted);
     }
 
-    /* =========================
-       Main Content
-       ========================= */
+    /* Main Content */
     .wrap {
       max-width: 900px;
       margin: 0 auto;
@@ -177,7 +167,6 @@
       font-size: 20px;
       font-weight: 600;
       margin: 0;
-      letter-spacing: -0.01em;
     }
 
     .demo-card-desc {
@@ -205,9 +194,7 @@
       stroke: currentColor;
     }
 
-    /* =========================
-       SHARED CHAT STYLES
-       ========================= */
+    /* SHARED CHAT STYLES */
     .chat-widget {
       position: fixed;
       z-index: 9999;
@@ -266,12 +253,15 @@
       flex: 1;
       overflow-y: auto;
       padding: 16px;
+      display: flex;
+      flex-direction: column;
     }
 
     .chat-messages {
       display: flex;
       flex-direction: column;
       gap: 12px;
+      margin-top: auto;
     }
 
     .chat-message {
@@ -328,7 +318,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      transition: transform 0.15s ease;
     }
 
     .chat-send-btn:hover {
@@ -495,9 +485,7 @@
     .chat-menu.is-open .chat-stripe { animation-delay: 0.05s; }
     .chat-menu.is-open .chat-options { animation-delay: 0.1s; }
 
-    /* =========================
-       HANDWERK THEME (Orange)
-       ========================= */
+    /* HANDWERK THEME (Orange) */
     #handwerk-widget {
       right: var(--gap);
       bottom: 100px;
@@ -544,9 +532,7 @@
       background: linear-gradient(180deg, rgba(22, 20, 16, 0.98) 0%, rgba(22, 20, 16, 0.9) 100%);
     }
 
-    /* =========================
-       FRISEUR THEME (Blue)
-       ========================= */
+    /* FRISEUR THEME (Blue) */
     #friseur-widget {
       right: var(--gap);
       bottom: var(--gap);
@@ -593,42 +579,19 @@
       background: linear-gradient(180deg, rgba(18, 20, 26, 0.98) 0%, rgba(18, 20, 26, 0.9) 100%);
     }
 
-    /* =========================
-       Mobile Responsive
-       ========================= */
+    /* Mobile */
     @media (max-width: 768px) {
-      .agentic-header {
-        padding: 12px 16px;
-      }
-
-      .agentic-badge {
-        padding: 10px 14px;
-      }
-
-      .agentic-badge-icon {
-        width: 32px;
-        height: 32px;
-        font-size: 16px;
-      }
-
-      .wrap {
-        padding: 90px 16px 200px;
-      }
-
-      .demo-card {
-        padding: 20px;
-      }
-
-      #handwerk-widget {
-        bottom: 88px;
-      }
-
+      .agentic-header { padding: 12px 16px; }
+      .agentic-badge { padding: 10px 14px; }
+      .agentic-badge-icon { width: 32px; height: 32px; font-size: 16px; }
+      .wrap { padding: 90px 16px 200px; }
+      .demo-card { padding: 20px; }
+      #handwerk-widget { bottom: 88px; }
       .chat-window {
         width: calc(100vw - 32px);
         height: calc(100vh - 160px);
         right: -10px;
       }
-
       #friseur-widget .chat-window {
         height: calc(100vh - 100px);
       }
@@ -660,7 +623,7 @@
 </head>
 
 <body>
-  <!-- Agentic Solutions Header -->
+  <!-- Header -->
   <header class="agentic-header">
     <div class="agentic-badge">
       <div class="agentic-badge-icon">⚡</div>
@@ -676,7 +639,6 @@
     <h1 class="page-title">KI-Assistenten in Aktion</h1>
     <p class="page-subtitle">Erlebe unsere intelligenten Chatbots live. Klicke auf einen der Buttons unten rechts, um einen Demo-Agenten zu testen.</p>
 
-    <!-- Handwerk Demo Card -->
     <div class="demo-card">
       <div class="demo-card-header">
         <div class="demo-card-icon handwerk">🛠️</div>
@@ -691,7 +653,6 @@
       </div>
     </div>
 
-    <!-- Friseur Demo Card -->
     <div class="demo-card">
       <div class="demo-card-header">
         <div class="demo-card-icon friseur">💈</div>
@@ -707,48 +668,42 @@
     </div>
   </div>
 
-  <!-- ========================= -->
-  <!-- HANDWERK CHAT WIDGET -->
-  <!-- ========================= -->
+  <!-- HANDWERK WIDGET -->
   <div id="handwerk-widget" class="chat-widget">
-    <div class="chat-toggle" onclick="toggleHandwerk()">🛠️</div>
+    <div class="chat-toggle" id="handwerk-toggle">🛠️</div>
     <div class="chat-window" id="handwerk-window">
-      <div class="chat-back" id="handwerk-back" onclick="showHandwerkMenu()">
+      <div class="chat-back" id="handwerk-back">
         <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
       </div>
-      
-      <!-- Menu -->
       <div class="chat-menu is-open" id="handwerk-menu">
         <div class="chat-welcome">
           <h2 class="chat-welcome-title">Müller Handwerk 🛠️</h2>
           <p class="chat-welcome-subtitle">Professionelle Handwerksleistungen.<br>Wie können wir Ihnen helfen?</p>
         </div>
-        <div class="chat-stripe">
-          <span></span><span></span><span></span>
-        </div>
-        <div class="chat-options">
-          <div class="chat-option" onclick="startHandwerkChat('maler')">
+        <div class="chat-stripe"><span></span><span></span><span></span></div>
+        <div class="chat-options" id="handwerk-options">
+          <div class="chat-option" data-mode="maler">
             <span class="chat-option-icon">🎨</span>
             <span class="chat-option-text">
               <span class="chat-option-label">Malerbetrieb</span>
               <span class="chat-option-desc">Innen- & Außenanstriche, Tapezieren</span>
             </span>
           </div>
-          <div class="chat-option" onclick="startHandwerkChat('metall')">
+          <div class="chat-option" data-mode="metall">
             <span class="chat-option-icon">🔩</span>
             <span class="chat-option-text">
               <span class="chat-option-label">Metallbau</span>
               <span class="chat-option-desc">Geländer, Zäune, Konstruktionen</span>
             </span>
           </div>
-          <div class="chat-option" onclick="startHandwerkChat('regal')">
+          <div class="chat-option" data-mode="regal">
             <span class="chat-option-icon">📦</span>
             <span class="chat-option-text">
               <span class="chat-option-label">Regalbau</span>
               <span class="chat-option-desc">Lager- & Industrieregale</span>
             </span>
           </div>
-          <div class="chat-option" onclick="startHandwerkChat('geruest')">
+          <div class="chat-option" data-mode="geruest">
             <span class="chat-option-icon">🏗️</span>
             <span class="chat-option-text">
               <span class="chat-option-label">Gerüstbau</span>
@@ -757,55 +712,47 @@
           </div>
         </div>
       </div>
-
-      <!-- Chat Area -->
       <div class="chat-body" id="handwerk-body" style="display: none;">
         <div class="chat-messages" id="handwerk-messages"></div>
       </div>
       <div class="chat-input-area" id="handwerk-input" style="display: none;">
-        <input type="text" id="handwerk-input-field" placeholder="Nachricht schreiben…" onkeypress="handleHandwerkKey(event)">
-        <button class="chat-send-btn" onclick="sendHandwerkMessage()">
+        <input type="text" id="handwerk-field" placeholder="Nachricht schreiben…">
+        <button class="chat-send-btn" id="handwerk-send">
           <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- ========================= -->
-  <!-- FRISEUR CHAT WIDGET -->
-  <!-- ========================= -->
+  <!-- FRISEUR WIDGET -->
   <div id="friseur-widget" class="chat-widget">
-    <div class="chat-toggle" onclick="toggleFriseur()">💈</div>
+    <div class="chat-toggle" id="friseur-toggle">💈</div>
     <div class="chat-window" id="friseur-window">
-      <div class="chat-back" id="friseur-back" onclick="showFriseurMenu()">
+      <div class="chat-back" id="friseur-back">
         <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
       </div>
-      
-      <!-- Menu -->
       <div class="chat-menu is-open" id="friseur-menu">
         <div class="chat-welcome">
           <h2 class="chat-welcome-title">Willkommen bei Conar 💈</h2>
           <p class="chat-welcome-subtitle">Dein Barber in der Nachbarschaft.<br>Wie können wir dir helfen?</p>
         </div>
-        <div class="chat-stripe">
-          <span></span><span></span><span></span>
-        </div>
-        <div class="chat-options">
-          <div class="chat-option" onclick="startFriseurChat('info')">
+        <div class="chat-stripe"><span></span><span></span><span></span></div>
+        <div class="chat-options" id="friseur-options">
+          <div class="chat-option" data-mode="info">
             <span class="chat-option-icon">ℹ️</span>
             <span class="chat-option-text">
               <span class="chat-option-label">Infos zum Salon</span>
               <span class="chat-option-desc">Öffnungszeiten, Preise & mehr</span>
             </span>
           </div>
-          <div class="chat-option" onclick="startFriseurChat('jason')">
+          <div class="chat-option" data-mode="jason">
             <span class="chat-option-icon">✂️</span>
             <span class="chat-option-text">
               <span class="chat-option-label">Termin bei Jason</span>
               <span class="chat-option-desc">Jetzt einen Slot reservieren</span>
             </span>
           </div>
-          <div class="chat-option" onclick="startFriseurChat('elina')">
+          <div class="chat-option" data-mode="elina">
             <span class="chat-option-icon">✂️</span>
             <span class="chat-option-text">
               <span class="chat-option-label">Termin bei Elina</span>
@@ -814,14 +761,12 @@
           </div>
         </div>
       </div>
-
-      <!-- Chat Area -->
       <div class="chat-body" id="friseur-body" style="display: none;">
         <div class="chat-messages" id="friseur-messages"></div>
       </div>
       <div class="chat-input-area" id="friseur-input" style="display: none;">
-        <input type="text" id="friseur-input-field" placeholder="Nachricht schreiben…" onkeypress="handleFriseurKey(event)">
-        <button class="chat-send-btn" onclick="sendFriseurMessage()">
+        <input type="text" id="friseur-field" placeholder="Nachricht schreiben…">
+        <button class="chat-send-btn" id="friseur-send">
           <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
         </button>
       </div>
@@ -829,248 +774,267 @@
   </div>
 
   <script>
-    // ========================= 
-    // CONFIGURATION
-    // =========================
-    const HANDWERK_WEBHOOK = "https://seidel1502.app.n8n.cloud/webhook/a6a426be-f177-400f-a96c-77d1482f181d";
-    const FRISEUR_WEBHOOK = "https://seidel1502.app.n8n.cloud/webhook/conar-chat";
-
-    const HANDWERK_MESSAGES = {
-      maler: "🎨 Willkommen beim Malerbetrieb!\n\nIch helfe Ihnen gerne bei:\n• Informationen zu unseren Leistungen\n• Auftragsanfragen für Ihr Projekt\n\nWie kann ich Ihnen behilflich sein?",
-      metall: "🔩 Willkommen beim Metallbau!\n\nIch helfe Ihnen gerne bei:\n• Informationen zu unseren Leistungen\n• Auftragsanfragen für Ihr Projekt\n\nWie kann ich Ihnen behilflich sein?",
-      regal: "📦 Willkommen beim Regalbau!\n\nIch helfe Ihnen gerne bei:\n• Informationen zu unseren Leistungen\n• Auftragsanfragen für Ihr Projekt\n\nWie kann ich Ihnen behilflich sein?",
-      geruest: "🏗️ Willkommen beim Gerüstbau!\n\nIch helfe Ihnen gerne bei:\n• Informationen zu unseren Leistungen\n• Auftragsanfragen für Ihr Projekt\n\nWie kann ich Ihnen behilflich sein?"
-    };
-
-    const FRISEUR_MESSAGES = {
-      info: "ℹ️ Hi! Ich gebe dir folgende Infos zu Conar Friseur 😊\n• Öffnungszeiten\n• Leistungen & Haarschnitte\n• Unsere Friseure\n• Terminbuchung",
-      jason: "✂️ Hi, ich bin Jason 😊\nFang gerne mit deinem gewünschten Datum an!🤗",
-      elina: "✂️ Hi, ich bin Elina 😊\nFang gerne mit deinem gewünschten Datum an!🤗"
-    };
-
-    // State
-    let handwerkMode = null;
-    let friseurMode = null;
-    let handwerkHistory = [];
-    let friseurHistory = [];
-
-    // ========================= 
-    // HANDWERK FUNCTIONS
-    // =========================
-    function toggleHandwerk() {
-      const win = document.getElementById('handwerk-window');
-      win.classList.toggle('is-open');
-      // Close friseur if open
-      document.getElementById('friseur-window').classList.remove('is-open');
-    }
-
-    function showHandwerkMenu() {
-      handwerkMode = null;
-      handwerkHistory = [];
-      document.getElementById('handwerk-menu').classList.add('is-open');
-      document.getElementById('handwerk-body').style.display = 'none';
-      document.getElementById('handwerk-input').style.display = 'none';
-      document.getElementById('handwerk-back').classList.remove('is-visible');
-      document.getElementById('handwerk-messages').innerHTML = '';
-    }
-
-    function startHandwerkChat(mode) {
-      handwerkMode = mode;
-      handwerkHistory = [];
-      document.getElementById('handwerk-menu').classList.remove('is-open');
-      document.getElementById('handwerk-body').style.display = 'block';
-      document.getElementById('handwerk-input').style.display = 'flex';
-      document.getElementById('handwerk-back').classList.add('is-visible');
+    // =====================================================================
+    // HANDWERK CHATBOT - Vollständig isoliert
+    // =====================================================================
+    (function() {
+      const WEBHOOK = "https://seidel1502.app.n8n.cloud/webhook/a6a426be-f177-400f-a96c-77d1482f181d";
       
-      addHandwerkMessage(HANDWERK_MESSAGES[mode], 'bot');
-    }
+      const MESSAGES = {
+        maler: "🎨 Willkommen beim Malerbetrieb!\n\nIch helfe Ihnen gerne bei:\n• Informationen zu unseren Leistungen\n• Auftragsanfragen für Ihr Projekt\n\nWie kann ich Ihnen behilflich sein?",
+        metall: "🔩 Willkommen beim Metallbau!\n\nIch helfe Ihnen gerne bei:\n• Informationen zu unseren Leistungen\n• Auftragsanfragen für Ihr Projekt\n\nWie kann ich Ihnen behilflich sein?",
+        regal: "📦 Willkommen beim Regalbau!\n\nIch helfe Ihnen gerne bei:\n• Informationen zu unseren Leistungen\n• Auftragsanfragen für Ihr Projekt\n\nWie kann ich Ihnen behilflich sein?",
+        geruest: "🏗️ Willkommen beim Gerüstbau!\n\nIch helfe Ihnen gerne bei:\n• Informationen zu unseren Leistungen\n• Auftragsanfragen für Ihr Projekt\n\nWie kann ich Ihnen behilflich sein?"
+      };
 
-    function addHandwerkMessage(text, type) {
-      const container = document.getElementById('handwerk-messages');
-      const msg = document.createElement('div');
-      msg.className = `chat-message ${type}`;
-      msg.textContent = text;
-      container.appendChild(msg);
-      container.parentElement.scrollTop = container.parentElement.scrollHeight;
-    }
+      let mode = null;
+      let history = [];
 
-    function showHandwerkTyping() {
-      const container = document.getElementById('handwerk-messages');
-      const typing = document.createElement('div');
-      typing.className = 'typing-indicator';
-      typing.id = 'handwerk-typing';
-      typing.innerHTML = '<span></span><span></span><span></span>';
-      container.appendChild(typing);
-      container.parentElement.scrollTop = container.parentElement.scrollHeight;
-    }
+      const $ = id => document.getElementById(id);
 
-    function hideHandwerkTyping() {
-      const typing = document.getElementById('handwerk-typing');
-      if (typing) typing.remove();
-    }
+      // Toggle
+      $('handwerk-toggle').addEventListener('click', () => {
+        $('handwerk-window').classList.toggle('is-open');
+        $('friseur-window').classList.remove('is-open');
+      });
 
-    async function sendHandwerkMessage() {
-      const input = document.getElementById('handwerk-input-field');
-      const text = input.value.trim();
-      if (!text) return;
+      // Back
+      $('handwerk-back').addEventListener('click', () => {
+        mode = null;
+        history = [];
+        $('handwerk-menu').classList.add('is-open');
+        $('handwerk-body').style.display = 'none';
+        $('handwerk-input').style.display = 'none';
+        $('handwerk-back').classList.remove('is-visible');
+        $('handwerk-messages').innerHTML = '';
+      });
 
-      input.value = '';
-      addHandwerkMessage(text, 'user');
-      handwerkHistory.push({ role: 'user', content: text });
-
-      showHandwerkTyping();
-
-      try {
-        const response = await fetch(`${HANDWERK_WEBHOOK}?mode=${handwerkMode}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
-            chatInput: text,
-            mode: handwerkMode,
-            history: handwerkHistory
-          })
-        });
-
-        const data = await response.json();
-        hideHandwerkTyping();
-
-        let reply = data.reply || data.output || data.text || data.message || JSON.stringify(data);
-        reply = cleanMessage(reply);
+      // Options
+      $('handwerk-options').addEventListener('click', (e) => {
+        const option = e.target.closest('.chat-option');
+        if (!option) return;
         
-        addHandwerkMessage(reply, 'bot');
-        handwerkHistory.push({ role: 'assistant', content: reply });
-      } catch (error) {
-        hideHandwerkTyping();
-        addHandwerkMessage('Entschuldigung, es gab einen Fehler. Bitte versuchen Sie es erneut.', 'bot');
-      }
-    }
-
-    function handleHandwerkKey(e) {
-      if (e.key === 'Enter') sendHandwerkMessage();
-    }
-
-    // ========================= 
-    // FRISEUR FUNCTIONS
-    // =========================
-    function toggleFriseur() {
-      const win = document.getElementById('friseur-window');
-      win.classList.toggle('is-open');
-      // Close handwerk if open
-      document.getElementById('handwerk-window').classList.remove('is-open');
-    }
-
-    function showFriseurMenu() {
-      friseurMode = null;
-      friseurHistory = [];
-      document.getElementById('friseur-menu').classList.add('is-open');
-      document.getElementById('friseur-body').style.display = 'none';
-      document.getElementById('friseur-input').style.display = 'none';
-      document.getElementById('friseur-back').classList.remove('is-visible');
-      document.getElementById('friseur-messages').innerHTML = '';
-    }
-
-    function startFriseurChat(mode) {
-      friseurMode = mode;
-      friseurHistory = [];
-      document.getElementById('friseur-menu').classList.remove('is-open');
-      document.getElementById('friseur-body').style.display = 'block';
-      document.getElementById('friseur-input').style.display = 'flex';
-      document.getElementById('friseur-back').classList.add('is-visible');
-      
-      addFriseurMessage(FRISEUR_MESSAGES[mode], 'bot');
-    }
-
-    function addFriseurMessage(text, type) {
-      const container = document.getElementById('friseur-messages');
-      const msg = document.createElement('div');
-      msg.className = `chat-message ${type}`;
-      msg.textContent = text;
-      container.appendChild(msg);
-      container.parentElement.scrollTop = container.parentElement.scrollHeight;
-    }
-
-    function showFriseurTyping() {
-      const container = document.getElementById('friseur-messages');
-      const typing = document.createElement('div');
-      typing.className = 'typing-indicator';
-      typing.id = 'friseur-typing';
-      typing.innerHTML = '<span></span><span></span><span></span>';
-      container.appendChild(typing);
-      container.parentElement.scrollTop = container.parentElement.scrollHeight;
-    }
-
-    function hideFriseurTyping() {
-      const typing = document.getElementById('friseur-typing');
-      if (typing) typing.remove();
-    }
-
-    async function sendFriseurMessage() {
-      const input = document.getElementById('friseur-input-field');
-      const text = input.value.trim();
-      if (!text) return;
-
-      input.value = '';
-      addFriseurMessage(text, 'user');
-      friseurHistory.push({ role: 'user', content: text });
-
-      showFriseurTyping();
-
-      try {
-        const response = await fetch(`${FRISEUR_WEBHOOK}?mode=${friseurMode}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
-            chatInput: text,
-            mode: friseurMode,
-            history: friseurHistory
-          })
-        });
-
-        const data = await response.json();
-        hideFriseurTyping();
-
-        let reply = data.reply || data.output || data.text || data.message || JSON.stringify(data);
-        reply = cleanMessage(reply);
+        mode = option.dataset.mode;
+        history = [];
         
-        addFriseurMessage(reply, 'bot');
-        friseurHistory.push({ role: 'assistant', content: reply });
-      } catch (error) {
-        hideFriseurTyping();
-        addFriseurMessage('Entschuldigung, es gab einen Fehler. Bitte versuche es erneut.', 'bot');
+        $('handwerk-menu').classList.remove('is-open');
+        $('handwerk-body').style.display = 'flex';
+        $('handwerk-input').style.display = 'flex';
+        $('handwerk-back').classList.add('is-visible');
+        $('handwerk-messages').innerHTML = '';
+        
+        addMsg(MESSAGES[mode], 'bot');
+        
+        setTimeout(() => {
+          $('handwerk-body').scrollTop = $('handwerk-body').scrollHeight;
+        }, 50);
+      });
+
+      // Send
+      $('handwerk-send').addEventListener('click', send);
+      $('handwerk-field').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') send();
+      });
+
+      function addMsg(text, type) {
+        const msg = document.createElement('div');
+        msg.className = `chat-message ${type}`;
+        msg.textContent = text;
+        $('handwerk-messages').appendChild(msg);
+        $('handwerk-body').scrollTop = $('handwerk-body').scrollHeight;
       }
-    }
 
-    function handleFriseurKey(e) {
-      if (e.key === 'Enter') sendFriseurMessage();
-    }
+      function showTyping() {
+        const t = document.createElement('div');
+        t.className = 'typing-indicator';
+        t.id = 'handwerk-typing';
+        t.innerHTML = '<span></span><span></span><span></span>';
+        $('handwerk-messages').appendChild(t);
+        $('handwerk-body').scrollTop = $('handwerk-body').scrollHeight;
+      }
 
-    // ========================= 
-    // UTILITY
-    // =========================
-    function cleanMessage(text) {
-      if (typeof text !== 'string') return String(text);
-      
-      let cleaned = text.trim();
-      
-      if (cleaned.startsWith('{') && cleaned.endsWith('}')) {
+      function hideTyping() {
+        const t = $('handwerk-typing');
+        if (t) t.remove();
+      }
+
+      async function send() {
+        const text = $('handwerk-field').value.trim();
+        if (!text) return;
+
+        $('handwerk-field').value = '';
+        addMsg(text, 'user');
+        history.push({ role: 'user', content: text });
+
+        showTyping();
+
         try {
-          const parsed = JSON.parse(cleaned);
-          if (parsed.reply) cleaned = parsed.reply;
-          else if (parsed.output) cleaned = parsed.output;
-          else if (parsed.text) cleaned = parsed.text;
-          else if (parsed.message) cleaned = parsed.message;
-        } catch (e) {
-          const match = cleaned.match(/"reply"\s*:\s*"((?:[^"\\]|\\.)*)"/);
-          if (match) {
-            cleaned = match[1].replace(/\\"/g, '"').replace(/\\n/g, '\n');
-          }
+          const res = await fetch(WEBHOOK, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+              chatInput: text,
+              mode: mode,
+              history: history,
+              source: 'handwerk'
+            })
+          });
+
+          const data = await res.json();
+          hideTyping();
+
+          const reply = clean(data.reply || data.output || data.text || data.message || JSON.stringify(data));
+          addMsg(reply, 'bot');
+          history.push({ role: 'assistant', content: reply });
+        } catch (err) {
+          hideTyping();
+          addMsg('Entschuldigung, es gab einen Fehler. Bitte versuchen Sie es erneut.', 'bot');
         }
       }
+
+      function clean(text) {
+        if (typeof text !== 'string') return String(text);
+        let c = text.trim();
+        if (c.startsWith('{') && c.endsWith('}')) {
+          try {
+            const p = JSON.parse(c);
+            c = p.reply || p.output || p.text || p.message || c;
+          } catch (e) {}
+        }
+        return c.replace(/^["„"']+|["„"']+$/g, '').trim();
+      }
+    })();
+
+
+    // =====================================================================
+    // FRISEUR CHATBOT - Vollständig isoliert
+    // =====================================================================
+    (function() {
+      const WEBHOOK = "https://seidel1502.app.n8n.cloud/webhook/conar-chat";
       
-      cleaned = cleaned.replace(/^["„"']+|["„"']+$/g, '').trim();
-      
-      return cleaned;
-    }
+      const MESSAGES = {
+        info: "ℹ️ Hi! Ich gebe dir folgende Infos zu Conar Friseur 😊\n• Öffnungszeiten\n• Leistungen & Haarschnitte\n• Unsere Friseure\n• Terminbuchung",
+        jason: "✂️ Hi, ich bin Jason 😊\nFang gerne mit deinem gewünschten Datum an!🤗",
+        elina: "✂️ Hi, ich bin Elina 😊\nFang gerne mit deinem gewünschten Datum an!🤗"
+      };
+
+      let mode = null;
+      let history = [];
+
+      const $ = id => document.getElementById(id);
+
+      // Toggle
+      $('friseur-toggle').addEventListener('click', () => {
+        $('friseur-window').classList.toggle('is-open');
+        $('handwerk-window').classList.remove('is-open');
+      });
+
+      // Back
+      $('friseur-back').addEventListener('click', () => {
+        mode = null;
+        history = [];
+        $('friseur-menu').classList.add('is-open');
+        $('friseur-body').style.display = 'none';
+        $('friseur-input').style.display = 'none';
+        $('friseur-back').classList.remove('is-visible');
+        $('friseur-messages').innerHTML = '';
+      });
+
+      // Options
+      $('friseur-options').addEventListener('click', (e) => {
+        const option = e.target.closest('.chat-option');
+        if (!option) return;
+        
+        mode = option.dataset.mode;
+        history = [];
+        
+        $('friseur-menu').classList.remove('is-open');
+        $('friseur-body').style.display = 'flex';
+        $('friseur-input').style.display = 'flex';
+        $('friseur-back').classList.add('is-visible');
+        $('friseur-messages').innerHTML = '';
+        
+        addMsg(MESSAGES[mode], 'bot');
+        
+        setTimeout(() => {
+          $('friseur-body').scrollTop = $('friseur-body').scrollHeight;
+        }, 50);
+      });
+
+      // Send
+      $('friseur-send').addEventListener('click', send);
+      $('friseur-field').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') send();
+      });
+
+      function addMsg(text, type) {
+        const msg = document.createElement('div');
+        msg.className = `chat-message ${type}`;
+        msg.textContent = text;
+        $('friseur-messages').appendChild(msg);
+        $('friseur-body').scrollTop = $('friseur-body').scrollHeight;
+      }
+
+      function showTyping() {
+        const t = document.createElement('div');
+        t.className = 'typing-indicator';
+        t.id = 'friseur-typing';
+        t.innerHTML = '<span></span><span></span><span></span>';
+        $('friseur-messages').appendChild(t);
+        $('friseur-body').scrollTop = $('friseur-body').scrollHeight;
+      }
+
+      function hideTyping() {
+        const t = $('friseur-typing');
+        if (t) t.remove();
+      }
+
+      async function send() {
+        const text = $('friseur-field').value.trim();
+        if (!text) return;
+
+        $('friseur-field').value = '';
+        addMsg(text, 'user');
+        history.push({ role: 'user', content: text });
+
+        showTyping();
+
+        try {
+          const res = await fetch(`${WEBHOOK}?mode=${mode}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+              chatInput: text,
+              mode: mode,
+              history: history,
+              source: 'friseur'
+            })
+          });
+
+          const data = await res.json();
+          hideTyping();
+
+          const reply = clean(data.reply || data.output || data.text || data.message || JSON.stringify(data));
+          addMsg(reply, 'bot');
+          history.push({ role: 'assistant', content: reply });
+        } catch (err) {
+          hideTyping();
+          addMsg('Entschuldigung, es gab einen Fehler. Bitte versuche es erneut.', 'bot');
+        }
+      }
+
+      function clean(text) {
+        if (typeof text !== 'string') return String(text);
+        let c = text.trim();
+        if (c.startsWith('{') && c.endsWith('}')) {
+          try {
+            const p = JSON.parse(c);
+            c = p.reply || p.output || p.text || p.message || c;
+          } catch (e) {}
+        }
+        return c.replace(/^["„"']+|["„"']+$/g, '').trim();
+      }
+    })();
   </script>
 </body>
 </html>
