@@ -20,17 +20,21 @@
       --radius-lg: 24px;
       --radius-md: 16px;
       --radius-sm: 12px;
-      --chat-width: min(380px, 90vw);
-      --chat-height: min(580px, 75vh);
+      --widget-width: min(420px, 95vw);
+      --widget-height: min(640px, 85vh);
+      --accent: #d97706;
+      --accent-light: #f59e0b;
     }
-    * { box-sizing: border-box; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      margin: 0;
       min-height: 100vh;
       background: var(--page-bg);
       color: var(--page-text);
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
     }
+
     /* Agentic Solutions Header */
     .agentic-header {
       position: fixed;
@@ -45,6 +49,7 @@
       background: linear-gradient(180deg, rgba(10, 11, 13, 0.98) 0%, rgba(10, 11, 13, 0.8) 70%, transparent 100%);
       pointer-events: none;
     }
+
     .agentic-badge {
       pointer-events: auto;
       display: flex;
@@ -58,10 +63,12 @@
       border-radius: 14px;
       transition: all 0.2s ease;
     }
+
     .agentic-badge:hover {
       background: rgba(255, 255, 255, 0.06);
       border-color: rgba(255, 255, 255, 0.12);
     }
+
     .agentic-badge-icon {
       width: 36px;
       height: 36px;
@@ -73,32 +80,38 @@
       font-size: 18px;
       box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
     }
+
     .agentic-badge-text {
       display: flex;
       flex-direction: column;
       gap: 2px;
     }
+
     .agentic-badge-title {
       font-size: 14px;
       font-weight: 600;
       color: var(--text);
     }
+
     .agentic-badge-subtitle {
       font-size: 11px;
       color: var(--text-muted);
     }
+
     /* Main Content */
     .wrap {
       max-width: 900px;
       margin: 0 auto;
       padding: 100px 24px 180px;
     }
+
     .page-title {
       margin: 0 0 8px;
       font-size: clamp(28px, 4vw, 42px);
       font-weight: 600;
       letter-spacing: -0.025em;
     }
+
     .page-subtitle {
       margin: 0 0 60px;
       color: var(--text-muted);
@@ -106,7 +119,8 @@
       line-height: 1.6;
       max-width: 50ch;
     }
-    /* Demo Cards */
+
+    /* Demo Card */
     .demo-card {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(255, 255, 255, 0.06);
@@ -115,16 +129,19 @@
       margin-bottom: 24px;
       transition: all 0.2s ease;
     }
+
     .demo-card:hover {
       background: rgba(255, 255, 255, 0.035);
       border-color: rgba(255, 255, 255, 0.1);
     }
+
     .demo-card-header {
       display: flex;
       align-items: center;
       gap: 16px;
       margin-bottom: 10px;
     }
+
     .demo-card-icon {
       width: 52px;
       height: 52px;
@@ -133,26 +150,23 @@
       align-items: center;
       justify-content: center;
       font-size: 26px;
-    }
-    .demo-card-icon.handwerk {
       background: linear-gradient(135deg, rgba(217, 119, 6, 0.2) 0%, rgba(245, 158, 11, 0.1) 100%);
       border: 1px solid rgba(217, 119, 6, 0.3);
     }
-    .demo-card-icon.friseur {
-      background: linear-gradient(135deg, rgba(37, 99, 235, 0.2) 0%, rgba(59, 130, 246, 0.1) 100%);
-      border: 1px solid rgba(37, 99, 235, 0.3);
-    }
+
     .demo-card-title {
       font-size: 20px;
       font-weight: 600;
       margin: 0;
     }
+
     .demo-card-desc {
       color: var(--text-muted);
       font-size: 14px;
       line-height: 1.5;
       margin: 0;
     }
+
     .demo-card-hint {
       display: inline-flex;
       align-items: center;
@@ -164,51 +178,66 @@
       font-size: 12px;
       color: var(--text-muted);
     }
+
     .demo-card-hint svg {
       width: 14px;
       height: 14px;
       stroke: currentColor;
     }
-    /* SHARED CHAT STYLES */
-    .chat-widget {
+
+    /* ========================================
+       MALERBETRIEB WIDGET
+    ======================================== */
+    .widget {
       position: fixed;
+      right: var(--gap);
+      bottom: var(--gap);
       z-index: 9999;
     }
-    .chat-toggle {
-      width: 60px;
-      height: 60px;
+
+    .widget-toggle {
+      width: 64px;
+      height: 64px;
       border-radius: 50%;
+      background: linear-gradient(135deg, #1a1816 0%, #252220 100%);
       border: 1px solid var(--glass-border);
       box-shadow: var(--shadow-strong);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24px;
+      font-size: 28px;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .chat-toggle:hover {
-      transform: scale(1.05);
+
+    .widget-toggle:hover {
+      transform: scale(1.08);
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7);
     }
-    .chat-window {
+
+    .widget-window {
       position: absolute;
-      bottom: 72px;
-      width: var(--chat-width);
-      height: var(--chat-height);
+      bottom: 76px;
+      right: 0;
+      width: var(--widget-width);
+      height: var(--widget-height);
       max-height: calc(100vh - 100px);
       border-radius: var(--radius-lg);
       overflow: hidden;
       box-shadow: var(--shadow-strong);
       border: 1px solid var(--glass-border);
+      background: rgba(22, 20, 16, 0.95);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       display: none;
       flex-direction: column;
     }
-    .chat-window.is-open {
+
+    .widget-window.is-open {
       display: flex;
     }
-    .chat-window::before {
+
+    .widget-window::before {
       content: '';
       position: absolute;
       top: 0;
@@ -218,333 +247,519 @@
       background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
       z-index: 10;
     }
-    .chat-body {
-      flex: 1;
-      overflow-y: auto;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
+
+    /* Widget Header */
+    .widget-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(0, 0, 0, 0.3);
     }
-    .chat-messages {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: auto;
-    }
-    .chat-message {
-      max-width: 85%;
-      padding: 12px 16px;
-      border-radius: var(--radius-md);
-      font-size: 14px;
-      line-height: 1.5;
-      white-space: pre-line;
-    }
-    .chat-message.bot {
-      align-self: flex-start;
-      border-bottom-left-radius: 6px;
-    }
-    .chat-message.user {
-      align-self: flex-end;
-      color: #fff;
-      border-bottom-right-radius: 6px;
-    }
-    /* Markdown in Messages */
-    .chat-message strong {
-      font-weight: 600;
-    }
-    .chat-message em {
-      font-style: italic;
-    }
-    .chat-message ul, .chat-message ol {
-      margin: 8px 0;
-      padding-left: 20px;
-    }
-    .chat-message li {
-      margin: 4px 0;
-    }
-    .chat-input-area {
-      padding: 14px 16px;
-      border-top: 1px solid var(--glass-border);
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-    .chat-input-area input {
-      flex: 1;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: var(--radius-sm);
-      padding: 12px 16px;
-      font-size: 14px;
-      color: var(--text);
-      outline: none;
-      font-family: inherit;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-    .chat-input-area input::placeholder {
-      color: var(--text-muted);
-    }
-    .chat-send-btn {
-      width: 44px;
-      height: 44px;
-      border: none;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.15s ease;
-    }
-    .chat-send-btn:hover {
-      transform: translateY(-1px);
-    }
-    .chat-send-btn svg {
-      width: 18px;
-      height: 18px;
-      fill: #fff;
-    }
-    .chat-back {
-      position: absolute;
-      top: 16px;
-      left: 16px;
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(8px);
-      color: var(--text-muted);
-      cursor: pointer;
-      display: none;
-      place-items: center;
-      z-index: 60;
-      transition: all 0.2s ease;
-    }
-    .chat-back.is-visible {
-      display: grid;
-    }
-    .chat-back:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: var(--text);
-    }
-    .chat-back svg {
-      width: 18px;
-      height: 18px;
-      stroke: currentColor;
-      stroke-width: 2;
-      fill: none;
-    }
-    .chat-menu {
-      position: absolute;
-      inset: 0;
-      padding: 32px 24px 24px;
-      display: none;
-      flex-direction: column;
-      z-index: 50;
-    }
-    .chat-menu.is-open {
-      display: flex;
-    }
-    .chat-welcome {
-      margin-bottom: 8px;
-    }
-    .chat-welcome-title {
+
+    .widget-header-title {
       font-family: 'Playfair Display', serif;
-      font-size: 26px;
+      font-size: 22px;
       font-weight: 600;
       color: var(--text);
-      margin: 0 0 6px 0;
-      letter-spacing: -0.02em;
+      margin: 0 0 4px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
-    .chat-welcome-subtitle {
+
+    .widget-header-subtitle {
       font-size: 13px;
       color: var(--text-muted);
-      line-height: 1.5;
       margin: 0;
     }
-    .chat-stripe {
-      display: flex;
-      gap: 4px;
-      margin: 20px 0 24px 0;
-    }
-    .chat-stripe span {
-      height: 3px;
-      border-radius: 2px;
+
+    /* Widget Body (scrollable) */
+    .widget-body {
       flex: 1;
+      overflow-y: auto;
+      padding: 20px 24px;
     }
-    .chat-options {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      justify-content: center;
+
+    .widget-body::-webkit-scrollbar {
+      width: 6px;
     }
-    .chat-option {
-      width: 100%;
-      background: rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+
+    .widget-body::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .widget-body::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 3px;
+    }
+
+    /* Welcome Message */
+    .welcome-box {
+      background: rgba(217, 119, 6, 0.1);
+      border: 1px solid rgba(217, 119, 6, 0.2);
       border-radius: var(--radius-md);
-      padding: 16px 18px;
-      text-align: left;
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+
+    .welcome-box p {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .welcome-box p strong {
+      color: var(--accent-light);
+    }
+
+    /* Form Styles */
+    .form-section {
+      margin-bottom: 20px;
+    }
+
+    .form-section-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent-light);
+      margin-bottom: 12px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .form-label .required {
+      color: #ef4444;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-size: 14px;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.06);
+      box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.2);
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .form-select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%238892b0' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 16px;
+    }
+
+    .form-select option {
+      background: #1a1816;
+      color: var(--text);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    /* Radio Group */
+    .radio-group {
+      display: flex;
+      gap: 12px;
+    }
+
+    .radio-option {
+      flex: 1;
+    }
+
+    .radio-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .radio-option label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
       font-size: 14px;
       font-weight: 500;
-      color: var(--text);
+      transition: all 0.2s ease;
+    }
+
+    .radio-option input:checked + label {
+      background: rgba(217, 119, 6, 0.2);
+      border-color: var(--accent);
+      color: var(--accent-light);
+    }
+
+    .radio-option label:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    /* File Upload */
+    .file-upload {
+      border: 2px dashed rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .file-upload:hover {
+      border-color: var(--accent);
+      background: rgba(217, 119, 6, 0.05);
+    }
+
+    .file-upload input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .file-upload-icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .file-upload-text {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .file-upload-hint {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.35);
+      margin-top: 4px;
+    }
+
+    .file-list {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      background: rgba(217, 119, 6, 0.15);
+      border-radius: 6px;
+      font-size: 12px;
+    }
+
+    .file-item-remove {
+      cursor: pointer;
+      color: #ef4444;
+      font-weight: bold;
+      margin-left: 4px;
+    }
+
+    /* Conditional Field */
+    .conditional-field {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .conditional-field.visible {
+      display: block;
+    }
+
+    /* Submit Button */
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+      border: none;
+      border-radius: var(--radius-sm);
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 14px;
-      transition: all 0.2s ease;
-    }
-    .chat-option:hover {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.15);
-      transform: translateY(-2px);
-    }
-    .chat-option-icon {
-      font-size: 20px;
-      width: 42px;
-      height: 42px;
-      display: flex;
-      align-items: center;
       justify-content: center;
-      background: rgba(255, 255, 255, 0.06);
-      border-radius: 11px;
-      flex-shrink: 0;
+      gap: 10px;
+      transition: all 0.2s ease;
+      margin-top: 24px;
     }
-    .chat-option-text {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(217, 119, 6, 0.35);
     }
-    .chat-option-label {
-      font-weight: 500;
+
+    .submit-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
     }
-    .chat-option-desc {
-      font-size: 11px;
-      font-weight: 400;
-      color: var(--text-muted);
+
+    .submit-btn .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid transparent;
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: none;
     }
+
+    .submit-btn.loading .spinner {
+      display: block;
+    }
+
+    .submit-btn.loading .btn-text {
+      display: none;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    .chat-menu.is-open .chat-welcome,
-    .chat-menu.is-open .chat-stripe,
-    .chat-menu.is-open .chat-options {
-      animation: fadeIn 0.3s ease forwards;
+
+    /* ========================================
+       RESPONSE / RESULT VIEW
+    ======================================== */
+    .result-view {
+      display: none;
     }
-    .chat-menu.is-open .chat-stripe { animation-delay: 0.05s; }
-    .chat-menu.is-open .chat-options { animation-delay: 0.1s; }
-    /* HANDWERK THEME (Orange) */
-    #handwerk-widget {
-      right: var(--gap);
+
+    .result-view.visible {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .result-success {
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .result-success-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    .result-success h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin: 0 0 8px 0;
+    }
+
+    .result-success p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .result-summary {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin: 24px 0;
+    }
+
+    .result-summary-title {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent-light);
+      margin-bottom: 16px;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 14px;
+    }
+
+    .result-row:last-child {
+      border-bottom: none;
+    }
+
+    .result-row .label {
+      color: var(--text-muted);
+    }
+
+    .result-row .value {
+      color: var(--text);
+      font-weight: 500;
+      text-align: right;
+    }
+
+    .result-row.highlight {
+      background: rgba(217, 119, 6, 0.15);
+      margin: 10px -20px;
+      padding: 14px 20px;
+      border-radius: 8px;
+      border-bottom: none;
+    }
+
+    .result-row.highlight .value {
+      font-size: 22px;
+      color: var(--accent-light);
+    }
+
+    .result-divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
+      margin: 16px 0;
+    }
+
+    /* Email Prompt */
+    .email-prompt {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      text-align: center;
+    }
+
+    .email-prompt p {
+      font-size: 14px;
+      color: var(--text);
+      margin: 0 0 14px 0;
+    }
+
+    .email-prompt-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .email-prompt-buttons button {
+      flex: 1;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-email-yes {
+      background: #22c55e;
+      border: none;
+      color: white;
+    }
+
+    .btn-email-yes:hover {
+      background: #16a34a;
+    }
+
+    .btn-email-no {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text-muted);
+    }
+
+    .btn-email-no:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-new-request {
+      width: 100%;
+      padding: 14px;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 16px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-new-request:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
       bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      padding: 14px 24px;
+      background: #22c55e;
+      color: white;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      z-index: 10000;
     }
-    #handwerk-widget .chat-toggle {
-      background: linear-gradient(135deg, #1a1816 0%, #252220 100%);
+
+    .toast.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
-    #handwerk-widget .chat-window {
-      right: 0;
-      background: rgba(22, 20, 16, 0.92);
+
+    .toast.error {
+      background: #ef4444;
     }
-    #handwerk-widget .chat-message.bot {
-      background: rgba(50, 44, 38, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    #handwerk-widget .chat-message.user {
-      background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
-      box-shadow: 0 4px 20px rgba(217, 119, 6, 0.3);
-    }
-    #handwerk-widget .chat-input-area {
-      background: rgba(0, 0, 0, 0.3);
-    }
-    #handwerk-widget .chat-input-area input:focus {
-      border-color: #d97706;
-      box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.3);
-    }
-    #handwerk-widget .chat-send-btn {
-      background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
-      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
-    }
-    #handwerk-widget .chat-stripe span:nth-child(1) { background: #d97706; }
-    #handwerk-widget .chat-stripe span:nth-child(2) { background: #78716c; }
-    #handwerk-widget .chat-stripe span:nth-child(3) { background: #f59e0b; }
-    #handwerk-widget .chat-menu {
-      background: linear-gradient(180deg, rgba(22, 20, 16, 0.98) 0%, rgba(22, 20, 16, 0.9) 100%);
-    }
-    /* FRISEUR THEME (Blue) */
-    #friseur-widget {
-      right: var(--gap);
-      bottom: var(--gap);
-    }
-    #friseur-widget .chat-toggle {
-      background: linear-gradient(135deg, #12141a 0%, #1e2028 100%);
-    }
-    #friseur-widget .chat-window {
-      right: 0;
-      background: rgba(18, 20, 26, 0.92);
-    }
-    #friseur-widget .chat-message.bot {
-      background: rgba(40, 44, 52, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    #friseur-widget .chat-message.user {
-      background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
-      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
-    }
-    #friseur-widget .chat-input-area {
-      background: rgba(0, 0, 0, 0.3);
-    }
-    #friseur-widget .chat-input-area input:focus {
-      border-color: #2563eb;
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
-    }
-    #friseur-widget .chat-send-btn {
-      background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-    }
-    #friseur-widget .chat-stripe span:nth-child(1) { background: #2563eb; }
-    #friseur-widget .chat-stripe span:nth-child(2) { background: rgba(255,255,255,0.8); }
-    #friseur-widget .chat-stripe span:nth-child(3) { background: #dc2626; }
-    #friseur-widget .chat-menu {
-      background: linear-gradient(180deg, rgba(18, 20, 26, 0.98) 0%, rgba(18, 20, 26, 0.9) 100%);
-    }
+
     /* Mobile */
     @media (max-width: 768px) {
       .agentic-header { padding: 12px 16px; }
       .agentic-badge { padding: 10px 14px; }
       .agentic-badge-icon { width: 32px; height: 32px; font-size: 16px; }
-      .wrap { padding: 90px 16px 200px; }
+      .wrap { padding: 90px 16px 150px; }
       .demo-card { padding: 20px; }
-      #handwerk-widget { bottom: 88px; }
-      .chat-window {
-        width: calc(100vw - 32px);
-        height: calc(100vh - 160px);
-        right: -10px;
-      }
-      #friseur-widget .chat-window {
+      
+      .widget-window {
+        width: calc(100vw - 24px);
         height: calc(100vh - 100px);
+        right: -8px;
       }
-    }
-    .typing-indicator {
-      display: flex;
-      gap: 4px;
-      padding: 12px 16px;
-      align-self: flex-start;
-    }
-    .typing-indicator span {
-      width: 8px;
-      height: 8px;
-      background: rgba(255, 255, 255, 0.4);
-      border-radius: 50%;
-      animation: typing 1.4s infinite ease-in-out;
-    }
-    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-    .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes typing {
-      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-      30% { transform: translateY(-4px); opacity: 1; }
     }
   </style>
 </head>
@@ -559,408 +774,504 @@
       </div>
     </div>
   </header>
+
   <!-- Main Content -->
   <div class="wrap">
     <h1 class="page-title">KI-Assistenten in Aktion</h1>
-    <p class="page-subtitle">Erlebe unsere intelligenten Chatbots live. Klicke auf einen der Buttons unten rechts, um einen Demo-Agenten zu testen.</p>
+    <p class="page-subtitle">Erlebe unseren intelligenten Malerbetrieb-Assistenten live. Klicke auf den Button unten rechts, um eine Anfrage zu stellen.</p>
+
     <div class="demo-card">
       <div class="demo-card-header">
-        <div class="demo-card-icon handwerk">🛠️</div>
+        <div class="demo-card-icon">🎨</div>
         <div>
-          <h2 class="demo-card-title">Projektbau GG Handwerk GmbH</h2>
-          <p class="demo-card-desc">Ihr Partner für Maler-, Metall-, Regal- und Gerüstbau. Infos und Auftragsanfragen rund um die Uhr.</p>
+          <h2 class="demo-card-title">ProjektBauGG Malerbetrieb</h2>
+          <p class="demo-card-desc">Professionelle Malerarbeiten in Paderborn und Umgebung. Füllen Sie das Formular aus und erhalten Sie sofort eine Preisschätzung.</p>
         </div>
       </div>
       <div class="demo-card-hint">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-        Chat öffnen mit dem 🛠️ Button
-      </div>
-    </div>
-    <div class="demo-card">
-      <div class="demo-card-header">
-        <div class="demo-card-icon friseur">💈</div>
-        <div>
-          <h2 class="demo-card-title">Conar Friseur</h2>
-          <p class="demo-card-desc">Termine buchen, ändern oder stornieren – direkt im Chat mit Jason oder Elina.</p>
-        </div>
-      </div>
-      <div class="demo-card-hint">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-        Chat öffnen mit dem 💈 Button
+        Formular öffnen mit dem 🎨 Button
       </div>
     </div>
   </div>
-  <!-- HANDWERK WIDGET -->
-  <div id="handwerk-widget" class="chat-widget">
-    <div class="chat-toggle" id="handwerk-toggle">🛠️</div>
-    <div class="chat-window" id="handwerk-window">
-      <div class="chat-back" id="handwerk-back">
-        <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+
+  <!-- MALERBETRIEB WIDGET -->
+  <div class="widget" id="widget">
+    <div class="widget-toggle" id="widget-toggle">🎨</div>
+    
+    <div class="widget-window" id="widget-window">
+      <!-- Header -->
+      <div class="widget-header">
+        <h2 class="widget-header-title">🎨 Malerbetrieb</h2>
+        <p class="widget-header-subtitle">ProjektBauGG GmbH • Paderborn</p>
       </div>
-      <div class="chat-menu is-open" id="handwerk-menu">
-        <div class="chat-welcome">
-          <h2 class="chat-welcome-title">Projektbau GG Handwerk GmbH 🛠️</h2>
-          <p class="chat-welcome-subtitle">Professionelle Handwerksleistungen.<br>Wie können wir Ihnen helfen?</p>
+
+      <!-- Body -->
+      <div class="widget-body" id="widget-body">
+        
+        <!-- FORM VIEW -->
+        <div class="form-view" id="form-view">
+          <!-- Welcome Message -->
+          <div class="welcome-box">
+            <p>
+              <strong>Willkommen!</strong> Füllen Sie das Formular aus, um eine <strong>kostenlose Preisschätzung</strong> zu erhalten. 
+              Bei Fragen können Sie uns auch gerne direkt kontaktieren.
+            </p>
+          </div>
+
+          <!-- Form -->
+          <form id="contact-form">
+            <!-- Kundentyp -->
+            <div class="form-section">
+              <div class="form-section-title">Kundentyp</div>
+              <div class="radio-group">
+                <div class="radio-option">
+                  <input type="radio" id="type-privat" name="customerType" value="privat" checked>
+                  <label for="type-privat">🏠 Privat</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="type-gewerbe" name="customerType" value="gewerbe">
+                  <label for="type-gewerbe">🏢 Gewerblich</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Firmenname (conditional) -->
+            <div class="form-group conditional-field" id="company-field">
+              <label class="form-label">Firmenname</label>
+              <input type="text" class="form-input" id="company" placeholder="Name Ihrer Firma">
+            </div>
+
+            <!-- Name -->
+            <div class="form-group">
+              <label class="form-label">Ihr Name <span class="required">*</span></label>
+              <input type="text" class="form-input" id="name" placeholder="Vor- und Nachname" required>
+            </div>
+
+            <!-- Telefon -->
+            <div class="form-group">
+              <label class="form-label">Telefonnummer <span class="required">*</span></label>
+              <input type="tel" class="form-input" id="phone" placeholder="z.B. 0151 12345678" required>
+            </div>
+
+            <!-- Ort -->
+            <div class="form-group">
+              <label class="form-label">Ort des Objekts <span class="required">*</span></label>
+              <input type="text" class="form-input" id="location" placeholder="Stadt oder PLZ" required>
+            </div>
+
+            <!-- Leistung -->
+            <div class="form-section">
+              <div class="form-section-title">Projektdetails</div>
+              <div class="form-group">
+                <label class="form-label">Gewünschte Leistung <span class="required">*</span></label>
+                <select class="form-select" id="service" required>
+                  <option value="">Bitte wählen...</option>
+                  <option value="1">Innenwände streichen</option>
+                  <option value="2">Fassade streichen</option>
+                  <option value="3">Tapezieren</option>
+                  <option value="4">Türen / Fenster lackieren</option>
+                  <option value="5">Verputzen / Grundieren</option>
+                  <option value="6">Dekorative Techniken</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Größe -->
+            <div class="form-group">
+              <label class="form-label">Ungefähre Größe <span class="required">*</span></label>
+              <input type="text" class="form-input" id="size" placeholder="z.B. 50 m² oder 3 Türen" required>
+            </div>
+
+            <!-- Zeitraum -->
+            <div class="form-group">
+              <label class="form-label">Gewünschter Zeitraum <span class="required">*</span></label>
+              <input type="text" class="form-input" id="timeframe" placeholder="z.B. Anfang März, KW 12" required>
+            </div>
+
+            <!-- Bilder -->
+            <div class="form-group">
+              <label class="form-label">Bilder vom Objekt (optional)</label>
+              <div class="file-upload" id="file-upload">
+                <input type="file" id="images" multiple accept="image/*">
+                <div class="file-upload-icon">📷</div>
+                <div class="file-upload-text">Bilder hier ablegen oder klicken</div>
+                <div class="file-upload-hint">JPG, PNG bis 10MB</div>
+              </div>
+              <div class="file-list" id="file-list"></div>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="submit-btn" id="submit-btn">
+              <span class="spinner"></span>
+              <span class="btn-text">🚀 Anfrage absenden</span>
+            </button>
+          </form>
         </div>
-        <div class="chat-stripe"><span></span><span></span><span></span></div>
-        <div class="chat-options" id="handwerk-options">
-          <div class="chat-option" data-mode="malerbetrieb">
-            <span class="chat-option-icon">🎨</span>
-            <span class="chat-option-text">
-              <span class="chat-option-label">Malerbetrieb</span>
-              <span class="chat-option-desc">Innen- & Außenanstriche, Tapezieren</span>
-            </span>
+
+        <!-- RESULT VIEW -->
+        <div class="result-view" id="result-view">
+          <div class="result-success">
+            <div class="result-success-icon">✅</div>
+            <h3>Anfrage erhalten!</h3>
+            <p>Hier ist Ihre Projektübersicht</p>
           </div>
-          <div class="chat-option" data-mode="metallbau">
-            <span class="chat-option-icon">🔩</span>
-            <span class="chat-option-text">
-              <span class="chat-option-label">Metallbau</span>
-              <span class="chat-option-desc">Geländer, Zäune, Konstruktionen</span>
-            </span>
+
+          <div class="result-summary">
+            <div class="result-summary-title">📋 Zusammenfassung</div>
+            
+            <div class="result-row">
+              <span class="label">Kundentyp</span>
+              <span class="value" id="result-type">-</span>
+            </div>
+            <div class="result-row" id="result-company-row" style="display: none;">
+              <span class="label">Firma</span>
+              <span class="value" id="result-company">-</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Name</span>
+              <span class="value" id="result-name">-</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Telefon</span>
+              <span class="value" id="result-phone">-</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Standort</span>
+              <span class="value" id="result-location">-</span>
+            </div>
+
+            <div class="result-divider"></div>
+
+            <div class="result-row">
+              <span class="label">Leistung</span>
+              <span class="value" id="result-service">-</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Umfang</span>
+              <span class="value" id="result-size">-</span>
+            </div>
+            <div class="result-row">
+              <span class="label">Zeitraum</span>
+              <span class="value" id="result-timeframe">-</span>
+            </div>
+
+            <div class="result-divider"></div>
+
+            <div class="result-row">
+              <span class="label">📅 Geschätzte Dauer</span>
+              <span class="value" id="result-duration">-</span>
+            </div>
+            <div class="result-row">
+              <span class="label">👷 Mitarbeiter</span>
+              <span class="value" id="result-workers">-</span>
+            </div>
+
+            <div class="result-row highlight">
+              <span class="label">💰 Preisschätzung</span>
+              <span class="value" id="result-price">-</span>
+            </div>
           </div>
-          <div class="chat-option" data-mode="regalbau">
-            <span class="chat-option-icon">📦</span>
-            <span class="chat-option-text">
-              <span class="chat-option-label">Regalbau</span>
-              <span class="chat-option-desc">Lager- & Industrieregale</span>
-            </span>
+
+          <p style="font-size: 12px; color: var(--text-muted); text-align: center; margin-bottom: 20px;">
+            Dies ist eine unverbindliche Schätzung. Nach Besichtigung kann der Preis um ±15-20% abweichen.
+          </p>
+
+          <!-- Email Prompt -->
+          <div class="email-prompt" id="email-prompt">
+            <p>📧 Soll ich Ihnen die Zusammenfassung auch per E-Mail schicken?</p>
+            <div class="email-prompt-buttons">
+              <button type="button" class="btn-email-yes" id="btn-email-yes">Ja, bitte!</button>
+              <button type="button" class="btn-email-no" id="btn-email-no">Nein, danke</button>
+            </div>
           </div>
-          <div class="chat-option" data-mode="geruestbau">
-            <span class="chat-option-icon">🏗️</span>
-            <span class="chat-option-text">
-              <span class="chat-option-label">Gerüstbau</span>
-              <span class="chat-option-desc">Auf- & Abbau, Verleih</span>
-            </span>
+
+          <!-- Email Input (hidden initially) -->
+          <div class="form-group" id="email-input-group" style="display: none; margin-top: 16px;">
+            <label class="form-label">Ihre E-Mail-Adresse</label>
+            <input type="email" class="form-input" id="email-address" placeholder="email@beispiel.de">
+            <button type="button" class="submit-btn" id="send-email-btn" style="margin-top: 12px;">
+              <span class="btn-text">📧 E-Mail senden</span>
+            </button>
           </div>
+
+          <button type="button" class="btn-new-request" id="btn-new-request">
+            ← Neue Anfrage stellen
+          </button>
         </div>
-      </div>
-      <div class="chat-body" id="handwerk-body" style="display: none;">
-        <div class="chat-messages" id="handwerk-messages"></div>
-      </div>
-      <div class="chat-input-area" id="handwerk-input" style="display: none;">
-        <input type="text" id="handwerk-field" placeholder="Nachricht schreiben…">
-        <button class="chat-send-btn" id="handwerk-send">
-          <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-        </button>
+
       </div>
     </div>
   </div>
-  <!-- FRISEUR WIDGET -->
-  <div id="friseur-widget" class="chat-widget">
-    <div class="chat-toggle" id="friseur-toggle">💈</div>
-    <div class="chat-window" id="friseur-window">
-      <div class="chat-back" id="friseur-back">
-        <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-      </div>
-      <div class="chat-menu is-open" id="friseur-menu">
-        <div class="chat-welcome">
-          <h2 class="chat-welcome-title">Willkommen bei Conar 💈</h2>
-          <p class="chat-welcome-subtitle">Dein Barber in der Nachbarschaft.<br>Wie können wir dir helfen?</p>
-        </div>
-        <div class="chat-stripe"><span></span><span></span><span></span></div>
-        <div class="chat-options" id="friseur-options">
-          <div class="chat-option" data-mode="info">
-            <span class="chat-option-icon">ℹ️</span>
-            <span class="chat-option-text">
-              <span class="chat-option-label">Infos zum Salon</span>
-              <span class="chat-option-desc">Öffnungszeiten, Preise & mehr</span>
-            </span>
-          </div>
-          <div class="chat-option" data-mode="jason">
-            <span class="chat-option-icon">✂️</span>
-            <span class="chat-option-text">
-              <span class="chat-option-label">Termin bei Jason</span>
-              <span class="chat-option-desc">Jetzt einen Slot reservieren</span>
-            </span>
-          </div>
-          <div class="chat-option" data-mode="elina">
-            <span class="chat-option-icon">✂️</span>
-            <span class="chat-option-text">
-              <span class="chat-option-label">Termin bei Elina</span>
-              <span class="chat-option-desc">Jetzt einen Slot reservieren</span>
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="chat-body" id="friseur-body" style="display: none;">
-        <div class="chat-messages" id="friseur-messages"></div>
-      </div>
-      <div class="chat-input-area" id="friseur-input" style="display: none;">
-        <input type="text" id="friseur-field" placeholder="Nachricht schreiben…">
-        <button class="chat-send-btn" id="friseur-send">
-          <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-        </button>
-      </div>
-    </div>
-  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
   <script>
     // =====================================================================
-    // MARKDOWN RENDERER - Shared function for both widgets
-    // =====================================================================
-    function renderMarkdown(text) {
-      if (typeof text !== 'string') return String(text);
-      
-      let html = text;
-      
-      // **bold** → <strong>bold</strong>
-      html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-      
-      // *italic* → <em>italic</em>
-      html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
-      
-      // _italic_ → <em>italic</em>
-      html = html.replace(/_(.+?)_/g, '<em>$1</em>');
-      
-      // Line breaks
-      html = html.replace(/\n/g, '<br>');
-      
-      // Bullet points (- item)
-      html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
-      if (html.includes('<li>')) {
-        html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
-      }
-      
-      return html;
-    }
-    
-    // =====================================================================
-    // HANDWERK CHATBOT - Vollständig isoliert
+    // MALERBETRIEB WIDGET
     // =====================================================================
     (function() {
-      const WEBHOOK = "https://seidel1502.app.n8n.cloud/webhook/a6a426be-f177-400f-a96c-77d1482f181d";
+      // Configuration
+      const WEBHOOK_URL = "https://seidel1502.app.n8n.cloud/webhook/malerbetrieb-form"; // TODO: Replace with your webhook
       
-      const MESSAGES = {
-        malerbetrieb: "🎨 Willkommen beim Malerbetrieb!\n\nIch helfe Ihnen gerne bei:\n• Informationen zu unseren Leistungen\n• Auftragsanfragen für Ihr Projekt\n\nWie kann ich Ihnen behilflich sein?",
-        metallbau: "🔩 Willkommen beim Metallbau!\n\nIch helfe Ihnen gerne bei:\n• Informationen zu unseren Leistungen\n• Auftragsanfragen für Ihr Projekt\n\nWie kann ich Ihnen behilflich sein?",
-        regalbau: "📦 Willkommen beim Regalbau!\n\nIch helfe Ihnen gerne bei:\n• Informationen zu unseren Leistungen\n• Auftragsanfragen für Ihr Projekt\n\nWie kann ich Ihnen behilflich sein?",
-        geruestbau: "🏗️ Willkommen beim Gerüstbau!\n\nIch helfe Ihnen gerne bei:\n• Informationen zu unseren Leistungen\n• Auftragsanfragen für Ihr Projekt\n\nWie kann ich Ihnen behilflich sein?"
+      // Service data for calculations
+      const SERVICES = {
+        1: { name: "Innenwände streichen", price: 12, hoursPerUnit: 0.15 },
+        2: { name: "Fassade streichen", price: 25, hoursPerUnit: 0.25 },
+        3: { name: "Tapezieren", price: 18, hoursPerUnit: 0.20 },
+        4: { name: "Türen/Fenster lackieren", price: 45, hoursPerUnit: 3, unit: "Stück" },
+        5: { name: "Verputzen/Grundieren", price: 15, hoursPerUnit: 0.20 },
+        6: { name: "Dekorative Techniken", price: 35, hoursPerUnit: 0.40 }
       };
-      let mode = null;
-      let history = [];
-      let sessionId = null;
+
+      // DOM Elements
       const $ = id => document.getElementById(id);
-      // Toggle
-      $('handwerk-toggle').addEventListener('click', () => {
-        $('handwerk-window').classList.toggle('is-open');
-        $('friseur-window').classList.remove('is-open');
+      const toggle = $('widget-toggle');
+      const window = $('widget-window');
+      const form = $('contact-form');
+      const formView = $('form-view');
+      const resultView = $('result-view');
+      const companyField = $('company-field');
+      const fileInput = $('images');
+      const fileList = $('file-list');
+      const submitBtn = $('submit-btn');
+      const toast = $('toast');
+
+      let uploadedFiles = [];
+      let currentFormData = {};
+
+      // Toggle Widget
+      toggle.addEventListener('click', () => {
+        window.classList.toggle('is-open');
       });
-      // Back
-      $('handwerk-back').addEventListener('click', () => {
-        mode = null;
-        history = [];
-        sessionId = null;
-        $('handwerk-menu').classList.add('is-open');
-        $('handwerk-body').style.display = 'none';
-        $('handwerk-input').style.display = 'none';
-        $('handwerk-back').classList.remove('is-visible');
-        $('handwerk-messages').innerHTML = '';
+
+      // Customer Type Toggle
+      document.querySelectorAll('input[name="customerType"]').forEach(radio => {
+        radio.addEventListener('change', (e) => {
+          if (e.target.value === 'gewerbe') {
+            companyField.classList.add('visible');
+          } else {
+            companyField.classList.remove('visible');
+          }
+        });
       });
-      // Options
-      $('handwerk-options').addEventListener('click', (e) => {
-        const option = e.target.closest('.chat-option');
-        if (!option) return;
-        
-        mode = option.dataset.mode;
-        history = [];
-        
-        // Generate sessionId
-        sessionId = Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-        
-        $('handwerk-menu').classList.remove('is-open');
-        $('handwerk-body').style.display = 'flex';
-        $('handwerk-input').style.display = 'flex';
-        $('handwerk-back').classList.add('is-visible');
-        $('handwerk-messages').innerHTML = '';
-        
-        addMsg(MESSAGES[mode], 'bot');
-        
-        setTimeout(() => {
-          $('handwerk-body').scrollTop = $('handwerk-body').scrollHeight;
-        }, 50);
+
+      // File Upload
+      fileInput.addEventListener('change', (e) => {
+        const files = Array.from(e.target.files);
+        files.forEach(file => {
+          if (file.size > 10 * 1024 * 1024) {
+            showToast('Datei zu groß (max. 10MB)', 'error');
+            return;
+          }
+          uploadedFiles.push(file);
+          renderFileList();
+        });
+        fileInput.value = '';
       });
-      // Send
-      $('handwerk-send').addEventListener('click', send);
-      $('handwerk-field').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') send();
-      });
-      function addMsg(text, type) {
-        const msg = document.createElement('div');
-        msg.className = `chat-message ${type}`;
-        msg.innerHTML = renderMarkdown(text); // ← CHANGED: Use innerHTML + markdown
-        $('handwerk-messages').appendChild(msg);
-        $('handwerk-body').scrollTop = $('handwerk-body').scrollHeight;
-      }
-      function showTyping() {
-        const t = document.createElement('div');
-        t.className = 'typing-indicator';
-        t.id = 'handwerk-typing';
-        t.innerHTML = '<span></span><span></span><span></span>';
-        $('handwerk-messages').appendChild(t);
-        $('handwerk-body').scrollTop = $('handwerk-body').scrollHeight;
-      }
-      function hideTyping() {
-        const t = $('handwerk-typing');
-        if (t) t.remove();
-      }
-      async function send() {
-        const text = $('handwerk-field').value.trim();
-        if (!text) return;
-        $('handwerk-field').value = '';
-        addMsg(text, 'user');
-        history.push({ role: 'user', content: text });
-        showTyping();
-        try {
-          const res = await fetch(WEBHOOK, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-              chatInput: text,
-              mode: mode,
-              sessionId: sessionId,
-              history: history,
-              source: 'handwerk'
-            })
+
+      function renderFileList() {
+        fileList.innerHTML = uploadedFiles.map((file, i) => `
+          <div class="file-item">
+            📷 ${file.name.substring(0, 20)}${file.name.length > 20 ? '...' : ''}
+            <span class="file-item-remove" data-index="${i}">✕</span>
+          </div>
+        `).join('');
+
+        fileList.querySelectorAll('.file-item-remove').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const index = parseInt(e.target.dataset.index);
+            uploadedFiles.splice(index, 1);
+            renderFileList();
           });
-          const data = await res.json();
-          hideTyping();
-          const reply = clean(data.reply || data.output || data.text || data.message || JSON.stringify(data));
-          addMsg(reply, 'bot');
-          history.push({ role: 'assistant', content: reply });
-        } catch (err) {
-          hideTyping();
-          addMsg('Entschuldigung, es gab einen Fehler. Bitte versuchen Sie es erneut.', 'bot');
+        });
+      }
+
+      // Form Submit
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Validate phone
+        const phone = $('phone').value.replace(/\s/g, '');
+        if (!/^(\+49|0)[1-7]\d{8,11}$/.test(phone)) {
+          showToast('Bitte gültige Telefonnummer eingeben', 'error');
+          return;
         }
-      }
-      function clean(text) {
-        if (typeof text !== 'string') return String(text);
-        let c = text.trim();
-        if (c.startsWith('{') && c.endsWith('}')) {
-          try {
-            const p = JSON.parse(c);
-            c = p.reply || p.output || p.text || p.message || c;
-          } catch (e) {}
-        }
-        return c.replace(/^["„"']+|["„"']+$/g, '').trim();
-      }
-    })();
-    // =====================================================================
-    // FRISEUR CHATBOT - Vollständig isoliert
-    // =====================================================================
-    (function() {
-      const WEBHOOK = "https://seidel1502.app.n8n.cloud/webhook/conar-chat";
-      
-      const MESSAGES = {
-        info: "ℹ️ Hi! Ich gebe dir folgende Infos zu Conar Friseur 😊\n• Öffnungszeiten\n• Leistungen & Haarschnitte\n• Unsere Friseure\n• Terminbuchung",
-        jason: "✂️ Hi, ich bin Jason 😊\nFang gerne mit deinem gewünschten Datum an!🤗",
-        elina: "✂️ Hi, ich bin Elina 😊\nFang gerne mit deinem gewünschten Datum an!🤗"
-      };
-      let mode = null;
-      let history = [];
-      let sessionId = null;
-      const $ = id => document.getElementById(id);
-      // Toggle
-      $('friseur-toggle').addEventListener('click', () => {
-        $('friseur-window').classList.toggle('is-open');
-        $('handwerk-window').classList.remove('is-open');
-      });
-      // Back
-      $('friseur-back').addEventListener('click', () => {
-        mode = null;
-        history = [];
-        sessionId = null;
-        $('friseur-menu').classList.add('is-open');
-        $('friseur-body').style.display = 'none';
-        $('friseur-input').style.display = 'none';
-        $('friseur-back').classList.remove('is-visible');
-        $('friseur-messages').innerHTML = '';
-      });
-      // Options
-      $('friseur-options').addEventListener('click', (e) => {
-        const option = e.target.closest('.chat-option');
-        if (!option) return;
-        
-        mode = option.dataset.mode;
-        history = [];
-        
-        // Generate sessionId
-        sessionId = Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-        
-        $('friseur-menu').classList.remove('is-open');
-        $('friseur-body').style.display = 'flex';
-        $('friseur-input').style.display = 'flex';
-        $('friseur-back').classList.add('is-visible');
-        $('friseur-messages').innerHTML = '';
-        
-        addMsg(MESSAGES[mode], 'bot');
-        
-        setTimeout(() => {
-          $('friseur-body').scrollTop = $('friseur-body').scrollHeight;
-        }, 50);
-      });
-      // Send
-      $('friseur-send').addEventListener('click', send);
-      $('friseur-field').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') send();
-      });
-      function addMsg(text, type) {
-        const msg = document.createElement('div');
-        msg.className = `chat-message ${type}`;
-        msg.innerHTML = renderMarkdown(text); // ← CHANGED: Use innerHTML + markdown
-        $('friseur-messages').appendChild(msg);
-        $('friseur-body').scrollTop = $('friseur-body').scrollHeight;
-      }
-      function showTyping() {
-        const t = document.createElement('div');
-        t.className = 'typing-indicator';
-        t.id = 'friseur-typing';
-        t.innerHTML = '<span></span><span></span><span></span>';
-        $('friseur-messages').appendChild(t);
-        $('friseur-body').scrollTop = $('friseur-body').scrollHeight;
-      }
-      function hideTyping() {
-        const t = $('friseur-typing');
-        if (t) t.remove();
-      }
-      async function send() {
-        const text = $('friseur-field').value.trim();
-        if (!text) return;
-        $('friseur-field').value = '';
-        addMsg(text, 'user');
-        history.push({ role: 'user', content: text });
-        showTyping();
+
+        submitBtn.classList.add('loading');
+        submitBtn.disabled = true;
+
+        // Collect form data
+        const customerType = document.querySelector('input[name="customerType"]:checked').value;
+        const serviceId = parseInt($('service').value);
+        const sizeInput = $('size').value;
+        const size = parseFloat(sizeInput.replace(/[^\d.,]/g, '').replace(',', '.')) || 30;
+
+        currentFormData = {
+          customerType,
+          company: customerType === 'gewerbe' ? $('company').value : '',
+          name: $('name').value,
+          phone: $('phone').value,
+          location: $('location').value,
+          serviceId,
+          serviceName: SERVICES[serviceId]?.name || '',
+          size: sizeInput,
+          sizeNumber: size,
+          timeframe: $('timeframe').value,
+          imagesCount: uploadedFiles.length
+        };
+
+        // Calculate estimates
+        const estimates = calculateEstimates(serviceId, size, customerType);
+        currentFormData.estimates = estimates;
+
         try {
-          const res = await fetch(`${WEBHOOK}?mode=${mode}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-              chatInput: text,
-              mode: mode,
-              sessionId: sessionId,
-              history: history,
-              source: 'friseur'
-            })
-          });
-          const data = await res.json();
-          hideTyping();
-          const reply = clean(data.reply || data.output || data.text || data.message || JSON.stringify(data));
-          addMsg(reply, 'bot');
-          history.push({ role: 'assistant', content: reply });
-        } catch (err) {
-          hideTyping();
-          addMsg('Entschuldigung, es gab einen Fehler. Bitte versuche es erneut.', 'bot');
+          // Send to webhook (optional - for now just show result)
+          // await sendToWebhook(currentFormData);
+          
+          // Show result
+          showResult(currentFormData, estimates);
+        } catch (error) {
+          showToast('Fehler beim Senden. Bitte erneut versuchen.', 'error');
+        } finally {
+          submitBtn.classList.remove('loading');
+          submitBtn.disabled = false;
         }
-      }
-      function clean(text) {
-        if (typeof text !== 'string') return String(text);
-        let c = text.trim();
-        if (c.startsWith('{') && c.endsWith('}')) {
-          try {
-            const p = JSON.parse(c);
-            c = p.reply || p.output || p.text || p.message || c;
-          } catch (e) {}
+      });
+
+      function calculateEstimates(serviceId, size, customerType) {
+        const service = SERVICES[serviceId];
+        if (!service) return { price: 0, duration: '-', workers: '-' };
+
+        // Price calculation
+        let basePrice = size * service.price;
+        let laborHours = size * service.hoursPerUnit;
+        let laborCost = laborHours * 65; // 65€/hour
+        let travelCost = 100 + (15 * 0.5); // Flat + 15km average
+        let subtotal = basePrice + laborCost + travelCost;
+
+        // B2B markup
+        if (customerType === 'gewerbe') {
+          subtotal *= 1.15;
         }
-        return c.replace(/^["„"']+|["„"']+$/g, '').trim();
+
+        const price = Math.round(subtotal);
+
+        // Duration calculation
+        let days;
+        if (size < 20) days = "1-2 Tage";
+        else if (size < 60) days = "2-4 Tage";
+        else if (size < 100) days = "4-7 Tage";
+        else days = "1-2 Wochen";
+
+        // Workers calculation
+        let workers;
+        if (size < 20) workers = "1-2";
+        else if (size < 80) workers = "2-4";
+        else workers = "4-6";
+
+        return { price, duration: days, workers };
       }
+
+      function showResult(data, estimates) {
+        // Populate result view
+        $('result-type').textContent = data.customerType === 'gewerbe' ? 'Gewerblich 🏢' : 'Privat 🏠';
+        
+        if (data.customerType === 'gewerbe' && data.company) {
+          $('result-company-row').style.display = 'flex';
+          $('result-company').textContent = data.company;
+        } else {
+          $('result-company-row').style.display = 'none';
+        }
+
+        $('result-name').textContent = data.name;
+        $('result-phone').textContent = data.phone;
+        $('result-location').textContent = data.location;
+        $('result-service').textContent = data.serviceName;
+        $('result-size').textContent = data.size;
+        $('result-timeframe').textContent = data.timeframe;
+        $('result-duration').textContent = estimates.duration;
+        $('result-workers').textContent = estimates.workers + ' Mitarbeiter';
+        $('result-price').textContent = 'ca. ' + estimates.price.toLocaleString('de-DE') + ' €';
+
+        // Switch views
+        formView.style.display = 'none';
+        resultView.classList.add('visible');
+        
+        // Scroll to top
+        $('widget-body').scrollTop = 0;
+      }
+
+      // Email Prompt Handlers
+      $('btn-email-yes').addEventListener('click', () => {
+        $('email-prompt').style.display = 'none';
+        $('email-input-group').style.display = 'block';
+      });
+
+      $('btn-email-no').addEventListener('click', () => {
+        $('email-prompt').style.display = 'none';
+        showToast('Vielen Dank! Wir melden uns bald bei Ihnen.');
+      });
+
+      $('send-email-btn').addEventListener('click', async () => {
+        const email = $('email-address').value;
+        if (!email || !email.includes('@')) {
+          showToast('Bitte gültige E-Mail eingeben', 'error');
+          return;
+        }
+
+        // TODO: Send email via webhook
+        showToast('📧 E-Mail wurde versendet!');
+        $('email-input-group').style.display = 'none';
+      });
+
+      // New Request
+      $('btn-new-request').addEventListener('click', () => {
+        // Reset form
+        form.reset();
+        uploadedFiles = [];
+        fileList.innerHTML = '';
+        companyField.classList.remove('visible');
+        
+        // Reset result view
+        $('email-prompt').style.display = 'block';
+        $('email-input-group').style.display = 'none';
+        
+        // Switch views
+        resultView.classList.remove('visible');
+        formView.style.display = 'block';
+        
+        $('widget-body').scrollTop = 0;
+      });
+
+      // Toast
+      function showToast(message, type = 'success') {
+        toast.textContent = message;
+        toast.className = 'toast visible' + (type === 'error' ? ' error' : '');
+        setTimeout(() => {
+          toast.classList.remove('visible');
+        }, 3000);
+      }
+
+      // Optional: Send to webhook
+      async function sendToWebhook(data) {
+        const formData = new FormData();
+        formData.append('data', JSON.stringify(data));
+        
+        uploadedFiles.forEach((file, i) => {
+          formData.append(`image_${i}`, file);
+        });
+
+        const response = await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!response.ok) throw new Error('Webhook error');
+        return response.json();
+      }
+
     })();
   </script>
 </body>
