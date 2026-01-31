@@ -747,6 +747,37 @@
       background: #ef4444;
     }
 
+    /* Loading Overlay */
+    .loading-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(22, 20, 16, 0.95);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+
+    .loading-overlay.visible {
+      display: flex;
+    }
+
+    .loading-spinner {
+      width: 48px;
+      height: 48px;
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 16px;
+    }
+
+    .loading-text {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
     /* Mobile */
     @media (max-width: 768px) {
       .agentic-header { padding: 12px 16px; }
@@ -800,6 +831,12 @@
     <div class="widget-toggle" id="widget-toggle">🎨</div>
     
     <div class="widget-window" id="widget-window">
+      <!-- Loading Overlay -->
+      <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Berechnung läuft...</div>
+      </div>
+
       <!-- Header -->
       <div class="widget-header">
         <h2 class="widget-header-title">🎨 Malerbetrieb</h2>
@@ -991,6 +1028,7 @@
             <label class="form-label">Ihre E-Mail-Adresse</label>
             <input type="email" class="form-input" id="email-address" placeholder="email@beispiel.de">
             <button type="button" class="submit-btn" id="send-email-btn" style="margin-top: 12px;">
+              <span class="spinner"></span>
               <span class="btn-text">📧 E-Mail senden</span>
             </button>
           </div>
@@ -1009,26 +1047,29 @@
 
   <script>
     // =====================================================================
-    // MALERBETRIEB WIDGET
+    // MALERBETRIEB WIDGET - Alles über n8n
     // =====================================================================
     (function() {
-      // Configuration
-      const WEBHOOK_URL = "https://seidel1502.app.n8n.cloud/webhook/malerbetrieb-form"; // TODO: Replace with your webhook
-      
-      // Service data for calculations
-      const SERVICES = {
-        1: { name: "Innenwände streichen", price: 12, hoursPerUnit: 0.15 },
-        2: { name: "Fassade streichen", price: 25, hoursPerUnit: 0.25 },
-        3: { name: "Tapezieren", price: 18, hoursPerUnit: 0.20 },
-        4: { name: "Türen/Fenster lackieren", price: 45, hoursPerUnit: 3, unit: "Stück" },
-        5: { name: "Verputzen/Grundieren", price: 15, hoursPerUnit: 0.20 },
-        6: { name: "Dekorative Techniken", price: 35, hoursPerUnit: 0.40 }
+      // ============================================
+      // CONFIGURATION - HIER DEINE WEBHOOK URLs
+      // ============================================
+      const WEBHOOK_CALCULATE = "https://seidel1502.app.n8n.cloud/webhook/malerbetrieb-calculate";
+      const WEBHOOK_EMAIL = "https://seidel1502.app.n8n.cloud/webhook/malerbetrieb-email";
+
+      // Service names for display (nur für Anzeige im Frontend)
+      const SERVICE_NAMES = {
+        1: "Innenwände streichen",
+        2: "Fassade streichen",
+        3: "Tapezieren",
+        4: "Türen/Fenster lackieren",
+        5: "Verputzen/Grundieren",
+        6: "Dekorative Techniken"
       };
 
       // DOM Elements
       const $ = id => document.getElementById(id);
       const toggle = $('widget-toggle');
-      const window = $('widget-window');
+      const widgetWindow = $('widget-window');
       const form = $('contact-form');
       const formView = $('form-view');
       const resultView = $('result-view');
@@ -1036,14 +1077,16 @@
       const fileInput = $('images');
       const fileList = $('file-list');
       const submitBtn = $('submit-btn');
+      const loadingOverlay = $('loading-overlay');
       const toast = $('toast');
 
       let uploadedFiles = [];
+      let currentRequestId = null;
       let currentFormData = {};
 
       // Toggle Widget
       toggle.addEventListener('click', () => {
-        window.classList.toggle('is-open');
+        widgetWindow.classList.toggle('is-open');
       });
 
       // Customer Type Toggle
@@ -1057,7 +1100,7 @@
         });
       });
 
-      // File Upload
+      // File Upload Handler
       fileInput.addEventListener('change', (e) => {
         const files = Array.from(e.target.files);
         files.forEach(file => {
@@ -1088,7 +1131,7 @@
         });
       }
 
-      // Form Submit
+      // Form Submit - Send to n8n
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
@@ -1099,101 +1142,102 @@
           return;
         }
 
-        submitBtn.classList.add('loading');
+        // Show loading
+        loadingOverlay.classList.add('visible');
         submitBtn.disabled = true;
 
         // Collect form data
         const customerType = document.querySelector('input[name="customerType"]:checked').value;
         const serviceId = parseInt($('service').value);
         const sizeInput = $('size').value;
-        const size = parseFloat(sizeInput.replace(/[^\d.,]/g, '').replace(',', '.')) || 30;
+        
+        // Extract number from size input
+        const sizeNumber = parseFloat(sizeInput.replace(/[^\d.,]/g, '').replace(',', '.')) || 30;
 
         currentFormData = {
-          customerType,
+          customerType: customerType,
           company: customerType === 'gewerbe' ? $('company').value : '',
           name: $('name').value,
           phone: $('phone').value,
           location: $('location').value,
-          serviceId,
-          serviceName: SERVICES[serviceId]?.name || '',
+          serviceId: serviceId,
+          serviceName: SERVICE_NAMES[serviceId] || '',
           size: sizeInput,
-          sizeNumber: size,
+          sizeNumber: sizeNumber,
           timeframe: $('timeframe').value,
-          imagesCount: uploadedFiles.length
+          imagesCount: uploadedFiles.length,
+          timestamp: new Date().toISOString()
         };
 
-        // Calculate estimates
-        const estimates = calculateEstimates(serviceId, size, customerType);
-        currentFormData.estimates = estimates;
-
         try {
-          // Send to webhook (optional - for now just show result)
-          // await sendToWebhook(currentFormData);
+          // Send data to n8n webhook
+          const response = await sendToN8N(currentFormData);
           
-          // Show result
-          showResult(currentFormData, estimates);
+          // Show result with data from n8n
+          showResult(currentFormData, response);
+          
         } catch (error) {
-          showToast('Fehler beim Senden. Bitte erneut versuchen.', 'error');
+          console.error('Error:', error);
+          showToast('Fehler bei der Verarbeitung. Bitte erneut versuchen.', 'error');
         } finally {
-          submitBtn.classList.remove('loading');
+          loadingOverlay.classList.remove('visible');
           submitBtn.disabled = false;
         }
       });
 
-      function calculateEstimates(serviceId, size, customerType) {
-        const service = SERVICES[serviceId];
-        if (!service) return { price: 0, duration: '-', workers: '-' };
+      // Send data to n8n webhook
+      async function sendToN8N(data) {
+        // Create FormData for file upload support
+        const formData = new FormData();
+        
+        // Add JSON data
+        formData.append('formData', JSON.stringify(data));
+        
+        // Add images if any
+        uploadedFiles.forEach((file, index) => {
+          formData.append(`image_${index}`, file);
+        });
 
-        // Price calculation
-        let basePrice = size * service.price;
-        let laborHours = size * service.hoursPerUnit;
-        let laborCost = laborHours * 65; // 65€/hour
-        let travelCost = 100 + (15 * 0.5); // Flat + 15km average
-        let subtotal = basePrice + laborCost + travelCost;
+        const response = await fetch(WEBHOOK_CALCULATE, {
+          method: 'POST',
+          body: formData
+        });
 
-        // B2B markup
-        if (customerType === 'gewerbe') {
-          subtotal *= 1.15;
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const price = Math.round(subtotal);
-
-        // Duration calculation
-        let days;
-        if (size < 20) days = "1-2 Tage";
-        else if (size < 60) days = "2-4 Tage";
-        else if (size < 100) days = "4-7 Tage";
-        else days = "1-2 Wochen";
-
-        // Workers calculation
-        let workers;
-        if (size < 20) workers = "1-2";
-        else if (size < 80) workers = "2-4";
-        else workers = "4-6";
-
-        return { price, duration: days, workers };
+        const result = await response.json();
+        
+        // Store request ID for email
+        currentRequestId = result.requestId || Date.now().toString();
+        
+        return result;
       }
 
-      function showResult(data, estimates) {
-        // Populate result view
-        $('result-type').textContent = data.customerType === 'gewerbe' ? 'Gewerblich 🏢' : 'Privat 🏠';
+      // Show Result View with n8n response
+      function showResult(formData, n8nResponse) {
+        // Populate result view with form data
+        $('result-type').textContent = formData.customerType === 'gewerbe' ? 'Gewerblich 🏢' : 'Privat 🏠';
         
-        if (data.customerType === 'gewerbe' && data.company) {
+        if (formData.customerType === 'gewerbe' && formData.company) {
           $('result-company-row').style.display = 'flex';
-          $('result-company').textContent = data.company;
+          $('result-company').textContent = formData.company;
         } else {
           $('result-company-row').style.display = 'none';
         }
 
-        $('result-name').textContent = data.name;
-        $('result-phone').textContent = data.phone;
-        $('result-location').textContent = data.location;
-        $('result-service').textContent = data.serviceName;
-        $('result-size').textContent = data.size;
-        $('result-timeframe').textContent = data.timeframe;
-        $('result-duration').textContent = estimates.duration;
-        $('result-workers').textContent = estimates.workers + ' Mitarbeiter';
-        $('result-price').textContent = 'ca. ' + estimates.price.toLocaleString('de-DE') + ' €';
+        $('result-name').textContent = formData.name;
+        $('result-phone').textContent = formData.phone;
+        $('result-location').textContent = formData.location;
+        $('result-service').textContent = formData.serviceName;
+        $('result-size').textContent = formData.size;
+        $('result-timeframe').textContent = formData.timeframe;
+
+        // Populate with n8n calculated values
+        $('result-duration').textContent = n8nResponse.duration || '-';
+        $('result-workers').textContent = n8nResponse.workers || '-';
+        $('result-price').textContent = n8nResponse.price ? `ca. ${n8nResponse.price.toLocaleString('de-DE')} €` : '-';
 
         // Switch views
         formView.style.display = 'none';
@@ -1211,9 +1255,10 @@
 
       $('btn-email-no').addEventListener('click', () => {
         $('email-prompt').style.display = 'none';
-        showToast('Vielen Dank! Wir melden uns bald bei Ihnen.');
+        showToast('Vielen Dank! Wir melden uns bald bei Ihnen. 📞');
       });
 
+      // Send Email via n8n
       $('send-email-btn').addEventListener('click', async () => {
         const email = $('email-address').value;
         if (!email || !email.includes('@')) {
@@ -1221,22 +1266,51 @@
           return;
         }
 
-        // TODO: Send email via webhook
-        showToast('📧 E-Mail wurde versendet!');
-        $('email-input-group').style.display = 'none';
+        const sendBtn = $('send-email-btn');
+        sendBtn.classList.add('loading');
+        sendBtn.disabled = true;
+
+        try {
+          const response = await fetch(WEBHOOK_EMAIL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              requestId: currentRequestId,
+              email: email,
+              formData: currentFormData
+            })
+          });
+
+          if (response.ok) {
+            showToast('📧 E-Mail wurde versendet!');
+            $('email-input-group').style.display = 'none';
+          } else {
+            throw new Error('Email failed');
+          }
+        } catch (error) {
+          showToast('Fehler beim Senden der E-Mail', 'error');
+        } finally {
+          sendBtn.classList.remove('loading');
+          sendBtn.disabled = false;
+        }
       });
 
-      // New Request
+      // New Request - Reset everything
       $('btn-new-request').addEventListener('click', () => {
         // Reset form
         form.reset();
         uploadedFiles = [];
         fileList.innerHTML = '';
         companyField.classList.remove('visible');
+        currentRequestId = null;
+        currentFormData = {};
         
         // Reset result view
         $('email-prompt').style.display = 'block';
         $('email-input-group').style.display = 'none';
+        $('email-address').value = '';
         
         // Switch views
         resultView.classList.remove('visible');
@@ -1245,31 +1319,13 @@
         $('widget-body').scrollTop = 0;
       });
 
-      // Toast
+      // Toast notification
       function showToast(message, type = 'success') {
         toast.textContent = message;
         toast.className = 'toast visible' + (type === 'error' ? ' error' : '');
         setTimeout(() => {
           toast.classList.remove('visible');
-        }, 3000);
-      }
-
-      // Optional: Send to webhook
-      async function sendToWebhook(data) {
-        const formData = new FormData();
-        formData.append('data', JSON.stringify(data));
-        
-        uploadedFiles.forEach((file, i) => {
-          formData.append(`image_${i}`, file);
-        });
-
-        const response = await fetch(WEBHOOK_URL, {
-          method: 'POST',
-          body: formData
-        });
-
-        if (!response.ok) throw new Error('Webhook error');
-        return response.json();
+        }, 3500);
       }
 
     })();
