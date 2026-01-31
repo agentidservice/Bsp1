@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Agentic Solutions – Agent Demos</title>
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -20,782 +19,345 @@
       --radius-lg: 24px;
       --radius-md: 16px;
       --radius-sm: 12px;
-      --widget-width: min(420px, 95vw);
-      --widget-height: min(640px, 85vh);
+      --widget-width: min(440px, 95vw);
+      --widget-height: min(680px, 88vh);
       --accent: #d97706;
       --accent-light: #f59e0b;
+      --success: #22c55e;
+      --error: #ef4444;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       min-height: 100vh;
       background: var(--page-bg);
       color: var(--page-text);
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
     }
-
-    /* Agentic Solutions Header */
     .agentic-header {
-      position: fixed;
-      top: 0;
-      right: 0;
-      left: 0;
+      position: fixed; top: 0; right: 0; left: 0;
       padding: 16px 24px;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
+      display: flex; justify-content: flex-end; align-items: center;
       z-index: 100;
       background: linear-gradient(180deg, rgba(10, 11, 13, 0.98) 0%, rgba(10, 11, 13, 0.8) 70%, transparent 100%);
       pointer-events: none;
     }
-
     .agentic-badge {
       pointer-events: auto;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      display: flex; align-items: center; gap: 12px;
       padding: 12px 20px;
       background: rgba(255, 255, 255, 0.03);
       backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 14px;
-      transition: all 0.2s ease;
     }
-
-    .agentic-badge:hover {
-      background: rgba(255, 255, 255, 0.06);
-      border-color: rgba(255, 255, 255, 0.12);
-    }
-
     .agentic-badge-icon {
-      width: 36px;
-      height: 36px;
+      width: 36px; height: 36px;
       background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
       border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       font-size: 18px;
-      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
     }
-
-    .agentic-badge-text {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .agentic-badge-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-    }
-
-    .agentic-badge-subtitle {
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    /* Main Content */
-    .wrap {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 100px 24px 180px;
-    }
-
-    .page-title {
-      margin: 0 0 8px;
-      font-size: clamp(28px, 4vw, 42px);
-      font-weight: 600;
-      letter-spacing: -0.025em;
-    }
-
-    .page-subtitle {
-      margin: 0 0 60px;
-      color: var(--text-muted);
-      font-size: 15px;
-      line-height: 1.6;
-      max-width: 50ch;
-    }
-
-    /* Demo Card */
+    .agentic-badge-text { display: flex; flex-direction: column; gap: 2px; }
+    .agentic-badge-title { font-size: 14px; font-weight: 600; }
+    .agentic-badge-subtitle { font-size: 11px; color: var(--text-muted); }
+    .wrap { max-width: 900px; margin: 0 auto; padding: 100px 24px 180px; }
+    .page-title { margin: 0 0 8px; font-size: clamp(28px, 4vw, 42px); font-weight: 600; }
+    .page-subtitle { margin: 0 0 60px; color: var(--text-muted); font-size: 15px; line-height: 1.6; }
     .demo-card {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 20px;
-      padding: 28px 32px;
-      margin-bottom: 24px;
-      transition: all 0.2s ease;
+      border-radius: 20px; padding: 28px 32px;
     }
-
-    .demo-card:hover {
-      background: rgba(255, 255, 255, 0.035);
-      border-color: rgba(255, 255, 255, 0.1);
-    }
-
-    .demo-card-header {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 10px;
-    }
-
+    .demo-card-header { display: flex; align-items: center; gap: 16px; margin-bottom: 10px; }
     .demo-card-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center; font-size: 26px;
       background: linear-gradient(135deg, rgba(217, 119, 6, 0.2) 0%, rgba(245, 158, 11, 0.1) 100%);
       border: 1px solid rgba(217, 119, 6, 0.3);
     }
-
-    .demo-card-title {
-      font-size: 20px;
-      font-weight: 600;
-      margin: 0;
-    }
-
-    .demo-card-desc {
-      color: var(--text-muted);
-      font-size: 14px;
-      line-height: 1.5;
-      margin: 0;
-    }
-
+    .demo-card-title { font-size: 20px; font-weight: 600; margin: 0; }
+    .demo-card-desc { color: var(--text-muted); font-size: 14px; margin: 0; }
     .demo-card-hint {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 16px;
-      padding: 8px 14px;
-      background: rgba(255, 255, 255, 0.04);
-      border-radius: 8px;
-      font-size: 12px;
-      color: var(--text-muted);
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 16px; padding: 8px 14px;
+      background: rgba(255, 255, 255, 0.04); border-radius: 8px;
+      font-size: 12px; color: var(--text-muted);
     }
-
-    .demo-card-hint svg {
-      width: 14px;
-      height: 14px;
-      stroke: currentColor;
-    }
-
-    /* ========================================
-       MALERBETRIEB WIDGET
-    ======================================== */
-    .widget {
-      position: fixed;
-      right: var(--gap);
-      bottom: var(--gap);
-      z-index: 9999;
-    }
-
+    /* Widget */
+    .widget { position: fixed; right: var(--gap); bottom: var(--gap); z-index: 9999; }
     .widget-toggle {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
+      width: 64px; height: 64px; border-radius: 50%;
       background: linear-gradient(135deg, #1a1816 0%, #252220 100%);
       border: 1px solid var(--glass-border);
       box-shadow: var(--shadow-strong);
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       font-size: 28px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.2s ease;
     }
-
-    .widget-toggle:hover {
-      transform: scale(1.08);
-      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7);
-    }
-
+    .widget-toggle:hover { transform: scale(1.08); }
     .widget-window {
-      position: absolute;
-      bottom: 76px;
-      right: 0;
-      width: var(--widget-width);
-      height: var(--widget-height);
+      position: absolute; bottom: 76px; right: 0;
+      width: var(--widget-width); height: var(--widget-height);
       max-height: calc(100vh - 100px);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
+      border-radius: var(--radius-lg); overflow: hidden;
       box-shadow: var(--shadow-strong);
       border: 1px solid var(--glass-border);
       background: rgba(22, 20, 16, 0.95);
       backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      display: none;
-      flex-direction: column;
+      display: none; flex-direction: column;
     }
-
-    .widget-window.is-open {
-      display: flex;
-    }
-
-    .widget-window::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
-      z-index: 10;
-    }
-
-    /* Widget Header */
+    .widget-window.is-open { display: flex; }
     .widget-header {
       padding: 20px 24px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       background: rgba(0, 0, 0, 0.3);
     }
-
     .widget-header-title {
       font-family: 'Playfair Display', serif;
-      font-size: 22px;
-      font-weight: 600;
-      color: var(--text);
-      margin: 0 0 4px 0;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      font-size: 22px; font-weight: 600; margin: 0 0 4px 0;
     }
-
-    .widget-header-subtitle {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin: 0;
-    }
-
-    /* Widget Body (scrollable) */
-    .widget-body {
-      flex: 1;
-      overflow-y: auto;
-      padding: 20px 24px;
-    }
-
-    .widget-body::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .widget-body::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    .widget-body::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 3px;
-    }
-
-    /* Welcome Message */
+    .widget-header-subtitle { font-size: 13px; color: var(--text-muted); margin: 0; }
+    .widget-body { flex: 1; overflow-y: auto; padding: 20px 24px; }
+    .widget-body::-webkit-scrollbar { width: 6px; }
+    .widget-body::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 3px; }
+    /* Form Elements */
     .welcome-box {
       background: rgba(217, 119, 6, 0.1);
       border: 1px solid rgba(217, 119, 6, 0.2);
-      border-radius: var(--radius-md);
-      padding: 16px;
-      margin-bottom: 24px;
+      border-radius: var(--radius-md); padding: 16px; margin-bottom: 24px;
     }
-
-    .welcome-box p {
-      font-size: 14px;
-      color: var(--text);
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    .welcome-box p strong {
-      color: var(--accent-light);
-    }
-
-    /* Form Styles */
-    .form-section {
-      margin-bottom: 20px;
-    }
-
+    .welcome-box p { font-size: 14px; line-height: 1.6; margin: 0; }
+    .welcome-box strong { color: var(--accent-light); }
+    .form-section { margin-bottom: 20px; }
     .form-section-title {
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--accent-light);
-      margin-bottom: 12px;
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--accent-light); margin-bottom: 12px;
     }
-
-    .form-group {
-      margin-bottom: 16px;
-    }
-
-    .form-label {
-      display: block;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-    }
-
-    .form-label .required {
-      color: #ef4444;
-    }
-
-    .form-input,
-    .form-select,
-    .form-textarea {
-      width: 100%;
-      padding: 12px 14px;
+    .form-group { margin-bottom: 16px; }
+    .form-label { display: block; font-size: 13px; font-weight: 500; color: var(--text-muted); margin-bottom: 6px; }
+    .form-label .required { color: var(--error); }
+    .form-input, .form-select {
+      width: 100%; padding: 12px 14px;
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: var(--radius-sm);
-      color: var(--text);
-      font-size: 14px;
-      font-family: inherit;
+      color: var(--text); font-size: 14px; font-family: inherit;
       transition: all 0.2s ease;
     }
-
-    .form-input:focus,
-    .form-select:focus,
-    .form-textarea:focus {
-      outline: none;
-      border-color: var(--accent);
-      background: rgba(255, 255, 255, 0.06);
+    .form-input:focus, .form-select:focus {
+      outline: none; border-color: var(--accent);
       box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.2);
     }
-
-    .form-input::placeholder,
-    .form-textarea::placeholder {
-      color: rgba(255, 255, 255, 0.3);
-    }
-
+    .form-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+    .form-input.valid { border-color: var(--success); }
+    .form-input.invalid { border-color: var(--error); }
     .form-select {
-      cursor: pointer;
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%238892b0' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 12px center;
-      background-size: 16px;
+      cursor: pointer; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%238892b0' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 12px center; background-size: 16px;
     }
-
-    .form-select option {
-      background: #1a1816;
-      color: var(--text);
-    }
-
-    .form-textarea {
-      resize: vertical;
-      min-height: 60px;
-    }
-
-    /* Radio Group */
-    .radio-group {
-      display: flex;
-      gap: 12px;
-    }
-
-    .radio-option {
-      flex: 1;
-    }
-
-    .radio-option input {
-      position: absolute;
-      opacity: 0;
-      pointer-events: none;
-    }
-
+    .form-select option { background: #1a1816; }
+    .radio-group { display: flex; gap: 12px; }
+    .radio-option { flex: 1; }
+    .radio-option input { position: absolute; opacity: 0; }
     .radio-option label {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
       padding: 12px 16px;
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: var(--radius-sm);
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 500;
+      cursor: pointer; font-size: 14px; font-weight: 500;
       transition: all 0.2s ease;
     }
-
     .radio-option input:checked + label {
       background: rgba(217, 119, 6, 0.2);
-      border-color: var(--accent);
-      color: var(--accent-light);
+      border-color: var(--accent); color: var(--accent-light);
     }
-
-    .radio-option label:hover {
+    /* Validation Box */
+    .validation-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md); padding: 16px; margin-bottom: 20px;
+    }
+    .validation-box-title {
+      font-size: 12px; font-weight: 600; color: var(--text-muted);
+      margin-bottom: 12px; display: flex; align-items: center; gap: 6px;
+    }
+    .validation-row { display: flex; gap: 10px; margin-bottom: 12px; }
+    .validation-row .form-input { flex: 1; }
+    .validate-btn {
+      padding: 12px 16px;
       background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-sm);
+      color: var(--text); font-size: 13px; font-weight: 500;
+      cursor: pointer; white-space: nowrap;
+      display: flex; align-items: center; gap: 6px;
+      transition: all 0.2s ease;
     }
-
+    .validate-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--accent); }
+    .validate-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .validate-btn .spinner {
+      width: 14px; height: 14px;
+      border: 2px solid transparent; border-top-color: var(--text);
+      border-radius: 50%; animation: spin 0.8s linear infinite;
+      display: none;
+    }
+    .validate-btn.loading .spinner { display: block; }
+    .validate-btn.loading .btn-icon { display: none; }
+    .validation-status {
+      padding: 10px 12px; border-radius: 8px; font-size: 13px;
+      display: none; align-items: center; gap: 8px;
+    }
+    .validation-status.visible { display: flex; }
+    .validation-status.success { background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); color: var(--success); }
+    .validation-status.error { background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: var(--error); }
+    .conditional-field { display: none; animation: fadeIn 0.3s ease; }
+    .conditional-field.visible { display: block; }
+    .phone-wrapper { position: relative; }
+    .phone-status { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 16px; }
     /* File Upload */
     .file-upload {
       border: 2px dashed rgba(255, 255, 255, 0.15);
-      border-radius: var(--radius-sm);
-      padding: 20px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      position: relative;
+      border-radius: var(--radius-sm); padding: 20px; text-align: center;
+      cursor: pointer; position: relative; transition: all 0.2s ease;
     }
-
-    .file-upload:hover {
-      border-color: var(--accent);
-      background: rgba(217, 119, 6, 0.05);
-    }
-
-    .file-upload input {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      cursor: pointer;
-    }
-
-    .file-upload-icon {
-      font-size: 28px;
-      margin-bottom: 8px;
-    }
-
-    .file-upload-text {
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-
-    .file-upload-hint {
-      font-size: 11px;
-      color: rgba(255, 255, 255, 0.35);
-      margin-top: 4px;
-    }
-
-    .file-list {
-      margin-top: 12px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
+    .file-upload:hover { border-color: var(--accent); background: rgba(217, 119, 6, 0.05); }
+    .file-upload input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .file-upload-icon { font-size: 28px; margin-bottom: 8px; }
+    .file-upload-text { font-size: 13px; color: var(--text-muted); }
+    .file-upload-hint { font-size: 11px; color: rgba(255, 255, 255, 0.35); margin-top: 4px; }
+    .file-list { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
     .file-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 10px;
-      background: rgba(217, 119, 6, 0.15);
-      border-radius: 6px;
-      font-size: 12px;
+      display: flex; align-items: center; gap: 6px;
+      padding: 6px 10px; background: rgba(217, 119, 6, 0.15);
+      border-radius: 6px; font-size: 12px;
     }
-
-    .file-item-remove {
-      cursor: pointer;
-      color: #ef4444;
-      font-weight: bold;
-      margin-left: 4px;
+    .file-item-remove { cursor: pointer; color: var(--error); font-weight: bold; margin-left: 4px; }
+    /* Checklist */
+    .validation-checklist {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: var(--radius-sm); padding: 14px 16px;
+      margin-top: 20px; margin-bottom: 10px;
     }
-
-    /* Conditional Field */
-    .conditional-field {
-      display: none;
-      animation: fadeIn 0.3s ease;
+    .validation-checklist-title {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--text-muted); margin-bottom: 10px;
     }
-
-    .conditional-field.visible {
-      display: block;
+    .checklist-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 6px 0; font-size: 13px; color: var(--text-muted);
     }
-
+    .checklist-item.checked { color: var(--success); }
+    .checklist-icon {
+      width: 18px; height: 18px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; flex-shrink: 0;
+    }
+    .checklist-item.checked .checklist-icon { background: var(--success); color: white; }
+    .checklist-item.unchecked .checklist-icon { background: rgba(255, 255, 255, 0.1); }
     /* Submit Button */
     .submit-btn {
-      width: 100%;
-      padding: 16px;
+      width: 100%; padding: 16px;
       background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
-      border: none;
-      border-radius: var(--radius-sm);
-      color: #ffffff;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      transition: all 0.2s ease;
-      margin-top: 24px;
+      border: none; border-radius: var(--radius-sm);
+      color: #ffffff; font-size: 15px; font-weight: 600;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+      transition: all 0.2s ease; margin-top: 24px;
     }
-
-    .submit-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(217, 119, 6, 0.35);
-    }
-
-    .submit-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-    }
-
+    .submit-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(217, 119, 6, 0.35); }
+    .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
     .submit-btn .spinner {
-      width: 18px;
-      height: 18px;
-      border: 2px solid transparent;
-      border-top-color: #ffffff;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      display: none;
+      width: 18px; height: 18px;
+      border: 2px solid transparent; border-top-color: #ffffff;
+      border-radius: 50%; animation: spin 0.8s linear infinite; display: none;
     }
-
-    .submit-btn.loading .spinner {
-      display: block;
-    }
-
-    .submit-btn.loading .btn-text {
-      display: none;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ========================================
-       RESPONSE / RESULT VIEW
-    ======================================== */
-    .result-view {
-      display: none;
-    }
-
-    .result-view.visible {
-      display: block;
-      animation: fadeIn 0.4s ease;
-    }
-
-    .result-success {
-      text-align: center;
-      padding: 20px 0;
-    }
-
-    .result-success-icon {
-      font-size: 48px;
-      margin-bottom: 12px;
-    }
-
-    .result-success h3 {
-      font-size: 20px;
-      font-weight: 600;
-      margin: 0 0 8px 0;
-    }
-
-    .result-success p {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin: 0;
-    }
-
+    .submit-btn.loading .spinner { display: block; }
+    .submit-btn.loading .btn-text { display: none; }
+    /* Result View */
+    .result-view { display: none; }
+    .result-view.visible { display: block; animation: fadeIn 0.4s ease; }
+    .result-success { text-align: center; padding: 20px 0; }
+    .result-success-icon { font-size: 48px; margin-bottom: 12px; }
+    .result-success h3 { font-size: 20px; font-weight: 600; margin: 0 0 8px 0; }
+    .result-success p { font-size: 14px; color: var(--text-muted); margin: 0; }
     .result-summary {
       background: rgba(0, 0, 0, 0.3);
-      border-radius: var(--radius-md);
-      padding: 20px;
-      margin: 24px 0;
+      border-radius: var(--radius-md); padding: 20px; margin: 24px 0;
     }
-
     .result-summary-title {
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--accent-light);
-      margin-bottom: 16px;
+      font-size: 12px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--accent-light); margin-bottom: 16px;
     }
-
     .result-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex; justify-content: space-between;
+      padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       font-size: 14px;
     }
-
-    .result-row:last-child {
-      border-bottom: none;
-    }
-
-    .result-row .label {
-      color: var(--text-muted);
-    }
-
-    .result-row .value {
-      color: var(--text);
-      font-weight: 500;
-      text-align: right;
-    }
-
+    .result-row:last-child { border-bottom: none; }
+    .result-row .label { color: var(--text-muted); }
+    .result-row .value { color: var(--text); font-weight: 500; text-align: right; }
     .result-row.highlight {
       background: rgba(217, 119, 6, 0.15);
-      margin: 10px -20px;
-      padding: 14px 20px;
-      border-radius: 8px;
-      border-bottom: none;
+      margin: 10px -20px; padding: 14px 20px;
+      border-radius: 8px; border-bottom: none;
     }
-
-    .result-row.highlight .value {
-      font-size: 22px;
-      color: var(--accent-light);
-    }
-
-    .result-divider {
-      height: 1px;
-      background: rgba(255, 255, 255, 0.1);
-      margin: 16px 0;
-    }
-
-    /* Email Prompt */
+    .result-row.highlight .value { font-size: 22px; color: var(--accent-light); }
+    .result-divider { height: 1px; background: rgba(255, 255, 255, 0.1); margin: 16px 0; }
     .email-prompt {
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: var(--radius-md);
-      padding: 16px;
-      text-align: center;
+      border-radius: var(--radius-md); padding: 16px; text-align: center;
     }
-
-    .email-prompt p {
-      font-size: 14px;
-      color: var(--text);
-      margin: 0 0 14px 0;
-    }
-
-    .email-prompt-buttons {
-      display: flex;
-      gap: 10px;
-    }
-
+    .email-prompt p { font-size: 14px; margin: 0 0 14px 0; }
+    .email-prompt-buttons { display: flex; gap: 10px; }
     .email-prompt-buttons button {
-      flex: 1;
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
+      flex: 1; padding: 12px; border-radius: 8px;
+      font-size: 14px; font-weight: 600; cursor: pointer;
     }
-
-    .btn-email-yes {
-      background: #22c55e;
-      border: none;
-      color: white;
-    }
-
-    .btn-email-yes:hover {
-      background: #16a34a;
-    }
-
-    .btn-email-no {
-      background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: var(--text-muted);
-    }
-
-    .btn-email-no:hover {
-      background: rgba(255, 255, 255, 0.05);
-    }
-
+    .btn-email-yes { background: var(--success); border: none; color: white; }
+    .btn-email-no { background: transparent; border: 1px solid rgba(255, 255, 255, 0.2); color: var(--text-muted); }
     .btn-new-request {
-      width: 100%;
-      padding: 14px;
-      background: transparent;
+      width: 100%; padding: 14px; background: transparent;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: var(--radius-sm);
-      color: var(--text-muted);
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      margin-top: 16px;
-      transition: all 0.2s ease;
+      border-radius: var(--radius-sm); color: var(--text-muted);
+      font-size: 14px; font-weight: 500; cursor: pointer; margin-top: 16px;
     }
-
-    .btn-new-request:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(255, 255, 255, 0.25);
-    }
-
-    /* Toast */
-    .toast {
-      position: fixed;
-      bottom: 100px;
-      left: 50%;
-      transform: translateX(-50%) translateY(20px);
-      padding: 14px 24px;
-      background: #22c55e;
-      color: white;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 500;
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.3s ease;
-      z-index: 10000;
-    }
-
-    .toast.visible {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-
-    .toast.error {
-      background: #ef4444;
-    }
-
-    /* Loading Overlay */
     .loading-overlay {
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background: rgba(22, 20, 16, 0.95);
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
+      display: none; flex-direction: column;
+      align-items: center; justify-content: center; z-index: 100;
     }
-
-    .loading-overlay.visible {
-      display: flex;
-    }
-
+    .loading-overlay.visible { display: flex; }
     .loading-spinner {
-      width: 48px;
-      height: 48px;
+      width: 48px; height: 48px;
       border: 3px solid rgba(255, 255, 255, 0.1);
       border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin-bottom: 16px;
+      border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 16px;
     }
-
-    .loading-text {
-      font-size: 14px;
-      color: var(--text-muted);
+    .loading-text { font-size: 14px; color: var(--text-muted); }
+    .toast {
+      position: fixed; bottom: 100px; left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      padding: 14px 24px; background: var(--success); color: white;
+      border-radius: 10px; font-size: 14px; font-weight: 500;
+      opacity: 0; pointer-events: none;
+      transition: all 0.3s ease; z-index: 10000;
     }
-
-    /* Mobile */
+    .toast.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .toast.error { background: var(--error); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     @media (max-width: 768px) {
-      .agentic-header { padding: 12px 16px; }
-      .agentic-badge { padding: 10px 14px; }
-      .agentic-badge-icon { width: 32px; height: 32px; font-size: 16px; }
-      .wrap { padding: 90px 16px 150px; }
-      .demo-card { padding: 20px; }
-      
-      .widget-window {
-        width: calc(100vw - 24px);
-        height: calc(100vh - 100px);
-        right: -8px;
-      }
+      .widget-window { width: calc(100vw - 24px); height: calc(100vh - 100px); right: -8px; }
+      .validation-row { flex-direction: column; }
+      .validate-btn { width: 100%; justify-content: center; }
     }
   </style>
 </head>
 <body>
-  <!-- Header -->
   <header class="agentic-header">
     <div class="agentic-badge">
       <div class="agentic-badge-icon">⚡</div>
@@ -806,11 +368,9 @@
     </div>
   </header>
 
-  <!-- Main Content -->
   <div class="wrap">
     <h1 class="page-title">KI-Assistenten in Aktion</h1>
     <p class="page-subtitle">Erlebe unseren intelligenten Malerbetrieb-Assistenten live. Klicke auf den Button unten rechts, um eine Anfrage zu stellen.</p>
-
     <div class="demo-card">
       <div class="demo-card-header">
         <div class="demo-card-icon">🎨</div>
@@ -819,44 +379,28 @@
           <p class="demo-card-desc">Professionelle Malerarbeiten in Paderborn und Umgebung. Füllen Sie das Formular aus und erhalten Sie sofort eine Preisschätzung.</p>
         </div>
       </div>
-      <div class="demo-card-hint">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-        Formular öffnen mit dem 🎨 Button
-      </div>
+      <div class="demo-card-hint">Formular öffnen mit dem 🎨 Button</div>
     </div>
   </div>
 
-  <!-- MALERBETRIEB WIDGET -->
+  <!-- WIDGET -->
   <div class="widget" id="widget">
     <div class="widget-toggle" id="widget-toggle">🎨</div>
-    
     <div class="widget-window" id="widget-window">
-      <!-- Loading Overlay -->
       <div class="loading-overlay" id="loading-overlay">
         <div class="loading-spinner"></div>
-        <div class="loading-text">Berechnung läuft...</div>
+        <div class="loading-text">Anfrage wird verarbeitet...</div>
       </div>
-
-      <!-- Header -->
       <div class="widget-header">
         <h2 class="widget-header-title">🎨 Malerbetrieb</h2>
         <p class="widget-header-subtitle">ProjektBauGG GmbH • Paderborn</p>
       </div>
-
-      <!-- Body -->
       <div class="widget-body" id="widget-body">
-        
         <!-- FORM VIEW -->
         <div class="form-view" id="form-view">
-          <!-- Welcome Message -->
           <div class="welcome-box">
-            <p>
-              <strong>Willkommen!</strong> Füllen Sie das Formular aus, um eine <strong>kostenlose Preisschätzung</strong> zu erhalten. 
-              Bei Fragen können Sie uns auch gerne direkt kontaktieren.
-            </p>
+            <p><strong>Willkommen!</strong> Füllen Sie das Formular aus, um eine <strong>kostenlose Preisschätzung</strong> zu erhalten.</p>
           </div>
-
-          <!-- Form -->
           <form id="contact-form">
             <!-- Kundentyp -->
             <div class="form-section">
@@ -873,10 +417,36 @@
               </div>
             </div>
 
-            <!-- Firmenname (conditional) -->
-            <div class="form-group conditional-field" id="company-field">
-              <label class="form-label">Firmenname</label>
-              <input type="text" class="form-input" id="company" placeholder="Name Ihrer Firma">
+            <!-- GEWERBE: Firma + Ort -->
+            <div class="validation-box conditional-field" id="gewerbe-validation">
+              <div class="validation-box-title">🔍 Firma & Standort prüfen</div>
+              <div class="form-group" style="margin-bottom: 12px;">
+                <label class="form-label">Firmenname <span class="required">*</span></label>
+                <input type="text" class="form-input" id="company" placeholder="Name Ihrer Firma">
+              </div>
+              <div class="validation-row">
+                <input type="text" class="form-input" id="location-gewerbe" placeholder="Ort des Objekts">
+                <button type="button" class="validate-btn" id="validate-gewerbe-btn">
+                  <span class="spinner"></span>
+                  <span class="btn-icon">🔍</span>
+                  Prüfen
+                </button>
+              </div>
+              <div class="validation-status" id="gewerbe-status"></div>
+            </div>
+
+            <!-- PRIVAT: Nur Ort -->
+            <div class="validation-box" id="privat-validation">
+              <div class="validation-box-title">🔍 Standort prüfen</div>
+              <div class="validation-row">
+                <input type="text" class="form-input" id="location-privat" placeholder="Ort des Objekts (Stadt oder PLZ)">
+                <button type="button" class="validate-btn" id="validate-privat-btn">
+                  <span class="spinner"></span>
+                  <span class="btn-icon">🔍</span>
+                  Prüfen
+                </button>
+              </div>
+              <div class="validation-status" id="privat-status"></div>
             </div>
 
             <!-- Name -->
@@ -888,13 +458,10 @@
             <!-- Telefon -->
             <div class="form-group">
               <label class="form-label">Telefonnummer <span class="required">*</span></label>
-              <input type="tel" class="form-input" id="phone" placeholder="z.B. 0151 12345678" required>
-            </div>
-
-            <!-- Ort -->
-            <div class="form-group">
-              <label class="form-label">Ort des Objekts <span class="required">*</span></label>
-              <input type="text" class="form-input" id="location" placeholder="Stadt oder PLZ" required>
+              <div class="phone-wrapper">
+                <input type="tel" class="form-input" id="phone" placeholder="z.B. 0151 12345678" required>
+                <span class="phone-status" id="phone-status"></span>
+              </div>
             </div>
 
             <!-- Leistung -->
@@ -929,7 +496,7 @@
             <!-- Bilder -->
             <div class="form-group">
               <label class="form-label">Bilder vom Objekt (optional)</label>
-              <div class="file-upload" id="file-upload">
+              <div class="file-upload">
                 <input type="file" id="images" multiple accept="image/*">
                 <div class="file-upload-icon">📷</div>
                 <div class="file-upload-text">Bilder hier ablegen oder klicken</div>
@@ -938,8 +505,20 @@
               <div class="file-list" id="file-list"></div>
             </div>
 
-            <!-- Submit -->
-            <button type="submit" class="submit-btn" id="submit-btn">
+            <!-- Checklist -->
+            <div class="validation-checklist">
+              <div class="validation-checklist-title">Checkliste vor Absenden</div>
+              <div class="checklist-item unchecked" id="check-location">
+                <span class="checklist-icon">○</span>
+                <span>Standort geprüft</span>
+              </div>
+              <div class="checklist-item unchecked" id="check-phone">
+                <span class="checklist-icon">○</span>
+                <span>Telefonnummer gültig</span>
+              </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submit-btn" disabled>
               <span class="spinner"></span>
               <span class="btn-text">🚀 Anfrage absenden</span>
             </button>
@@ -953,68 +532,23 @@
             <h3>Anfrage erhalten!</h3>
             <p>Hier ist Ihre Projektübersicht</p>
           </div>
-
           <div class="result-summary">
             <div class="result-summary-title">📋 Zusammenfassung</div>
-            
-            <div class="result-row">
-              <span class="label">Kundentyp</span>
-              <span class="value" id="result-type">-</span>
-            </div>
-            <div class="result-row" id="result-company-row" style="display: none;">
-              <span class="label">Firma</span>
-              <span class="value" id="result-company">-</span>
-            </div>
-            <div class="result-row">
-              <span class="label">Name</span>
-              <span class="value" id="result-name">-</span>
-            </div>
-            <div class="result-row">
-              <span class="label">Telefon</span>
-              <span class="value" id="result-phone">-</span>
-            </div>
-            <div class="result-row">
-              <span class="label">Standort</span>
-              <span class="value" id="result-location">-</span>
-            </div>
-
+            <div class="result-row"><span class="label">Kundentyp</span><span class="value" id="result-type">-</span></div>
+            <div class="result-row" id="result-company-row" style="display:none"><span class="label">Firma</span><span class="value" id="result-company">-</span></div>
+            <div class="result-row"><span class="label">Name</span><span class="value" id="result-name">-</span></div>
+            <div class="result-row"><span class="label">Telefon</span><span class="value" id="result-phone">-</span></div>
+            <div class="result-row"><span class="label">Standort</span><span class="value" id="result-location">-</span></div>
             <div class="result-divider"></div>
-
-            <div class="result-row">
-              <span class="label">Leistung</span>
-              <span class="value" id="result-service">-</span>
-            </div>
-            <div class="result-row">
-              <span class="label">Umfang</span>
-              <span class="value" id="result-size">-</span>
-            </div>
-            <div class="result-row">
-              <span class="label">Zeitraum</span>
-              <span class="value" id="result-timeframe">-</span>
-            </div>
-
+            <div class="result-row"><span class="label">Leistung</span><span class="value" id="result-service">-</span></div>
+            <div class="result-row"><span class="label">Umfang</span><span class="value" id="result-size">-</span></div>
+            <div class="result-row"><span class="label">Zeitraum</span><span class="value" id="result-timeframe">-</span></div>
             <div class="result-divider"></div>
-
-            <div class="result-row">
-              <span class="label">📅 Geschätzte Dauer</span>
-              <span class="value" id="result-duration">-</span>
-            </div>
-            <div class="result-row">
-              <span class="label">👷 Mitarbeiter</span>
-              <span class="value" id="result-workers">-</span>
-            </div>
-
-            <div class="result-row highlight">
-              <span class="label">💰 Preisschätzung</span>
-              <span class="value" id="result-price">-</span>
-            </div>
+            <div class="result-row"><span class="label">📅 Geschätzte Dauer</span><span class="value" id="result-duration">-</span></div>
+            <div class="result-row"><span class="label">👷 Mitarbeiter</span><span class="value" id="result-workers">-</span></div>
+            <div class="result-row highlight"><span class="label">💰 Preisschätzung</span><span class="value" id="result-price">-</span></div>
           </div>
-
-          <p style="font-size: 12px; color: var(--text-muted); text-align: center; margin-bottom: 20px;">
-            Dies ist eine unverbindliche Schätzung. Nach Besichtigung kann der Preis um ±15-20% abweichen.
-          </p>
-
-          <!-- Email Prompt -->
+          <p style="font-size:12px;color:var(--text-muted);text-align:center;margin-bottom:20px;">Dies ist eine unverbindliche Schätzung. Nach Besichtigung kann der Preis um ±15-20% abweichen.</p>
           <div class="email-prompt" id="email-prompt">
             <p>📧 Soll ich Ihnen die Zusammenfassung auch per E-Mail schicken?</p>
             <div class="email-prompt-buttons">
@@ -1022,312 +556,272 @@
               <button type="button" class="btn-email-no" id="btn-email-no">Nein, danke</button>
             </div>
           </div>
-
-          <!-- Email Input (hidden initially) -->
-          <div class="form-group" id="email-input-group" style="display: none; margin-top: 16px;">
+          <div class="form-group" id="email-input-group" style="display:none;margin-top:16px;">
             <label class="form-label">Ihre E-Mail-Adresse</label>
             <input type="email" class="form-input" id="email-address" placeholder="email@beispiel.de">
-            <button type="button" class="submit-btn" id="send-email-btn" style="margin-top: 12px;">
+            <button type="button" class="submit-btn" id="send-email-btn" style="margin-top:12px;">
               <span class="spinner"></span>
               <span class="btn-text">📧 E-Mail senden</span>
             </button>
           </div>
-
-          <button type="button" class="btn-new-request" id="btn-new-request">
-            ← Neue Anfrage stellen
-          </button>
+          <button type="button" class="btn-new-request" id="btn-new-request">← Neue Anfrage stellen</button>
         </div>
-
       </div>
     </div>
   </div>
 
-  <!-- Toast -->
   <div class="toast" id="toast"></div>
 
   <script>
-    // =====================================================================
-    // MALERBETRIEB WIDGET - Alles über n8n
-    // =====================================================================
     (function() {
-      // ============================================
-      // CONFIGURATION - HIER DEINE WEBHOOK URLs
-      // ============================================
+      // ============ WEBHOOKS ============
+      const WEBHOOK_VALIDATE = "https://seidel1502.app.n8n.cloud/webhook/malerbetrieb-validate";
       const WEBHOOK_CALCULATE = "https://seidel1502.app.n8n.cloud/webhook/malerbetrieb-calculate";
       const WEBHOOK_EMAIL = "https://seidel1502.app.n8n.cloud/webhook/malerbetrieb-email";
 
-      // Service names for display (nur für Anzeige im Frontend)
       const SERVICE_NAMES = {
-        1: "Innenwände streichen",
-        2: "Fassade streichen",
-        3: "Tapezieren",
-        4: "Türen/Fenster lackieren",
-        5: "Verputzen/Grundieren",
-        6: "Dekorative Techniken"
+        1: "Innenwände streichen", 2: "Fassade streichen", 3: "Tapezieren",
+        4: "Türen/Fenster lackieren", 5: "Verputzen/Grundieren", 6: "Dekorative Techniken"
       };
 
-      // DOM Elements
       const $ = id => document.getElementById(id);
-      const toggle = $('widget-toggle');
-      const widgetWindow = $('widget-window');
-      const form = $('contact-form');
-      const formView = $('form-view');
-      const resultView = $('result-view');
-      const companyField = $('company-field');
-      const fileInput = $('images');
-      const fileList = $('file-list');
-      const submitBtn = $('submit-btn');
-      const loadingOverlay = $('loading-overlay');
-      const toast = $('toast');
-
+      let validationState = { locationValid: false, phoneValid: false, distance: null };
       let uploadedFiles = [];
       let currentRequestId = null;
       let currentFormData = {};
 
       // Toggle Widget
-      toggle.addEventListener('click', () => {
-        widgetWindow.classList.toggle('is-open');
-      });
+      $('widget-toggle').onclick = () => $('widget-window').classList.toggle('is-open');
 
       // Customer Type Toggle
-      document.querySelectorAll('input[name="customerType"]').forEach(radio => {
-        radio.addEventListener('change', (e) => {
-          if (e.target.value === 'gewerbe') {
-            companyField.classList.add('visible');
-          } else {
-            companyField.classList.remove('visible');
-          }
-        });
+      document.querySelectorAll('input[name="customerType"]').forEach(r => {
+        r.onchange = e => {
+          const isGewerbe = e.target.value === 'gewerbe';
+          $('gewerbe-validation').classList.toggle('visible', isGewerbe);
+          $('privat-validation').style.display = isGewerbe ? 'none' : 'block';
+          validationState.locationValid = false;
+          updateUI();
+        };
       });
 
-      // File Upload Handler
-      fileInput.addEventListener('change', (e) => {
-        const files = Array.from(e.target.files);
-        files.forEach(file => {
-          if (file.size > 10 * 1024 * 1024) {
-            showToast('Datei zu groß (max. 10MB)', 'error');
-            return;
-          }
-          uploadedFiles.push(file);
-          renderFileList();
-        });
-        fileInput.value = '';
-      });
-
-      function renderFileList() {
-        fileList.innerHTML = uploadedFiles.map((file, i) => `
-          <div class="file-item">
-            📷 ${file.name.substring(0, 20)}${file.name.length > 20 ? '...' : ''}
-            <span class="file-item-remove" data-index="${i}">✕</span>
-          </div>
-        `).join('');
-
-        fileList.querySelectorAll('.file-item-remove').forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            const index = parseInt(e.target.dataset.index);
-            uploadedFiles.splice(index, 1);
-            renderFileList();
+      // Validate GEWERBE
+      $('validate-gewerbe-btn').onclick = async () => {
+        const company = $('company').value.trim();
+        const location = $('location-gewerbe').value.trim();
+        if (!company || !location) return showStatus('gewerbe-status', 'error', '❌ Bitte Firmenname und Ort eingeben');
+        
+        const btn = $('validate-gewerbe-btn');
+        btn.classList.add('loading'); btn.disabled = true;
+        
+        try {
+          const res = await fetch(WEBHOOK_VALIDATE, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type: 'gewerbe', company, location })
           });
+          const data = await res.json();
+          
+          if (data.valid) {
+            validationState.locationValid = true;
+            validationState.distance = data.distance;
+            showStatus('gewerbe-status', 'success', `✅ ${data.companyInfo || company} gefunden! Entfernung: ${data.distance}km`);
+          } else {
+            validationState.locationValid = false;
+            showStatus('gewerbe-status', 'error', data.message || '❌ Firma nicht gefunden oder außerhalb des Einsatzgebiets');
+          }
+        } catch (e) {
+          showStatus('gewerbe-status', 'error', '❌ Prüfung fehlgeschlagen');
+        }
+        btn.classList.remove('loading'); btn.disabled = false;
+        updateUI();
+      };
+
+      // Validate PRIVAT
+      $('validate-privat-btn').onclick = async () => {
+        const location = $('location-privat').value.trim();
+        if (!location) return showStatus('privat-status', 'error', '❌ Bitte Ort eingeben');
+        
+        const btn = $('validate-privat-btn');
+        btn.classList.add('loading'); btn.disabled = true;
+        
+        try {
+          const res = await fetch(WEBHOOK_VALIDATE, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type: 'privat', location })
+          });
+          const data = await res.json();
+          
+          if (data.valid) {
+            validationState.locationValid = true;
+            validationState.distance = data.distance;
+            showStatus('privat-status', 'success', `✅ Im Einsatzgebiet! Entfernung: ${data.distance}km`);
+          } else {
+            validationState.locationValid = false;
+            const msg = data.distance ? `❌ Außerhalb (${data.distance}km). Max. 30km.` : '❌ Ort nicht gefunden';
+            showStatus('privat-status', 'error', msg);
+          }
+        } catch (e) {
+          showStatus('privat-status', 'error', '❌ Prüfung fehlgeschlagen');
+        }
+        btn.classList.remove('loading'); btn.disabled = false;
+        updateUI();
+      };
+
+      // Phone Validation (Frontend)
+      $('phone').oninput = e => {
+        const phone = e.target.value.replace(/\s/g, '');
+        const valid = /^(\+49|0)[1-7]\d{8,11}$/.test(phone);
+        
+        $('phone-status').textContent = phone.length === 0 ? '' : valid ? '✅' : phone.length >= 6 ? '❌' : '';
+        $('phone').classList.toggle('valid', valid);
+        $('phone').classList.toggle('invalid', phone.length >= 6 && !valid);
+        validationState.phoneValid = valid;
+        updateUI();
+      };
+
+      // Helpers
+      function showStatus(id, type, msg) {
+        $(id).className = `validation-status visible ${type}`;
+        $(id).textContent = msg;
+      }
+
+      function updateUI() {
+        const loc = $('check-location'), ph = $('check-phone');
+        loc.className = validationState.locationValid ? 'checklist-item checked' : 'checklist-item unchecked';
+        loc.querySelector('.checklist-icon').textContent = validationState.locationValid ? '✓' : '○';
+        ph.className = validationState.phoneValid ? 'checklist-item checked' : 'checklist-item unchecked';
+        ph.querySelector('.checklist-icon').textContent = validationState.phoneValid ? '✓' : '○';
+        $('submit-btn').disabled = !(validationState.locationValid && validationState.phoneValid);
+      }
+
+      function showToast(msg, type = 'success') {
+        $('toast').textContent = msg;
+        $('toast').className = 'toast visible' + (type === 'error' ? ' error' : '');
+        setTimeout(() => $('toast').classList.remove('visible'), 3500);
+      }
+
+      // File Upload
+      $('images').onchange = e => {
+        Array.from(e.target.files).forEach(f => {
+          if (f.size > 10 * 1024 * 1024) return showToast('Datei zu groß', 'error');
+          uploadedFiles.push(f);
+        });
+        renderFiles();
+        e.target.value = '';
+      };
+
+      function renderFiles() {
+        $('file-list').innerHTML = uploadedFiles.map((f, i) => 
+          `<div class="file-item">📷 ${f.name.slice(0,20)}${f.name.length>20?'...':''}<span class="file-item-remove" data-i="${i}">✕</span></div>`
+        ).join('');
+        $('file-list').querySelectorAll('.file-item-remove').forEach(b => b.onclick = e => {
+          uploadedFiles.splice(+e.target.dataset.i, 1);
+          renderFiles();
         });
       }
 
-      // Form Submit - Send to n8n
-      form.addEventListener('submit', async (e) => {
+      // Form Submit
+      $('contact-form').onsubmit = async e => {
         e.preventDefault();
-        
-        // Validate phone
-        const phone = $('phone').value.replace(/\s/g, '');
-        if (!/^(\+49|0)[1-7]\d{8,11}$/.test(phone)) {
-          showToast('Bitte gültige Telefonnummer eingeben', 'error');
-          return;
-        }
+        if (!validationState.locationValid || !validationState.phoneValid) return;
 
-        // Show loading
-        loadingOverlay.classList.add('visible');
-        submitBtn.disabled = true;
+        $('loading-overlay').classList.add('visible');
+        $('submit-btn').disabled = true;
 
-        // Collect form data
-        const customerType = document.querySelector('input[name="customerType"]:checked').value;
-        const serviceId = parseInt($('service').value);
-        const sizeInput = $('size').value;
-        
-        // Extract number from size input
-        const sizeNumber = parseFloat(sizeInput.replace(/[^\d.,]/g, '').replace(',', '.')) || 30;
+        const isGewerbe = document.querySelector('input[name="customerType"]:checked').value === 'gewerbe';
+        const serviceId = +$('service').value;
+        const sizeNum = parseFloat($('size').value.replace(/[^\d.,]/g, '').replace(',', '.')) || 30;
 
         currentFormData = {
-          customerType: customerType,
-          company: customerType === 'gewerbe' ? $('company').value : '',
+          customerType: isGewerbe ? 'gewerbe' : 'privat',
+          company: isGewerbe ? $('company').value : '',
           name: $('name').value,
           phone: $('phone').value,
-          location: $('location').value,
-          serviceId: serviceId,
-          serviceName: SERVICE_NAMES[serviceId] || '',
-          size: sizeInput,
-          sizeNumber: sizeNumber,
+          location: isGewerbe ? $('location-gewerbe').value : $('location-privat').value,
+          distance: validationState.distance,
+          serviceId, serviceName: SERVICE_NAMES[serviceId] || '',
+          size: $('size').value, sizeNumber: sizeNum,
           timeframe: $('timeframe').value,
           imagesCount: uploadedFiles.length,
           timestamp: new Date().toISOString()
         };
 
         try {
-          // Send data to n8n webhook
-          const response = await sendToN8N(currentFormData);
-          
-          // Show result with data from n8n
-          showResult(currentFormData, response);
-          
-        } catch (error) {
-          console.error('Error:', error);
-          showToast('Fehler bei der Verarbeitung. Bitte erneut versuchen.', 'error');
-        } finally {
-          loadingOverlay.classList.remove('visible');
-          submitBtn.disabled = false;
+          const fd = new FormData();
+          fd.append('formData', JSON.stringify(currentFormData));
+          uploadedFiles.forEach((f, i) => fd.append(`image_${i}`, f));
+
+          const res = await fetch(WEBHOOK_CALCULATE, { method: 'POST', body: fd });
+          const data = await res.json();
+          currentRequestId = data.requestId;
+          showResult(currentFormData, data);
+        } catch (e) {
+          showToast('Fehler beim Senden', 'error');
         }
-      });
+        $('loading-overlay').classList.remove('visible');
+        $('submit-btn').disabled = false;
+      };
 
-      // Send data to n8n webhook
-      async function sendToN8N(data) {
-        // Create FormData for file upload support
-        const formData = new FormData();
-        
-        // Add JSON data
-        formData.append('formData', JSON.stringify(data));
-        
-        // Add images if any
-        uploadedFiles.forEach((file, index) => {
-          formData.append(`image_${index}`, file);
-        });
+      function showResult(d, r) {
+        $('result-type').textContent = d.customerType === 'gewerbe' ? 'Gewerblich 🏢' : 'Privat 🏠';
+        $('result-company-row').style.display = d.company ? 'flex' : 'none';
+        $('result-company').textContent = d.company;
+        $('result-name').textContent = d.name;
+        $('result-phone').textContent = d.phone;
+        $('result-location').textContent = `${d.location} (${d.distance}km)`;
+        $('result-service').textContent = d.serviceName;
+        $('result-size').textContent = d.size;
+        $('result-timeframe').textContent = d.timeframe;
+        $('result-duration').textContent = r.duration || '-';
+        $('result-workers').textContent = r.workers || '-';
+        $('result-price').textContent = r.price ? `ca. ${r.price.toLocaleString('de-DE')} €` : '-';
 
-        const response = await fetch(WEBHOOK_CALCULATE, {
-          method: 'POST',
-          body: formData
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const result = await response.json();
-        
-        // Store request ID for email
-        currentRequestId = result.requestId || Date.now().toString();
-        
-        return result;
-      }
-
-      // Show Result View with n8n response
-      function showResult(formData, n8nResponse) {
-        // Populate result view with form data
-        $('result-type').textContent = formData.customerType === 'gewerbe' ? 'Gewerblich 🏢' : 'Privat 🏠';
-        
-        if (formData.customerType === 'gewerbe' && formData.company) {
-          $('result-company-row').style.display = 'flex';
-          $('result-company').textContent = formData.company;
-        } else {
-          $('result-company-row').style.display = 'none';
-        }
-
-        $('result-name').textContent = formData.name;
-        $('result-phone').textContent = formData.phone;
-        $('result-location').textContent = formData.location;
-        $('result-service').textContent = formData.serviceName;
-        $('result-size').textContent = formData.size;
-        $('result-timeframe').textContent = formData.timeframe;
-
-        // Populate with n8n calculated values
-        $('result-duration').textContent = n8nResponse.duration || '-';
-        $('result-workers').textContent = n8nResponse.workers || '-';
-        $('result-price').textContent = n8nResponse.price ? `ca. ${n8nResponse.price.toLocaleString('de-DE')} €` : '-';
-
-        // Switch views
-        formView.style.display = 'none';
-        resultView.classList.add('visible');
-        
-        // Scroll to top
+        $('form-view').style.display = 'none';
+        $('result-view').classList.add('visible');
         $('widget-body').scrollTop = 0;
       }
 
-      // Email Prompt Handlers
-      $('btn-email-yes').addEventListener('click', () => {
-        $('email-prompt').style.display = 'none';
-        $('email-input-group').style.display = 'block';
-      });
+      // Email
+      $('btn-email-yes').onclick = () => { $('email-prompt').style.display = 'none'; $('email-input-group').style.display = 'block'; };
+      $('btn-email-no').onclick = () => { $('email-prompt').style.display = 'none'; showToast('Vielen Dank! Wir melden uns bald. 📞'); };
 
-      $('btn-email-no').addEventListener('click', () => {
-        $('email-prompt').style.display = 'none';
-        showToast('Vielen Dank! Wir melden uns bald bei Ihnen. 📞');
-      });
-
-      // Send Email via n8n
-      $('send-email-btn').addEventListener('click', async () => {
+      $('send-email-btn').onclick = async () => {
         const email = $('email-address').value;
-        if (!email || !email.includes('@')) {
-          showToast('Bitte gültige E-Mail eingeben', 'error');
-          return;
-        }
-
-        const sendBtn = $('send-email-btn');
-        sendBtn.classList.add('loading');
-        sendBtn.disabled = true;
-
-        try {
-          const response = await fetch(WEBHOOK_EMAIL, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              requestId: currentRequestId,
-              email: email,
-              formData: currentFormData
-            })
-          });
-
-          if (response.ok) {
-            showToast('📧 E-Mail wurde versendet!');
-            $('email-input-group').style.display = 'none';
-          } else {
-            throw new Error('Email failed');
-          }
-        } catch (error) {
-          showToast('Fehler beim Senden der E-Mail', 'error');
-        } finally {
-          sendBtn.classList.remove('loading');
-          sendBtn.disabled = false;
-        }
-      });
-
-      // New Request - Reset everything
-      $('btn-new-request').addEventListener('click', () => {
-        // Reset form
-        form.reset();
-        uploadedFiles = [];
-        fileList.innerHTML = '';
-        companyField.classList.remove('visible');
-        currentRequestId = null;
-        currentFormData = {};
+        if (!email.includes('@')) return showToast('Bitte gültige E-Mail', 'error');
         
-        // Reset result view
+        $('send-email-btn').classList.add('loading');
+        try {
+          await fetch(WEBHOOK_EMAIL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ requestId: currentRequestId, email, formData: currentFormData })
+          });
+          showToast('📧 E-Mail versendet!');
+          $('email-input-group').style.display = 'none';
+        } catch (e) { showToast('Fehler', 'error'); }
+        $('send-email-btn').classList.remove('loading');
+      };
+
+      // Reset
+      $('btn-new-request').onclick = () => {
+        $('contact-form').reset();
+        uploadedFiles = [];
+        $('file-list').innerHTML = '';
+        validationState = { locationValid: false, phoneValid: false, distance: null };
+        $('gewerbe-validation').classList.remove('visible');
+        $('privat-validation').style.display = 'block';
+        $('gewerbe-status').classList.remove('visible');
+        $('privat-status').classList.remove('visible');
+        $('phone').classList.remove('valid', 'invalid');
+        $('phone-status').textContent = '';
         $('email-prompt').style.display = 'block';
         $('email-input-group').style.display = 'none';
-        $('email-address').value = '';
-        
-        // Switch views
-        resultView.classList.remove('visible');
-        formView.style.display = 'block';
-        
+        updateUI();
+        $('result-view').classList.remove('visible');
+        $('form-view').style.display = 'block';
         $('widget-body').scrollTop = 0;
-      });
-
-      // Toast notification
-      function showToast(message, type = 'success') {
-        toast.textContent = message;
-        toast.className = 'toast visible' + (type === 'error' ? ' error' : '');
-        setTimeout(() => {
-          toast.classList.remove('visible');
-        }, 3500);
-      }
-
+      };
     })();
   </script>
 </body>
