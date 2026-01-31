@@ -257,6 +257,46 @@
     }
     .checklist-item.checked .checklist-icon { background: var(--success); color: white; }
     .checklist-item.unchecked .checklist-icon { background: rgba(255, 255, 255, 0.1); }
+
+    /* DSGVO (NEU) */
+    .dsgvo-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-top: 10px;
+    }
+    .dsgvo-row {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 13px; color: var(--text-muted);
+      line-height: 1.45;
+      cursor: pointer;
+      user-select: none;
+    }
+    .dsgvo-row input {
+      margin-top: 3px;
+      accent-color: var(--accent-light);
+    }
+    .dsgvo-toggle {
+      background: none;
+      border: none;
+      color: var(--accent-light);
+      cursor: pointer;
+      padding: 0;
+      font-size: 13px;
+      text-decoration: underline;
+    }
+    .dsgvo-details {
+      display: none;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.45);
+      animation: fadeIn 0.25s ease;
+    }
+    .dsgvo-details.visible { display: block; }
+
     /* Submit Button */
     .submit-btn {
       width: 100%; padding: 16px;
@@ -518,6 +558,27 @@
               </div>
             </div>
 
+            <!-- DSGVO (NEU) -->
+            <div class="dsgvo-box" id="dsgvo-box">
+              <label class="dsgvo-row" for="dsgvo-checkbox">
+                <input type="checkbox" id="dsgvo-checkbox">
+                <span>
+                  Ich stimme der Verarbeitung meiner Daten gemäß
+                  <button type="button" class="dsgvo-toggle" id="dsgvo-toggle">Datenschutz</button>
+                  zu.
+                </span>
+              </label>
+
+              <div class="dsgvo-details" id="dsgvo-details">
+                <div>
+                  <strong style="color: var(--accent-light); font-weight: 600;">Kurzinfo:</strong>
+                  Ihre Angaben werden ausschließlich zur Bearbeitung Ihrer Anfrage verwendet und nicht an Dritte weitergegeben.
+                  Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen).
+                  Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen.
+                </div>
+              </div>
+            </div>
+
             <button type="submit" class="submit-btn" id="submit-btn" disabled>
               <span class="spinner"></span>
               <span class="btn-text">🚀 Anfrage absenden</span>
@@ -585,7 +646,10 @@
       };
 
       const $ = id => document.getElementById(id);
-      let validationState = { locationValid: false, phoneValid: false, distance: null };
+
+      // (NEU) DSGVO in validationState integriert
+      let validationState = { locationValid: false, phoneValid: false, dsgvoAccepted: false, distance: null };
+
       let uploadedFiles = [];
       let currentRequestId = null;
       let currentFormData = {};
@@ -604,15 +668,26 @@
         };
       });
 
+      // (NEU) DSGVO Details Toggle
+      $('dsgvo-toggle').onclick = () => {
+        $('dsgvo-details').classList.toggle('visible');
+      };
+
+      // (NEU) DSGVO Checkbox Pflicht
+      $('dsgvo-checkbox').onchange = e => {
+        validationState.dsgvoAccepted = !!e.target.checked;
+        updateUI();
+      };
+
       // Validate GEWERBE
       $('validate-gewerbe-btn').onclick = async () => {
         const company = $('company').value.trim();
         const location = $('location-gewerbe').value.trim();
         if (!company || !location) return showStatus('gewerbe-status', 'error', '❌ Bitte Firmenname und Ort eingeben');
-        
+
         const btn = $('validate-gewerbe-btn');
         btn.classList.add('loading'); btn.disabled = true;
-        
+
         try {
           const res = await fetch(WEBHOOK_VALIDATE, {
             method: 'POST',
@@ -620,7 +695,7 @@
             body: JSON.stringify({ type: 'gewerbe', company, location })
           });
           const data = await res.json();
-          
+
           if (data.valid) {
             validationState.locationValid = true;
             validationState.distance = data.distance;
@@ -640,10 +715,10 @@
       $('validate-privat-btn').onclick = async () => {
         const location = $('location-privat').value.trim();
         if (!location) return showStatus('privat-status', 'error', '❌ Bitte Ort eingeben');
-        
+
         const btn = $('validate-privat-btn');
         btn.classList.add('loading'); btn.disabled = true;
-        
+
         try {
           const res = await fetch(WEBHOOK_VALIDATE, {
             method: 'POST',
@@ -651,7 +726,7 @@
             body: JSON.stringify({ type: 'privat', location })
           });
           const data = await res.json();
-          
+
           if (data.valid) {
             validationState.locationValid = true;
             validationState.distance = data.distance;
@@ -672,7 +747,7 @@
       $('phone').oninput = e => {
         const phone = e.target.value.replace(/\s/g, '');
         const valid = /^(\+49|0)[1-7]\d{8,11}$/.test(phone);
-        
+
         $('phone-status').textContent = phone.length === 0 ? '' : valid ? '✅' : phone.length >= 6 ? '❌' : '';
         $('phone').classList.toggle('valid', valid);
         $('phone').classList.toggle('invalid', phone.length >= 6 && !valid);
@@ -692,7 +767,9 @@
         loc.querySelector('.checklist-icon').textContent = validationState.locationValid ? '✓' : '○';
         ph.className = validationState.phoneValid ? 'checklist-item checked' : 'checklist-item unchecked';
         ph.querySelector('.checklist-icon').textContent = validationState.phoneValid ? '✓' : '○';
-        $('submit-btn').disabled = !(validationState.locationValid && validationState.phoneValid);
+
+        // (NEU) DSGVO muss ebenfalls erfüllt sein
+        $('submit-btn').disabled = !(validationState.locationValid && validationState.phoneValid && validationState.dsgvoAccepted);
       }
 
       function showToast(msg, type = 'success') {
@@ -712,7 +789,7 @@
       };
 
       function renderFiles() {
-        $('file-list').innerHTML = uploadedFiles.map((f, i) => 
+        $('file-list').innerHTML = uploadedFiles.map((f, i) =>
           `<div class="file-item">📷 ${f.name.slice(0,20)}${f.name.length>20?'...':''}<span class="file-item-remove" data-i="${i}">✕</span></div>`
         ).join('');
         $('file-list').querySelectorAll('.file-item-remove').forEach(b => b.onclick = e => {
@@ -724,7 +801,9 @@
       // Form Submit
       $('contact-form').onsubmit = async e => {
         e.preventDefault();
-        if (!validationState.locationValid || !validationState.phoneValid) return;
+
+        // (NEU) DSGVO ist Pflicht
+        if (!validationState.locationValid || !validationState.phoneValid || !validationState.dsgvoAccepted) return;
 
         $('loading-overlay').classList.add('visible');
         $('submit-btn').disabled = true;
@@ -744,6 +823,7 @@
           size: $('size').value, sizeNumber: sizeNum,
           timeframe: $('timeframe').value,
           imagesCount: uploadedFiles.length,
+          dsgvoAccepted: true,                 // (NEU) fürs Backend
           timestamp: new Date().toISOString()
         };
 
@@ -760,7 +840,7 @@
           showToast('Fehler beim Senden', 'error');
         }
         $('loading-overlay').classList.remove('visible');
-        $('submit-btn').disabled = false;
+        updateUI();
       };
 
       function showResult(d, r) {
@@ -789,7 +869,7 @@
       $('send-email-btn').onclick = async () => {
         const email = $('email-address').value;
         if (!email.includes('@')) return showToast('Bitte gültige E-Mail', 'error');
-        
+
         $('send-email-btn').classList.add('loading');
         try {
           await fetch(WEBHOOK_EMAIL, {
@@ -808,13 +888,19 @@
         $('contact-form').reset();
         uploadedFiles = [];
         $('file-list').innerHTML = '';
-        validationState = { locationValid: false, phoneValid: false, distance: null };
+        validationState = { locationValid: false, phoneValid: false, dsgvoAccepted: false, distance: null };
+
         $('gewerbe-validation').classList.remove('visible');
         $('privat-validation').style.display = 'block';
         $('gewerbe-status').classList.remove('visible');
         $('privat-status').classList.remove('visible');
         $('phone').classList.remove('valid', 'invalid');
         $('phone-status').textContent = '';
+
+        // (NEU) DSGVO Reset
+        $('dsgvo-checkbox').checked = false;
+        $('dsgvo-details').classList.remove('visible');
+
         $('email-prompt').style.display = 'block';
         $('email-input-group').style.display = 'none';
         updateUI();
