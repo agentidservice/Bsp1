@@ -257,7 +257,7 @@
     }
     .checklist-item.checked .checklist-icon { background: var(--success); color: white; }
     .checklist-item.unchecked .checklist-icon { background: rgba(255, 255, 255, 0.1); }
-    /* DSGVO (NEU) */
+    /* DSGVO */
     .dsgvo-box {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -635,6 +635,7 @@
             body: JSON.stringify({ type: 'gewerbe', company, location })
           });
           const data = await res.json();
+          console.log('Gewerbe Validation Response:', data);
           if (data.valid) {
             validationState.locationValid = true;
             validationState.distance = data.distance;
@@ -644,6 +645,7 @@
             showStatus('gewerbe-status', 'error', data.message || '❌ Firma nicht gefunden oder außerhalb des Einsatzgebiets');
           }
         } catch (e) {
+          console.error('Gewerbe Validation Error:', e);
           showStatus('gewerbe-status', 'error', '❌ Prüfung fehlgeschlagen');
         }
         btn.classList.remove('loading'); btn.disabled = false;
@@ -662,16 +664,17 @@
             body: JSON.stringify({ type: 'privat', location })
           });
           const data = await res.json();
+          console.log('Privat Validation Response:', data);
           if (data.valid) {
             validationState.locationValid = true;
             validationState.distance = data.distance;
             showStatus('privat-status', 'success', `✅ Im Einsatzgebiet! Entfernung: ${data.distance}km`);
           } else {
             validationState.locationValid = false;
-            const msg = data.distance ? `❌ Außerhalb (${data.distance}km). Max. 30km.` : '❌ Ort nicht gefunden';
-            showStatus('privat-status', 'error', msg);
+            showStatus('privat-status', 'error', data.message || '❌ Ort nicht gefunden oder außerhalb des Einsatzgebiets');
           }
         } catch (e) {
+          console.error('Privat Validation Error:', e);
           showStatus('privat-status', 'error', '❌ Prüfung fehlgeschlagen');
         }
         btn.classList.remove('loading'); btn.disabled = false;
