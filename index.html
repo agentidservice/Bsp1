@@ -257,7 +257,6 @@
     }
     .checklist-item.checked .checklist-icon { background: var(--success); color: white; }
     .checklist-item.unchecked .checklist-icon { background: rgba(255, 255, 255, 0.1); }
-
     /* DSGVO (NEU) */
     .dsgvo-box {
       background: rgba(255, 255, 255, 0.02);
@@ -296,7 +295,6 @@
       animation: fadeIn 0.25s ease;
     }
     .dsgvo-details.visible { display: block; }
-
     /* Submit Button */
     .submit-btn {
       width: 100%; padding: 16px;
@@ -345,9 +343,6 @@
     }
     .result-row.highlight .value { font-size: 22px; color: var(--accent-light); }
     .result-divider { height: 1px; background: rgba(255, 255, 255, 0.1); margin: 16px 0; }
-
-    /* (ENTFERNT) Email Styles: .email-prompt, .email-prompt-buttons, .btn-email-yes, .btn-email-no */
-
     .btn-new-request {
       width: 100%; padding: 14px; background: transparent;
       border: 1px solid rgba(255, 255, 255, 0.15);
@@ -397,7 +392,6 @@
       </div>
     </div>
   </header>
-
   <div class="wrap">
     <h1 class="page-title">KI-Assistenten in Aktion</h1>
     <p class="page-subtitle">Erlebe unseren intelligenten Malerbetrieb-Assistenten live. Klicke auf den Button unten rechts, um eine Anfrage zu stellen.</p>
@@ -406,13 +400,12 @@
         <div class="demo-card-icon">🎨</div>
         <div>
           <h2 class="demo-card-title">ProjektBauGG Malerbetrieb</h2>
-          <p class="demo-card-desc">Professionelle Malerarbeiten in Paderborn und Umgebung. Füllen Sie das Formular aus und erhalten Sie sofort eine Preisschätzung.</p>
+          <p class="demo-card-desc">Professionelle Malerarbeiten in Paderborn und Umgebung. Füllen Sie das Formular aus um eine Projektanfrage inkl. Preisschätzung zu stellen.</p>
         </div>
       </div>
       <div class="demo-card-hint">Formular öffnen mit dem 🎨 Button</div>
     </div>
   </div>
-
   <!-- WIDGET -->
   <div class="widget" id="widget">
     <div class="widget-toggle" id="widget-toggle">🎨</div>
@@ -446,7 +439,6 @@
                 </div>
               </div>
             </div>
-
             <!-- GEWERBE: Firma + Ort -->
             <div class="validation-box conditional-field" id="gewerbe-validation">
               <div class="validation-box-title">🔍 Firma & Standort prüfen</div>
@@ -464,7 +456,6 @@
               </div>
               <div class="validation-status" id="gewerbe-status"></div>
             </div>
-
             <!-- PRIVAT: Nur Ort -->
             <div class="validation-box" id="privat-validation">
               <div class="validation-box-title">🔍 Standort prüfen</div>
@@ -478,13 +469,11 @@
               </div>
               <div class="validation-status" id="privat-status"></div>
             </div>
-
             <!-- Name -->
             <div class="form-group">
               <label class="form-label">Ihr Name <span class="required">*</span></label>
               <input type="text" class="form-input" id="name" placeholder="Vor- und Nachname" required>
             </div>
-
             <!-- Telefon -->
             <div class="form-group">
               <label class="form-label">Telefonnummer <span class="required">*</span></label>
@@ -493,7 +482,6 @@
                 <span class="phone-status" id="phone-status"></span>
               </div>
             </div>
-
             <!-- Leistung -->
             <div class="form-section">
               <div class="form-section-title">Projektdetails</div>
@@ -510,19 +498,16 @@
                 </select>
               </div>
             </div>
-
             <!-- Größe -->
             <div class="form-group">
               <label class="form-label">Ungefähre Größe <span class="required">*</span></label>
               <input type="text" class="form-input" id="size" placeholder="z.B. 50 m² oder 3 Türen" required>
             </div>
-
             <!-- Zeitraum -->
             <div class="form-group">
               <label class="form-label">Gewünschter Zeitraum <span class="required">*</span></label>
               <input type="text" class="form-input" id="timeframe" placeholder="z.B. Anfang März, KW 12" required>
             </div>
-
             <!-- Bilder -->
             <div class="form-group">
               <label class="form-label">Bilder vom Objekt (optional)</label>
@@ -534,7 +519,6 @@
               </div>
               <div class="file-list" id="file-list"></div>
             </div>
-
             <!-- Checklist -->
             <div class="validation-checklist">
               <div class="validation-checklist-title">Checkliste vor Absenden</div>
@@ -547,8 +531,7 @@
                 <span>Telefonnummer gültig</span>
               </div>
             </div>
-
-            <!-- DSGVO (NEU) -->
+            <!-- DSGVO -->
             <div class="dsgvo-box" id="dsgvo-box">
               <label class="dsgvo-row" for="dsgvo-checkbox">
                 <input type="checkbox" id="dsgvo-checkbox">
@@ -558,7 +541,6 @@
                   zu.
                 </span>
               </label>
-
               <div class="dsgvo-details" id="dsgvo-details">
                 <div>
                   <strong style="color: var(--accent-light); font-weight: 600;">Kurzinfo:</strong>
@@ -568,14 +550,12 @@
                 </div>
               </div>
             </div>
-
             <button type="submit" class="submit-btn" id="submit-btn" disabled>
               <span class="spinner"></span>
               <span class="btn-text">🚀 Anfrage absenden</span>
             </button>
           </form>
         </div>
-
         <!-- RESULT VIEW -->
         <div class="result-view" id="result-view">
           <div class="result-success">
@@ -600,38 +580,28 @@
             <div class="result-row highlight"><span class="label">💰 Preisschätzung</span><span class="value" id="result-price">-</span></div>
           </div>
           <p style="font-size:12px;color:var(--text-muted);text-align:center;margin-bottom:20px;">Dies ist eine unverbindliche Schätzung. Nach Besichtigung kann der Preis um ±15-20% abweichen.</p>
-
           <button type="button" class="btn-new-request" id="btn-new-request">← Neue Anfrage stellen</button>
         </div>
       </div>
     </div>
   </div>
-
   <div class="toast" id="toast"></div>
-
   <script>
     (function() {
       // ============ WEBHOOKS ============
       const WEBHOOK_VALIDATE  = "https://seidel1502.app.n8n.cloud/webhook/3ad0bd7f-1b6e-4501-ba99-0cf05a2b4565";
       const WEBHOOK_CALCULATE = "https://seidel1502.app.n8n.cloud/webhook/d71b1438-46b7-4d67-9517-c0b2d2be92bd";
-
       const SERVICE_NAMES = {
         1: "Innenwände streichen", 2: "Fassade streichen", 3: "Tapezieren",
         4: "Türen/Fenster lackieren", 5: "Verputzen/Grundieren", 6: "Dekorative Techniken"
       };
-
       const $ = id => document.getElementById(id);
-
-      // (NEU) DSGVO in validationState integriert
       let validationState = { locationValid: false, phoneValid: false, dsgvoAccepted: false, distance: null };
-
       let uploadedFiles = [];
       let currentRequestId = null;
       let currentFormData = {};
-
       // Toggle Widget
       $('widget-toggle').onclick = () => $('widget-window').classList.toggle('is-open');
-
       // Customer Type Toggle
       document.querySelectorAll('input[name="customerType"]').forEach(r => {
         r.onchange = e => {
@@ -642,27 +612,22 @@
           updateUI();
         };
       });
-
-      // (NEU) DSGVO Details Toggle
+      // DSGVO Details Toggle
       $('dsgvo-toggle').onclick = () => {
         $('dsgvo-details').classList.toggle('visible');
       };
-
-      // (NEU) DSGVO Checkbox Pflicht
+      // DSGVO Checkbox Pflicht
       $('dsgvo-checkbox').onchange = e => {
         validationState.dsgvoAccepted = !!e.target.checked;
         updateUI();
       };
-
       // Validate GEWERBE
       $('validate-gewerbe-btn').onclick = async () => {
         const company = $('company').value.trim();
         const location = $('location-gewerbe').value.trim();
         if (!company || !location) return showStatus('gewerbe-status', 'error', '❌ Bitte Firmenname und Ort eingeben');
-
         const btn = $('validate-gewerbe-btn');
         btn.classList.add('loading'); btn.disabled = true;
-
         try {
           const res = await fetch(WEBHOOK_VALIDATE, {
             method: 'POST',
@@ -670,7 +635,6 @@
             body: JSON.stringify({ type: 'gewerbe', company, location })
           });
           const data = await res.json();
-
           if (data.valid) {
             validationState.locationValid = true;
             validationState.distance = data.distance;
@@ -685,15 +649,12 @@
         btn.classList.remove('loading'); btn.disabled = false;
         updateUI();
       };
-
       // Validate PRIVAT
       $('validate-privat-btn').onclick = async () => {
         const location = $('location-privat').value.trim();
         if (!location) return showStatus('privat-status', 'error', '❌ Bitte Ort eingeben');
-
         const btn = $('validate-privat-btn');
         btn.classList.add('loading'); btn.disabled = true;
-
         try {
           const res = await fetch(WEBHOOK_VALIDATE, {
             method: 'POST',
@@ -701,7 +662,6 @@
             body: JSON.stringify({ type: 'privat', location })
           });
           const data = await res.json();
-
           if (data.valid) {
             validationState.locationValid = true;
             validationState.distance = data.distance;
@@ -717,42 +677,34 @@
         btn.classList.remove('loading'); btn.disabled = false;
         updateUI();
       };
-
       // Phone Validation (Frontend)
       $('phone').oninput = e => {
         const phone = e.target.value.replace(/\s/g, '');
         const valid = /^(\+49|0)[1-7]\d{8,11}$/.test(phone);
-
         $('phone-status').textContent = phone.length === 0 ? '' : valid ? '✅' : phone.length >= 6 ? '❌' : '';
         $('phone').classList.toggle('valid', valid);
         $('phone').classList.toggle('invalid', phone.length >= 6 && !valid);
         validationState.phoneValid = valid;
         updateUI();
       };
-
       // Helpers
       function showStatus(id, type, msg) {
         $(id).className = `validation-status visible ${type}`;
         $(id).textContent = msg;
       }
-
       function updateUI() {
         const loc = $('check-location'), ph = $('check-phone');
         loc.className = validationState.locationValid ? 'checklist-item checked' : 'checklist-item unchecked';
         loc.querySelector('.checklist-icon').textContent = validationState.locationValid ? '✓' : '○';
         ph.className = validationState.phoneValid ? 'checklist-item checked' : 'checklist-item unchecked';
         ph.querySelector('.checklist-icon').textContent = validationState.phoneValid ? '✓' : '○';
-
-        // (NEU) DSGVO muss ebenfalls erfüllt sein
         $('submit-btn').disabled = !(validationState.locationValid && validationState.phoneValid && validationState.dsgvoAccepted);
       }
-
       function showToast(msg, type = 'success') {
         $('toast').textContent = msg;
         $('toast').className = 'toast visible' + (type === 'error' ? ' error' : '');
         setTimeout(() => $('toast').classList.remove('visible'), 3500);
       }
-
       // File Upload
       $('images').onchange = e => {
         Array.from(e.target.files).forEach(f => {
@@ -762,7 +714,6 @@
         renderFiles();
         e.target.value = '';
       };
-
       function renderFiles() {
         $('file-list').innerHTML = uploadedFiles.map((f, i) =>
           `<div class="file-item">📷 ${f.name.slice(0,20)}${f.name.length>20?'...':''}<span class="file-item-remove" data-i="${i}">✕</span></div>`
@@ -772,21 +723,15 @@
           renderFiles();
         });
       }
-
       // Form Submit
       $('contact-form').onsubmit = async e => {
         e.preventDefault();
-
-        // (NEU) DSGVO ist Pflicht
         if (!validationState.locationValid || !validationState.phoneValid || !validationState.dsgvoAccepted) return;
-
         $('loading-overlay').classList.add('visible');
         $('submit-btn').disabled = true;
-
         const isGewerbe = document.querySelector('input[name="customerType"]:checked').value === 'gewerbe';
         const serviceId = +$('service').value;
         const sizeNum = parseFloat($('size').value.replace(/[^\d.,]/g, '').replace(',', '.')) || 30;
-
         currentFormData = {
           customerType: isGewerbe ? 'gewerbe' : 'privat',
           company: isGewerbe ? $('company').value : '',
@@ -798,15 +743,13 @@
           size: $('size').value, sizeNumber: sizeNum,
           timeframe: $('timeframe').value,
           imagesCount: uploadedFiles.length,
-          dsgvoAccepted: true,                 // (NEU) fürs Backend
+          dsgvoAccepted: true,
           timestamp: new Date().toISOString()
         };
-
         try {
           const fd = new FormData();
           fd.append('formData', JSON.stringify(currentFormData));
-          uploadedFiles.forEach((f, i) => fd.append(`image_${i}`, f));
-
+          uploadedFiles.forEach((f, i) => fd.append('image_' + i, f));
           const res = await fetch(WEBHOOK_CALCULATE, { method: 'POST', body: fd });
           const data = await res.json();
           currentRequestId = data.requestId;
@@ -817,7 +760,6 @@
         $('loading-overlay').classList.remove('visible');
         updateUI();
       };
-
       function showResult(d, r) {
         $('result-type').textContent = d.customerType === 'gewerbe' ? 'Gewerblich 🏢' : 'Privat 🏠';
         $('result-company-row').style.display = d.company ? 'flex' : 'none';
@@ -831,30 +773,24 @@
         $('result-duration').textContent = r.duration || '-';
         $('result-workers').textContent = r.workers || '-';
         $('result-price').textContent = r.price ? `ca. ${r.price.toLocaleString('de-DE')} €` : '-';
-
         $('form-view').style.display = 'none';
         $('result-view').classList.add('visible');
         $('widget-body').scrollTop = 0;
       }
-
       // Reset
       $('btn-new-request').onclick = () => {
         $('contact-form').reset();
         uploadedFiles = [];
         $('file-list').innerHTML = '';
         validationState = { locationValid: false, phoneValid: false, dsgvoAccepted: false, distance: null };
-
         $('gewerbe-validation').classList.remove('visible');
         $('privat-validation').style.display = 'block';
         $('gewerbe-status').classList.remove('visible');
         $('privat-status').classList.remove('visible');
         $('phone').classList.remove('valid', 'invalid');
         $('phone-status').textContent = '';
-
-        // (NEU) DSGVO Reset
         $('dsgvo-checkbox').checked = false;
         $('dsgvo-details').classList.remove('visible');
-
         updateUI();
         $('result-view').classList.remove('visible');
         $('form-view').style.display = 'block';
