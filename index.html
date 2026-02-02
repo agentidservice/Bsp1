@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>Agentic Solutions – Agent Demos</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -137,23 +137,32 @@
     .form-group { margin-bottom: 16px; }
     .form-label { display: block; font-size: 13px; font-weight: 500; color: var(--text-muted); margin-bottom: 6px; }
     .form-label .required { color: var(--error); }
-    .form-input, .form-select {
+    .form-label .optional { color: rgba(255, 255, 255, 0.35); font-weight: 400; }
+    .form-input, .form-select, .form-textarea {
       width: 100%; padding: 12px 14px;
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: var(--radius-sm);
-      color: var(--text); font-size: 14px; font-family: inherit;
+      color: var(--text); font-size: 16px; font-family: inherit;
       transition: all 0.2s ease;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
     }
-    .form-input:focus, .form-select:focus {
+    .form-textarea {
+      resize: vertical;
+      min-height: 80px;
+      line-height: 1.5;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
       outline: none; border-color: var(--accent);
       box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.2);
     }
-    .form-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+    .form-input::placeholder, .form-textarea::placeholder { color: rgba(255, 255, 255, 0.3); }
     .form-input.valid { border-color: var(--success); }
     .form-input.invalid { border-color: var(--error); }
     .form-select {
-      cursor: pointer; appearance: none;
+      cursor: pointer;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%238892b0' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
       background-repeat: no-repeat; background-position: right 12px center; background-size: 16px;
     }
@@ -275,6 +284,8 @@
     .dsgvo-row input {
       margin-top: 3px;
       accent-color: var(--accent-light);
+      width: 18px;
+      height: 18px;
     }
     .dsgvo-toggle {
       background: none;
@@ -313,41 +324,67 @@
     }
     .submit-btn.loading .spinner { display: block; }
     .submit-btn.loading .btn-text { display: none; }
-    /* Result View */
+    /* Result View - Kompakt */
     .result-view { display: none; }
     .result-view.visible { display: block; animation: fadeIn 0.4s ease; }
-    .result-success { text-align: center; padding: 20px 0; }
-    .result-success-icon { font-size: 48px; margin-bottom: 12px; }
-    .result-success h3 { font-size: 20px; font-weight: 600; margin: 0 0 8px 0; }
-    .result-success p { font-size: 14px; color: var(--text-muted); margin: 0; }
+    .result-success { text-align: center; padding: 12px 0 8px; }
+    .result-success-icon { font-size: 32px; margin-bottom: 6px; }
+    .result-success h3 { font-size: 17px; font-weight: 600; margin: 0 0 4px 0; }
+    .result-success p { font-size: 13px; color: var(--text-muted); margin: 0; }
+    /* Highlight Box für Preisschätzung */
+    .result-highlight-box {
+      background: linear-gradient(135deg, rgba(217, 119, 6, 0.2) 0%, rgba(245, 158, 11, 0.1) 100%);
+      border: 1px solid rgba(217, 119, 6, 0.3);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin: 12px 0 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      text-align: center;
+    }
+    .result-highlight-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .result-highlight-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .result-highlight-value {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--accent-light);
+    }
+    .result-highlight-item.main .result-highlight-value {
+      font-size: 22px;
+    }
     .result-summary {
       background: rgba(0, 0, 0, 0.3);
-      border-radius: var(--radius-md); padding: 20px; margin: 24px 0;
+      border-radius: var(--radius-md); padding: 16px; margin: 0 0 12px;
     }
     .result-summary-title {
-      font-size: 12px; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 1px; color: var(--accent-light); margin-bottom: 16px;
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--accent-light); margin-bottom: 12px;
     }
     .result-row {
       display: flex; justify-content: space-between;
-      padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      font-size: 14px;
+      padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 13px;
     }
     .result-row:last-child { border-bottom: none; }
     .result-row .label { color: var(--text-muted); }
     .result-row .value { color: var(--text); font-weight: 500; text-align: right; }
-    .result-row.highlight {
-      background: rgba(217, 119, 6, 0.15);
-      margin: 10px -20px; padding: 14px 20px;
-      border-radius: 8px; border-bottom: none;
-    }
-    .result-row.highlight .value { font-size: 22px; color: var(--accent-light); }
-    .result-divider { height: 1px; background: rgba(255, 255, 255, 0.1); margin: 16px 0; }
-    .btn-new-request {
-      width: 100%; padding: 14px; background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: var(--radius-sm); color: var(--text-muted);
-      font-size: 14px; font-weight: 500; cursor: pointer; margin-top: 16px;
+    .result-divider { height: 1px; background: rgba(255, 255, 255, 0.1); margin: 10px 0; }
+    .result-disclaimer {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.4);
+      text-align: center;
+      margin-top: 12px;
+      line-height: 1.4;
     }
     .loading-overlay {
       position: absolute; inset: 0;
@@ -379,6 +416,28 @@
       .widget-window { width: calc(100vw - 24px); height: calc(100vh - 100px); right: -8px; }
       .validation-row { flex-direction: column; }
       .validate-btn { width: 100%; justify-content: center; }
+      .result-highlight-box {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .result-highlight-item {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .result-highlight-item:last-child {
+        border-bottom: none;
+      }
+      .result-highlight-item.main {
+        order: -1;
+        background: rgba(217, 119, 6, 0.15);
+        margin: -16px -16px 8px;
+        padding: 12px 16px;
+        border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+        border-bottom: none;
+      }
     }
   </style>
 </head>
@@ -474,6 +533,11 @@
               <label class="form-label">Ihr Name <span class="required">*</span></label>
               <input type="text" class="form-input" id="name" placeholder="Vor- und Nachname" required>
             </div>
+            <!-- E-Mail (optional) -->
+            <div class="form-group">
+              <label class="form-label">E-Mail-Adresse <span class="optional">(optional)</span></label>
+              <input type="email" class="form-input" id="email" placeholder="ihre@email.de">
+            </div>
             <!-- Telefon -->
             <div class="form-group">
               <label class="form-label">Telefonnummer <span class="required">*</span></label>
@@ -508,9 +572,14 @@
               <label class="form-label">Gewünschter Zeitraum <span class="required">*</span></label>
               <input type="text" class="form-input" id="timeframe" placeholder="z.B. Anfang März, KW 12" required>
             </div>
+            <!-- Beschreibung (optional) -->
+            <div class="form-group">
+              <label class="form-label">Beschreibung <span class="optional">(optional)</span></label>
+              <textarea class="form-textarea" id="description" placeholder="Zusätzliche Informationen zum Projekt, besondere Wünsche, Zustand der Flächen..."></textarea>
+            </div>
             <!-- Bilder -->
             <div class="form-group">
-              <label class="form-label">Bilder vom Objekt (optional)</label>
+              <label class="form-label">Bilder vom Objekt <span class="optional">(optional)</span></label>
               <div class="file-upload">
                 <input type="file" id="images" multiple accept="image/*">
                 <div class="file-upload-icon">📷</div>
@@ -561,26 +630,38 @@
           <div class="result-success">
             <div class="result-success-icon">✅</div>
             <h3>Anfrage erhalten!</h3>
-            <p>Hier ist Ihre Projektübersicht</p>
+            <p>Ihre Projektübersicht</p>
+          </div>
+          <!-- Highlight Box mit Preis, Dauer, MA -->
+          <div class="result-highlight-box">
+            <div class="result-highlight-item main">
+              <span class="result-highlight-label">💰 Preisschätzung</span>
+              <span class="result-highlight-value" id="result-price">-</span>
+            </div>
+            <div class="result-highlight-item">
+              <span class="result-highlight-label">📅 Dauer</span>
+              <span class="result-highlight-value" id="result-duration">-</span>
+            </div>
+            <div class="result-highlight-item">
+              <span class="result-highlight-label">👷 MA</span>
+              <span class="result-highlight-value" id="result-workers">-</span>
+            </div>
           </div>
           <div class="result-summary">
-            <div class="result-summary-title">📋 Zusammenfassung</div>
+            <div class="result-summary-title">📋 Details</div>
             <div class="result-row"><span class="label">Kundentyp</span><span class="value" id="result-type">-</span></div>
             <div class="result-row" id="result-company-row" style="display:none"><span class="label">Firma</span><span class="value" id="result-company">-</span></div>
             <div class="result-row"><span class="label">Name</span><span class="value" id="result-name">-</span></div>
+            <div class="result-row" id="result-email-row" style="display:none"><span class="label">E-Mail</span><span class="value" id="result-email">-</span></div>
             <div class="result-row"><span class="label">Telefon</span><span class="value" id="result-phone">-</span></div>
             <div class="result-row"><span class="label">Standort</span><span class="value" id="result-location">-</span></div>
             <div class="result-divider"></div>
             <div class="result-row"><span class="label">Leistung</span><span class="value" id="result-service">-</span></div>
             <div class="result-row"><span class="label">Umfang</span><span class="value" id="result-size">-</span></div>
             <div class="result-row"><span class="label">Zeitraum</span><span class="value" id="result-timeframe">-</span></div>
-            <div class="result-divider"></div>
-            <div class="result-row"><span class="label">📅 Geschätzte Dauer</span><span class="value" id="result-duration">-</span></div>
-            <div class="result-row"><span class="label">👷 Mitarbeiter</span><span class="value" id="result-workers">-</span></div>
-            <div class="result-row highlight"><span class="label">💰 Preisschätzung</span><span class="value" id="result-price">-</span></div>
+            <div class="result-row" id="result-description-row" style="display:none"><span class="label">Beschreibung</span><span class="value" id="result-description">-</span></div>
           </div>
-          <p style="font-size:12px;color:var(--text-muted);text-align:center;margin-bottom:20px;">Dies ist eine unverbindliche Schätzung. Nach Besichtigung kann der Preis um ±15-20% abweichen.</p>
-          <button type="button" class="btn-new-request" id="btn-new-request">← Neue Anfrage stellen</button>
+          <p class="result-disclaimer">Unverbindliche Schätzung. Nach Besichtigung kann der Preis um ±15-20% abweichen.</p>
         </div>
       </div>
     </div>
@@ -613,7 +694,9 @@
         };
       });
       // DSGVO Details Toggle
-      $('dsgvo-toggle').onclick = () => {
+      $('dsgvo-toggle').onclick = e => {
+        e.preventDefault();
+        e.stopPropagation();
         $('dsgvo-details').classList.toggle('visible');
       };
       // DSGVO Checkbox Pflicht
@@ -741,12 +824,14 @@
           customerType: isGewerbe ? 'gewerbe' : 'privat',
           company: isGewerbe ? $('company').value : '',
           name: $('name').value,
+          email: $('email').value.trim(),
           phone: $('phone').value,
           location: isGewerbe ? $('location-gewerbe').value : $('location-privat').value,
           distance: validationState.distance,
           serviceId, serviceName: SERVICE_NAMES[serviceId] || '',
           size: $('size').value, sizeNumber: sizeNum,
           timeframe: $('timeframe').value,
+          description: $('description').value.trim(),
           imagesCount: uploadedFiles.length,
           dsgvoAccepted: true,
           timestamp: new Date().toISOString()
@@ -766,41 +851,28 @@
         updateUI();
       };
       function showResult(d, r) {
+        // Highlight Box
+        $('result-price').textContent = r.price ? `ca. ${r.price.toLocaleString('de-DE')} €` : '-';
+        $('result-duration').textContent = r.duration || '-';
+        $('result-workers').textContent = r.workers || '-';
+        // Details
         $('result-type').textContent = d.customerType === 'gewerbe' ? 'Gewerblich 🏢' : 'Privat 🏠';
         $('result-company-row').style.display = d.company ? 'flex' : 'none';
         $('result-company').textContent = d.company;
         $('result-name').textContent = d.name;
+        $('result-email-row').style.display = d.email ? 'flex' : 'none';
+        $('result-email').textContent = d.email;
         $('result-phone').textContent = d.phone;
         $('result-location').textContent = `${d.location} (${d.distance}km)`;
         $('result-service').textContent = d.serviceName;
         $('result-size').textContent = d.size;
         $('result-timeframe').textContent = d.timeframe;
-        $('result-duration').textContent = r.duration || '-';
-        $('result-workers').textContent = r.workers || '-';
-        $('result-price').textContent = r.price ? `ca. ${r.price.toLocaleString('de-DE')} €` : '-';
+        $('result-description-row').style.display = d.description ? 'flex' : 'none';
+        $('result-description').textContent = d.description;
         $('form-view').style.display = 'none';
         $('result-view').classList.add('visible');
         $('widget-body').scrollTop = 0;
       }
-      // Reset
-      $('btn-new-request').onclick = () => {
-        $('contact-form').reset();
-        uploadedFiles = [];
-        $('file-list').innerHTML = '';
-        validationState = { locationValid: false, phoneValid: false, dsgvoAccepted: false, distance: null };
-        $('gewerbe-validation').classList.remove('visible');
-        $('privat-validation').style.display = 'block';
-        $('gewerbe-status').classList.remove('visible');
-        $('privat-status').classList.remove('visible');
-        $('phone').classList.remove('valid', 'invalid');
-        $('phone-status').textContent = '';
-        $('dsgvo-checkbox').checked = false;
-        $('dsgvo-details').classList.remove('visible');
-        updateUI();
-        $('result-view').classList.remove('visible');
-        $('form-view').style.display = 'block';
-        $('widget-body').scrollTop = 0;
-      };
     })();
   </script>
 </body>
