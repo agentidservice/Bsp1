@@ -226,6 +226,15 @@
     .conditional-field.visible { display: block; }
     .phone-wrapper { position: relative; }
     .phone-status { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 16px; }
+    .name-wrapper { position: relative; }
+    .name-status { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 16px; }
+    .field-error {
+      font-size: 12px;
+      color: var(--error);
+      margin-top: 6px;
+      display: none;
+    }
+    .field-error.visible { display: block; }
     /* File Upload */
     .file-upload {
       border: 2px dashed rgba(255, 255, 255, 0.15);
@@ -531,7 +540,11 @@
             <!-- Name -->
             <div class="form-group">
               <label class="form-label">Ihr Name <span class="required">*</span></label>
-              <input type="text" class="form-input" id="name" placeholder="Vor- und Nachname" required>
+              <div class="name-wrapper">
+                <input type="text" class="form-input" id="name" placeholder="Vor- und Nachname" required>
+                <span class="name-status" id="name-status"></span>
+              </div>
+              <div class="field-error" id="name-error"></div>
             </div>
             <!-- E-Mail (optional) -->
             <div class="form-group">
@@ -594,6 +607,10 @@
               <div class="checklist-item unchecked" id="check-location">
                 <span class="checklist-icon">○</span>
                 <span>Standort geprüft</span>
+              </div>
+              <div class="checklist-item unchecked" id="check-name">
+                <span class="checklist-icon">○</span>
+                <span>Name gültig</span>
               </div>
               <div class="checklist-item unchecked" id="check-phone">
                 <span class="checklist-icon">○</span>
@@ -677,7 +694,108 @@
         4: "Türen/Fenster lackieren", 5: "Verputzen/Grundieren", 6: "Dekorative Techniken"
       };
       const $ = id => document.getElementById(id);
-      let validationState = { locationValid: false, phoneValid: false, dsgvoAccepted: false, distance: null };
+      let validationState = { locationValid: false, phoneValid: false, nameValid: false, dsgvoAccepted: false, distance: null };
+      
+      // ============ NAME VALIDATION ============
+      const BLOCKED_WORDS = [
+        // Deutsche Schimpfwörter
+        'arsch', 'arschloch', 'wichser', 'hurensohn', 'fotze', 'fick', 'ficken', 'scheiße', 'scheisse', 
+        'scheiß', 'kacke', 'pisser', 'schwanz', 'hure', 'nutte', 'bastard', 'idiot', 'depp', 'trottel',
+        'vollidiot', 'dummkopf', 'missgeburt', 'spast', 'schwuchtel', 'kanake', 'nazi', 'hitler',
+        // Englische Schimpfwörter
+        'fuck', 'shit', 'asshole', 'bitch', 'cunt', 'dick', 'pussy', 'whore', 'slut', 'bastard',
+        'nigger', 'faggot', 'retard'
+      ];
+      
+      const FAKE_NAMES = [
+        // Schauspieler
+        'brad pitt', 'angelina jolie', 'tom cruise', 'johnny depp', 'leonardo dicaprio', 'leo dicaprio',
+        'george clooney', 'julia roberts', 'will smith', 'dwayne johnson', 'the rock', 'robert downey',
+        'scarlett johansson', 'jennifer lawrence', 'chris hemsworth', 'chris evans', 'ryan gosling',
+        'ryan reynolds', 'keanu reeves', 'morgan freeman', 'samuel jackson', 'denzel washington',
+        'matt damon', 'ben affleck', 'tom hanks', 'christian bale', 'heath ledger', 'joaquin phoenix',
+        'margot robbie', 'gal gadot', 'emma watson', 'emma stone', 'natalie portman', 'anne hathaway',
+        'meryl streep', 'cate blanchett', 'sandra bullock', 'nicole kidman', 'charlize theron',
+        'til schweiger', 'elyas mbarek', 'matthias schweighöfer', 'daniel brühl',
+        // Deutsche Promis
+        'günther jauch', 'thomas gottschalk', 'markus lanz', 'jan böhmermann', 'oliver pocher',
+        'dieter bohlen', 'heidi klum', 'stefanie giesinger', 'lena meyer landrut',
+        // Politiker
+        'angela merkel', 'olaf scholz', 'friedrich merz', 'robert habeck', 'christian lindner',
+        'annalena baerbock', 'markus söder', 'donald trump', 'joe biden', 'barack obama',
+        'elon musk', 'jeff bezos', 'bill gates', 'mark zuckerberg', 'steve jobs',
+        // Fiktive Charaktere
+        'harry potter', 'hermine granger', 'ron weasley', 'darth vader', 'luke skywalker',
+        'james bond', 'batman', 'superman', 'spider man', 'spiderman', 'iron man', 'ironman',
+        'peter parker', 'bruce wayne', 'tony stark', 'thor odinson', 'captain america',
+        'spongebob', 'mickey mouse', 'donald duck', 'bugs bunny', 'homer simpson', 'bart simpson',
+        'walter white', 'jesse pinkman', 'tony soprano', 'michael scott', 'dwight schrute',
+        // Test-Namen
+        'max mustermann', 'erika mustermann', 'john doe', 'jane doe', 'test test', 'asdf asdf',
+        'abc abc', 'xxx xxx', 'aaa aaa', 'bbb bbb', 'test name', 'muster mann', 'beispiel name'
+      ];
+      
+      function validateName(name) {
+        const trimmed = name.trim();
+        const lower = trimmed.toLowerCase();
+        
+        // Mindestlänge
+        if (trimmed.length < 3) {
+          return { valid: false, message: 'Name zu kurz' };
+        }
+        
+        // Maxlänge
+        if (trimmed.length > 100) {
+          return { valid: false, message: 'Name zu lang' };
+        }
+        
+        // Muss mindestens 2 Wörter haben (Vor- und Nachname)
+        const words = trimmed.split(/\s+/).filter(w => w.length > 0);
+        if (words.length < 2) {
+          return { valid: false, message: 'Bitte Vor- und Nachname angeben' };
+        }
+        
+        // Jedes Wort mindestens 2 Zeichen
+        if (words.some(w => w.length < 2)) {
+          return { valid: false, message: 'Name ungültig' };
+        }
+        
+        // Keine Zahlen
+        if (/\d/.test(trimmed)) {
+          return { valid: false, message: 'Name darf keine Zahlen enthalten' };
+        }
+        
+        // Keine Sonderzeichen (außer Bindestrich, Apostroph, Punkt)
+        if (/[^a-zA-ZäöüÄÖÜßéèêëàâáíìîïóòôõúùûñçćčžšđ\s\-'.]/i.test(trimmed)) {
+          return { valid: false, message: 'Ungültige Zeichen im Namen' };
+        }
+        
+        // Schimpfwörter prüfen
+        for (const word of BLOCKED_WORDS) {
+          if (lower.includes(word)) {
+            return { valid: false, message: 'Bitte geben Sie Ihren echten Namen ein' };
+          }
+        }
+        
+        // Fake-Namen prüfen
+        for (const fakeName of FAKE_NAMES) {
+          if (lower.includes(fakeName) || fakeName.includes(lower)) {
+            return { valid: false, message: 'Bitte geben Sie Ihren echten Namen ein' };
+          }
+        }
+        
+        // Wiederholte Buchstaben (aaaa, bbbb)
+        if (/(.)\1{3,}/i.test(trimmed)) {
+          return { valid: false, message: 'Ungültiger Name' };
+        }
+        
+        // Gleichlautende Vor- und Nachname
+        if (words.length >= 2 && words[0].toLowerCase() === words[1].toLowerCase()) {
+          return { valid: false, message: 'Vor- und Nachname identisch' };
+        }
+        
+        return { valid: true, message: '' };
+      }
       let uploadedFiles = [];
       let currentRequestId = null;
       let currentFormData = {};
@@ -775,18 +893,46 @@
         validationState.phoneValid = valid;
         updateUI();
       };
+      
+      // Name Validation (Frontend)
+      $('name').oninput = e => {
+        const name = e.target.value;
+        if (name.trim().length === 0) {
+          $('name').classList.remove('valid', 'invalid');
+          $('name-status').textContent = '';
+          $('name-error').textContent = '';
+          $('name-error').classList.remove('visible');
+          validationState.nameValid = false;
+        } else {
+          const result = validateName(name);
+          $('name').classList.toggle('valid', result.valid);
+          $('name').classList.toggle('invalid', !result.valid && name.trim().length >= 3);
+          $('name-status').textContent = result.valid ? '✅' : (name.trim().length >= 3 ? '❌' : '');
+          if (!result.valid && name.trim().length >= 3) {
+            $('name-error').textContent = result.message;
+            $('name-error').classList.add('visible');
+          } else {
+            $('name-error').textContent = '';
+            $('name-error').classList.remove('visible');
+          }
+          validationState.nameValid = result.valid;
+        }
+        updateUI();
+      };
       // Helpers
       function showStatus(id, type, msg) {
         $(id).className = `validation-status visible ${type}`;
         $(id).textContent = msg;
       }
       function updateUI() {
-        const loc = $('check-location'), ph = $('check-phone');
+        const loc = $('check-location'), nm = $('check-name'), ph = $('check-phone');
         loc.className = validationState.locationValid ? 'checklist-item checked' : 'checklist-item unchecked';
         loc.querySelector('.checklist-icon').textContent = validationState.locationValid ? '✓' : '○';
+        nm.className = validationState.nameValid ? 'checklist-item checked' : 'checklist-item unchecked';
+        nm.querySelector('.checklist-icon').textContent = validationState.nameValid ? '✓' : '○';
         ph.className = validationState.phoneValid ? 'checklist-item checked' : 'checklist-item unchecked';
         ph.querySelector('.checklist-icon').textContent = validationState.phoneValid ? '✓' : '○';
-        $('submit-btn').disabled = !(validationState.locationValid && validationState.phoneValid && validationState.dsgvoAccepted);
+        $('submit-btn').disabled = !(validationState.locationValid && validationState.nameValid && validationState.phoneValid && validationState.dsgvoAccepted);
       }
       function showToast(msg, type = 'success') {
         $('toast').textContent = msg;
@@ -814,7 +960,7 @@
       // Form Submit
       $('contact-form').onsubmit = async e => {
         e.preventDefault();
-        if (!validationState.locationValid || !validationState.phoneValid || !validationState.dsgvoAccepted) return;
+        if (!validationState.locationValid || !validationState.nameValid || !validationState.phoneValid || !validationState.dsgvoAccepted) return;
         $('loading-overlay').classList.add('visible');
         $('submit-btn').disabled = true;
         const isGewerbe = document.querySelector('input[name="customerType"]:checked').value === 'gewerbe';
