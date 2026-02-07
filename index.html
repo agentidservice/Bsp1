@@ -21,8 +21,10 @@
       --radius-sm: 12px;
       --widget-width: min(440px, 95vw);
       --widget-height: min(680px, 88vh);
-      --accent: #d97706;
-      --accent-light: #f59e0b;
+      --accent-orange: #d97706;
+      --accent-orange-light: #f59e0b;
+      --accent-blue: #6366f1;
+      --accent-blue-light: #818cf8;
       --success: #22c55e;
       --error: #ef4444;
     }
@@ -62,7 +64,8 @@
     .agentic-badge-subtitle { font-size: 11px; color: var(--text-muted); }
     .wrap { max-width: 900px; margin: 0 auto; padding: 100px 24px 180px; }
     .page-title { margin: 0 0 8px; font-size: clamp(28px, 4vw, 42px); font-weight: 600; }
-    .page-subtitle { margin: 0 0 60px; color: var(--text-muted); font-size: 15px; line-height: 1.6; }
+    .page-subtitle { margin: 0 0 40px; color: var(--text-muted); font-size: 15px; line-height: 1.6; }
+    .demo-cards { display: flex; flex-direction: column; gap: 20px; }
     .demo-card {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(255, 255, 255, 0.06);
@@ -72,8 +75,14 @@
     .demo-card-icon {
       width: 52px; height: 52px; border-radius: 14px;
       display: flex; align-items: center; justify-content: center; font-size: 26px;
+    }
+    .demo-card-icon.orange {
       background: linear-gradient(135deg, rgba(217, 119, 6, 0.2) 0%, rgba(245, 158, 11, 0.1) 100%);
       border: 1px solid rgba(217, 119, 6, 0.3);
+    }
+    .demo-card-icon.blue {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(129, 140, 248, 0.1) 100%);
+      border: 1px solid rgba(99, 102, 241, 0.3);
     }
     .demo-card-title { font-size: 20px; font-weight: 600; margin: 0; }
     .demo-card-desc { color: var(--text-muted); font-size: 14px; margin: 0; }
@@ -83,11 +92,14 @@
       background: rgba(255, 255, 255, 0.04); border-radius: 8px;
       font-size: 12px; color: var(--text-muted);
     }
-    /* Widget */
-    .widget { position: fixed; right: var(--gap); bottom: var(--gap); z-index: 9999; }
-    .widget-toggle {
+
+    /* ==================== SHARED WIDGET STYLES ==================== */
+    .widget-base {
+      position: fixed;
+      z-index: 9999;
+    }
+    .widget-toggle-base {
       width: 64px; height: 64px; border-radius: 50%;
-      background: linear-gradient(135deg, #1a1816 0%, #252220 100%);
       border: 1px solid var(--glass-border);
       box-shadow: var(--shadow-strong);
       cursor: pointer;
@@ -95,20 +107,19 @@
       font-size: 28px;
       transition: transform 0.2s ease;
     }
-    .widget-toggle:hover { transform: scale(1.08); }
-    .widget-window {
-      position: absolute; bottom: 76px; right: 0;
+    .widget-toggle-base:hover { transform: scale(1.08); }
+    .widget-window-base {
+      position: absolute;
       width: var(--widget-width); height: var(--widget-height);
       max-height: calc(100vh - 100px);
       border-radius: var(--radius-lg); overflow: hidden;
       box-shadow: var(--shadow-strong);
       border: 1px solid var(--glass-border);
-      background: rgba(22, 20, 16, 0.95);
       backdrop-filter: blur(20px);
       display: none; flex-direction: column;
     }
-    .widget-window.is-open { display: flex; }
-    .widget-header {
+    .widget-window-base.is-open { display: flex; }
+    .widget-header-base {
       padding: 20px 24px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       background: rgba(0, 0, 0, 0.3);
@@ -118,22 +129,12 @@
       font-size: 22px; font-weight: 600; margin: 0 0 4px 0;
     }
     .widget-header-subtitle { font-size: 13px; color: var(--text-muted); margin: 0; }
-    .widget-body { flex: 1; overflow-y: auto; padding: 20px 24px; }
-    .widget-body::-webkit-scrollbar { width: 6px; }
-    .widget-body::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 3px; }
-    /* Form Elements */
-    .welcome-box {
-      background: rgba(217, 119, 6, 0.1);
-      border: 1px solid rgba(217, 119, 6, 0.2);
-      border-radius: var(--radius-md); padding: 16px; margin-bottom: 24px;
-    }
-    .welcome-box p { font-size: 14px; line-height: 1.6; margin: 0; }
-    .welcome-box strong { color: var(--accent-light); }
+    .widget-body-base { flex: 1; overflow-y: auto; padding: 20px 24px; }
+    .widget-body-base::-webkit-scrollbar { width: 6px; }
+    .widget-body-base::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 3px; }
+
+    /* Shared Form Elements */
     .form-section { margin-bottom: 20px; }
-    .form-section-title {
-      font-size: 11px; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 1px; color: var(--accent-light); margin-bottom: 12px;
-    }
     .form-group { margin-bottom: 16px; }
     .form-label { display: block; font-size: 13px; font-weight: 500; color: var(--text-muted); margin-bottom: 6px; }
     .form-label .required { color: var(--error); }
@@ -146,18 +147,8 @@
       color: var(--text); font-size: 16px; font-family: inherit;
       transition: all 0.2s ease;
       -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
     }
-    .form-textarea {
-      resize: vertical;
-      min-height: 80px;
-      line-height: 1.5;
-    }
-    .form-input:focus, .form-select:focus, .form-textarea:focus {
-      outline: none; border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.2);
-    }
+    .form-textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
     .form-input::placeholder, .form-textarea::placeholder { color: rgba(255, 255, 255, 0.3); }
     .form-input.valid { border-color: var(--success); }
     .form-input.invalid { border-color: var(--error); }
@@ -167,23 +158,6 @@
       background-repeat: no-repeat; background-position: right 12px center; background-size: 16px;
     }
     .form-select option { background: #1a1816; }
-    .radio-group { display: flex; gap: 12px; }
-    .radio-option { flex: 1; }
-    .radio-option input { position: absolute; opacity: 0; }
-    .radio-option label {
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      padding: 12px 16px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: var(--radius-sm);
-      cursor: pointer; font-size: 14px; font-weight: 500;
-      transition: all 0.2s ease;
-    }
-    .radio-option input:checked + label {
-      background: rgba(217, 119, 6, 0.2);
-      border-color: var(--accent); color: var(--accent-light);
-    }
-    /* Validation Box */
     .validation-box {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -205,7 +179,7 @@
       display: flex; align-items: center; gap: 6px;
       transition: all 0.2s ease;
     }
-    .validate-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: var(--accent); }
+    .validate-btn:hover { background: rgba(255, 255, 255, 0.1); }
     .validate-btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .validate-btn .spinner {
       width: 14px; height: 14px;
@@ -224,24 +198,28 @@
     .validation-status.error { background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: var(--error); }
     .conditional-field { display: none; animation: fadeIn 0.3s ease; }
     .conditional-field.visible { display: block; }
-    .phone-wrapper { position: relative; }
-    .phone-status { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 16px; }
-    .name-wrapper { position: relative; }
-    .name-status { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 16px; }
-    .field-error {
-      font-size: 12px;
-      color: var(--error);
-      margin-top: 6px;
-      display: none;
-    }
+    .input-wrapper { position: relative; }
+    .input-status { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 16px; }
+    .field-error { font-size: 12px; color: var(--error); margin-top: 6px; display: none; }
     .field-error.visible { display: block; }
+    .radio-group { display: flex; gap: 12px; }
+    .radio-option { flex: 1; }
+    .radio-option input { position: absolute; opacity: 0; }
+    .radio-option label {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-sm);
+      cursor: pointer; font-size: 14px; font-weight: 500;
+      transition: all 0.2s ease;
+    }
     /* File Upload */
     .file-upload {
       border: 2px dashed rgba(255, 255, 255, 0.15);
       border-radius: var(--radius-sm); padding: 20px; text-align: center;
       cursor: pointer; position: relative; transition: all 0.2s ease;
     }
-    .file-upload:hover { border-color: var(--accent); background: rgba(217, 119, 6, 0.05); }
     .file-upload input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
     .file-upload-icon { font-size: 28px; margin-bottom: 8px; }
     .file-upload-text { font-size: 13px; color: var(--text-muted); }
@@ -249,8 +227,7 @@
     .file-list { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
     .file-item {
       display: flex; align-items: center; gap: 6px;
-      padding: 6px 10px; background: rgba(217, 119, 6, 0.15);
-      border-radius: 6px; font-size: 12px;
+      padding: 6px 10px; border-radius: 6px; font-size: 12px;
     }
     .file-item-remove { cursor: pointer; color: var(--error); font-weight: bold; margin-left: 4px; }
     /* Checklist */
@@ -288,96 +265,47 @@
       font-size: 13px; color: var(--text-muted);
       line-height: 1.45;
       cursor: pointer;
-      user-select: none;
     }
-    .dsgvo-row input {
-      margin-top: 3px;
-      accent-color: var(--accent-light);
-      width: 18px;
-      height: 18px;
-    }
+    .dsgvo-row input { margin-top: 3px; width: 18px; height: 18px; }
     .dsgvo-toggle {
-      background: none;
-      border: none;
-      color: var(--accent-light);
-      cursor: pointer;
-      padding: 0;
-      font-size: 13px;
-      text-decoration: underline;
+      background: none; border: none; cursor: pointer;
+      padding: 0; font-size: 13px; text-decoration: underline;
     }
     .dsgvo-details {
       display: none;
-      margin-top: 10px;
-      padding-top: 10px;
+      margin-top: 10px; padding-top: 10px;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.45);
+      font-size: 12px; color: rgba(255, 255, 255, 0.45);
       animation: fadeIn 0.25s ease;
     }
     .dsgvo-details.visible { display: block; }
-    /* Submit Button */
-    .submit-btn {
+    /* Submit Button Base */
+    .submit-btn-base {
       width: 100%; padding: 16px;
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
       border: none; border-radius: var(--radius-sm);
       color: #ffffff; font-size: 15px; font-weight: 600;
       cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
       transition: all 0.2s ease; margin-top: 24px;
     }
-    .submit-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(217, 119, 6, 0.35); }
-    .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-    .submit-btn .spinner {
+    .submit-btn-base:hover:not(:disabled) { transform: translateY(-2px); }
+    .submit-btn-base:disabled { opacity: 0.4; cursor: not-allowed; }
+    .submit-btn-base .spinner {
       width: 18px; height: 18px;
       border: 2px solid transparent; border-top-color: #ffffff;
       border-radius: 50%; animation: spin 0.8s linear infinite; display: none;
     }
-    .submit-btn.loading .spinner { display: block; }
-    .submit-btn.loading .btn-text { display: none; }
-    /* Result View - Kompakt */
+    .submit-btn-base.loading .spinner { display: block; }
+    .submit-btn-base.loading .btn-text { display: none; }
+    /* Result View */
     .result-view { display: none; }
     .result-view.visible { display: block; animation: fadeIn 0.4s ease; }
     .result-success { text-align: center; padding: 12px 0 8px; }
     .result-success-icon { font-size: 32px; margin-bottom: 6px; }
     .result-success h3 { font-size: 17px; font-weight: 600; margin: 0 0 4px 0; }
     .result-success p { font-size: 13px; color: var(--text-muted); margin: 0; }
-    /* Highlight Box für Preisschätzung */
-    .result-highlight-box {
-      background: linear-gradient(135deg, rgba(217, 119, 6, 0.2) 0%, rgba(245, 158, 11, 0.1) 100%);
-      border: 1px solid rgba(217, 119, 6, 0.3);
-      border-radius: var(--radius-md);
-      padding: 16px;
-      margin: 12px 0 16px;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 12px;
-      text-align: center;
-    }
-    .result-highlight-item {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .result-highlight-label {
-      font-size: 11px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .result-highlight-value {
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--accent-light);
-    }
-    .result-highlight-item.main .result-highlight-value {
-      font-size: 22px;
-    }
     .result-summary {
       background: rgba(0, 0, 0, 0.3);
-      border-radius: var(--radius-md); padding: 16px; margin: 0 0 12px;
-    }
-    .result-summary-title {
-      font-size: 11px; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 1px; color: var(--accent-light); margin-bottom: 12px;
+      border-radius: var(--radius-md); padding: 16px; margin: 12px 0;
     }
     .result-row {
       display: flex; justify-content: space-between;
@@ -386,14 +314,11 @@
     }
     .result-row:last-child { border-bottom: none; }
     .result-row .label { color: var(--text-muted); }
-    .result-row .value { color: var(--text); font-weight: 500; text-align: right; }
+    .result-row .value { color: var(--text); font-weight: 500; text-align: right; max-width: 60%; }
     .result-divider { height: 1px; background: rgba(255, 255, 255, 0.1); margin: 10px 0; }
     .result-disclaimer {
-      font-size: 11px;
-      color: rgba(255, 255, 255, 0.4);
-      text-align: center;
-      margin-top: 12px;
-      line-height: 1.4;
+      font-size: 11px; color: rgba(255, 255, 255, 0.4);
+      text-align: center; margin-top: 12px; line-height: 1.4;
     }
     .loading-overlay {
       position: absolute; inset: 0;
@@ -405,7 +330,6 @@
     .loading-spinner {
       width: 48px; height: 48px;
       border: 3px solid rgba(255, 255, 255, 0.1);
-      border-top-color: var(--accent);
       border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 16px;
     }
     .loading-text { font-size: 14px; color: var(--text-muted); }
@@ -421,32 +345,162 @@
     .toast.error { background: var(--error); }
     @keyframes spin { to { transform: rotate(360deg); } }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ==================== MALERBETRIEB WIDGET (ORANGE) ==================== */
+    #maler-widget { right: var(--gap); bottom: var(--gap); }
+    #maler-widget .widget-toggle-base {
+      background: linear-gradient(135deg, #1a1816 0%, #252220 100%);
+    }
+    #maler-widget .widget-window-base {
+      bottom: 76px; right: 0;
+      background: rgba(22, 20, 16, 0.95);
+    }
+    #maler-widget .welcome-box {
+      background: rgba(217, 119, 6, 0.1);
+      border: 1px solid rgba(217, 119, 6, 0.2);
+    }
+    #maler-widget .welcome-box strong { color: var(--accent-orange-light); }
+    #maler-widget .form-section-title { color: var(--accent-orange-light); }
+    #maler-widget .form-input:focus, #maler-widget .form-select:focus, #maler-widget .form-textarea:focus {
+      border-color: var(--accent-orange);
+      box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.2);
+    }
+    #maler-widget .radio-option input:checked + label {
+      background: rgba(217, 119, 6, 0.2);
+      border-color: var(--accent-orange); color: var(--accent-orange-light);
+    }
+    #maler-widget .validate-btn:hover { border-color: var(--accent-orange); }
+    #maler-widget .file-upload:hover { border-color: var(--accent-orange); background: rgba(217, 119, 6, 0.05); }
+    #maler-widget .file-item { background: rgba(217, 119, 6, 0.15); }
+    #maler-widget .dsgvo-row input { accent-color: var(--accent-orange-light); }
+    #maler-widget .dsgvo-toggle { color: var(--accent-orange-light); }
+    #maler-widget .submit-btn-base {
+      background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-orange-light) 100%);
+    }
+    #maler-widget .submit-btn-base:hover:not(:disabled) { box-shadow: 0 8px 25px rgba(217, 119, 6, 0.35); }
+    #maler-widget .loading-spinner { border-top-color: var(--accent-orange); }
+    #maler-widget .result-highlight-box {
+      background: linear-gradient(135deg, rgba(217, 119, 6, 0.2) 0%, rgba(245, 158, 11, 0.1) 100%);
+      border: 1px solid rgba(217, 119, 6, 0.3);
+      border-radius: var(--radius-md);
+      padding: 16px; margin: 12px 0 16px;
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px; text-align: center;
+    }
+    #maler-widget .result-highlight-item { display: flex; flex-direction: column; gap: 4px; }
+    #maler-widget .result-highlight-label {
+      font-size: 11px; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    #maler-widget .result-highlight-value { font-size: 18px; font-weight: 600; color: var(--accent-orange-light); }
+    #maler-widget .result-highlight-item.main .result-highlight-value { font-size: 22px; }
+    #maler-widget .result-summary-title {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--accent-orange-light); margin-bottom: 12px;
+    }
+
+    /* ==================== AGENTIC B2B WIDGET (BLUE) ==================== */
+    #b2b-widget { right: var(--gap); bottom: calc(var(--gap) + 80px); }
+    #b2b-widget .widget-toggle-base {
+      background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
+    }
+    #b2b-widget .widget-window-base {
+      bottom: 76px; right: 0;
+      background: rgba(15, 15, 25, 0.97);
+    }
+    #b2b-widget .welcome-box {
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+    #b2b-widget .welcome-box strong { color: var(--accent-blue-light); }
+    #b2b-widget .form-section-title { color: var(--accent-blue-light); }
+    #b2b-widget .form-input:focus, #b2b-widget .form-select:focus, #b2b-widget .form-textarea:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    }
+    #b2b-widget .validate-btn:hover { border-color: var(--accent-blue); }
+    #b2b-widget .dsgvo-row input { accent-color: var(--accent-blue-light); }
+    #b2b-widget .dsgvo-toggle { color: var(--accent-blue-light); }
+    #b2b-widget .submit-btn-base {
+      background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-blue-light) 100%);
+    }
+    #b2b-widget .submit-btn-base:hover:not(:disabled) { box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35); }
+    #b2b-widget .loading-spinner { border-top-color: var(--accent-blue); }
+    #b2b-widget .result-highlight-box {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(129, 140, 248, 0.1) 100%);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: var(--radius-md);
+      padding: 16px; margin: 12px 0 16px;
+    }
+    #b2b-widget .result-highlight-value { color: var(--accent-blue-light); }
+    #b2b-widget .result-summary-title {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--accent-blue-light); margin-bottom: 12px;
+    }
+    /* Package Selection */
+    .package-grid { display: flex; flex-direction: column; gap: 8px; }
+    .package-option {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .package-option:hover { background: rgba(255, 255, 255, 0.04); }
+    .package-option.selected {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: var(--accent-blue);
+    }
+    .package-checkbox {
+      width: 18px; height: 18px; border-radius: 5px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; color: transparent;
+      transition: all 0.2s ease;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .package-option.selected .package-checkbox {
+      background: var(--accent-blue); border-color: var(--accent-blue); color: white;
+    }
+    .package-content { flex: 1; min-width: 0; }
+    .package-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+    .package-name { font-size: 13px; font-weight: 600; color: var(--text); }
+    .package-price { font-size: 11px; color: var(--accent-blue-light); text-align: right; white-space: nowrap; }
+    .package-desc { font-size: 11px; color: var(--text-muted); line-height: 1.4; margin-top: 2px; }
+    .package-tag {
+      display: inline-block; padding: 2px 6px; margin-top: 4px;
+      background: rgba(99, 102, 241, 0.2); border-radius: 4px;
+      font-size: 9px; color: var(--accent-blue-light);
+    }
+    /* Info Box */
+    .info-box {
+      background: rgba(99, 102, 241, 0.08);
+      border: 1px solid rgba(99, 102, 241, 0.15);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      margin-top: 16px;
+    }
+    .info-box p { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin: 0; }
+    .info-box strong { color: var(--accent-blue-light); }
+
     @media (max-width: 768px) {
-      .widget-window { width: calc(100vw - 24px); height: calc(100vh - 100px); right: -8px; }
+      .widget-window-base { width: calc(100vw - 24px); height: calc(100vh - 100px); right: -8px; }
       .validation-row { flex-direction: column; }
       .validate-btn { width: 100%; justify-content: center; }
-      .result-highlight-box {
-        grid-template-columns: 1fr;
-        gap: 10px;
+      #maler-widget .result-highlight-box { grid-template-columns: 1fr; gap: 10px; }
+      #maler-widget .result-highlight-item {
+        flex-direction: row; justify-content: space-between; align-items: center;
+        padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       }
-      .result-highlight-item {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: 8px 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      #maler-widget .result-highlight-item:last-child { border-bottom: none; }
+      #maler-widget .result-highlight-item.main {
+        order: -1; background: rgba(217, 119, 6, 0.15);
+        margin: -16px -16px 8px; padding: 12px 16px;
+        border-radius: var(--radius-sm) var(--radius-sm) 0 0; border-bottom: none;
       }
-      .result-highlight-item:last-child {
-        border-bottom: none;
-      }
-      .result-highlight-item.main {
-        order: -1;
-        background: rgba(217, 119, 6, 0.15);
-        margin: -16px -16px 8px;
-        padding: 12px 16px;
-        border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-        border-bottom: none;
-      }
+      #b2b-widget { bottom: calc(var(--gap) + 80px); }
     }
   </style>
 </head>
@@ -460,103 +514,353 @@
       </div>
     </div>
   </header>
+
   <div class="wrap">
     <h1 class="page-title">KI-Assistenten in Aktion</h1>
-    <p class="page-subtitle">Erlebe unseren intelligenten Malerbetrieb-Assistenten live. Klicke auf den Button unten rechts, um eine Anfrage zu stellen.</p>
-    <div class="demo-card">
-      <div class="demo-card-header">
-        <div class="demo-card-icon">🎨</div>
-        <div>
-          <h2 class="demo-card-title">ProjektBauGG Malerbetrieb</h2>
-          <p class="demo-card-desc">Professionelle Malerarbeiten in Paderborn und Umgebung. Füllen Sie das Formular aus um eine Projektanfrage inkl. Preisschätzung zu stellen.</p>
+    <p class="page-subtitle">Erlebe unsere intelligenten Assistenten live. Zwei Demos verfügbar – klicke auf die Buttons unten rechts.</p>
+    
+    <div class="demo-cards">
+      <div class="demo-card">
+        <div class="demo-card-header">
+          <div class="demo-card-icon blue">⚡</div>
+          <div>
+            <h2 class="demo-card-title">Agentic Solutions – B2B Anfrage</h2>
+            <p class="demo-card-desc">Sie möchten unsere KI-Lösungen für Ihr Unternehmen? Stellen Sie hier Ihre Anfrage – inkl. Preisschätzung.</p>
+          </div>
         </div>
+        <div class="demo-card-hint">Anfrage stellen mit dem ⚡ Button</div>
       </div>
-      <div class="demo-card-hint">Formular öffnen mit dem 🎨 Button</div>
+      
+      <div class="demo-card">
+        <div class="demo-card-header">
+          <div class="demo-card-icon orange">🎨</div>
+          <div>
+            <h2 class="demo-card-title">ProjektBauGG Malerbetrieb</h2>
+            <p class="demo-card-desc">Kundenbeispiel: Professionelle Malerarbeiten in Paderborn. Projektanfrage inkl. Preisschätzung.</p>
+          </div>
+        </div>
+        <div class="demo-card-hint">Demo öffnen mit dem 🎨 Button</div>
+      </div>
     </div>
   </div>
-  <!-- WIDGET -->
-  <div class="widget" id="widget">
-    <div class="widget-toggle" id="widget-toggle">🎨</div>
-    <div class="widget-window" id="widget-window">
-      <div class="loading-overlay" id="loading-overlay">
+
+  <!-- ==================== B2B WIDGET (BLUE) ==================== -->
+  <div class="widget-base" id="b2b-widget">
+    <div class="widget-toggle-base" id="b2b-toggle">⚡</div>
+    <div class="widget-window-base" id="b2b-window">
+      <div class="loading-overlay" id="b2b-loading">
         <div class="loading-spinner"></div>
         <div class="loading-text">Anfrage wird verarbeitet...</div>
       </div>
-      <div class="widget-header">
+      <div class="widget-header-base">
+        <h2 class="widget-header-title">⚡ Agentic Solutions</h2>
+        <p class="widget-header-subtitle">B2B Anfrage • KI-Automatisierung</p>
+      </div>
+      <div class="widget-body-base" id="b2b-body">
+        <!-- FORM VIEW -->
+        <div id="b2b-form-view">
+          <div class="welcome-box">
+            <p><strong>Interesse an unseren Lösungen?</strong> Füllen Sie das Formular aus und erhalten Sie eine <strong>unverbindliche Preisschätzung</strong>.</p>
+          </div>
+          <form id="b2b-form">
+            <!-- Firma & Ort -->
+            <div class="validation-box">
+              <div class="validation-box-title">🏢 Unternehmen prüfen</div>
+              <div class="form-group" style="margin-bottom: 12px;">
+                <label class="form-label">Firmenname <span class="required">*</span></label>
+                <input type="text" class="form-input" id="b2b-company" placeholder="Ihr Unternehmen">
+              </div>
+              <div class="validation-row">
+                <input type="text" class="form-input" id="b2b-location" placeholder="Standort (Stadt)">
+                <button type="button" class="validate-btn" id="b2b-validate-btn">
+                  <span class="spinner"></span>
+                  <span class="btn-icon">🔍</span>
+                  Prüfen
+                </button>
+              </div>
+              <div class="validation-status" id="b2b-company-status"></div>
+            </div>
+
+            <!-- Ansprechpartner -->
+            <div class="form-group">
+              <label class="form-label">Ansprechpartner <span class="required">*</span></label>
+              <div class="input-wrapper">
+                <input type="text" class="form-input" id="b2b-contact" placeholder="Vor- und Nachname">
+                <span class="input-status" id="b2b-contact-status"></span>
+              </div>
+              <div class="field-error" id="b2b-contact-error"></div>
+            </div>
+
+            <!-- E-Mail -->
+            <div class="form-group">
+              <label class="form-label">E-Mail-Adresse <span class="required">*</span></label>
+              <div class="input-wrapper">
+                <input type="email" class="form-input" id="b2b-email" placeholder="ihre@firma.de">
+                <span class="input-status" id="b2b-email-status"></span>
+              </div>
+            </div>
+
+            <!-- Telefon -->
+            <div class="form-group">
+              <label class="form-label">Telefonnummer <span class="required">*</span></label>
+              <div class="input-wrapper">
+                <input type="tel" class="form-input" id="b2b-phone" placeholder="z.B. 0151 12345678">
+                <span class="input-status" id="b2b-phone-status"></span>
+              </div>
+            </div>
+
+            <!-- Leistungen -->
+            <div class="form-section">
+              <div class="form-section-title">Gewünschte Leistungen</div>
+              <div class="package-grid" id="b2b-packages">
+                <div class="package-option" data-package="starter" data-setup="299" data-monthly="79">
+                  <div class="package-checkbox">✓</div>
+                  <div class="package-content">
+                    <div class="package-header">
+                      <span class="package-name">Starter</span>
+                      <span class="package-price">79 €/M + 299 € Setup</span>
+                    </div>
+                    <div class="package-desc">KI-Kontaktformular mit Validierung & Preisschätzung</div>
+                  </div>
+                </div>
+                <div class="package-option" data-package="advanced" data-setup="499" data-monthly="139">
+                  <div class="package-checkbox">✓</div>
+                  <div class="package-content">
+                    <div class="package-header">
+                      <span class="package-name">Advanced</span>
+                      <span class="package-price">ab 139 €/M + ab 499 € Setup</span>
+                    </div>
+                    <div class="package-desc">Erweiterte Validierung, WhatsApp-Integration</div>
+                  </div>
+                </div>
+                <div class="package-option" data-package="chatbot-basic" data-setup="299" data-monthly="79">
+                  <div class="package-checkbox">✓</div>
+                  <div class="package-content">
+                    <div class="package-header">
+                      <span class="package-name">ChatBot Basic</span>
+                      <span class="package-price">79–300 €/M + 299 € Setup</span>
+                    </div>
+                    <div class="package-desc">Automatische Terminbuchung, 1 Kanal</div>
+                  </div>
+                </div>
+                <div class="package-option" data-package="chatbot-premium" data-setup="0" data-monthly="0">
+                  <div class="package-checkbox">✓</div>
+                  <div class="package-content">
+                    <div class="package-header">
+                      <span class="package-name">ChatBot Premium</span>
+                      <span class="package-price">Individuell</span>
+                    </div>
+                    <div class="package-desc">Komplexe Logik, mehrere Kanäle</div>
+                    <span class="package-tag">👉 Beschreibung erforderlich</span>
+                  </div>
+                </div>
+                <div class="package-option" data-package="voice-info" data-setup="549" data-monthly="249">
+                  <div class="package-checkbox">✓</div>
+                  <div class="package-content">
+                    <div class="package-header">
+                      <span class="package-name">Info Voice Agent</span>
+                      <span class="package-price">99–399 €/M + 299–799 € Setup</span>
+                    </div>
+                    <div class="package-desc">24/7 Telefonassistent für Infos</div>
+                  </div>
+                </div>
+                <div class="package-option" data-package="voice-pure" data-setup="1349" data-monthly="649">
+                  <div class="package-checkbox">✓</div>
+                  <div class="package-content">
+                    <div class="package-header">
+                      <span class="package-name">Voice Agent Pure</span>
+                      <span class="package-price">299–999 €/M + 699–1.999 € Setup</span>
+                    </div>
+                    <div class="package-desc">Vollautomatische Kundenabwicklung & Terminbuchung</div>
+                  </div>
+                </div>
+                <div class="package-option" data-package="individual" data-setup="0" data-monthly="0">
+                  <div class="package-checkbox">✓</div>
+                  <div class="package-content">
+                    <div class="package-header">
+                      <span class="package-name">Individuelle Kombination</span>
+                      <span class="package-price">Auf Anfrage</span>
+                    </div>
+                    <div class="package-desc">Maßgeschneiderte Lösung aus allen Modulen</div>
+                    <span class="package-tag">👉 Beschreibung erforderlich</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Beschreibung -->
+            <div class="form-group">
+              <label class="form-label">Beschreibung <span id="b2b-desc-required" class="optional">(optional)</span></label>
+              <textarea class="form-textarea" id="b2b-description" placeholder="Beschreiben Sie Ihren Anwendungsfall, besondere Anforderungen oder Fragen..."></textarea>
+            </div>
+
+            <!-- Info Box -->
+            <div class="info-box">
+              <p><strong>Alle Pakete</strong> sind individuell anpassbar und beinhalten <strong>kostenlose Wartung</strong>. Bei individuellen Lösungen benötigen wir eine Beschreibung Ihres Anwendungsfalls.</p>
+            </div>
+
+            <!-- Checklist -->
+            <div class="validation-checklist">
+              <div class="validation-checklist-title">Checkliste</div>
+              <div class="checklist-item unchecked" id="b2b-check-company">
+                <span class="checklist-icon">○</span>
+                <span>Unternehmen geprüft</span>
+              </div>
+              <div class="checklist-item unchecked" id="b2b-check-contact">
+                <span class="checklist-icon">○</span>
+                <span>Ansprechpartner gültig</span>
+              </div>
+              <div class="checklist-item unchecked" id="b2b-check-email">
+                <span class="checklist-icon">○</span>
+                <span>E-Mail gültig</span>
+              </div>
+              <div class="checklist-item unchecked" id="b2b-check-phone">
+                <span class="checklist-icon">○</span>
+                <span>Telefon gültig</span>
+              </div>
+              <div class="checklist-item unchecked" id="b2b-check-package">
+                <span class="checklist-icon">○</span>
+                <span>Mindestens 1 Paket gewählt</span>
+              </div>
+            </div>
+
+            <!-- DSGVO -->
+            <div class="dsgvo-box">
+              <label class="dsgvo-row" for="b2b-dsgvo">
+                <input type="checkbox" id="b2b-dsgvo">
+                <span>
+                  Ich stimme der Verarbeitung meiner Daten gemäß
+                  <button type="button" class="dsgvo-toggle" id="b2b-dsgvo-toggle">Datenschutz</button>
+                  zu.
+                </span>
+              </label>
+              <div class="dsgvo-details" id="b2b-dsgvo-details">
+                <strong style="color: var(--accent-blue-light);">Kurzinfo:</strong>
+                Ihre Angaben werden ausschließlich zur Bearbeitung Ihrer Anfrage verwendet.
+                Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO. Widerruf jederzeit möglich.
+              </div>
+            </div>
+
+            <button type="submit" class="submit-btn-base" id="b2b-submit" disabled>
+              <span class="spinner"></span>
+              <span class="btn-text">🚀 Anfrage absenden</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- RESULT VIEW -->
+        <div class="result-view" id="b2b-result-view">
+          <div class="result-success">
+            <div class="result-success-icon">✅</div>
+            <h3>Anfrage erhalten!</h3>
+            <p>Wir melden uns morgen bei Ihnen</p>
+          </div>
+          <div class="result-highlight-box">
+            <div style="text-align: center;">
+              <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px;">💰 Geschätzte Kosten</div>
+              <div style="font-size: 24px; font-weight: 600; color: var(--accent-blue-light);" id="b2b-result-price">-</div>
+            </div>
+          </div>
+          <div class="result-summary">
+            <div class="result-summary-title">📋 Ihre Anfrage</div>
+            <div class="result-row"><span class="label">Unternehmen</span><span class="value" id="b2b-result-company">-</span></div>
+            <div class="result-row"><span class="label">Standort</span><span class="value" id="b2b-result-location">-</span></div>
+            <div class="result-row"><span class="label">Ansprechpartner</span><span class="value" id="b2b-result-contact">-</span></div>
+            <div class="result-row"><span class="label">E-Mail</span><span class="value" id="b2b-result-email">-</span></div>
+            <div class="result-row"><span class="label">Telefon</span><span class="value" id="b2b-result-phone">-</span></div>
+            <div class="result-divider"></div>
+            <div class="result-row"><span class="label">Gewählte Pakete</span><span class="value" id="b2b-result-packages">-</span></div>
+            <div class="result-row" id="b2b-result-desc-row" style="display:none;"><span class="label">Beschreibung</span><span class="value" id="b2b-result-description">-</span></div>
+          </div>
+          <p class="result-disclaimer">Unverbindliche Schätzung. Das finale Angebot erhalten Sie nach persönlicher Beratung.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MALERBETRIEB WIDGET (ORANGE) ==================== -->
+  <div class="widget-base" id="maler-widget">
+    <div class="widget-toggle-base" id="maler-toggle">🎨</div>
+    <div class="widget-window-base" id="maler-window">
+      <div class="loading-overlay" id="maler-loading">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Anfrage wird verarbeitet...</div>
+      </div>
+      <div class="widget-header-base">
         <h2 class="widget-header-title">🎨 Malerbetrieb</h2>
         <p class="widget-header-subtitle">ProjektBauGG GmbH • Paderborn</p>
       </div>
-      <div class="widget-body" id="widget-body">
+      <div class="widget-body-base" id="maler-body">
         <!-- FORM VIEW -->
-        <div class="form-view" id="form-view">
+        <div id="maler-form-view">
           <div class="welcome-box">
             <p><strong>Willkommen!</strong> Füllen Sie das Formular aus, um eine <strong>Projektanfrage inkl. Preisschätzung & Aufwand</strong> zu erhalten.</p>
           </div>
-          <form id="contact-form">
+          <form id="maler-form">
             <!-- Kundentyp -->
             <div class="form-section">
               <div class="form-section-title">Kundentyp</div>
               <div class="radio-group">
                 <div class="radio-option">
-                  <input type="radio" id="type-privat" name="customerType" value="privat" checked>
-                  <label for="type-privat">🏠 Privat</label>
+                  <input type="radio" id="maler-type-privat" name="malerCustomerType" value="privat" checked>
+                  <label for="maler-type-privat">🏠 Privat</label>
                 </div>
                 <div class="radio-option">
-                  <input type="radio" id="type-gewerbe" name="customerType" value="gewerbe">
-                  <label for="type-gewerbe">🏢 Gewerblich</label>
+                  <input type="radio" id="maler-type-gewerbe" name="malerCustomerType" value="gewerbe">
+                  <label for="maler-type-gewerbe">🏢 Gewerblich</label>
                 </div>
               </div>
             </div>
-            <!-- GEWERBE: Firma + Ort -->
-            <div class="validation-box conditional-field" id="gewerbe-validation">
+            <!-- GEWERBE -->
+            <div class="validation-box conditional-field" id="maler-gewerbe-box">
               <div class="validation-box-title">🔍 Firma & Standort prüfen</div>
               <div class="form-group" style="margin-bottom: 12px;">
                 <label class="form-label">Firmenname <span class="required">*</span></label>
-                <input type="text" class="form-input" id="company" placeholder="Name Ihrer Firma">
+                <input type="text" class="form-input" id="maler-company" placeholder="Name Ihrer Firma">
               </div>
               <div class="validation-row">
-                <input type="text" class="form-input" id="location-gewerbe" placeholder="Ort des Objekts">
-                <button type="button" class="validate-btn" id="validate-gewerbe-btn">
+                <input type="text" class="form-input" id="maler-location-gewerbe" placeholder="Ort des Objekts">
+                <button type="button" class="validate-btn" id="maler-validate-gewerbe-btn">
                   <span class="spinner"></span>
                   <span class="btn-icon">🔍</span>
                   Prüfen
                 </button>
               </div>
-              <div class="validation-status" id="gewerbe-status"></div>
+              <div class="validation-status" id="maler-gewerbe-status"></div>
             </div>
-            <!-- PRIVAT: Nur Ort -->
-            <div class="validation-box" id="privat-validation">
+            <!-- PRIVAT -->
+            <div class="validation-box" id="maler-privat-box">
               <div class="validation-box-title">🔍 Standort prüfen</div>
               <div class="validation-row">
-                <input type="text" class="form-input" id="location-privat" placeholder="Ort des Objekts (Stadt oder PLZ)">
-                <button type="button" class="validate-btn" id="validate-privat-btn">
+                <input type="text" class="form-input" id="maler-location-privat" placeholder="Ort des Objekts (Stadt oder PLZ)">
+                <button type="button" class="validate-btn" id="maler-validate-privat-btn">
                   <span class="spinner"></span>
                   <span class="btn-icon">🔍</span>
                   Prüfen
                 </button>
               </div>
-              <div class="validation-status" id="privat-status"></div>
+              <div class="validation-status" id="maler-privat-status"></div>
             </div>
             <!-- Name -->
             <div class="form-group">
               <label class="form-label">Ihr Name <span class="required">*</span></label>
-              <div class="name-wrapper">
-                <input type="text" class="form-input" id="name" placeholder="Vor- und Nachname" required>
-                <span class="name-status" id="name-status"></span>
+              <div class="input-wrapper">
+                <input type="text" class="form-input" id="maler-name" placeholder="Vor- und Nachname" required>
+                <span class="input-status" id="maler-name-status"></span>
               </div>
-              <div class="field-error" id="name-error"></div>
+              <div class="field-error" id="maler-name-error"></div>
             </div>
-            <!-- E-Mail (optional) -->
+            <!-- E-Mail -->
             <div class="form-group">
               <label class="form-label">E-Mail-Adresse <span class="optional">(optional)</span></label>
-              <input type="email" class="form-input" id="email" placeholder="ihre@email.de">
+              <input type="email" class="form-input" id="maler-email" placeholder="ihre@email.de">
             </div>
             <!-- Telefon -->
             <div class="form-group">
               <label class="form-label">Telefonnummer <span class="required">*</span></label>
-              <div class="phone-wrapper">
-                <input type="tel" class="form-input" id="phone" placeholder="z.B. 0151 12345678" required>
-                <span class="phone-status" id="phone-status"></span>
+              <div class="input-wrapper">
+                <input type="tel" class="form-input" id="maler-phone" placeholder="z.B. 0151 12345678" required>
+                <span class="input-status" id="maler-phone-status"></span>
               </div>
             </div>
             <!-- Leistung -->
@@ -564,7 +868,7 @@
               <div class="form-section-title">Projektdetails</div>
               <div class="form-group">
                 <label class="form-label">Gewünschte Leistung <span class="required">*</span></label>
-                <select class="form-select" id="service" required>
+                <select class="form-select" id="maler-service" required>
                   <option value="">Bitte wählen...</option>
                   <option value="1">Innenwände streichen</option>
                   <option value="2">Fassade streichen</option>
@@ -578,448 +882,561 @@
             <!-- Größe -->
             <div class="form-group">
               <label class="form-label">Ungefähre Größe <span class="required">*</span></label>
-              <input type="text" class="form-input" id="size" placeholder="z.B. 50 m² oder 3 Türen" required>
+              <input type="text" class="form-input" id="maler-size" placeholder="z.B. 50 m² oder 3 Türen" required>
             </div>
             <!-- Zeitraum -->
             <div class="form-group">
               <label class="form-label">Gewünschter Zeitraum <span class="required">*</span></label>
-              <input type="text" class="form-input" id="timeframe" placeholder="z.B. Anfang März, KW 12" required>
+              <input type="text" class="form-input" id="maler-timeframe" placeholder="z.B. Anfang März, KW 12" required>
             </div>
-            <!-- Beschreibung (optional) -->
+            <!-- Beschreibung -->
             <div class="form-group">
               <label class="form-label">Beschreibung <span class="optional">(optional)</span></label>
-              <textarea class="form-textarea" id="description" placeholder="Zusätzliche Informationen zum Projekt, besondere Wünsche, Zustand der Flächen..."></textarea>
+              <textarea class="form-textarea" id="maler-description" placeholder="Zusätzliche Informationen zum Projekt..."></textarea>
             </div>
             <!-- Bilder -->
             <div class="form-group">
               <label class="form-label">Bilder vom Objekt <span class="optional">(optional)</span></label>
               <div class="file-upload">
-                <input type="file" id="images" multiple accept="image/*">
+                <input type="file" id="maler-images" multiple accept="image/*">
                 <div class="file-upload-icon">📷</div>
                 <div class="file-upload-text">Bilder hier ablegen oder klicken</div>
                 <div class="file-upload-hint">JPG, PNG bis 10MB</div>
               </div>
-              <div class="file-list" id="file-list"></div>
+              <div class="file-list" id="maler-file-list"></div>
             </div>
             <!-- Checklist -->
             <div class="validation-checklist">
               <div class="validation-checklist-title">Checkliste vor Absenden</div>
-              <div class="checklist-item unchecked" id="check-location">
+              <div class="checklist-item unchecked" id="maler-check-location">
                 <span class="checklist-icon">○</span>
                 <span>Standort geprüft</span>
               </div>
-              <div class="checklist-item unchecked" id="check-name">
+              <div class="checklist-item unchecked" id="maler-check-name">
                 <span class="checklist-icon">○</span>
                 <span>Name gültig</span>
               </div>
-              <div class="checklist-item unchecked" id="check-phone">
+              <div class="checklist-item unchecked" id="maler-check-phone">
                 <span class="checklist-icon">○</span>
                 <span>Telefonnummer gültig</span>
               </div>
             </div>
             <!-- DSGVO -->
-            <div class="dsgvo-box" id="dsgvo-box">
-              <label class="dsgvo-row" for="dsgvo-checkbox">
-                <input type="checkbox" id="dsgvo-checkbox">
+            <div class="dsgvo-box">
+              <label class="dsgvo-row" for="maler-dsgvo">
+                <input type="checkbox" id="maler-dsgvo">
                 <span>
                   Ich stimme der Verarbeitung meiner Daten gemäß
-                  <button type="button" class="dsgvo-toggle" id="dsgvo-toggle">Datenschutz</button>
+                  <button type="button" class="dsgvo-toggle" id="maler-dsgvo-toggle">Datenschutz</button>
                   zu.
                 </span>
               </label>
-              <div class="dsgvo-details" id="dsgvo-details">
-                <div>
-                  <strong style="color: var(--accent-light); font-weight: 600;">Kurzinfo:</strong>
-                  Ihre Angaben werden ausschließlich zur Bearbeitung Ihrer Anfrage verwendet und nicht an Dritte weitergegeben.
-                  Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen).
-                  Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen.
-                </div>
+              <div class="dsgvo-details" id="maler-dsgvo-details">
+                <strong style="color: var(--accent-orange-light);">Kurzinfo:</strong>
+                Ihre Angaben werden ausschließlich zur Bearbeitung Ihrer Anfrage verwendet.
+                Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO.
               </div>
             </div>
-            <button type="submit" class="submit-btn" id="submit-btn" disabled>
+            <button type="submit" class="submit-btn-base" id="maler-submit" disabled>
               <span class="spinner"></span>
               <span class="btn-text">🚀 Anfrage absenden</span>
             </button>
           </form>
         </div>
         <!-- RESULT VIEW -->
-        <div class="result-view" id="result-view">
+        <div class="result-view" id="maler-result-view">
           <div class="result-success">
             <div class="result-success-icon">✅</div>
             <h3>Anfrage erhalten!</h3>
             <p>Ihre Projektübersicht</p>
           </div>
-          <!-- Highlight Box mit Preis, Dauer, MA -->
           <div class="result-highlight-box">
             <div class="result-highlight-item main">
               <span class="result-highlight-label">💰 Preisschätzung</span>
-              <span class="result-highlight-value" id="result-price">-</span>
+              <span class="result-highlight-value" id="maler-result-price">-</span>
             </div>
             <div class="result-highlight-item">
               <span class="result-highlight-label">📅 Dauer</span>
-              <span class="result-highlight-value" id="result-duration">-</span>
+              <span class="result-highlight-value" id="maler-result-duration">-</span>
             </div>
             <div class="result-highlight-item">
               <span class="result-highlight-label">👷 MA</span>
-              <span class="result-highlight-value" id="result-workers">-</span>
+              <span class="result-highlight-value" id="maler-result-workers">-</span>
             </div>
           </div>
           <div class="result-summary">
             <div class="result-summary-title">📋 Details</div>
-            <div class="result-row"><span class="label">Kundentyp</span><span class="value" id="result-type">-</span></div>
-            <div class="result-row" id="result-company-row" style="display:none"><span class="label">Firma</span><span class="value" id="result-company">-</span></div>
-            <div class="result-row"><span class="label">Name</span><span class="value" id="result-name">-</span></div>
-            <div class="result-row" id="result-email-row" style="display:none"><span class="label">E-Mail</span><span class="value" id="result-email">-</span></div>
-            <div class="result-row"><span class="label">Telefon</span><span class="value" id="result-phone">-</span></div>
-            <div class="result-row"><span class="label">Standort</span><span class="value" id="result-location">-</span></div>
+            <div class="result-row"><span class="label">Kundentyp</span><span class="value" id="maler-result-type">-</span></div>
+            <div class="result-row" id="maler-result-company-row" style="display:none"><span class="label">Firma</span><span class="value" id="maler-result-company">-</span></div>
+            <div class="result-row"><span class="label">Name</span><span class="value" id="maler-result-name">-</span></div>
+            <div class="result-row" id="maler-result-email-row" style="display:none"><span class="label">E-Mail</span><span class="value" id="maler-result-email">-</span></div>
+            <div class="result-row"><span class="label">Telefon</span><span class="value" id="maler-result-phone">-</span></div>
+            <div class="result-row"><span class="label">Standort</span><span class="value" id="maler-result-location">-</span></div>
             <div class="result-divider"></div>
-            <div class="result-row"><span class="label">Leistung</span><span class="value" id="result-service">-</span></div>
-            <div class="result-row"><span class="label">Umfang</span><span class="value" id="result-size">-</span></div>
-            <div class="result-row"><span class="label">Zeitraum</span><span class="value" id="result-timeframe">-</span></div>
-            <div class="result-row" id="result-description-row" style="display:none"><span class="label">Beschreibung</span><span class="value" id="result-description">-</span></div>
+            <div class="result-row"><span class="label">Leistung</span><span class="value" id="maler-result-service">-</span></div>
+            <div class="result-row"><span class="label">Umfang</span><span class="value" id="maler-result-size">-</span></div>
+            <div class="result-row"><span class="label">Zeitraum</span><span class="value" id="maler-result-timeframe">-</span></div>
+            <div class="result-row" id="maler-result-desc-row" style="display:none"><span class="label">Beschreibung</span><span class="value" id="maler-result-description">-</span></div>
           </div>
-          <p class="result-disclaimer">Unverbindliche Schätzung. Nach Besichtigung kann der Preis um ±15-20% abweichen.</p>
+          <p class="result-disclaimer">Unverbindliche Schätzung. Abweichung ±15–20% möglich.</p>
         </div>
       </div>
     </div>
   </div>
+
   <div class="toast" id="toast"></div>
+
   <script>
-    (function() {
-      // ============ WEBHOOKS ============
-      const WEBHOOK_VALIDATE  = "https://seidel1502.app.n8n.cloud/webhook/3ad0bd7f-1b6e-4501-ba99-0cf05a2b4565";
-      const WEBHOOK_CALCULATE = "https://seidel1502.app.n8n.cloud/webhook/af4d3fcf-7cc3-48ee-b665-1b61703e678c";
-      const SERVICE_NAMES = {
-        1: "Innenwände streichen", 2: "Fassade streichen", 3: "Tapezieren",
-        4: "Türen/Fenster lackieren", 5: "Verputzen/Grundieren", 6: "Dekorative Techniken"
-      };
-      const $ = id => document.getElementById(id);
-      let validationState = { locationValid: false, phoneValid: false, nameValid: false, dsgvoAccepted: false, distance: null };
-      
-      // ============ NAME VALIDATION ============
-      const BLOCKED_WORDS = [
-        // Deutsche Schimpfwörter
-        'arsch', 'arschloch', 'wichser', 'hurensohn', 'fotze', 'fick', 'ficken', 'scheiße', 'scheisse', 
-        'scheiß', 'kacke', 'pisser', 'schwanz', 'hure', 'nutte', 'bastard', 'idiot', 'depp', 'trottel',
-        'vollidiot', 'dummkopf', 'missgeburt', 'spast', 'schwuchtel', 'kanake', 'nazi', 'hitler',
-        // Englische Schimpfwörter
-        'fuck', 'shit', 'asshole', 'bitch', 'cunt', 'dick', 'pussy', 'whore', 'slut', 'bastard',
-        'nigger', 'faggot', 'retard'
-      ];
-      
-      const FAKE_NAMES = [
-        // Schauspieler
-        'brad pitt', 'angelina jolie', 'tom cruise', 'johnny depp', 'leonardo dicaprio', 'leo dicaprio',
-        'george clooney', 'julia roberts', 'will smith', 'dwayne johnson', 'the rock', 'robert downey',
-        'scarlett johansson', 'jennifer lawrence', 'chris hemsworth', 'chris evans', 'ryan gosling',
-        'ryan reynolds', 'keanu reeves', 'morgan freeman', 'samuel jackson', 'denzel washington',
-        'matt damon', 'ben affleck', 'tom hanks', 'christian bale', 'heath ledger', 'joaquin phoenix',
-        'margot robbie', 'gal gadot', 'emma watson', 'emma stone', 'natalie portman', 'anne hathaway',
-        'meryl streep', 'cate blanchett', 'sandra bullock', 'nicole kidman', 'charlize theron',
-        'til schweiger', 'elyas mbarek', 'matthias schweighöfer', 'daniel brühl',
-        // Deutsche Promis
-        'günther jauch', 'thomas gottschalk', 'markus lanz', 'jan böhmermann', 'oliver pocher',
-        'dieter bohlen', 'heidi klum', 'stefanie giesinger', 'lena meyer landrut',
-        // Politiker
-        'angela merkel', 'olaf scholz', 'friedrich merz', 'robert habeck', 'christian lindner',
-        'annalena baerbock', 'markus söder', 'donald trump', 'joe biden', 'barack obama',
-        'elon musk', 'jeff bezos', 'bill gates', 'mark zuckerberg', 'steve jobs',
-        // Fiktive Charaktere
-        'harry potter', 'hermine granger', 'ron weasley', 'darth vader', 'luke skywalker',
-        'james bond', 'batman', 'superman', 'spider man', 'spiderman', 'iron man', 'ironman',
-        'peter parker', 'bruce wayne', 'tony stark', 'thor odinson', 'captain america',
-        'spongebob', 'mickey mouse', 'donald duck', 'bugs bunny', 'homer simpson', 'bart simpson',
-        'walter white', 'jesse pinkman', 'tony soprano', 'michael scott', 'dwight schrute',
-        // Test-Namen
-        'max mustermann', 'erika mustermann', 'john doe', 'jane doe', 'test test', 'asdf asdf',
-        'abc abc', 'xxx xxx', 'aaa aaa', 'bbb bbb', 'test name', 'muster mann', 'beispiel name'
-      ];
-      
-      function validateName(name) {
-        const trimmed = name.trim();
-        const lower = trimmed.toLowerCase();
-        
-        // Mindestlänge
-        if (trimmed.length < 3) {
-          return { valid: false, message: 'Name zu kurz' };
-        }
-        
-        // Maxlänge
-        if (trimmed.length > 100) {
-          return { valid: false, message: 'Name zu lang' };
-        }
-        
-        // Muss mindestens 2 Wörter haben (Vor- und Nachname)
-        const words = trimmed.split(/\s+/).filter(w => w.length > 0);
-        if (words.length < 2) {
-          return { valid: false, message: 'Bitte Vor- und Nachname angeben' };
-        }
-        
-        // Jedes Wort mindestens 2 Zeichen
-        if (words.some(w => w.length < 2)) {
-          return { valid: false, message: 'Name ungültig' };
-        }
-        
-        // Keine Zahlen
-        if (/\d/.test(trimmed)) {
-          return { valid: false, message: 'Name darf keine Zahlen enthalten' };
-        }
-        
-        // Keine Sonderzeichen (außer Bindestrich, Apostroph, Punkt)
-        if (/[^a-zA-ZäöüÄÖÜßéèêëàâáíìîïóòôõúùûñçćčžšđ\s\-'.]/i.test(trimmed)) {
-          return { valid: false, message: 'Ungültige Zeichen im Namen' };
-        }
-        
-        // Schimpfwörter prüfen
-        for (const word of BLOCKED_WORDS) {
-          if (lower.includes(word)) {
-            return { valid: false, message: 'Bitte geben Sie Ihren echten Namen ein' };
-          }
-        }
-        
-        // Fake-Namen prüfen
-        for (const fakeName of FAKE_NAMES) {
-          if (lower.includes(fakeName) || fakeName.includes(lower)) {
-            return { valid: false, message: 'Bitte geben Sie Ihren echten Namen ein' };
-          }
-        }
-        
-        // Wiederholte Buchstaben (aaaa, bbbb)
-        if (/(.)\1{3,}/i.test(trimmed)) {
-          return { valid: false, message: 'Ungültiger Name' };
-        }
-        
-        // Gleichlautende Vor- und Nachname
-        if (words.length >= 2 && words[0].toLowerCase() === words[1].toLowerCase()) {
-          return { valid: false, message: 'Vor- und Nachname identisch' };
-        }
-        
-        return { valid: true, message: '' };
+  (function() {
+    const $ = id => document.getElementById(id);
+    
+    // ==================== SHARED HELPERS ====================
+    const BLOCKED_WORDS = ['arsch','arschloch','wichser','hurensohn','fotze','fick','ficken','scheiße','scheisse','kacke','pisser','schwanz','hure','nutte','bastard','idiot','depp','trottel','vollidiot','missgeburt','spast','nazi','hitler','fuck','shit','asshole','bitch','cunt','dick','pussy','whore','slut','nigger','faggot','retard'];
+    const FAKE_NAMES = ['brad pitt','angelina jolie','tom cruise','johnny depp','leonardo dicaprio','angela merkel','olaf scholz','donald trump','joe biden','elon musk','harry potter','darth vader','batman','superman','spider man','max mustermann','erika mustermann','john doe','jane doe','test test'];
+    
+    function validateName(name) {
+      const trimmed = name.trim();
+      const lower = trimmed.toLowerCase();
+      if (trimmed.length < 3) return { valid: false, message: 'Name zu kurz' };
+      if (trimmed.length > 100) return { valid: false, message: 'Name zu lang' };
+      const words = trimmed.split(/\s+/).filter(w => w.length > 0);
+      if (words.length < 2) return { valid: false, message: 'Bitte Vor- und Nachname angeben' };
+      if (/\d/.test(trimmed)) return { valid: false, message: 'Name darf keine Zahlen enthalten' };
+      if (/[^a-zA-ZäöüÄÖÜßéèêëàâáíìîïóòôõúùûñçćčžšđ\s\-'.]/i.test(trimmed)) return { valid: false, message: 'Ungültige Zeichen' };
+      for (const word of BLOCKED_WORDS) { if (lower.includes(word)) return { valid: false, message: 'Bitte echten Namen eingeben' }; }
+      for (const fake of FAKE_NAMES) { if (lower.includes(fake)) return { valid: false, message: 'Bitte echten Namen eingeben' }; }
+      if (/(.)\1{3,}/i.test(trimmed)) return { valid: false, message: 'Ungültiger Name' };
+      return { valid: true, message: '' };
+    }
+    
+    function validatePhone(phone) {
+      return /^(\+49|0)[1-7]\d{8,11}$/.test(phone.replace(/\s/g, ''));
+    }
+    
+    function validateEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+    
+    function showToast(msg, type = 'success') {
+      $('toast').textContent = msg;
+      $('toast').className = 'toast visible' + (type === 'error' ? ' error' : '');
+      setTimeout(() => $('toast').classList.remove('visible'), 3500);
+    }
+
+    // ==================== B2B WIDGET ====================
+    const B2B_WEBHOOK_VALIDATE = "DEINE_WEBHOOK_URL_VALIDATE";
+    const B2B_WEBHOOK_SUBMIT = "DEINE_WEBHOOK_URL_SUBMIT";
+    
+    const b2bState = {
+      companyValid: false,
+      contactValid: false,
+      emailValid: false,
+      phoneValid: false,
+      packagesSelected: [],
+      dsgvoAccepted: false
+    };
+    
+    const PACKAGE_NAMES = {
+      'starter': 'Starter',
+      'advanced': 'Advanced',
+      'chatbot-basic': 'ChatBot Basic',
+      'chatbot-premium': 'ChatBot Premium',
+      'voice-info': 'Info Voice Agent',
+      'voice-pure': 'Voice Agent Pure',
+      'individual': 'Individuelle Kombination'
+    };
+    
+    // Toggle
+    $('b2b-toggle').onclick = () => {
+      $('b2b-window').classList.toggle('is-open');
+      $('maler-window').classList.remove('is-open');
+    };
+    
+    // Company Validation
+    $('b2b-validate-btn').onclick = async () => {
+      const company = $('b2b-company').value.trim();
+      const location = $('b2b-location').value.trim();
+      if (!company || !location) {
+        $('b2b-company-status').className = 'validation-status visible error';
+        $('b2b-company-status').textContent = '❌ Bitte Firma und Standort eingeben';
+        return;
       }
-      let uploadedFiles = [];
-      let currentRequestId = null;
-      let currentFormData = {};
-      // Toggle Widget
-      $('widget-toggle').onclick = () => $('widget-window').classList.toggle('is-open');
-      // Customer Type Toggle
-      document.querySelectorAll('input[name="customerType"]').forEach(r => {
-        r.onchange = e => {
-          const isGewerbe = e.target.value === 'gewerbe';
-          $('gewerbe-validation').classList.toggle('visible', isGewerbe);
-          $('privat-validation').style.display = isGewerbe ? 'none' : 'block';
-          validationState.locationValid = false;
-          updateUI();
-        };
-      });
-      // DSGVO Details Toggle
-      $('dsgvo-toggle').onclick = e => {
-        e.preventDefault();
-        e.stopPropagation();
-        $('dsgvo-details').classList.toggle('visible');
-      };
-      // DSGVO Checkbox Pflicht
-      $('dsgvo-checkbox').onchange = e => {
-        validationState.dsgvoAccepted = !!e.target.checked;
-        updateUI();
-      };
-      // Validate GEWERBE
-      $('validate-gewerbe-btn').onclick = async () => {
-        const company = $('company').value.trim();
-        const location = $('location-gewerbe').value.trim();
-        if (!company || !location) return showStatus('gewerbe-status', 'error', '❌ Bitte Firmenname und Ort eingeben');
-        const btn = $('validate-gewerbe-btn');
-        btn.classList.add('loading'); btn.disabled = true;
-        try {
-          const res = await fetch(WEBHOOK_VALIDATE, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ type: 'gewerbe', company, location })
-          });
-          const rawData = await res.json();
-          const data = Array.isArray(rawData) ? rawData[0] : rawData;
-          console.log('Gewerbe Validation Response:', data);
-          if (data.valid) {
-            validationState.locationValid = true;
-            validationState.distance = data.distance;
-            showStatus('gewerbe-status', 'success', `✅ ${data.companyInfo || company} gefunden! Entfernung: ${data.distance}km`);
-          } else {
-            validationState.locationValid = false;
-            showStatus('gewerbe-status', 'error', data.message || '❌ Firma nicht gefunden oder außerhalb des Einsatzgebiets');
-          }
-        } catch (e) {
-          console.error('Gewerbe Validation Error:', e);
-          showStatus('gewerbe-status', 'error', '❌ Prüfung fehlgeschlagen');
-        }
-        btn.classList.remove('loading'); btn.disabled = false;
-        updateUI();
-      };
-      // Validate PRIVAT
-      $('validate-privat-btn').onclick = async () => {
-        const location = $('location-privat').value.trim();
-        if (!location) return showStatus('privat-status', 'error', '❌ Bitte Ort eingeben');
-        const btn = $('validate-privat-btn');
-        btn.classList.add('loading'); btn.disabled = true;
-        try {
-          const res = await fetch(WEBHOOK_VALIDATE, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ type: 'privat', location })
-          });
-          const rawData = await res.json();
-          const data = Array.isArray(rawData) ? rawData[0] : rawData;
-          console.log('Privat Validation Response:', data);
-          if (data.valid) {
-            validationState.locationValid = true;
-            validationState.distance = data.distance;
-            showStatus('privat-status', 'success', `✅ Im Einsatzgebiet! Entfernung: ${data.distance}km`);
-          } else {
-            validationState.locationValid = false;
-            showStatus('privat-status', 'error', data.message || '❌ Ort nicht gefunden oder außerhalb des Einsatzgebiets');
-          }
-        } catch (e) {
-          console.error('Privat Validation Error:', e);
-          showStatus('privat-status', 'error', '❌ Prüfung fehlgeschlagen');
-        }
-        btn.classList.remove('loading'); btn.disabled = false;
-        updateUI();
-      };
-      // Phone Validation (Frontend)
-      $('phone').oninput = e => {
-        const phone = e.target.value.replace(/\s/g, '');
-        const valid = /^(\+49|0)[1-7]\d{8,11}$/.test(phone);
-        $('phone-status').textContent = phone.length === 0 ? '' : valid ? '✅' : phone.length >= 6 ? '❌' : '';
-        $('phone').classList.toggle('valid', valid);
-        $('phone').classList.toggle('invalid', phone.length >= 6 && !valid);
-        validationState.phoneValid = valid;
-        updateUI();
-      };
-      
-      // Name Validation (Frontend)
-      $('name').oninput = e => {
-        const name = e.target.value;
-        if (name.trim().length === 0) {
-          $('name').classList.remove('valid', 'invalid');
-          $('name-status').textContent = '';
-          $('name-error').textContent = '';
-          $('name-error').classList.remove('visible');
-          validationState.nameValid = false;
+      const btn = $('b2b-validate-btn');
+      btn.classList.add('loading'); btn.disabled = true;
+      try {
+        const res = await fetch(B2B_WEBHOOK_VALIDATE, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ company, location })
+        });
+        const data = await res.json();
+        const d = Array.isArray(data) ? data[0] : data;
+        if (d.valid) {
+          b2bState.companyValid = true;
+          $('b2b-company-status').className = 'validation-status visible success';
+          $('b2b-company-status').textContent = `✅ ${d.companyInfo || company} bestätigt`;
         } else {
-          const result = validateName(name);
-          $('name').classList.toggle('valid', result.valid);
-          $('name').classList.toggle('invalid', !result.valid && name.trim().length >= 3);
-          $('name-status').textContent = result.valid ? '✅' : (name.trim().length >= 3 ? '❌' : '');
-          if (!result.valid && name.trim().length >= 3) {
-            $('name-error').textContent = result.message;
-            $('name-error').classList.add('visible');
-          } else {
-            $('name-error').textContent = '';
-            $('name-error').classList.remove('visible');
-          }
-          validationState.nameValid = result.valid;
+          b2bState.companyValid = false;
+          $('b2b-company-status').className = 'validation-status visible error';
+          $('b2b-company-status').textContent = d.message || '❌ Firma nicht gefunden';
         }
-        updateUI();
-      };
-      // Helpers
-      function showStatus(id, type, msg) {
-        $(id).className = `validation-status visible ${type}`;
-        $(id).textContent = msg;
+      } catch (e) {
+        $('b2b-company-status').className = 'validation-status visible error';
+        $('b2b-company-status').textContent = '❌ Prüfung fehlgeschlagen';
       }
-      function updateUI() {
-        const loc = $('check-location'), nm = $('check-name'), ph = $('check-phone');
-        loc.className = validationState.locationValid ? 'checklist-item checked' : 'checklist-item unchecked';
-        loc.querySelector('.checklist-icon').textContent = validationState.locationValid ? '✓' : '○';
-        nm.className = validationState.nameValid ? 'checklist-item checked' : 'checklist-item unchecked';
-        nm.querySelector('.checklist-icon').textContent = validationState.nameValid ? '✓' : '○';
-        ph.className = validationState.phoneValid ? 'checklist-item checked' : 'checklist-item unchecked';
-        ph.querySelector('.checklist-icon').textContent = validationState.phoneValid ? '✓' : '○';
-        $('submit-btn').disabled = !(validationState.locationValid && validationState.nameValid && validationState.phoneValid && validationState.dsgvoAccepted);
-      }
-      function showToast(msg, type = 'success') {
-        $('toast').textContent = msg;
-        $('toast').className = 'toast visible' + (type === 'error' ? ' error' : '');
-        setTimeout(() => $('toast').classList.remove('visible'), 3500);
-      }
-      // File Upload
-      $('images').onchange = e => {
-        Array.from(e.target.files).forEach(f => {
-          if (f.size > 10 * 1024 * 1024) return showToast('Datei zu groß', 'error');
-          uploadedFiles.push(f);
-        });
-        renderFiles();
-        e.target.value = '';
-      };
-      function renderFiles() {
-        $('file-list').innerHTML = uploadedFiles.map((f, i) =>
-          `<div class="file-item">📷 ${f.name.slice(0,20)}${f.name.length>20?'...':''}<span class="file-item-remove" data-i="${i}">✕</span></div>`
-        ).join('');
-        $('file-list').querySelectorAll('.file-item-remove').forEach(b => b.onclick = e => {
-          uploadedFiles.splice(+e.target.dataset.i, 1);
-          renderFiles();
-        });
-      }
-      // Form Submit
-      $('contact-form').onsubmit = async e => {
-        e.preventDefault();
-        if (!validationState.locationValid || !validationState.nameValid || !validationState.phoneValid || !validationState.dsgvoAccepted) return;
-        $('loading-overlay').classList.add('visible');
-        $('submit-btn').disabled = true;
-        const isGewerbe = document.querySelector('input[name="customerType"]:checked').value === 'gewerbe';
-        const serviceId = +$('service').value;
-        const sizeNum = parseFloat($('size').value.replace(/[^\d.,]/g, '').replace(',', '.')) || 30;
-        currentFormData = {
-          customerType: isGewerbe ? 'gewerbe' : 'privat',
-          company: isGewerbe ? $('company').value : '',
-          name: $('name').value,
-          email: $('email').value.trim(),
-          phone: $('phone').value,
-          location: isGewerbe ? $('location-gewerbe').value : $('location-privat').value,
-          distance: validationState.distance,
-          serviceId, serviceName: SERVICE_NAMES[serviceId] || '',
-          size: $('size').value, sizeNumber: sizeNum,
-          timeframe: $('timeframe').value,
-          description: $('description').value.trim(),
-          imagesCount: uploadedFiles.length,
-          dsgvoAccepted: true,
-          timestamp: new Date().toISOString()
-        };
-        try {
-          const fd = new FormData();
-          fd.append('formData', JSON.stringify(currentFormData));
-          uploadedFiles.forEach((f, i) => fd.append('image_' + i, f));
-          const res = await fetch(WEBHOOK_CALCULATE, { method: 'POST', body: fd });
-          const data = await res.json();
-          currentRequestId = data.requestId;
-          showResult(currentFormData, data);
-        } catch (e) {
-          showToast('Fehler beim Senden', 'error');
+      btn.classList.remove('loading'); btn.disabled = false;
+      updateB2BUI();
+    };
+    
+    // Contact Validation
+    $('b2b-contact').oninput = e => {
+      const name = e.target.value;
+      const result = validateName(name);
+      $('b2b-contact').classList.toggle('valid', result.valid);
+      $('b2b-contact').classList.toggle('invalid', !result.valid && name.trim().length >= 3);
+      $('b2b-contact-status').textContent = name.length === 0 ? '' : result.valid ? '✅' : name.trim().length >= 3 ? '❌' : '';
+      $('b2b-contact-error').textContent = !result.valid && name.trim().length >= 3 ? result.message : '';
+      $('b2b-contact-error').classList.toggle('visible', !result.valid && name.trim().length >= 3);
+      b2bState.contactValid = result.valid;
+      updateB2BUI();
+    };
+    
+    // Email Validation
+    $('b2b-email').oninput = e => {
+      const email = e.target.value.trim();
+      const valid = validateEmail(email);
+      $('b2b-email').classList.toggle('valid', valid);
+      $('b2b-email').classList.toggle('invalid', email.length > 3 && !valid);
+      $('b2b-email-status').textContent = email.length === 0 ? '' : valid ? '✅' : email.length > 3 ? '❌' : '';
+      b2bState.emailValid = valid;
+      updateB2BUI();
+    };
+    
+    // Phone Validation
+    $('b2b-phone').oninput = e => {
+      const phone = e.target.value;
+      const valid = validatePhone(phone);
+      $('b2b-phone').classList.toggle('valid', valid);
+      $('b2b-phone').classList.toggle('invalid', phone.length >= 6 && !valid);
+      $('b2b-phone-status').textContent = phone.length === 0 ? '' : valid ? '✅' : phone.length >= 6 ? '❌' : '';
+      b2bState.phoneValid = valid;
+      updateB2BUI();
+    };
+    
+    // Package Selection
+    document.querySelectorAll('#b2b-packages .package-option').forEach(opt => {
+      opt.onclick = () => {
+        opt.classList.toggle('selected');
+        const pkg = opt.dataset.package;
+        if (opt.classList.contains('selected')) {
+          if (!b2bState.packagesSelected.includes(pkg)) b2bState.packagesSelected.push(pkg);
+        } else {
+          b2bState.packagesSelected = b2bState.packagesSelected.filter(p => p !== pkg);
         }
-        $('loading-overlay').classList.remove('visible');
-        updateUI();
+        // Description required?
+        const needsDesc = b2bState.packagesSelected.includes('chatbot-premium') || b2bState.packagesSelected.includes('individual');
+        $('b2b-desc-required').className = needsDesc ? 'required' : 'optional';
+        $('b2b-desc-required').textContent = needsDesc ? '*' : '(optional)';
+        updateB2BUI();
       };
-      function showResult(d, r) {
-        // Highlight Box
-        $('result-price').textContent = r.price ? `ca. ${r.price.toLocaleString('de-DE')} €` : '-';
-        $('result-duration').textContent = r.duration || '-';
-        $('result-workers').textContent = r.workers || '-';
-        // Details
-        $('result-type').textContent = d.customerType === 'gewerbe' ? 'Gewerblich 🏢' : 'Privat 🏠';
-        $('result-company-row').style.display = d.company ? 'flex' : 'none';
-        $('result-company').textContent = d.company;
-        $('result-name').textContent = d.name;
-        $('result-email-row').style.display = d.email ? 'flex' : 'none';
-        $('result-email').textContent = d.email;
-        $('result-phone').textContent = d.phone;
-        $('result-location').textContent = `${d.location} (${d.distance}km)`;
-        $('result-service').textContent = d.serviceName;
-        $('result-size').textContent = d.size;
-        $('result-timeframe').textContent = d.timeframe;
-        $('result-description-row').style.display = d.description ? 'flex' : 'none';
-        $('result-description').textContent = d.description;
-        $('form-view').style.display = 'none';
-        $('result-view').classList.add('visible');
-        $('widget-body').scrollTop = 0;
+    });
+    
+    // DSGVO
+    $('b2b-dsgvo').onchange = e => { b2bState.dsgvoAccepted = e.target.checked; updateB2BUI(); };
+    $('b2b-dsgvo-toggle').onclick = e => { e.preventDefault(); e.stopPropagation(); $('b2b-dsgvo-details').classList.toggle('visible'); };
+    
+    function updateB2BUI() {
+      const checks = [
+        { id: 'b2b-check-company', valid: b2bState.companyValid },
+        { id: 'b2b-check-contact', valid: b2bState.contactValid },
+        { id: 'b2b-check-email', valid: b2bState.emailValid },
+        { id: 'b2b-check-phone', valid: b2bState.phoneValid },
+        { id: 'b2b-check-package', valid: b2bState.packagesSelected.length > 0 }
+      ];
+      checks.forEach(c => {
+        $(c.id).className = c.valid ? 'checklist-item checked' : 'checklist-item unchecked';
+        $(c.id).querySelector('.checklist-icon').textContent = c.valid ? '✓' : '○';
+      });
+      
+      const needsDesc = b2bState.packagesSelected.includes('chatbot-premium') || b2bState.packagesSelected.includes('individual');
+      const descOk = !needsDesc || $('b2b-description').value.trim().length > 10;
+      
+      $('b2b-submit').disabled = !(b2bState.companyValid && b2bState.contactValid && b2bState.emailValid && b2bState.phoneValid && b2bState.packagesSelected.length > 0 && b2bState.dsgvoAccepted && descOk);
+    }
+    
+    // Submit
+    $('b2b-form').onsubmit = async e => {
+      e.preventDefault();
+      $('b2b-loading').classList.add('visible');
+      
+      // Calculate price
+      let setupTotal = 0, monthlyTotal = 0;
+      b2bState.packagesSelected.forEach(pkg => {
+        const opt = document.querySelector(`[data-package="${pkg}"]`);
+        setupTotal += parseInt(opt.dataset.setup) || 0;
+        monthlyTotal += parseInt(opt.dataset.monthly) || 0;
+      });
+      
+      const formData = {
+        company: $('b2b-company').value.trim(),
+        location: $('b2b-location').value.trim(),
+        contact: $('b2b-contact').value.trim(),
+        email: $('b2b-email').value.trim(),
+        phone: $('b2b-phone').value.trim(),
+        packages: b2bState.packagesSelected,
+        packageNames: b2bState.packagesSelected.map(p => PACKAGE_NAMES[p]).join(', '),
+        description: $('b2b-description').value.trim(),
+        setupTotal,
+        monthlyTotal,
+        timestamp: new Date().toISOString()
+      };
+      
+      try {
+        await fetch(B2B_WEBHOOK_SUBMIT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+      } catch (e) { console.error(e); }
+      
+      // Show result
+      const hasIndividual = b2bState.packagesSelected.includes('chatbot-premium') || b2bState.packagesSelected.includes('individual');
+      $('b2b-result-price').textContent = hasIndividual ? 'Individuell' : `ab ${monthlyTotal} €/M + ${setupTotal} € Setup`;
+      $('b2b-result-company').textContent = formData.company;
+      $('b2b-result-location').textContent = formData.location;
+      $('b2b-result-contact').textContent = formData.contact;
+      $('b2b-result-email').textContent = formData.email;
+      $('b2b-result-phone').textContent = formData.phone;
+      $('b2b-result-packages').textContent = formData.packageNames;
+      $('b2b-result-desc-row').style.display = formData.description ? 'flex' : 'none';
+      $('b2b-result-description').textContent = formData.description;
+      
+      $('b2b-loading').classList.remove('visible');
+      $('b2b-form-view').style.display = 'none';
+      $('b2b-result-view').classList.add('visible');
+      $('b2b-body').scrollTop = 0;
+    };
+
+    // ==================== MALERBETRIEB WIDGET ====================
+    const MALER_WEBHOOK_VALIDATE = "https://seidel1502.app.n8n.cloud/webhook/3ad0bd7f-1b6e-4501-ba99-0cf05a2b4565";
+    const MALER_WEBHOOK_CALCULATE = "https://seidel1502.app.n8n.cloud/webhook/d71b1438-46b7-4d67-9517-c0b2d2be92bd";
+    const SERVICE_NAMES = {1:'Innenwände streichen',2:'Fassade streichen',3:'Tapezieren',4:'Türen/Fenster lackieren',5:'Verputzen/Grundieren',6:'Dekorative Techniken'};
+    
+    const malerState = { locationValid: false, nameValid: false, phoneValid: false, dsgvoAccepted: false, distance: null };
+    let malerFiles = [];
+    
+    // Toggle
+    $('maler-toggle').onclick = () => {
+      $('maler-window').classList.toggle('is-open');
+      $('b2b-window').classList.remove('is-open');
+    };
+    
+    // Customer Type
+    document.querySelectorAll('input[name="malerCustomerType"]').forEach(r => {
+      r.onchange = e => {
+        const isGewerbe = e.target.value === 'gewerbe';
+        $('maler-gewerbe-box').classList.toggle('visible', isGewerbe);
+        $('maler-privat-box').style.display = isGewerbe ? 'none' : 'block';
+        malerState.locationValid = false;
+        updateMalerUI();
+      };
+    });
+    
+    // Gewerbe Validation
+    $('maler-validate-gewerbe-btn').onclick = async () => {
+      const company = $('maler-company').value.trim();
+      const location = $('maler-location-gewerbe').value.trim();
+      if (!company || !location) {
+        $('maler-gewerbe-status').className = 'validation-status visible error';
+        $('maler-gewerbe-status').textContent = '❌ Bitte Firma und Ort eingeben';
+        return;
       }
-    })();
+      const btn = $('maler-validate-gewerbe-btn');
+      btn.classList.add('loading'); btn.disabled = true;
+      try {
+        const res = await fetch(MALER_WEBHOOK_VALIDATE, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'gewerbe', company, location })
+        });
+        const data = await res.json();
+        const d = Array.isArray(data) ? data[0] : data;
+        if (d.valid) {
+          malerState.locationValid = true;
+          malerState.distance = d.distance;
+          $('maler-gewerbe-status').className = 'validation-status visible success';
+          $('maler-gewerbe-status').textContent = `✅ ${d.companyInfo || company} – ${d.distance}km`;
+        } else {
+          malerState.locationValid = false;
+          $('maler-gewerbe-status').className = 'validation-status visible error';
+          $('maler-gewerbe-status').textContent = d.message || '❌ Nicht gefunden';
+        }
+      } catch (e) {
+        $('maler-gewerbe-status').className = 'validation-status visible error';
+        $('maler-gewerbe-status').textContent = '❌ Fehler';
+      }
+      btn.classList.remove('loading'); btn.disabled = false;
+      updateMalerUI();
+    };
+    
+    // Privat Validation
+    $('maler-validate-privat-btn').onclick = async () => {
+      const location = $('maler-location-privat').value.trim();
+      if (!location) {
+        $('maler-privat-status').className = 'validation-status visible error';
+        $('maler-privat-status').textContent = '❌ Bitte Ort eingeben';
+        return;
+      }
+      const btn = $('maler-validate-privat-btn');
+      btn.classList.add('loading'); btn.disabled = true;
+      try {
+        const res = await fetch(MALER_WEBHOOK_VALIDATE, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'privat', location })
+        });
+        const data = await res.json();
+        const d = Array.isArray(data) ? data[0] : data;
+        if (d.valid) {
+          malerState.locationValid = true;
+          malerState.distance = d.distance;
+          $('maler-privat-status').className = 'validation-status visible success';
+          $('maler-privat-status').textContent = `✅ Im Gebiet – ${d.distance}km`;
+        } else {
+          malerState.locationValid = false;
+          $('maler-privat-status').className = 'validation-status visible error';
+          $('maler-privat-status').textContent = d.message || '❌ Außerhalb';
+        }
+      } catch (e) {
+        $('maler-privat-status').className = 'validation-status visible error';
+        $('maler-privat-status').textContent = '❌ Fehler';
+      }
+      btn.classList.remove('loading'); btn.disabled = false;
+      updateMalerUI();
+    };
+    
+    // Name Validation
+    $('maler-name').oninput = e => {
+      const name = e.target.value;
+      const result = validateName(name);
+      $('maler-name').classList.toggle('valid', result.valid);
+      $('maler-name').classList.toggle('invalid', !result.valid && name.trim().length >= 3);
+      $('maler-name-status').textContent = name.length === 0 ? '' : result.valid ? '✅' : name.trim().length >= 3 ? '❌' : '';
+      $('maler-name-error').textContent = !result.valid && name.trim().length >= 3 ? result.message : '';
+      $('maler-name-error').classList.toggle('visible', !result.valid && name.trim().length >= 3);
+      malerState.nameValid = result.valid;
+      updateMalerUI();
+    };
+    
+    // Phone Validation
+    $('maler-phone').oninput = e => {
+      const phone = e.target.value;
+      const valid = validatePhone(phone);
+      $('maler-phone').classList.toggle('valid', valid);
+      $('maler-phone').classList.toggle('invalid', phone.length >= 6 && !valid);
+      $('maler-phone-status').textContent = phone.length === 0 ? '' : valid ? '✅' : phone.length >= 6 ? '❌' : '';
+      malerState.phoneValid = valid;
+      updateMalerUI();
+    };
+    
+    // DSGVO
+    $('maler-dsgvo').onchange = e => { malerState.dsgvoAccepted = e.target.checked; updateMalerUI(); };
+    $('maler-dsgvo-toggle').onclick = e => { e.preventDefault(); e.stopPropagation(); $('maler-dsgvo-details').classList.toggle('visible'); };
+    
+    // Files
+    $('maler-images').onchange = e => {
+      Array.from(e.target.files).forEach(f => {
+        if (f.size > 10*1024*1024) return showToast('Datei zu groß', 'error');
+        malerFiles.push(f);
+      });
+      renderMalerFiles();
+      e.target.value = '';
+    };
+    
+    function renderMalerFiles() {
+      $('maler-file-list').innerHTML = malerFiles.map((f,i) => 
+        `<div class="file-item">📷 ${f.name.slice(0,20)}${f.name.length>20?'...':''}<span class="file-item-remove" data-i="${i}">✕</span></div>`
+      ).join('');
+      $('maler-file-list').querySelectorAll('.file-item-remove').forEach(b => b.onclick = e => {
+        malerFiles.splice(+e.target.dataset.i, 1);
+        renderMalerFiles();
+      });
+    }
+    
+    function updateMalerUI() {
+      const checks = [
+        { id: 'maler-check-location', valid: malerState.locationValid },
+        { id: 'maler-check-name', valid: malerState.nameValid },
+        { id: 'maler-check-phone', valid: malerState.phoneValid }
+      ];
+      checks.forEach(c => {
+        $(c.id).className = c.valid ? 'checklist-item checked' : 'checklist-item unchecked';
+        $(c.id).querySelector('.checklist-icon').textContent = c.valid ? '✓' : '○';
+      });
+      $('maler-submit').disabled = !(malerState.locationValid && malerState.nameValid && malerState.phoneValid && malerState.dsgvoAccepted);
+    }
+    
+    // Submit
+    $('maler-form').onsubmit = async e => {
+      e.preventDefault();
+      $('maler-loading').classList.add('visible');
+      
+      const isGewerbe = document.querySelector('input[name="malerCustomerType"]:checked').value === 'gewerbe';
+      const serviceId = +$('maler-service').value;
+      const sizeNum = parseFloat($('maler-size').value.replace(/[^\d.,]/g,'').replace(',','.')) || 30;
+      
+      const formData = {
+        customerType: isGewerbe ? 'gewerbe' : 'privat',
+        company: isGewerbe ? $('maler-company').value : '',
+        name: $('maler-name').value,
+        email: $('maler-email').value.trim(),
+        phone: $('maler-phone').value,
+        location: isGewerbe ? $('maler-location-gewerbe').value : $('maler-location-privat').value,
+        distance: malerState.distance,
+        serviceId,
+        serviceName: SERVICE_NAMES[serviceId] || '',
+        size: $('maler-size').value,
+        sizeNumber: sizeNum,
+        timeframe: $('maler-timeframe').value,
+        description: $('maler-description').value.trim(),
+        imagesCount: malerFiles.length,
+        dsgvoAccepted: true,
+        timestamp: new Date().toISOString()
+      };
+      
+      try {
+        const fd = new FormData();
+        fd.append('formData', JSON.stringify(formData));
+        malerFiles.forEach((f,i) => fd.append('image_'+i, f));
+        const res = await fetch(MALER_WEBHOOK_CALCULATE, { method: 'POST', body: fd });
+        const data = await res.json();
+        
+        $('maler-result-price').textContent = data.price ? `ca. ${data.price.toLocaleString('de-DE')} €` : '-';
+        $('maler-result-duration').textContent = data.duration || '-';
+        $('maler-result-workers').textContent = data.workers || '-';
+        $('maler-result-type').textContent = formData.customerType === 'gewerbe' ? 'Gewerblich 🏢' : 'Privat 🏠';
+        $('maler-result-company-row').style.display = formData.company ? 'flex' : 'none';
+        $('maler-result-company').textContent = formData.company;
+        $('maler-result-name').textContent = formData.name;
+        $('maler-result-email-row').style.display = formData.email ? 'flex' : 'none';
+        $('maler-result-email').textContent = formData.email;
+        $('maler-result-phone').textContent = formData.phone;
+        $('maler-result-location').textContent = `${formData.location} (${formData.distance}km)`;
+        $('maler-result-service').textContent = formData.serviceName;
+        $('maler-result-size').textContent = formData.size;
+        $('maler-result-timeframe').textContent = formData.timeframe;
+        $('maler-result-desc-row').style.display = formData.description ? 'flex' : 'none';
+        $('maler-result-description').textContent = formData.description;
+      } catch (e) {
+        showToast('Fehler beim Senden', 'error');
+      }
+      
+      $('maler-loading').classList.remove('visible');
+      $('maler-form-view').style.display = 'none';
+      $('maler-result-view').classList.add('visible');
+      $('maler-body').scrollTop = 0;
+    };
+  })();
   </script>
 </body>
 </html>
