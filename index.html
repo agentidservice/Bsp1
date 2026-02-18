@@ -191,6 +191,15 @@ nav {
 .filter-chip:hover { border-color: var(--accent); color: var(--accent); }
 .filter-chip.active { background: rgba(200,169,110,.15); border-color: var(--accent); color: var(--accent); }
 .filter-optional { font-size: 10px; color: rgba(255,255,255,.25); margin-left: 4px; }
+.filter-custom-wrap { margin-top: 10px; position: relative; }
+.filter-custom-input {
+  width: 100%; padding: 8px 14px; background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1); border-radius: 8px;
+  color: #fff; font-size: 12px; font-family: 'DM Sans', sans-serif;
+  outline: none; transition: border-color .2s;
+}
+.filter-custom-input::placeholder { color: rgba(255,255,255,.3); }
+.filter-custom-input:focus { border-color: var(--accent); }
 
 .sum-footer {
   padding: 14px 20px;
@@ -442,29 +451,41 @@ nav {
     <h1>Ihre Anlaufstelle für alle Behördenangelegenheiten</h1>
   </div>
   <div class="article-body">
-    <p>Der Bürgerservice der Stadt Paderborn ist Ihr zentraler Ansprechpartner für nahezu alle Verwaltungsangelegenheiten des täglichen Lebens. Ob Ummeldung, Personalausweis, Führungszeugnis oder die Beantragung eines Gewerbescheins – wir sind für Sie da, sowohl persönlich in unseren Servicezentren als auch digital über dieses Portal.</p>
+    <p>Der Bürgerservice der Stadt Paderborn ist Ihr zentraler Ansprechpartner für nahezu alle Verwaltungsangelegenheiten des täglichen Lebens. Ob Ummeldung, Personalausweis, Führungszeugnis oder die Beantragung eines Gewerbescheins – wir sind für Sie da, sowohl persönlich in unseren Servicezentren als auch digital über dieses Portal. Unser Anspruch ist es, Verwaltung so einfach, transparent und bürgerfreundlich wie möglich zu gestalten. Denn wir glauben: Gute Verwaltung ist kein Selbstzweck, sondern der Grundstein einer funktionierenden Stadtgesellschaft.</p>
 
     <h2>Meldewesen und Ausweise</h2>
     <p>Das Meldewesen bildet die Grundlage für viele weitere Verwaltungsvorgänge. Eine fristgerechte Anmeldung innerhalb von zwei Wochen nach dem Einzug ist gesetzlich vorgeschrieben. In Paderborn können Sie Ihre Ummeldung bequem online über unser Portal vornehmen, ohne persönlich erscheinen zu müssen. Für die Erstanmeldung nach Zuzug aus einer anderen Gemeinde benötigen Sie Ihren aktuellen Personalausweis oder Reisepass, eine Wohnungsgeberbestätigung Ihres Vermieters sowie gegebenenfalls Nachweise über Familienstand oder Sorgerecht bei Anmeldung von Kindern.</p>
-    <p>Der Personalausweis ist das wichtigste Identifikationsdokument für deutsche Staatsbürgerinnen und Staatsbürger. Er wird ab dem 16. Lebensjahr Pflicht und hat eine Gültigkeitsdauer von zehn Jahren für Erwachsene und sechs Jahren für Minderjährige. Die Beantragung erfolgt persönlich beim Bürgerservice. Bringen Sie dazu ein aktuelles biometrisches Lichtbild, Ihren alten Ausweis oder eine Geburtsurkunde sowie die anfallende Gebühr mit. Der neue Ausweis wird in der Regel innerhalb von drei bis vier Wochen zugestellt.</p>
+    <p>Der Personalausweis ist das wichtigste Identifikationsdokument für deutsche Staatsbürgerinnen und Staatsbürger. Er wird ab dem 16. Lebensjahr Pflicht und hat eine Gültigkeitsdauer von zehn Jahren für Erwachsene und sechs Jahren für Minderjährige. Die Beantragung erfolgt persönlich beim Bürgerservice. Bringen Sie dazu ein aktuelles biometrisches Lichtbild, Ihren alten Ausweis oder eine Geburtsurkunde sowie die anfallende Gebühr mit. Der neue Ausweis wird in der Regel innerhalb von drei bis vier Wochen zugestellt. Auf Wunsch ist eine Expressbestellung möglich, die Bearbeitung dauert dann in der Regel nur drei Werktage – gegen einen Aufpreis.</p>
+    <p>Der Reisepass ist erforderlich für Reisen in Länder, die den Personalausweis nicht als Einreisedokument akzeptieren. Er ist für Erwachsene zehn Jahre gültig, für Kinder unter zwölf Jahren sechs Jahre. Auch hier ist ein persönliches Erscheinen bei der Beantragung notwendig, da Fingerabdrücke genommen werden. Kinder, die noch keinen eigenen Pass besitzen, können nicht mehr in den Reisepass der Eltern eingetragen werden – jedes Kind benötigt seit 2006 ein eigenes Dokument.</p>
 
     <div class="info-box">
-      <p><strong>Tipp:</strong> Nutzen Sie die Online-Terminvereinbarung, um Wartezeiten zu vermeiden. Viele Leistungen können außerdem vollständig digital beantragt werden – ohne Behördengang.</p>
+      <p><strong>Tipp:</strong> Nutzen Sie die Online-Terminvereinbarung, um Wartezeiten zu vermeiden. Viele Leistungen können außerdem vollständig digital beantragt werden – ohne Behördengang. Termine können bis zu acht Wochen im Voraus gebucht werden.</p>
     </div>
 
     <h2>Gewerbeanmeldung und Unternehmensservice</h2>
     <p>Wer in Paderborn ein Gewerbe betreiben möchte, muss dieses bei der zuständigen Behörde anmelden. Die Gewerbeanmeldung ist dabei nicht nur eine bürokratische Pflicht, sondern auch der offizielle Start Ihrer unternehmerischen Tätigkeit in der Stadt. Der Prozess ist bewusst einfach gestaltet: Sie füllen das Formular online aus, laden die erforderlichen Unterlagen hoch und erhalten innerhalb weniger Werktage Ihre Gewerbeanmeldebestätigung per Post oder digital zugestellt.</p>
-    <p>Zu den erforderlichen Unterlagen gehören ein gültiges Ausweisdokument, bei Handwerksbetrieben ein Nachweis über die entsprechende Qualifikation sowie bei bestimmten Gewerben zusätzliche Genehmigungen oder Konzessionen. Das Stadtportal führt Sie Schritt für Schritt durch den gesamten Prozess und weist Sie auf möglicherweise fehlende Dokumente hin.</p>
+    <p>Zu den erforderlichen Unterlagen gehören ein gültiges Ausweisdokument, bei Handwerksbetrieben ein Nachweis über die entsprechende Qualifikation sowie bei bestimmten Gewerben zusätzliche Genehmigungen oder Konzessionen. Das Stadtportal führt Sie Schritt für Schritt durch den gesamten Prozess und weist Sie auf möglicherweise fehlende Dokumente hin. Die Gebühr für eine Gewerbeanmeldung beträgt in Paderborn 26 Euro, für eine Gewerbeummeldung 26 Euro und für eine Gewerbeabmeldung 26 Euro. Bei gleichzeitiger Beantragung mehrerer Leistungen können Rabatte gewährt werden.</p>
+    <p>Für Gründerinnen und Gründer bietet die Stadt Paderborn in Kooperation mit der Wirtschaftsförderungsgesellschaft kostenlose Erstberatungen an. Hier erhalten Sie Informationen zu Finanzierungsmöglichkeiten, Förderprogrammen des Landes und des Bundes sowie zur Wahl der geeigneten Rechtsform. Die Beratungsstelle ist dienstags und donnerstags von 9:00 bis 12:00 Uhr ohne Voranmeldung erreichbar, zu anderen Zeiten nach Vereinbarung.</p>
 
     <h2>Führungszeugnisse und Beglaubigungen</h2>
-    <p>Ein einfaches Führungszeugnis können Sie bequem online über das Bundeszentralregister beantragen. Für ein erweitertes Führungszeugnis, das beispielsweise bei der Arbeit mit Kindern und Jugendlichen verlangt wird, wenden Sie sich bitte direkt an unsere Mitarbeiterinnen und Mitarbeiter. Beglaubigungen von Dokumenten und Unterschriften nehmen wir während der regulären Öffnungszeiten in allen Servicezentren vor.</p>
+    <p>Ein einfaches Führungszeugnis können Sie bequem online über das Bundeszentralregister beantragen. Die Gebühr beträgt 13 Euro und wird per Lastschrift oder Kreditkarte eingezogen. Das Führungszeugnis wird dann direkt an Ihre Meldeadresse geschickt – Sie können jedoch auch eine abweichende Versandadresse angeben. Die Bearbeitungszeit beträgt in der Regel ein bis zwei Wochen.</p>
+    <p>Für ein erweitertes Führungszeugnis, das beispielsweise bei der Arbeit mit Kindern und Jugendlichen verlangt wird, ist eine Beantragung beim Bürgerservice notwendig. Sie benötigen dafür eine Bestätigung des Arbeitgebers oder der Organisation, dass das erweiterte Führungszeugnis für die beabsichtigte Tätigkeit erforderlich ist. Ehrenamtliche erhalten das erweiterte Führungszeugnis kostenfrei. Beglaubigungen von Dokumenten und Unterschriften nehmen wir während der regulären Öffnungszeiten in allen Servicezentren vor. Bitte beachten Sie, dass für die Beglaubigung das Original des Dokuments mitgebracht werden muss.</p>
 
     <h2>Standesamt und Personenstandswesen</h2>
     <p>Das Standesamt ist zuständig für alle Angelegenheiten des Personenstandswesens: von der Beurkundung von Geburten und Sterbefällen über die Eheschließung bis hin zur Ausstellung von Personenstandsurkunden. Heiratswillige Paare können sich ab sechs Monate vor dem gewünschten Trautermin beim Standesamt anmelden. Paderborn bietet mehrere standesamtliche Trauorte an, darunter das historische Rathaus, den Kaisersaal und mehrere Außenstellen in den umliegenden Ortschaften.</p>
-    <p>Geburtsurkunden, Heiratsurkunden und Sterbeurkunden können sowohl persönlich als auch schriftlich oder per E-Mail beantragt werden. Für Urkunden aus anderen Standesämtern leiten wir Ihre Anfrage gerne weiter oder beraten Sie bei der direkten Kontaktaufnahme.</p>
+    <p>Für die Anmeldung zur Eheschließung benötigen beide Partner einen gültigen Ausweis sowie einen beglaubigten Ausdruck aus dem Geburtenregister, der nicht älter als sechs Monate sein darf. Geschiedene Personen müssen zusätzlich das rechtskräftige Scheidungsurteil vorlegen, Verwitwete eine Sterbeurkunde des früheren Ehepartners. Ausländische Urkunden müssen in der Regel übersetzt und mit einer Apostille versehen werden.</p>
+    <p>Geburten müssen dem Standesamt innerhalb von sieben Tagen nach der Entbindung gemeldet werden. Bei Geburten in einer Klinik übernimmt in der Regel die Klinik die Meldung. Bei Hausgeburten oder Geburten in Geburtshäusern muss die Anzeige durch die Eltern oder die Hebamme erfolgen. Für die Beurkundung benötigen Sie die Geburtsbescheinigung der Hebamme oder des Arztes, Ausweisdokumente beider Elternteile sowie gegebenenfalls die Heiratsurkunde oder eine Sorgerechtserklärung.</p>
+    <p>Geburtsurkunden, Heiratsurkunden und Sterbeurkunden können sowohl persönlich als auch schriftlich, per E-Mail oder über das Onlineportal beantragt werden. Für Urkunden aus anderen Standesämtern leiten wir Ihre Anfrage gerne weiter oder beraten Sie bei der direkten Kontaktaufnahme. Die Gebühr für eine einfache Urkunde beträgt 12 Euro, für jede weitere Ausfertigung 6 Euro.</p>
+
+    <h2>Kfz-Zulassung und Fahrerlaubnisbehörde</h2>
+    <p>Die Kfz-Zulassungsstelle ist für alle Angelegenheiten rund um die Zulassung von Kraftfahrzeugen zuständig. Sie können Ihr Fahrzeug anmelden, ummelden, abmelden oder auf eine andere Person umschreiben lassen. Seit Einführung des i-Kfz-Systems ist auch eine vollständig digitale Zulassung, Umschreibung und Abmeldung möglich, sofern das Fahrzeug und die Kennzeichen entsprechend ausgestattet sind. Die Kfz-Zulassungsstelle befindet sich im Technischen Rathaus in der Pontanusstraße und ist montags bis freitags von 7:30 bis 15:00 Uhr geöffnet, donnerstags bis 17:30 Uhr.</p>
+    <p>Die Fahrerlaubnisbehörde bearbeitet alle Angelegenheiten rund um den Führerschein: Neuerteilung, Umtausch ausländischer Führerscheine, Erweiterung um neue Klassen sowie Maßnahmen bei Punkteständen oder medizinischen Einschränkungen. Für den Umtausch eines alten grauen Führerscheins in den EU-Kartenführerschein gelten gestaffelte Fristen je nach Geburtsjahr. Prüfen Sie frühzeitig, ob Sie von einer Umtauschpflicht betroffen sind.</p>
+
+    <h2>Sozialleistungen und Unterstützungsangebote</h2>
+    <p>Das Sozialamt der Stadt Paderborn berät und unterstützt Menschen in schwierigen Lebenslagen. Dazu gehören Leistungen der Grundsicherung im Alter und bei Erwerbsminderung, Hilfe zur Pflege, Eingliederungshilfe für Menschen mit Behinderungen sowie Hilfen in besonderen sozialen Situationen. Die Beratung ist vertraulich und kostenlos. Wer Ansprüche auf Sozialleistungen hat, sollte sich frühzeitig melden – Leistungen werden in der Regel erst ab dem Zeitpunkt der Antragstellung gewährt.</p>
 
     <h2>Öffnungszeiten und Kontakt</h2>
-    <p>Unsere Servicezentren sind Montag bis Freitag von 8:00 bis 16:00 Uhr geöffnet, donnerstags verlängert bis 18:00 Uhr. Für dringende Angelegenheiten außerhalb dieser Zeiten steht Ihnen unser Online-Service rund um die Uhr zur Verfügung. Das Bürgertelefon ist werktags von 8:00 bis 17:00 Uhr erreichbar.</p>
+    <p>Unsere Servicezentren sind Montag bis Freitag von 8:00 bis 16:00 Uhr geöffnet, donnerstags verlängert bis 18:00 Uhr. Samstags ist das Servicezentrum Innenstadt von 9:00 bis 12:00 Uhr geöffnet. Für dringende Angelegenheiten außerhalb dieser Zeiten steht Ihnen unser Online-Service rund um die Uhr zur Verfügung. Das Bürgertelefon unter 05251 88-0 ist werktags von 8:00 bis 17:00 Uhr erreichbar. Weitere Servicezentren befinden sich in Schloß Neuhaus, Bad Lippspringe und Delbrück.</p>
   </div>
 </div>
 
@@ -477,28 +498,39 @@ nav {
     <h1>Paderborn bewegt sich – sicher, nachhaltig und vernetzt</h1>
   </div>
   <div class="article-body">
-    <p>Die Mobilität in Paderborn befindet sich im Wandel. Die Stadt investiert konsequent in den Ausbau eines nachhaltigen Verkehrsnetzes, das alle Verkehrsteilnehmerinnen und Verkehrsteilnehmer gleichermaßen berücksichtigt. Ob zu Fuß, per Fahrrad, mit dem Bus oder dem Auto – Paderborn gestaltet die Mobilität der Zukunft aktiv mit.</p>
+    <p>Die Mobilität in Paderborn befindet sich im Wandel. Die Stadt investiert konsequent in den Ausbau eines nachhaltigen Verkehrsnetzes, das alle Verkehrsteilnehmerinnen und Verkehrsteilnehmer gleichermaßen berücksichtigt. Ob zu Fuß, per Fahrrad, mit dem Bus oder dem Auto – Paderborn gestaltet die Mobilität der Zukunft aktiv mit und setzt dabei auf ein integriertes Konzept, das verschiedene Verkehrsträger sinnvoll miteinander verknüpft.</p>
 
     <h2>Öffentlicher Personennahverkehr</h2>
-    <p>Der ÖPNV in Paderborn wird vom Nahverkehr Paderborn-Lippe (NPL) koordiniert. Das Busnetz umfasst über 30 Linien und verbindet nahezu alle Stadtteile sowie viele umliegende Gemeinden. Das Herzstück des Stadtbusnetzes ist der Hauptbahnhof, von dem aus alle wesentlichen Linien abfahren. Die Taktzeiten auf den Hauptstrecken betragen zu Stoßzeiten zehn Minuten, im Grundtakt zwanzig Minuten.</p>
-    <p>Seit dem Fahrplanwechsel 2024 fahren mehrere Nachtbuslinien an Wochenenden und Feiertagen bis in die frühen Morgenstunden, um auch Nachtschwärmern eine sichere Heimfahrt zu ermöglichen. Tickets können an Automaten an allen Haupthaltestellen, in der PaderSprinter-App oder direkt beim Fahrer erworben werden. Das Deutschlandticket gilt im gesamten Verbundnetz.</p>
+    <p>Der ÖPNV in Paderborn wird vom Nahverkehr Paderborn-Lippe (NPL) koordiniert. Das Busnetz umfasst über 30 Linien und verbindet nahezu alle Stadtteile sowie viele umliegende Gemeinden. Das Herzstück des Stadtbusnetzes ist der Hauptbahnhof, von dem aus alle wesentlichen Linien abfahren. Die Taktzeiten auf den Hauptstrecken betragen zu Stoßzeiten zehn Minuten, im Grundtakt zwanzig Minuten. In den Abendstunden und am Wochenende wird auf einen 30-Minuten-Takt umgestellt, auf Nebenstrecken auf stündliche Verbindungen.</p>
+    <p>Seit dem Fahrplanwechsel 2024 fahren mehrere Nachtbuslinien an Wochenenden und Feiertagen bis in die frühen Morgenstunden, um auch Nachtschwärmern eine sichere Heimfahrt zu ermöglichen. Die Nachtbusse verkehren in der Regel stündlich und bedienen alle größeren Stadtteile. Tickets können an Automaten an allen Haupthaltestellen, in der PaderSprinter-App oder direkt beim Fahrer erworben werden. Das Deutschlandticket gilt im gesamten Verbundnetz und kann bequem digital abonniert werden.</p>
+    <p>Für Schülerinnen und Schüler, Auszubildende und Studierende gibt es vergünstigte Zeitkarten, die für alle Linien im Stadtgebiet und im Umland gültig sind. Senioren ab 65 Jahren erhalten auf Antrag eine Seniorenkarte zu besonders günstigen Konditionen. Für Menschen mit Behinderungen sind alle modernen Busse mit Niederflurantrieb ausgestattet und verfügen über Rampen für Rollstuhlfahrer sowie Audioansagen und Fahrgastinformationssysteme.</p>
 
     <div class="info-box">
-      <p><strong>Aktuell:</strong> Die Linie 68 wird bis Ende März 2025 aufgrund von Bauarbeiten an der Detmolder Straße umgeleitet. Bitte beachten Sie die aktuellen Aushänge und Informationen in der App.</p>
+      <p><strong>Aktuell:</strong> Die Linie 68 wird bis Ende März 2025 aufgrund von Bauarbeiten an der Detmolder Straße umgeleitet. Bitte beachten Sie die aktuellen Aushänge und Informationen in der PaderSprinter-App.</p>
     </div>
 
     <h2>Radverkehr und Fahrradinfrastruktur</h2>
     <p>Paderborn hat sich das ehrgeizige Ziel gesetzt, bis 2030 eine der fahrradfreundlichsten Städte Nordrhein-Westfalens zu werden. Das Radwegenetz wurde in den vergangenen Jahren kontinuierlich ausgebaut und umfasst heute über 280 Kilometer ausgeschilderte Radwege, Fahrradstraßen und Schutzstreifen. Besonders die innerstädtische Anbindung wurde erheblich verbessert, sodass die meisten Ziele im Stadtgebiet sicher und komfortabel per Fahrrad erreichbar sind.</p>
-    <p>An über 50 Standorten im Stadtgebiet befinden sich überdachte Fahrradabstellanlagen, an Bahnhöfen und zentralen Plätzen auch Fahrradhäuser mit Schließfächern für Helm und Zubehör. Das Paderborn-Bike-Sharing-System bietet 200 Leihräder und 60 E-Bikes an 35 Stationen im gesamten Stadtgebiet. Die Ausleihe erfolgt unkompliziert per App oder Chipkarte.</p>
+    <p>An über 50 Standorten im Stadtgebiet befinden sich überdachte Fahrradabstellanlagen, an Bahnhöfen und zentralen Plätzen auch Fahrradhäuser mit Schließfächern für Helm und Zubehör. Das Paderborn-Bike-Sharing-System bietet 200 Leihräder und 60 E-Bikes an 35 Stationen im gesamten Stadtgebiet. Die Ausleihe erfolgt unkompliziert per App oder Chipkarte. Die ersten 30 Minuten sind bei vielen Tarifen kostenfrei.</p>
+    <p>Der Radschnellweg Paderborn–Detmold befindet sich in der Planung und soll ab 2027 eine direkte, weitgehend kreuzungsfreie Radverbindung zwischen den beiden Städten ermöglichen. Auf 22 Kilometern Länge werden Pendlerinnen und Pendler in Zukunft bequem und sicher zwischen den Städten radeln können. Das Projekt wird zu 80 Prozent vom Land Nordrhein-Westfalen und vom Bund gefördert.</p>
 
     <h2>Aktuelle Baustellen und Verkehrsbehinderungen</h2>
-    <p>Baumaßnahmen sind notwendig, um die städtische Infrastruktur zu erhalten und zu modernisieren. Wir bemühen uns, Behinderungen so gering wie möglich zu halten und informieren Sie frühzeitig über bevorstehende Einschränkungen. Die wichtigsten aktuellen Maßnahmen umfassen die Erneuerung der Wasserleitung in der Westernstraße, die voraussichtlich bis Ende April andauert, die Brückensanierung an der Paderborner Straße mit halbseitiger Sperrung sowie die Fahrbahnmarkierungsarbeiten auf dem Westernring, die in Nachtarbeit durchgeführt werden.</p>
+    <p>Baumaßnahmen sind notwendig, um die städtische Infrastruktur zu erhalten und zu modernisieren. Wir bemühen uns, Behinderungen so gering wie möglich zu halten und informieren Sie frühzeitig über bevorstehende Einschränkungen. Die wichtigsten aktuellen Maßnahmen umfassen die Erneuerung der Wasserleitung in der Westernstraße (voraussichtlich bis Ende April), die Brückensanierung an der Paderborner Straße mit halbseitiger Sperrung sowie die Fahrbahnmarkierungsarbeiten auf dem Westernring, die in Nachtarbeit durchgeführt werden.</p>
+    <p>Größere Bauvorhaben für 2025 sind der Umbau des Knotenpunkts Detmolder Straße/Fürstenweg zu einem Kreisverkehr, die Sanierung der Fahrbahn auf der Berliner Straße zwischen Kasseler Tor und Stadtring sowie der Neubau einer Fuß- und Radwegbrücke über die Pader im Bereich der Paderseen. Alle Baustellen werden im interaktiven Baustellenplan auf unserem Portal aktuell gehalten.</p>
 
     <h2>Parken in der Innenstadt</h2>
-    <p>In der Paderborner Innenstadt stehen rund 3.500 bewirtschaftete Parkplätze in zwölf Parkhäusern und auf mehreren Freiluftparkplätzen zur Verfügung. Die Parkhäuser am Bahnhof, am Liboriberg und am Westerntor sind rund um die Uhr geöffnet. Die Parkgebühren wurden zuletzt 2023 angepasst und betragen derzeit zwischen einem und zwei Euro pro Stunde, je nach Lage und Parkanlage. Für Bewohnerinnen und Bewohner der Innenstadt gibt es Anwohnerparkausweise zu günstigen Jahresgebühren.</p>
+    <p>In der Paderborner Innenstadt stehen rund 3.500 bewirtschaftete Parkplätze in zwölf Parkhäusern und auf mehreren Freiluftparkplätzen zur Verfügung. Die Parkhäuser am Bahnhof, am Liboriberg und am Westerntor sind rund um die Uhr geöffnet. Die Parkgebühren betragen derzeit zwischen einem und zwei Euro pro Stunde, je nach Lage und Parkanlage. Für Bewohnerinnen und Bewohner der Innenstadt gibt es Anwohnerparkausweise zu günstigen Jahresgebühren.</p>
+    <p>Das digitale Parkleitsystem zeigt in Echtzeit die aktuell freien Stellplätze in allen Parkhäusern an – sowohl auf den Anzeigetafeln im Stadtgebiet als auch in der Paderborn-Navigations-App. So können Sie bereits auf der Anfahrt das geeignete Parkhaus auswählen und unnötigen Suchverkehr vermeiden. Kurzzeitparken bis zu 30 Minuten ist in mehreren Zonen der Innenstadt kostenlos, sofern eine Parkscheibe ausgelegt wird.</p>
 
     <h2>Elektromobilität und Ladeinfrastruktur</h2>
-    <p>Die Stadt Paderborn treibt den Ausbau der Ladeinfrastruktur für Elektrofahrzeuge konsequent voran. Aktuell gibt es 87 öffentliche Ladepunkte im Stadtgebiet, davon 14 Schnellladepunkte mit einer Leistung von mindestens 50 Kilowatt. Bis Ende 2026 soll die Zahl der öffentlichen Ladepunkte auf 200 steigen. Eine interaktive Karte aller Ladestandorte finden Sie auf unserem Portal unter dem Menüpunkt Elektromobilität.</p>
+    <p>Die Stadt Paderborn treibt den Ausbau der Ladeinfrastruktur für Elektrofahrzeuge konsequent voran. Aktuell gibt es 87 öffentliche Ladepunkte im Stadtgebiet, davon 14 Schnellladepunkte mit einer Leistung von mindestens 50 Kilowatt. Bis Ende 2026 soll die Zahl der öffentlichen Ladepunkte auf 200 steigen. Eine interaktive Karte aller Ladestandorte finden Sie auf unserem Portal.</p>
+    <p>Die Stadtwerke Paderborn bieten Privatpersonen und Unternehmen Beratung zur Installation privater Ladeeinrichtungen (Wallboxen) und informieren über Fördermöglichkeiten. Der Zuschuss des Bundesamts für Wirtschaft und Ausfuhrkontrolle (BAFA) für private Wallboxen in Kombination mit einem Ökostromvertrag kann bis zu 900 Euro betragen. Auch für Wohnungseigentümergemeinschaften und Vermieter gibt es attraktive Fördermodelle.</p>
+
+    <h2>Carsharing und Mobilitätsstationen</h2>
+    <p>An derzeit acht Mobilitätsstationen im Stadtgebiet sind Carsharing-Fahrzeuge, Leihräder und E-Scooter gebündelt verfügbar. Die Stationen befinden sich an gut frequentierten Punkten wie Bahnhöfen, Einkaufszentren und Hochschulen. Das Angebot soll bis 2026 auf 20 Stationen ausgebaut werden. Wer einmal bei einem der beteiligten Carsharing-Anbieter registriert ist, kann die Fahrzeuge bequem per App reservieren und öffnen – ohne Schlüsselübergabe.</p>
+
+    <h2>Barrierefreiheit im Verkehr</h2>
+    <p>Die Herstellung von Barrierefreiheit im öffentlichen Verkehrsraum ist eine Daueraufgabe, der sich die Stadt Paderborn konsequent widmet. Alle neu gebauten oder grundlegend sanierten Haltestellen werden barrierefrei ausgebaut, mit taktilen Leitsystemen, akustischen Signalen und ausreichend Aufstellflächen für Rollstühle und Kinderwagen. Der Umbau älterer Haltestellen wird nach einem Prioritätenplan fortgeführt, der stark frequentierte Haltestellen bevorzugt behandelt. Bis 2028 sollen alle Bushaltestellen im Stadtgebiet barrierefrei zugänglich sein.</p>
   </div>
 </div>
 
@@ -511,26 +543,37 @@ nav {
     <h1>Paderborn – eine Stadt mit Geschichte, Herz und Kreativität</h1>
   </div>
   <div class="article-body">
-    <p>Paderborn ist eine Stadt mit einer über 1.200-jährigen Geschichte, die in jedem Winkel des Stadtbildes spürbar ist. Vom imposanten Dom über die mittelalterliche Altstadt bis zu modernen Kulturzentren – die Stadt bietet ein außergewöhnlich vielfältiges kulturelles Leben, das weit über die Stadtgrenzen hinaus strahlt.</p>
+    <p>Paderborn ist eine Stadt mit einer über 1.200-jährigen Geschichte, die in jedem Winkel des Stadtbildes spürbar ist. Vom imposanten Dom über die mittelalterliche Altstadt bis zu modernen Kulturzentren – die Stadt bietet ein außergewöhnlich vielfältiges kulturelles Leben, das weit über die Stadtgrenzen hinaus strahlt. Kunst, Geschichte, Musik und Geselligkeit bilden in Paderborn eine lebendige Einheit, die Einheimische wie Gäste gleichermaßen begeistert.</p>
 
     <h2>Museen und historische Stätten</h2>
-    <p>Das Erzbischöfliche Diözesanmuseum Paderborn beherbergt eine der bedeutendsten Sammlungen mittelalterlicher Sakralkunst in Deutschland. Herzstück ist die weltberühmte Imad-Madonna aus dem 11. Jahrhundert sowie ein umfangreiches Konvolut ottonischer Goldschmiedekunst. Das Museum ist Dienstag bis Sonntag von 10:00 bis 18:00 Uhr geöffnet, donnerstags bis 20:00 Uhr.</p>
-    <p>Das Museum in der Kaiserpfalz führt Besucherinnen und Besucher durch die archäologische Geschichte Paderborns, von den frühgeschichtlichen Siedlungsspuren über die karolingische Pfalz Karls des Großen bis zur ottonischen Blütezeit. Das Museumsgelände umfasst auch die freigelegten Fundamentreste der karolingischen Pfalzanlage, die unter freiem Himmel besichtigt werden kann. Für Schulklassen bieten wir speziell ausgearbeitete pädagogische Programme an.</p>
+    <p>Das Erzbischöfliche Diözesanmuseum Paderborn beherbergt eine der bedeutendsten Sammlungen mittelalterlicher Sakralkunst in Deutschland. Herzstück ist die weltberühmte Imad-Madonna aus dem 11. Jahrhundert sowie ein umfangreiches Konvolut ottonischer Goldschmiedekunst. Das Museum ist Dienstag bis Sonntag von 10:00 bis 18:00 Uhr geöffnet, donnerstags bis 20:00 Uhr. Der Eintritt beträgt 7 Euro für Erwachsene, 5 Euro für Ermäßigte, Kinder bis 12 Jahre haben freien Eintritt.</p>
+    <p>Das Museum in der Kaiserpfalz führt Besucherinnen und Besucher durch die archäologische Geschichte Paderborns, von den frühgeschichtlichen Siedlungsspuren über die karolingische Pfalz Karls des Großen bis zur ottonischen Blütezeit. Das Museumsgelände umfasst auch die freigelegten Fundamentreste der karolingischen Pfalzanlage, die unter freiem Himmel besichtigt werden kann. Für Schulklassen bieten wir speziell ausgearbeitete pädagogische Programme an, die vorab buchbar sind.</p>
+    <p>Das Stadtmuseum Paderborn dokumentiert in seiner Dauerausstellung die Geschichte der Stadt von der frühen Neuzeit bis ins 20. Jahrhundert. Besonderes Highlight ist die originalgetreue Rekonstruktion einer bürgerlichen Wohnstube aus dem 19. Jahrhundert sowie eine umfangreiche Sammlung historischer Stadtpläne und Fotografien. Wechselausstellungen zu spezifischen Themen der Stadtgeschichte ergänzen das Programm regelmäßig.</p>
 
     <div class="info-box">
-      <p><strong>Empfehlung:</strong> Mit dem Paderborn-Museumspass erhalten Sie freien Eintritt in alle städtischen Museen für ein ganzes Jahr – ein ideales Geschenk für Kulturbegeisterte.</p>
+      <p><strong>Empfehlung:</strong> Mit dem Paderborn-Museumspass erhalten Sie freien Eintritt in alle städtischen Museen für ein ganzes Jahr zum Preis von nur 25 Euro – ein ideales Geschenk für Kulturbegeisterte.</p>
     </div>
 
     <h2>Theater und Bühnen</h2>
-    <p>Das Theater Paderborn ist das kulturelle Flaggschiff der Stadt und bespielt drei Bühnen mit einem breiten Programm aus Schauspiel, Oper, Operette, Tanz und Kinder- und Jugendtheater. Die Spielzeit 2024/25 steht unter dem Motto „Grenzen" und umfasst über 200 Aufführungen. Höhepunkt der Saison ist die Neuproduktion von Puccinis „La Bohème" im Großen Haus sowie die Uraufführung eines zeitgenössischen Tanzstücks in Zusammenarbeit mit dem Choreographen Ensemble aus Brüssel.</p>
-    <p>Neben dem städtischen Theater gibt es eine lebendige freie Szene: Das Kulturzentrum Paderhalle, das Kulturbüro und die vielen kleineren Spielstätten in der Stadt bieten das ganze Jahr über Konzerte, Lesungen, Kabarett und Kleinkunst. Besonders beliebt sind die Sommerbühne im Schloßpark und die offene Bühne im Kulturspeicher.</p>
+    <p>Das Theater Paderborn ist das kulturelle Flaggschiff der Stadt und bespielt drei Bühnen mit einem breiten Programm aus Schauspiel, Oper, Operette, Tanz und Kinder- und Jugendtheater. Die Spielzeit 2024/25 steht unter dem Motto „Grenzen" und umfasst über 200 Aufführungen. Höhepunkt der Saison ist die Neuproduktion von Puccinis „La Bohème" im Großen Haus sowie die Uraufführung eines zeitgenössischen Tanzstücks in Zusammenarbeit mit einem Ensemble aus Brüssel.</p>
+    <p>Die Theaterkasse ist Dienstag bis Freitag von 10:00 bis 18:00 Uhr und Samstag von 10:00 bis 14:00 Uhr geöffnet. Tickets können auch online, per Telefon oder an der Abendkasse erworben werden. Für Schülerinnen, Schüler und Studierende gibt es stark vergünstigte Karten für alle Vorstellungen – bis zu 50 Prozent Rabatt gegenüber dem regulären Preis. Das Angebot „Letzte Minute" ermöglicht den Kauf von Restkarten kurz vor der Vorstellung zu besonders günstigen Konditionen.</p>
+    <p>Neben dem städtischen Theater gibt es eine lebendige freie Szene: Das Kulturzentrum Paderhalle, das Kulturbüro und die vielen kleineren Spielstätten in der Stadt bieten das ganze Jahr über Konzerte, Lesungen, Kabarett und Kleinkunst. Besonders beliebt sind die Sommerbühne im Schloßpark und die offene Bühne im Kulturspeicher, die lokalen Künstlerinnen und Künstlern eine Plattform bietet.</p>
 
     <h2>Stadtfeste und Veranstaltungen</h2>
-    <p>Das Libori-Fest ist das älteste und bedeutendste Volksfest Westfalens. Es findet jährlich um den 23. Juli, den Gedenktag des Heiligen Liborius, statt und zieht jedes Jahr über eine Million Besucherinnen und Besucher in die Stadt. Das einwöchige Fest vereint religiöse Feierlichkeiten, ein großes Volksvergnügen und zahlreiche kulturelle Veranstaltungen zu einem einzigartigen Erlebnis.</p>
-    <p>Der Paderborner Weihnachtsmarkt zählt zu den schönsten in ganz Nordrhein-Westfalen. Auf dem Rathausplatz und den angrenzenden Gassen laden über 120 Stände zum Bummeln, Genießen und Verweilen ein. Handwerkskunst, regionale Spezialitäten und ein abwechslungsreiches Bühnenprogramm machen den Markt zu einem besonderen Erlebnis für die ganze Familie.</p>
+    <p>Das Libori-Fest ist das älteste und bedeutendste Volksfest Westfalens. Es findet jährlich um den 23. Juli, den Gedenktag des Heiligen Liborius, statt und zieht jedes Jahr über eine Million Besucherinnen und Besucher in die Stadt. Das einwöchige Fest vereint religiöse Feierlichkeiten, ein großes Volksvergnügen und zahlreiche kulturelle Veranstaltungen zu einem einzigartigen Erlebnis. Höhepunkte sind der feierliche Pontifikalgottesdienst im Dom, der historische Festumzug durch die Altstadt und das große Feuerwerk am letzten Abend.</p>
+    <p>Der Paderborner Weihnachtsmarkt zählt zu den schönsten in ganz Nordrhein-Westfalen. Auf dem Rathausplatz und den angrenzenden Gassen laden über 120 Stände zum Bummeln, Genießen und Verweilen ein. Handwerkskunst, regionale Spezialitäten und ein abwechslungsreiches Bühnenprogramm machen den Markt zu einem besonderen Erlebnis für die ganze Familie. Der Markt öffnet jedes Jahr am ersten Adventswochenende und ist bis zum 23. Dezember täglich von 11:00 bis 21:00 Uhr geöffnet.</p>
+    <p>Das Kulturfestival Paderborn im Juni zieht Kunstschaffende und Kulturbegeisterte aus der ganzen Region in die Stadt. An mehreren Wochenenden bespielt das Festival öffentliche Plätze, Parks und ungewöhnliche Orte mit Musik, Theater, Performances und Ausstellungen. Der Eintritt zu den meisten Veranstaltungen ist frei. Das Programm erscheint jeweils im April auf der Website des Kulturbüros.</p>
+
+    <h2>Musik und Konzerte</h2>
+    <p>Die Paderborner Musikszene ist lebendig und vielfältig. Die Stadtkapelle Paderborn, einer der ältesten Musikvereine der Stadt, gibt regelmäßig Konzerte in der Paderhalle und im Schloßpark. Das Philharmonische Orchester Südwestfalen gastiert mehrmals jährlich in Paderborn und bespielt dabei die Paderhalle mit sinfonischen Konzerten von internationalem Niveau. Kammerkonzerte finden in den historischen Räumen des Rathauses und des Diözesanmuseums statt.</p>
+    <p>Popmusik, Rock und Jazz haben in Paderborn ebenfalls eine starke Heimat. Der Kulturverein Paderborn organisiert monatlich Konzerte in verschiedenen Spielstätten der Stadt, darunter das Zakk und der Kulturspeicher. Die Jazzinitiative Paderborn veranstaltet jährlich das Jazz-Festival im Sommer, das Musikerinnen und Musiker aus ganz Deutschland nach Paderborn bringt.</p>
 
     <h2>Sport und Freizeitanlagen</h2>
-    <p>Paderborn bietet ein hervorragendes Angebot an Sportanlagen und Freizeitmöglichkeiten für alle Altersgruppen. Das Sportzentrum Maspernplatz mit seinen modernen Hallen und Außenanlagen steht Vereinen und der Allgemeinheit zu erschwinglichen Tarifen zur Verfügung. Die Paderquellanlage ist ein beliebtes Naherholungsgebiet mit Laufstrecken, Liegewiesen und einem Spielplatz. Das Paderbad ist das moderne Freizeitbad der Stadt mit Saunalandschaft, Wellenbad und Outdoor-Bereich.</p>
+    <p>Paderborn bietet ein hervorragendes Angebot an Sportanlagen und Freizeitmöglichkeiten für alle Altersgruppen. Das Sportzentrum Maspernplatz mit seinen modernen Hallen und Außenanlagen steht Vereinen und der Allgemeinheit zu erschwinglichen Tarifen zur Verfügung. Die Paderquellanlage ist ein beliebtes Naherholungsgebiet mit Laufstrecken, Liegewiesen und einem Spielplatz. Das Paderbad ist das moderne Freizeitbad der Stadt mit Saunalandschaft, Wellenbad und Outdoor-Bereich. Die Eintrittspreise betragen für Erwachsene 8 Euro, für Kinder 5 Euro, Familientageskarten sind zum Preis von 20 Euro erhältlich.</p>
+    <p>Der SC Paderborn 07 ist der bekannteste Sportverein der Stadt und spielt aktuell in der 2. Bundesliga. Heimspiele finden in der Benteler-Arena statt, die Platz für 15.000 Zuschauer bietet. Tickets sind online und an der Tageskasse erhältlich. Neben dem Profifußball gibt es in Paderborn starke Vereine in den Bereichen Handball, Basketball, Leichtathletik und Schwimmen.</p>
+
+    <h2>Bibliotheken und Bildungseinrichtungen</h2>
+    <p>Die Stadtbibliothek Paderborn ist mit über 180.000 Medien eine der größten öffentlichen Bibliotheken Ostwestfalens. Neben Büchern, Zeitschriften und DVDs bietet sie ein umfangreiches digitales Angebot mit E-Books, Hörbüchern und Onlinedatenbanken, das mit einem gültigen Bibliotheksausweis rund um die Uhr zugänglich ist. Die Bibliothek ist Montag bis Freitag von 10:00 bis 19:00 Uhr und Samstag von 10:00 bis 14:00 Uhr geöffnet. Der Jahresbeitrag beträgt 20 Euro, für Kinder und Jugendliche ist er kostenlos.</p>
   </div>
 </div>
 
@@ -543,26 +586,34 @@ nav {
     <h1>Paderborn handelt – für eine lebenswerte Stadt von morgen</h1>
   </div>
   <div class="article-body">
-    <p>Der Klimawandel ist eine der zentralen Herausforderungen unserer Zeit. Die Stadt Paderborn begegnet dieser Herausforderung mit einem umfassenden Klimaschutzkonzept, das konkrete Maßnahmen in den Bereichen Energie, Mobilität, Stadtgrün und Kreislaufwirtschaft zusammenfasst. Das Ziel: Bis 2040 soll Paderborn klimaneutral sein.</p>
+    <p>Der Klimawandel ist eine der zentralen Herausforderungen unserer Zeit. Die Stadt Paderborn begegnet dieser Herausforderung mit einem umfassenden Klimaschutzkonzept, das konkrete Maßnahmen in den Bereichen Energie, Mobilität, Stadtgrün und Kreislaufwirtschaft zusammenfasst. Das Ziel: Bis 2040 soll Paderborn klimaneutral sein – ein ambitioniertes, aber erreichbares Ziel, wenn alle gesellschaftlichen Kräfte an einem Strang ziehen.</p>
 
     <h2>Abfallentsorgung und Recycling</h2>
-    <p>Eine funktionierende Kreislaufwirtschaft ist der Schlüssel zu einer nachhaltigen Stadtgesellschaft. Die Entsorgungsbetriebe Paderborn (EBP) organisieren die Abfallentsorgung für alle Haushalte und Gewerbetreibenden. Die Abfuhrtermine für Restmüll, Biomüll, Papiermüll und die Gelbe Tonne variieren je nach Stadtbezirk und sind im Abfuhrkalender auf unserem Portal nachzuschlagen.</p>
-    <p>Für Elektroschrott, Sperrmüll und gefährliche Abfälle wie Farben, Chemikalien oder Batterien gibt es spezielle Entsorgungswege. Die Wertstoffhöfe an der Stettiner Straße und am Dörener Feld nehmen diese Materialien kostenlos entgegen. Sperrmüll kann einmal im Jahr kostenfrei abgeholt werden – eine Terminvereinbarung ist erforderlich. Wer häufiger Sperrmüll entsorgen möchte, kann dies zu günstigen Gebühren über das Online-Portal beauftragen.</p>
+    <p>Eine funktionierende Kreislaufwirtschaft ist der Schlüssel zu einer nachhaltigen Stadtgesellschaft. Die Entsorgungsbetriebe Paderborn (EBP) organisieren die Abfallentsorgung für alle Haushalte und Gewerbetreibenden in der Stadt. Die Abfuhrtermine für Restmüll, Biomüll, Papiermüll und die Gelbe Tonne variieren je nach Stadtbezirk und sind im Abfuhrkalender auf unserem Portal nachzuschlagen. Der persönliche Abfuhrkalender kann auch als App auf dem Smartphone gespeichert werden, sodass Erinnerungen an Abfuhrtage automatisch angezeigt werden.</p>
+    <p>Restmüll sollte auf ein Minimum reduziert werden. Was in der Biotonne, der Papiertonne oder der Gelben Tonne entsorgt werden kann, gehört nicht in den Restmüll. Die Biotonne nimmt alle kompostierbaren Küchenabfälle auf – Obst- und Gemüsereste, Kaffeesatz, Eierschalen, Blumen und Gartenabfälle. Bitte verwenden Sie keine Plastikbeutel, auch keine als kompostierbar ausgezeichneten, da diese den Kompostierungsprozess stören. Braune Papiertüten und Zeitungspapier eignen sich hervorragend zum Einwickeln feuchter Bioabfälle.</p>
+    <p>Für Elektroschrott, Sperrmüll und gefährliche Abfälle wie Farben, Chemikalien oder Batterien gibt es spezielle Entsorgungswege. Die Wertstoffhöfe an der Stettiner Straße und am Dörener Feld nehmen diese Materialien kostenlos entgegen. Öffnungszeiten: Montag bis Freitag 7:30–17:00 Uhr, Samstag 8:00–13:00 Uhr. Sperrmüll kann einmal im Jahr kostenfrei abgeholt werden – eine Terminvereinbarung ist erforderlich und kann online erfolgen.</p>
 
     <div class="info-box">
-      <p><strong>Neu:</strong> Ab April 2025 können Alttextilien und Altkleider an sechs neuen Standorten im Stadtgebiet abgegeben werden. Gut erhaltene Kleidung sollte jedoch lieber an Sozialkaufhäuser oder die Kleiderkammern gespendet werden.</p>
+      <p><strong>Neu ab April 2025:</strong> Alttextilien und Altkleider können an sechs neuen Standorten im Stadtgebiet abgegeben werden. Gut erhaltene Kleidung sollte jedoch lieber an Sozialkaufhäuser oder die Kleiderkammern der karitativen Einrichtungen gespendet werden.</p>
     </div>
 
     <h2>Stadtgrün und Biodiversität</h2>
     <p>Paderborn verfügt über rund 1.200 Hektar städtische Grünflächen, Parks, Wälder und Bachläufe. Diese Grünräume sind nicht nur Erholungsflächen für die Bevölkerung, sondern auch wichtige Lebensräume für zahlreiche Tier- und Pflanzenarten. Der städtische Grünflächenamt arbeitet daran, die Biodiversität in der Stadt systematisch zu fördern, indem artenreiche Blühflächen angelegt, standortgerechte Bäume gepflanzt und naturnahe Gewässerstrukturen erhalten werden.</p>
-    <p>Das Stadtbaumkonzept sieht vor, bis 2030 insgesamt 5.000 neue Bäume im Stadtgebiet zu pflanzen. Besonders klimaresistente Arten wie die Zierbirne, die Baumhasel und verschiedene Eichenarten sollen dabei helfen, die Stadt gegen Hitzeereignisse zu wappnen und die Luftqualität zu verbessern. Bürgerinnen und Bürger können sich aktiv am Stadtbaumkonzept beteiligen, indem sie eine Baumpatenschaft übernehmen.</p>
+    <p>Das Stadtbaumkonzept sieht vor, bis 2030 insgesamt 5.000 neue Bäume im Stadtgebiet zu pflanzen. Besonders klimaresistente Arten wie die Zierbirne, die Baumhasel und verschiedene Eichenarten sollen dabei helfen, die Stadt gegen Hitzeereignisse zu wappnen und die Luftqualität zu verbessern. Bürgerinnen und Bürger können sich aktiv am Stadtbaumkonzept beteiligen, indem sie eine Baumpatenschaft übernehmen. Paten verpflichten sich, in den ersten drei Jahren nach der Pflanzung in Trockenperioden für die Bewässerung des Baumes zu sorgen, und erhalten dafür eine Urkunde sowie einen Eintrag in das digitale Stadtbaumkataster.</p>
+    <p>Auf städtischen Grünflächen und Straßenrändern werden zunehmend extensive Wiesenflächen angelegt, die erst im Herbst gemäht werden. Diese sogenannten Blühstreifen bieten Bienen, Schmetterlingen und anderen Insekten wertvolle Lebensräume und Nahrungsquellen. Seit 2022 hat die Stadt Paderborn auf diese Weise über 40 Hektar neue Blühflächen geschaffen. Anwohnerinnen und Anwohner können beim Grünflächenamt Vorschläge für weitere Blühflächen in ihrer Nachbarschaft einreichen.</p>
 
     <h2>Energie und Klimaschutz</h2>
-    <p>Im Rahmen des Klimaschutzkonzepts wurden in den letzten Jahren zahlreiche städtische Gebäude energetisch saniert. Die Stadtwerke Paderborn bieten Privatpersonen und Unternehmen eine kostenlose Energieberatung an, die bei der Identifikation von Einsparpotenzial und der Beantragung von Fördermitteln hilft. Die Photovoltaik-Offensive der Stadt hat bereits dazu geführt, dass über 60 städtische Gebäude mit Solaranlagen ausgestattet wurden.</p>
-    <p>Ein zentrales Element des Klimaschutzkonzepts ist die Wärmewende. Der Fernwärmeausbau in Paderborn schreitet voran: Bis 2028 sollen weitere 8.000 Haushalte ans Fernwärmenetz angeschlossen werden. Die Fernwärme wird zunehmend aus erneuerbaren Quellen gewonnen, darunter Abwärme aus der Industrie, Geothermie und Großwärmepumpen.</p>
+    <p>Im Rahmen des Klimaschutzkonzepts wurden in den letzten Jahren zahlreiche städtische Gebäude energetisch saniert. Schulen, Sporthallen und Verwaltungsgebäude wurden gedämmt, Heizungsanlagen modernisiert und auf LED-Beleuchtung umgestellt. Dadurch konnten die Energieverbräuche der städtischen Liegenschaften in den letzten zehn Jahren um durchschnittlich 28 Prozent reduziert werden.</p>
+    <p>Die Stadtwerke Paderborn bieten Privatpersonen und Unternehmen eine kostenlose Energieberatung an, die bei der Identifikation von Einsparpotenzial und der Beantragung von Fördermitteln hilft. Die Photovoltaik-Offensive der Stadt hat bereits dazu geführt, dass über 60 städtische Gebäude mit Solaranlagen ausgestattet wurden. Zusammen erzeugen diese Anlagen jährlich rund 4.500 Megawattstunden Strom – genug für über 1.500 Haushalte.</p>
+    <p>Ein zentrales Element des Klimaschutzkonzepts ist die Wärmewende. Der Fernwärmeausbau in Paderborn schreitet voran: Bis 2028 sollen weitere 8.000 Haushalte ans Fernwärmenetz angeschlossen werden. Die Fernwärme wird zunehmend aus erneuerbaren Quellen gewonnen, darunter Abwärme aus der Industrie, Geothermie und Großwärmepumpen. Hausbesitzerinnen und Hausbesitzer, die sich ans Fernwärmenetz anschließen lassen, profitieren von einem Zuschuss von bis zu 5.000 Euro aus dem städtischen Klimaschutzfonds.</p>
 
     <h2>Wasser und Gewässerschutz</h2>
-    <p>Paderborn ist bekannt für seinen Wasserreichtum – die zahlreichen Quellen der Pader machen die Stadt zu einem einzigartigen Naturraum mitten in der Innenstadt. Der Schutz und die Renaturierung der städtischen Gewässer ist daher ein besonderes Anliegen der Stadtverwaltung. In den letzten Jahren wurden mehrere Bachabschnitte renaturiert, Uferstreifen bepflanzt und Wanderhindernisse für Fische beseitigt. Das Trinkwasser in Paderborn kommt aus dem stadtnahen Wasserwerk Haxtergrund und ist von hervorragender Qualität.</p>
+    <p>Paderborn ist bekannt für seinen Wasserreichtum – die zahlreichen Quellen der Pader machen die Stadt zu einem einzigartigen Naturraum mitten in der Innenstadt. Der Schutz und die Renaturierung der städtischen Gewässer ist daher ein besonderes Anliegen der Stadtverwaltung. In den letzten Jahren wurden mehrere Bachabschnitte renaturiert, Uferstreifen bepflanzt und Wanderhindernisse für Fische beseitigt.</p>
+    <p>Das Trinkwasser in Paderborn kommt aus dem stadtnahen Wasserwerk Haxtergrund und ist von hervorragender Qualität. Es wird regelmäßig auf über 50 Parameter untersucht und erfüllt alle gesetzlichen Anforderungen deutlich. Leitungswasser ist in Paderborn eine hervorragende Alternative zu Flaschenwasser – sowohl ökologisch als auch ökonomisch. Die jährliche Wasserqualitätsanalyse kann auf der Website der Stadtwerke eingesehen werden.</p>
+
+    <h2>Umweltberatung und Förderprogramme</h2>
+    <p>Die städtische Umweltberatung steht Bürgerinnen und Bürgern sowie Unternehmen kostenlos zur Verfügung. Beraterinnen und Berater informieren zu Themen wie Energiesparen, erneuerbare Energien, nachhaltige Mobilität, ökologisches Bauen und Sanieren sowie Förderprogramme des Bundes, des Landes und der Stadt. Termine können online oder telefonisch vereinbart werden. Auch Hausbesuche sind auf Anfrage möglich.</p>
+    <p>Der städtische Klimaschutzfonds fördert private und gewerbliche Projekte, die einen messbaren Beitrag zur Reduktion von Treibhausgasemissionen leisten. Gefördert werden unter anderem die Installation von Photovoltaikanlagen, der Kauf von Lastenrädern für die gewerbliche Nutzung, die Anlage von Dachbegrünungen und die Einrichtung von Gemeinschaftsgärten. Die Förderhöhe beträgt je nach Maßnahme zwischen 500 und 10.000 Euro. Anträge können jährlich bis zum 31. März für das laufende Jahr gestellt werden.</p>
   </div>
 </div>
 
@@ -797,6 +848,9 @@ nav {
         <div class="filter-chip" data-filter="fristen">Fristen & Termine</div>
         <div class="filter-chip" data-filter="kosten">Kosten & Gebühren</div>
       </div>
+      <div class="filter-custom-wrap">
+        <input type="text" class="filter-custom-input" id="filter-custom" placeholder="Eigener Filter, z.B. „Voraussetzungen" oder „Dokumente" …">
+      </div>
     </div>
     <div class="sum-result" id="sum-result">
       <div class="sum-result-inner">
@@ -880,9 +934,18 @@ document.querySelectorAll('.filter-chip').forEach(chip => {
     } else {
       chip.classList.add('active');
       activeFilter = chip.dataset.filter;
+      $('filter-custom').value = ''; // clear custom input when chip selected
     }
   };
 });
+
+$('filter-custom').oninput = e => {
+  if(e.target.value.trim()) {
+    // deselect chips when typing custom
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    activeFilter = null;
+  }
+};
 
 $('sum-toggle').onclick = () => {
   const panel = $('sum-panel');
@@ -897,7 +960,8 @@ $('sum-submit').onclick = async () => {
   const btn = $('sum-submit');
   btn.classList.add('loading');
 
-  // Get current page content
+  const customFilter = $('filter-custom').value.trim();
+  const filterToSend = customFilter || activeFilter || 'alles';
   const activePage = document.querySelector('.page.active');
   const articleBody = activePage.querySelector('.article-body');
   const hero = activePage.querySelector('.article-hero h1');
@@ -912,7 +976,7 @@ $('sum-submit').onclick = async () => {
   try {
     const r = await authFetch(WEBHOOK_SUMMARIZE, {
       text: pageText,
-      filter: activeFilter || 'alles',
+      filter: filterToSend,
       url: window.location.href
     }, SUMMARIZE_TOKEN);
 
