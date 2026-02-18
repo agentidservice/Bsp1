@@ -549,9 +549,40 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Inter'
 <script>
 (function(){
   const $=id=>document.getElementById(id);
-  
-  const WEBHOOK_VALIDATE="https://seidel1502.app.n8n.cloud/webhook/3ad0bd7f-1b6e-4501-ba99-0cf05a2b4565";
-  const WEBHOOK_CALCULATE="https://seidel1502.app.n8n.cloud/webhook/d71b1438-46b7-4d67-9517-c0b2d2be92bd";
+
+  // ============================================================
+  // 🔐 WEBHOOK KONFIGURATION
+  // Token muss exakt mit dem n8n Webhook-Node Header übereinstimmen
+  // ============================================================
+  const API_TOKEN = "0Xpj42sQ#g*kjpYP3cRsPawHAUH#U_&Mt&rlgnqPcnfsclT-"; // <-- HIER DEINEN TOKEN EINTRAGEN
+
+  const WEBHOOK_VALIDATE = "https://seidel1502.app.n8n.cloud/webhook/3ad0bd7f-1b6e-4501-ba99-0cf05a2b4565";
+  const WEBHOOK_CALCULATE = "https://seidel1502.app.n8n.cloud/webhook/d71b1438-46b7-4d67-9517-c0b2d2be92bd";
+
+  // Einheitliche Funktion für authentifizierte JSON-Requests
+  async function authFetch(url, body) {
+    return fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + API_TOKEN
+      },
+      body: JSON.stringify(body)
+    });
+  }
+
+  // Einheitliche Funktion für authentifizierte FormData-Requests
+  async function authFetchForm(url, formData) {
+    return fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + API_TOKEN
+        // Content-Type NICHT setzen bei FormData – Browser setzt boundary automatisch
+      },
+      body: formData
+    });
+  }
+  // ============================================================
   
   const SERVICE_NAMES={1:'Innenwände streichen',2:'Fassade streichen',3:'Tapezieren',4:'Türen/Fenster lackieren',5:'Verputzen/Grundieren',6:'Dekorative Techniken'};
   
@@ -636,7 +667,7 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Inter'
     }
     const btn=$('validate-privat-btn');btn.classList.add('loading');btn.disabled=true;
     try{
-      const r=await fetch(WEBHOOK_VALIDATE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'privat',location:l})});
+      const r=await authFetch(WEBHOOK_VALIDATE,{type:'privat',location:l});
       const d=await r.json();const x=Array.isArray(d)?d[0]:d;
       if(x.valid){
         state.locationValid=true;state.distance=x.distance;
@@ -669,7 +700,7 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Inter'
     }
     const btn=$('validate-gewerbe-btn');btn.classList.add('loading');btn.disabled=true;
     try{
-      const r=await fetch(WEBHOOK_VALIDATE,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'gewerbe',company:c,location:l})});
+      const r=await authFetch(WEBHOOK_VALIDATE,{type:'gewerbe',company:c,location:l});
       const d=await r.json();const x=Array.isArray(d)?d[0]:d;
       if(x.valid){
         state.locationValid=true;state.distance=x.distance;
@@ -775,7 +806,7 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Inter'
       const fm=new FormData();
       fm.append('formData',JSON.stringify(fd));
       files.forEach((f,i)=>fm.append('image_'+i,f));
-      const r=await fetch(WEBHOOK_CALCULATE,{method:'POST',body:fm});
+      const r=await authFetchForm(WEBHOOK_CALCULATE,fm);
       const d=await r.json();
       $('result-price').textContent=d.price?'ca. '+d.price.toLocaleString('de-DE')+' €':'-';
       $('result-duration').textContent=d.duration||'-';
