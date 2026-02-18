@@ -229,7 +229,12 @@ nav {
 .sum-result-inner::-webkit-scrollbar { width: 4px; }
 .sum-result-inner::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 2px; }
 .sum-result-text { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,.8); }
-.sum-result-text .token { opacity: 0; animation: fadeToken .05s forwards; }
+.sum-heading { font-weight: 700; color: #fff; font-size: 13px; margin-top: 14px; margin-bottom: 4px; letter-spacing: 0.3px; }
+.sum-bullet { padding-left: 16px; position: relative; color: rgba(255,255,255,.8); font-size: 13px; margin-bottom: 3px; }
+.sum-bullet::before { content: '•'; position: absolute; left: 0; color: var(--accent); font-size: 14px; line-height: 1.6; }
+.sum-line { font-size: 13px; color: rgba(255,255,255,.7); margin-bottom: 3px; }
+.sum-spacer { height: 8px; }
+.sum-fade { opacity: 0; animation: fadeInUp .3s forwards; }
 
 /* ── MALER FORM STYLES (compressed from original) ── */
 .maler-header {
@@ -983,22 +988,51 @@ $('sum-submit').onclick = async () => {
     const d = await r.json();
     const text = d.summary || d.text || d.result || 'Keine Zusammenfassung erhalten.';
 
-    // Stream text token by token
+    // Markdown → HTML konvertieren und Zeile für Zeile einblenden
+    function markdownToHtml(md) {
+      return md
+        .split('\n')
+        .map(line => {
+          if (line.startsWith('**') && line.endsWith('**')) {
+            return `<div class="sum-heading">${line.replace(/\*\*/g,'')}</div>`;
+          }
+          if (/^\*\*(.+)\*\*/.test(line)) {
+            line = line.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+          }
+          if (line.startsWith('• ') || line.startsWith('- ')) {
+            return `<div class="sum-bullet">${line.replace(/^[•\-]\s/,'')}</div>`;
+          }
+          if (line.trim() === '') return '<div class="sum-spacer"></div>';
+          return `<div class="sum-line">${line}</div>`;
+        })
+        .join('');
+    }
+
     resultText.innerHTML = '';
-    const words = text.split(' ');
+    const lines = text.split('\n');
     let i = 0;
-    function nextWord() {
-      if(i < words.length) {
-        const span = document.createElement('span');
-        span.className = 'token';
-        span.style.animationDelay = '0s';
-        span.textContent = (i > 0 ? ' ' : '') + words[i];
-        resultText.appendChild(span);
+    function nextLine() {
+      if(i < lines.length) {
+        const line = lines[i];
+        const div = document.createElement('div');
+        if (line.startsWith('**') && line.endsWith('**')) {
+          div.className = 'sum-heading sum-fade';
+          div.textContent = line.replace(/\*\*/g,'');
+        } else if (line.startsWith('• ') || line.startsWith('- ')) {
+          div.className = 'sum-bullet sum-fade';
+          div.innerHTML = line.replace(/^[•\-]\s/,'').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+        } else if (line.trim() === '') {
+          div.className = 'sum-spacer';
+        } else {
+          div.className = 'sum-line sum-fade';
+          div.innerHTML = line.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+        }
+        resultText.appendChild(div);
         i++;
-        setTimeout(nextWord, 30);
+        setTimeout(nextLine, 60);
       }
     }
-    nextWord();
+    nextLine();
 
   } catch(e) {
     resultText.textContent = 'Fehler beim Laden der Zusammenfassung. Bitte versuchen Sie es erneut.';
