@@ -7,391 +7,302 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-:root {
-  --bg: #f5f3ef;
-  --bg-dark: #1a1a1a;
-  --text: #1a1a1a;
-  --text-muted: #6b6b6b;
-  --accent: #c8a96e;
-  --accent-dark: #a8893e;
-  --white: #ffffff;
-  --border: #e2ddd6;
-  --card: #ffffff;
-  --nav-h: 72px;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); }
+:root{--bg:#f5f3ef;--bg-dark:#1a1a1a;--text:#1a1a1a;--text-muted:#6b6b6b;--accent:#c8a96e;--accent-dark:#a8893e;--white:#ffffff;--border:#e2ddd6;--card:#ffffff;--nav-h:72px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text)}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--nav-h);background:rgba(245,243,239,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 48px}
+.nav-logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;letter-spacing:-.5px}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:4px}
+.nav-link{padding:8px 16px;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;border:none;background:none;color:var(--text-muted);transition:all .2s}
+.nav-link:hover,.nav-link.active{background:var(--accent);color:var(--white)}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px}
+.nav-hamburger span{display:block;width:24px;height:2px;background:var(--text);border-radius:2px;transition:all .3s}
+.mobile-nav-overlay{display:none;position:fixed;inset:0;z-index:999;background:rgba(245,243,239,.98);flex-direction:column;align-items:center;justify-content:center;gap:12px}
+.mobile-nav-overlay.open{display:flex}
+.mobile-nav-overlay .nav-link{font-size:18px;padding:14px 32px;width:260px;text-align:center}
+.mobile-nav-close{position:absolute;top:20px;right:24px;background:none;border:none;font-size:28px;cursor:pointer;color:var(--text)}
+.page{display:none;padding-top:var(--nav-h);min-height:100vh}
+.page.active{display:block}
+.hero{background:var(--bg-dark);color:var(--white);padding:100px 48px 80px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(200,169,110,.2) 0%,transparent 60%)}
+.hero-tag{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,64px);font-weight:900;line-height:1.1;margin-bottom:20px;max-width:700px}
+.hero p{font-size:17px;color:rgba(255,255,255,.65);max-width:560px;line-height:1.7;margin-bottom:40px}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{padding:14px 28px;background:var(--accent);color:var(--white);border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-primary:hover{background:var(--accent-dark);transform:translateY(-1px)}
+.btn-secondary{padding:14px 28px;background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.25);border-radius:10px;font-size:15px;font-weight:500;cursor:pointer;transition:all .2s}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+.section{padding:80px 48px}
+.section-header{margin-bottom:48px}
+.section-tag{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(28px,3vw,42px);font-weight:700}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;cursor:pointer;transition:all .25s}
+.card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.08);border-color:var(--accent)}
+.card-icon{font-size:32px;margin-bottom:16px}
+.card-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:8px}
+.card-desc{font-size:14px;color:var(--text-muted);line-height:1.6}
+.article-hero{background:var(--bg-dark);color:var(--white);padding:80px 48px 60px}
+.article-hero .section-tag{color:var(--accent)}
+.article-hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,52px);font-weight:900;line-height:1.15;max-width:800px;margin-top:12px}
+.article-body{max-width:820px;margin:0 auto;padding:64px 48px}
+.article-body h2{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin:48px 0 16px}
+.article-body h3{font-size:18px;font-weight:600;margin:32px 0 12px}
+.article-body p{font-size:16px;line-height:1.8;color:#3a3a3a;margin-bottom:20px}
+.article-body ul{margin:0 0 20px 20px}
+.article-body li{font-size:16px;line-height:1.8;color:#3a3a3a;margin-bottom:8px}
+.info-box{background:linear-gradient(135deg,rgba(200,169,110,.12),rgba(200,169,110,.05));border:1px solid rgba(200,169,110,.3);border-radius:12px;padding:24px 28px;margin:32px 0}
+.info-box strong{color:var(--accent-dark)}
 
-/* ── NAV ── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-  height: var(--nav-h);
-  background: rgba(245,243,239,0.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 48px;
-}
-.nav-logo { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
-.nav-logo span { color: var(--accent); }
-.nav-links { display: flex; gap: 4px; }
-.nav-link {
-  padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 500;
-  cursor: pointer; border: none; background: none; color: var(--text-muted);
-  transition: all .2s;
-}
-.nav-link:hover, .nav-link.active { background: var(--accent); color: var(--white); }
+/* ── STADTBOT (unten links) ── */
+.stadtbot-widget{position:fixed;left:20px;bottom:20px;z-index:900;display:flex;flex-direction:column;align-items:flex-start}
+.stadtbot-toggle{width:64px;height:64px;background:var(--bg-dark);border:2px solid var(--accent);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 8px 32px rgba(0,0,0,.3);transition:all .25s;position:relative}
+.stadtbot-toggle:hover{transform:scale(1.08);box-shadow:0 12px 40px rgba(200,169,110,.35);border-color:var(--accent-dark)}
+.stadtbot-badge{position:absolute;top:-4px;right:-4px;width:18px;height:18px;background:#22c55e;border-radius:50%;border:2px solid var(--bg);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;animation:pulse-dot 2s infinite}
+.stadtbot-window{position:absolute;bottom:76px;left:0;width:min(400px,92vw);height:min(560px,80vh);background:#fff;border-radius:20px;border:1px solid var(--border);box-shadow:0 25px 60px rgba(0,0,0,.15);display:none;flex-direction:column;overflow:hidden}
+.stadtbot-window.open{display:flex;animation:scaleInLeft .3s ease-out}
+.bot-header{padding:16px 20px;background:var(--bg-dark);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.bot-header-left{display:flex;align-items:center;gap:12px}
+.bot-avatar{width:38px;height:38px;background:linear-gradient(135deg,var(--accent-dark),var(--accent));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.bot-header-name{font-size:15px;font-weight:600;color:#fff}
+.bot-header-status{font-size:11px;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:5px;margin-top:2px}
+.bot-status-dot{width:6px;height:6px;background:#22c55e;border-radius:50%;display:inline-block;animation:pulse-dot 2s infinite}
+.bot-close{background:none;border:none;color:rgba(255,255,255,.5);font-size:20px;cursor:pointer;padding:4px;line-height:1}
+.bot-close:hover{color:#fff}
+.bot-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;background:var(--bg)}
+.bot-messages::-webkit-scrollbar{width:4px}
+.bot-messages::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.bot-msg{display:flex;gap:8px;animation:fadeInUp .25s ease-out}
+.bot-msg.user{flex-direction:row-reverse}
+.bot-msg-avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--accent-dark),var(--accent));display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;margin-top:2px}
+.bot-msg.user .bot-msg-avatar{background:#e2ddd6;font-size:16px}
+.bot-msg-bubble{max-width:80%;padding:10px 14px;border-radius:16px;font-size:13px;line-height:1.6;color:var(--text);background:#fff;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.bot-msg.user .bot-msg-bubble{background:var(--bg-dark);color:#fff;border:none;border-radius:16px 16px 4px 16px}
+.bot-msg:not(.user) .bot-msg-bubble{border-radius:4px 16px 16px 16px}
+.bot-page-chip{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:7px 14px;background:rgba(200,169,110,.1);border:1px solid rgba(200,169,110,.35);border-radius:20px;font-size:12px;font-weight:600;color:var(--accent-dark);cursor:pointer;transition:all .2s;white-space:nowrap}
+.bot-page-chip:hover{background:rgba(200,169,110,.22);transform:translateX(2px)}
+.bot-page-chip-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.bot-typing{display:flex;gap:4px;align-items:center;padding:10px 14px;background:#fff;border:1px solid var(--border);border-radius:4px 16px 16px 16px;width:fit-content}
+.bot-typing span{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:typingBounce 1.2s infinite}
+.bot-typing span:nth-child(2){animation-delay:.2s}
+.bot-typing span:nth-child(3){animation-delay:.4s}
+.bot-suggestions{padding:10px 16px 6px;display:flex;flex-wrap:wrap;gap:6px;border-top:1px solid var(--border);background:#fff;flex-shrink:0}
+.bot-suggestion{padding:6px 12px;background:var(--bg);border:1px solid var(--border);border-radius:20px;font-size:12px;font-weight:500;color:var(--text-muted);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.bot-suggestion:hover{border-color:var(--accent);color:var(--accent-dark)}
+.bot-input-area{padding:12px 16px;border-top:1px solid var(--border);background:#fff;display:flex;gap:8px;align-items:flex-end;flex-shrink:0}
+.bot-input{flex:1;padding:10px 14px;border:1px solid var(--border);border-radius:12px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--text);resize:none;max-height:80px;line-height:1.5;outline:none;transition:border-color .2s}
+.bot-input:focus{border-color:var(--accent)}
+.bot-input::placeholder{color:var(--text-muted)}
+.bot-send{width:40px;height:40px;background:var(--bg-dark);border:none;border-radius:10px;color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+.bot-send:hover{background:var(--accent-dark)}
+.bot-send:disabled{opacity:.4;cursor:not-allowed}
 
-/* ── PAGES ── */
-.page { display: none; padding-top: var(--nav-h); min-height: 100vh; }
-.page.active { display: block; }
+/* ── MALER WIDGET (unten rechts) ── */
+.maler-widget{position:fixed;right:20px;bottom:20px;z-index:900}
+.maler-toggle{width:64px;height:64px;background:linear-gradient(135deg,#b45309,#d97706,#f59e0b);border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 8px 32px rgba(217,119,6,.5);transition:transform .2s}
+.maler-toggle:hover{transform:scale(1.08)}
+.maler-window{position:absolute;bottom:76px;right:0;width:min(420px,92vw);height:min(680px,85vh);background:#1a1816;border-radius:20px;border:1px solid rgba(255,255,255,.06);box-shadow:0 25px 60px rgba(0,0,0,.6);display:none;flex-direction:column;overflow:hidden}
+.maler-window.open{display:flex;animation:scaleIn .3s ease-out}
 
-/* ── HERO ── */
-.hero {
-  background: var(--bg-dark);
-  color: var(--white);
-  padding: 100px 48px 80px;
-  position: relative; overflow: hidden;
-}
-.hero::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 70% 50%, rgba(200,169,110,0.2) 0%, transparent 60%);
-}
-.hero-tag { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
-.hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(36px, 5vw, 64px); font-weight: 900; line-height: 1.1; margin-bottom: 20px; max-width: 700px; }
-.hero p { font-size: 17px; color: rgba(255,255,255,0.65); max-width: 560px; line-height: 1.7; margin-bottom: 40px; }
-.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
-.btn-primary {
-  padding: 14px 28px; background: var(--accent); color: var(--white);
-  border: none; border-radius: 10px; font-size: 15px; font-weight: 600;
-  cursor: pointer; transition: all .2s;
-}
-.btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); }
-.btn-secondary {
-  padding: 14px 28px; background: transparent; color: var(--white);
-  border: 1px solid rgba(255,255,255,0.25); border-radius: 10px;
-  font-size: 15px; font-weight: 500; cursor: pointer; transition: all .2s;
-}
-.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+/* ── SUMMARIZER (unten mitte) ── */
+.summarizer-widget{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:900;display:flex;flex-direction:column;align-items:center}
+.summarizer-btn{display:flex;align-items:center;gap:10px;padding:13px 24px;background:var(--bg-dark);color:var(--white);border:1px solid rgba(255,255,255,.12);border-radius:50px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 8px 32px rgba(0,0,0,.25);transition:all .25s;white-space:nowrap}
+.summarizer-btn:hover{background:#2a2a2a;transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.35)}
+.summarizer-btn .s-emoji{font-size:18px}
+.summarizer-btn .s-pulse{width:8px;height:8px;background:#22c55e;border-radius:50%;animation:pulse-dot 2s infinite}
+.summarizer-panel{position:absolute;bottom:56px;left:50%;transform:translateX(-50%);width:min(420px,90vw);background:#111;border:1px solid rgba(255,255,255,.1);border-radius:20px;overflow:hidden;display:none;flex-direction:column;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.summarizer-panel.open{display:flex;animation:scaleInUp .3s ease-out}
+.sum-header{padding:18px 20px 14px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between}
+.sum-header-left{display:flex;align-items:center;gap:10px}
+.sum-header-icon{font-size:22px}
+.sum-header-title{font-size:15px;font-weight:600;color:#fff}
+.sum-header-sub{font-size:11px;color:rgba(255,255,255,.4)}
+.sum-close{background:none;border:none;color:rgba(255,255,255,.4);font-size:18px;cursor:pointer;padding:4px}
+.sum-close:hover{color:#fff}
+.sum-filter{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.07)}
+.sum-filter-label{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:10px}
+.sum-filter-row{display:flex;gap:8px;flex-wrap:wrap}
+.filter-chip{padding:6px 14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;font-size:12px;font-weight:500;color:rgba(255,255,255,.6);cursor:pointer;transition:all .2s}
+.filter-chip:hover{border-color:var(--accent);color:var(--accent)}
+.filter-chip.active{background:rgba(200,169,110,.15);border-color:var(--accent);color:var(--accent)}
+.filter-optional{font-size:10px;color:rgba(255,255,255,.25);margin-left:4px}
+.filter-custom-wrap{margin-top:10px}
+.filter-custom-input{width:100%;padding:8px 14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#fff;font-size:12px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s}
+.filter-custom-input::placeholder{color:rgba(255,255,255,.3)}
+.filter-custom-input:focus{border-color:var(--accent)}
+.sum-footer{padding:14px 20px}
+.sum-submit{width:100%;padding:13px;background:linear-gradient(135deg,#a8893e,#c8a96e);border:none;border-radius:10px;color:#fff;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s;font-family:'DM Sans',sans-serif}
+.sum-submit:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(200,169,110,.3)}
+.sum-submit .spinner{width:16px;height:16px;border:2px solid transparent;border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;display:none}
+.sum-submit.loading .spinner{display:block}
+.sum-submit.loading .btn-text{display:none}
+.sum-result{max-height:0;overflow:hidden;transition:max-height .5s ease;border-top:0 solid rgba(255,255,255,.07)}
+.sum-result.visible{max-height:400px;border-top:1px solid rgba(255,255,255,.07)}
+.sum-result-inner{padding:20px;overflow-y:auto;max-height:400px}
+.sum-result-inner::-webkit-scrollbar{width:4px}
+.sum-result-inner::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px}
+.sum-result-text{font-size:14px;line-height:1.7;color:rgba(255,255,255,.8)}
+.sum-heading{font-weight:700;color:#fff;font-size:13px;margin-top:14px;margin-bottom:4px;letter-spacing:.3px}
+/* FIX: CSS erzeugt kein eigenes Bullet mehr – n8n liefert das Zeichen bereits */
+.sum-bullet{padding-left:14px;position:relative;color:rgba(255,255,255,.8);font-size:13px;margin-bottom:3px}
+.sum-bullet::before{content:'';position:absolute;left:2px;top:7px;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.sum-line{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:3px}
+.sum-spacer{height:8px}
+.sum-fade{opacity:0;animation:fadeInUp .3s forwards}
 
-/* ── CARDS GRID ── */
-.section { padding: 80px 48px; }
-.section-header { margin-bottom: 48px; }
-.section-tag { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
-.section-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 3vw, 42px); font-weight: 700; }
-.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
-.card {
-  background: var(--card); border: 1px solid var(--border); border-radius: 16px;
-  padding: 28px; cursor: pointer; transition: all .25s;
-}
-.card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.08); border-color: var(--accent); }
-.card-icon { font-size: 32px; margin-bottom: 16px; }
-.card-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; margin-bottom: 8px; }
-.card-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
-
-/* ── ARTICLE PAGE ── */
-.article-hero { background: var(--bg-dark); color: var(--white); padding: 80px 48px 60px; }
-.article-hero .section-tag { color: var(--accent); }
-.article-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 52px); font-weight: 900; line-height: 1.15; max-width: 800px; margin-top: 12px; }
-.article-body { max-width: 820px; margin: 0 auto; padding: 64px 48px; }
-.article-body h2 { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; margin: 48px 0 16px; }
-.article-body h3 { font-size: 18px; font-weight: 600; margin: 32px 0 12px; }
-.article-body p { font-size: 16px; line-height: 1.8; color: #3a3a3a; margin-bottom: 20px; }
-.article-body ul { margin: 0 0 20px 20px; }
-.article-body li { font-size: 16px; line-height: 1.8; color: #3a3a3a; margin-bottom: 8px; }
-.info-box {
-  background: linear-gradient(135deg, rgba(200,169,110,0.12), rgba(200,169,110,0.05));
-  border: 1px solid rgba(200,169,110,0.3); border-radius: 12px;
-  padding: 24px 28px; margin: 32px 0;
-}
-.info-box strong { color: var(--accent-dark); }
-
-/* ── MALER WIDGET (bottom right) ── */
-.maler-widget { position: fixed; right: 20px; bottom: 20px; z-index: 900; }
-.maler-toggle {
-  width: 64px; height: 64px; background: linear-gradient(135deg,#b45309,#d97706,#f59e0b);
-  border-radius: 50%; border: none; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; font-size: 28px;
-  box-shadow: 0 8px 32px rgba(217,119,6,0.5); transition: transform .2s;
-}
-.maler-toggle:hover { transform: scale(1.08); }
-.maler-window {
-  position: absolute; bottom: 76px; right: 0;
-  width: min(420px, 92vw); height: min(680px, 85vh);
-  background: #1a1816; border-radius: 20px; border: 1px solid rgba(255,255,255,.06);
-  box-shadow: 0 25px 60px rgba(0,0,0,.6);
-  display: none; flex-direction: column; overflow: hidden;
-}
-.maler-window.open { display: flex; animation: scaleIn .3s ease-out; }
-
-/* ── SUMMARIZER WIDGET (bottom center) ── */
-.summarizer-widget {
-  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-  z-index: 900; display: flex; flex-direction: column; align-items: center;
-}
-.summarizer-btn {
-  display: flex; align-items: center; gap: 10px;
-  padding: 13px 24px;
-  background: var(--bg-dark);
-  color: var(--white);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 50px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px; font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
-  transition: all .25s;
-  white-space: nowrap;
-}
-.summarizer-btn:hover { background: #2a2a2a; transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,0,0,0.35); }
-.summarizer-btn .s-emoji { font-size: 18px; }
-.summarizer-btn .s-pulse {
-  width: 8px; height: 8px; background: #22c55e; border-radius: 50%;
-  animation: pulse-dot 2s infinite;
-}
-
-.summarizer-panel {
-  position: absolute; bottom: 56px; left: 50%; transform: translateX(-50%);
-  width: min(420px, 90vw);
-  background: #111;
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: 20px;
-  overflow: hidden;
-  display: none;
-  flex-direction: column;
-  box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-}
-.summarizer-panel.open { display: flex; animation: scaleInUp .3s ease-out; }
-
-.sum-header {
-  padding: 18px 20px 14px;
-  border-bottom: 1px solid rgba(255,255,255,.07);
-  display: flex; align-items: center; justify-content: space-between;
-}
-.sum-header-left { display: flex; align-items: center; gap: 10px; }
-.sum-header-icon { font-size: 22px; }
-.sum-header-title { font-size: 15px; font-weight: 600; color: #fff; }
-.sum-header-sub { font-size: 11px; color: rgba(255,255,255,.4); }
-.sum-close { background: none; border: none; color: rgba(255,255,255,.4); font-size: 18px; cursor: pointer; padding: 4px; }
-.sum-close:hover { color: #fff; }
-
-.sum-filter {
-  padding: 14px 20px;
-  border-bottom: 1px solid rgba(255,255,255,.07);
-}
-.sum-filter-label { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,.35); margin-bottom: 10px; }
-.sum-filter-row { display: flex; gap: 8px; flex-wrap: wrap; }
-.filter-chip {
-  padding: 6px 14px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
-  border-radius: 20px; font-size: 12px; font-weight: 500; color: rgba(255,255,255,.6);
-  cursor: pointer; transition: all .2s;
-}
-.filter-chip:hover { border-color: var(--accent); color: var(--accent); }
-.filter-chip.active { background: rgba(200,169,110,.15); border-color: var(--accent); color: var(--accent); }
-.filter-optional { font-size: 10px; color: rgba(255,255,255,.25); margin-left: 4px; }
-.filter-custom-wrap { margin-top: 10px; position: relative; }
-.filter-custom-input {
-  width: 100%; padding: 8px 14px; background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.1); border-radius: 8px;
-  color: #fff; font-size: 12px; font-family: 'DM Sans', sans-serif;
-  outline: none; transition: border-color .2s;
-}
-.filter-custom-input::placeholder { color: rgba(255,255,255,.3); }
-.filter-custom-input:focus { border-color: var(--accent); }
-
-.sum-footer {
-  padding: 14px 20px;
-}
-.sum-submit {
-  width: 100%; padding: 13px; background: linear-gradient(135deg, #a8893e, #c8a96e);
-  border: none; border-radius: 10px; color: #fff; font-size: 14px; font-weight: 600;
-  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
-  transition: all .2s; font-family: 'DM Sans', sans-serif;
-}
-.sum-submit:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(200,169,110,0.3); }
-.sum-submit .spinner { width: 16px; height: 16px; border: 2px solid transparent; border-top-color: #fff; border-radius: 50%; animation: spin .8s linear infinite; display: none; }
-.sum-submit.loading .spinner { display: block; }
-.sum-submit.loading .btn-text { display: none; }
-
-/* Result area - hidden initially, expands */
-.sum-result {
-  max-height: 0; overflow: hidden;
-  transition: max-height .5s ease;
-  border-top: 0px solid rgba(255,255,255,.07);
-}
-.sum-result.visible {
-  max-height: 400px;
-  border-top: 1px solid rgba(255,255,255,.07);
-}
-.sum-result-inner { padding: 20px; overflow-y: auto; max-height: 400px; }
-.sum-result-inner::-webkit-scrollbar { width: 4px; }
-.sum-result-inner::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 2px; }
-.sum-result-text { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,.8); }
-.sum-heading { font-weight: 700; color: #fff; font-size: 13px; margin-top: 14px; margin-bottom: 4px; letter-spacing: 0.3px; }
-.sum-bullet { padding-left: 16px; position: relative; color: rgba(255,255,255,.8); font-size: 13px; margin-bottom: 3px; }
-.sum-bullet::before { content: '•'; position: absolute; left: 0; color: var(--accent); font-size: 14px; line-height: 1.6; }
-.sum-line { font-size: 13px; color: rgba(255,255,255,.7); margin-bottom: 3px; }
-.sum-spacer { height: 8px; }
-.sum-fade { opacity: 0; animation: fadeInUp .3s forwards; }
-
-/* ── MALER FORM STYLES (compressed from original) ── */
-.maler-header {
-  padding: 16px 20px; background: rgba(0,0,0,.3);
-  border-bottom: 1px solid rgba(255,255,255,.06);
-  display: flex; justify-content: space-between; align-items: center;
-}
-.maler-header-left { display: flex; align-items: center; gap: 12px; }
-.maler-logo { width: 36px; height: 36px; background: linear-gradient(135deg,#b45309,#d97706,#f59e0b); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
-.maler-title { font-size: 15px; font-weight: 600; color: #fff; }
-.maler-subtitle { font-size: 11px; color: rgba(255,255,255,.55); }
-.maler-close { background: none; border: none; color: rgba(255,255,255,.55); font-size: 20px; cursor: pointer; }
-.maler-progress { height: 3px; background: rgba(255,255,255,.1); }
-.maler-progress-bar { height: 100%; background: linear-gradient(135deg,#b45309,#d97706,#f59e0b); width: 0; transition: width .4s; }
-.maler-body { flex: 1; overflow-y: auto; padding: 20px; color: #fff; }
-.maler-body::-webkit-scrollbar { width: 5px; }
-.maler-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 3px; }
-.maler-loading { position: absolute; inset: 0; background: rgba(26,24,22,.95); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 10; border-radius: 20px; }
-.maler-loading.visible { display: flex; }
-.maler-loading-spinner { width: 48px; height: 48px; border: 3px solid rgba(255,255,255,.1); border-top-color: #d97706; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 16px; }
-.maler-loading-text { font-size: 14px; color: rgba(255,255,255,.55); }
-
-/* maler form elements */
-.m-section { margin-bottom: 20px; }
-.m-section-title { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #f59e0b; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
-.m-section-title::before { content: ''; width: 10px; height: 2px; background: linear-gradient(135deg,#b45309,#f59e0b); }
-.m-type-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
-.m-type-btn { padding: 12px; background: #12100e; border: 1px solid rgba(255,255,255,.06); border-radius: 10px; color: rgba(255,255,255,.55); font-size: 13px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all .2s; font-family: 'DM Sans', sans-serif; }
-.m-type-btn.active { background: rgba(217,119,6,.15); border-color: #d97706; color: #f59e0b; }
-.m-val-box { background: rgba(217,119,6,.05); border: 1px solid rgba(217,119,6,.12); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
-.m-val-row { display: flex; gap: 10px; }
-.m-float-group { position: relative; flex: 1; }
-.m-float-label { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 13px; color: rgba(255,255,255,.55); pointer-events: none; transition: all .2s; background: #12100e; padding: 0 5px; }
-.m-float-label .req { color: #ef4444; margin-left: 2px; }
-.m-float-input:focus ~ .m-float-label, .m-float-input:not(:placeholder-shown) ~ .m-float-label { top: 0; font-size: 10px; color: #d97706; font-weight: 500; }
-.m-float-input { width: 100%; padding: 14px 16px; background: #12100e; border: 1px solid rgba(255,255,255,.06); border-radius: 10px; color: #fff; font-size: 14px; font-family: 'DM Sans', sans-serif; }
-.m-float-input:focus { outline: none; border-color: #d97706; box-shadow: 0 0 0 3px rgba(217,119,6,.15); }
-.m-float-input::placeholder { color: transparent; }
-.m-float-input.valid { border-color: #22c55e; }
-.m-float-input.invalid { border-color: #ef4444; }
-.m-val-btn { padding: 14px 16px; background: rgba(217,119,6,.15); border: 1px solid rgba(217,119,6,.3); border-radius: 10px; color: #f59e0b; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; white-space: nowrap; font-family: 'DM Sans', sans-serif; }
-.m-val-btn:hover { background: rgba(217,119,6,.25); }
-.m-val-btn:disabled { opacity: .5; cursor: not-allowed; }
-.m-val-btn .spinner { width: 14px; height: 14px; border: 2px solid transparent; border-top-color: #f59e0b; border-radius: 50%; animation: spin .8s linear infinite; display: none; }
-.m-val-btn.loading .spinner { display: block; }
-.m-val-btn.loading .btn-icon { display: none; }
-.m-val-status { padding: 10px 12px; border-radius: 8px; font-size: 12px; margin-top: 12px; display: none; }
-.m-val-status.visible { display: flex; align-items: center; gap: 8px; }
-.m-val-status.success { background: rgba(34,197,94,.1); border: 1px solid rgba(34,197,94,.2); color: #22c55e; }
-.m-val-status.error { background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.2); color: #ef4444; }
-.m-group { margin-bottom: 14px; }
-.m-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.m-input-wrap { position: relative; }
-.m-input-status { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 16px; }
-.m-field-error { font-size: 11px; color: #ef4444; margin-top: 5px; display: none; }
-.m-field-error.visible { display: block; }
-.m-service-grid { display: flex; flex-direction: column; gap: 6px; }
-.m-service-option { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: #12100e; border: 1px solid rgba(255,255,255,.06); border-radius: 10px; cursor: pointer; transition: all .2s; }
-.m-service-option:hover { border-color: rgba(255,255,255,.12); }
-.m-service-option.selected { background: rgba(217,119,6,.1); border-color: #d97706; }
-.m-service-check { width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(255,255,255,.12); display: flex; align-items: center; justify-content: center; font-size: 11px; color: transparent; flex-shrink: 0; }
-.m-service-option.selected .m-service-check { background: linear-gradient(135deg,#b45309,#f59e0b); border-color: #d97706; color: #fff; animation: checkBounce .4s; }
-.m-service-name { font-size: 13px; font-weight: 500; color: #fff; }
-.m-textarea-group { position: relative; }
-.m-textarea { width: 100%; padding: 14px 16px; background: #12100e; border: 1px solid rgba(255,255,255,.06); border-radius: 10px; color: #fff; font-size: 14px; font-family: 'DM Sans', sans-serif; resize: vertical; min-height: 80px; line-height: 1.5; }
-.m-textarea:focus { outline: none; border-color: #d97706; }
-.m-textarea::placeholder { color: transparent; }
-.m-textarea-label { position: absolute; left: 14px; top: 14px; font-size: 13px; color: rgba(255,255,255,.55); pointer-events: none; transition: all .2s; background: #12100e; padding: 0 5px; }
-.m-textarea:focus ~ .m-textarea-label, .m-textarea:not(:placeholder-shown) ~ .m-textarea-label { top: -8px; font-size: 10px; color: #d97706; font-weight: 500; }
-.m-checklist { background: rgba(217,119,6,.05); border: 1px solid rgba(217,119,6,.08); border-radius: 12px; padding: 14px 16px; margin-bottom: 16px; }
-.m-checklist-title { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,.55); margin-bottom: 10px; }
-.m-checklist-items { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.m-check-item { display: flex; align-items: center; gap: 8px; font-size: 11px; color: rgba(255,255,255,.35); }
-.m-check-item.checked { color: #22c55e; }
-.m-check-icon { width: 16px; height: 16px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 9px; background: rgba(255,255,255,.05); }
-.m-check-item.checked .m-check-icon { background: #22c55e; color: #fff; }
-.m-dsgvo { background: #12100e; border: 1px solid rgba(255,255,255,.06); border-radius: 12px; padding: 14px 16px; margin-bottom: 20px; }
-.m-dsgvo-row { display: flex; align-items: flex-start; gap: 10px; font-size: 12px; color: rgba(255,255,255,.55); cursor: pointer; }
-.m-dsgvo-row input { margin-top: 2px; width: 16px; height: 16px; accent-color: #d97706; }
-.m-dsgvo-toggle { background: none; border: none; cursor: pointer; font-size: 12px; color: #f59e0b; padding: 0; font-family: 'DM Sans', sans-serif; }
-.m-dsgvo-details { display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.06); font-size: 11px; color: rgba(255,255,255,.35); }
-.m-dsgvo-details.visible { display: block; }
-.m-welcome { background: rgba(217,119,6,.1); border: 1px solid rgba(217,119,6,.2); border-radius: 10px; padding: 12px 14px; margin-bottom: 20px; }
-.m-welcome p { font-size: 13px; line-height: 1.5; margin: 0; color: rgba(255,255,255,.8); }
-.m-welcome strong { color: #f59e0b; }
-.m-submit { width: 100%; padding: 16px; background: linear-gradient(135deg,#b45309,#d97706,#f59e0b); border: none; border-radius: 12px; color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all .3s; font-family: 'DM Sans', sans-serif; }
-.m-submit:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(217,119,6,.5); }
-.m-submit:disabled { opacity: .4; cursor: not-allowed; }
-.m-submit.ready { animation: orangePulse 2s infinite; }
-.m-submit .spinner { width: 18px; height: 18px; border: 2px solid transparent; border-top-color: #fff; border-radius: 50%; animation: spin .8s linear infinite; display: none; }
-.m-submit.loading .spinner { display: block; }
-.m-submit.loading .btn-text { display: none; }
-
-/* Result */
-.m-result { display: none; }
-.m-result.visible { display: block; animation: fadeInUp .4s; }
-.m-confetti { position: absolute; width: 8px; height: 8px; border-radius: 2px; animation: confetti 3s forwards; }
-.m-result-success { text-align: center; padding: 20px 0; color: #fff; }
-.m-result-icon { font-size: 56px; margin-bottom: 12px; }
-.m-result-success h3 { font-size: 20px; font-weight: 700; margin: 0 0 6px; }
-.m-result-success p { font-size: 13px; color: rgba(255,255,255,.55); margin: 0; }
-.m-result-highlight { background: rgba(217,119,6,.1); border: 1px solid rgba(217,119,6,.2); border-radius: 12px; padding: 16px; margin: 16px 0; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; text-align: center; }
-.m-result-highlight-item { display: flex; flex-direction: column; gap: 3px; }
-.m-result-highlight-label { font-size: 10px; color: rgba(255,255,255,.55); text-transform: uppercase; }
-.m-result-highlight-value { font-size: 18px; font-weight: 700; color: #f59e0b; }
-.m-result-summary { background: #12100e; border: 1px solid rgba(255,255,255,.06); border-radius: 12px; padding: 16px; }
-.m-result-summary-title { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #f59e0b; margin-bottom: 12px; }
-.m-result-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.06); font-size: 12px; color: #fff; }
-.m-result-row:last-child { border-bottom: none; }
-.m-result-row .lbl { color: rgba(255,255,255,.55); }
-.m-result-row .val { font-weight: 500; text-align: right; max-width: 55%; }
-.m-disclaimer { font-size: 11px; color: rgba(255,255,255,.35); text-align: center; margin-top: 16px; }
-
-/* ── FILE UPLOAD ── */
-.m-file-upload { border: 2px dashed rgba(217,119,6,.25); border-radius: 10px; padding: 20px; text-align: center; cursor: pointer; position: relative; transition: all .2s; }
-.m-file-upload:hover { border-color: #d97706; background: rgba(217,119,6,.05); }
-.m-file-upload input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-.m-file-upload-icon { font-size: 28px; margin-bottom: 6px; }
-.m-file-upload-text { font-size: 12px; color: rgba(255,255,255,.55); }
-.m-file-upload-hint { font-size: 10px; color: rgba(255,255,255,.35); margin-top: 3px; }
-.m-file-list { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
-.m-file-item { display: flex; align-items: center; gap: 5px; padding: 6px 10px; background: rgba(217,119,6,.15); border-radius: 6px; font-size: 11px; color: #fff; }
-.m-file-item-remove { cursor: pointer; color: #ef4444; font-weight: bold; margin-left: 3px; }
+/* ── MALER FORM ── */
+.maler-header{padding:16px 20px;background:rgba(0,0,0,.3);border-bottom:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center}
+.maler-header-left{display:flex;align-items:center;gap:12px}
+.maler-logo{width:36px;height:36px;background:linear-gradient(135deg,#b45309,#d97706,#f59e0b);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.maler-title{font-size:15px;font-weight:600;color:#fff}
+.maler-subtitle{font-size:11px;color:rgba(255,255,255,.55)}
+.maler-close{background:none;border:none;color:rgba(255,255,255,.55);font-size:20px;cursor:pointer}
+.maler-progress{height:3px;background:rgba(255,255,255,.1)}
+.maler-progress-bar{height:100%;background:linear-gradient(135deg,#b45309,#d97706,#f59e0b);width:0;transition:width .4s}
+.maler-body{flex:1;overflow-y:auto;padding:20px;color:#fff}
+.maler-body::-webkit-scrollbar{width:5px}
+.maler-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:3px}
+.maler-loading{position:absolute;inset:0;background:rgba(26,24,22,.95);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:10;border-radius:20px}
+.maler-loading.visible{display:flex}
+.maler-loading-spinner{width:48px;height:48px;border:3px solid rgba(255,255,255,.1);border-top-color:#d97706;border-radius:50%;animation:spin 1s linear infinite;margin-bottom:16px}
+.maler-loading-text{font-size:14px;color:rgba(255,255,255,.55)}
+.m-section{margin-bottom:20px}
+.m-section-title{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#f59e0b;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.m-section-title::before{content:'';width:10px;height:2px;background:linear-gradient(135deg,#b45309,#f59e0b)}
+.m-type-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.m-type-btn{padding:12px;background:#12100e;border:1px solid rgba(255,255,255,.06);border-radius:10px;color:rgba(255,255,255,.55);font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .2s;font-family:'DM Sans',sans-serif}
+.m-type-btn.active{background:rgba(217,119,6,.15);border-color:#d97706;color:#f59e0b}
+.m-val-box{background:rgba(217,119,6,.05);border:1px solid rgba(217,119,6,.12);border-radius:12px;padding:16px;margin-bottom:16px}
+.m-val-row{display:flex;gap:10px}
+.m-float-group{position:relative;flex:1}
+.m-float-label{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:13px;color:rgba(255,255,255,.55);pointer-events:none;transition:all .2s;background:#12100e;padding:0 5px}
+.m-float-label .req{color:#ef4444;margin-left:2px}
+.m-float-input:focus~.m-float-label,.m-float-input:not(:placeholder-shown)~.m-float-label{top:0;font-size:10px;color:#d97706;font-weight:500}
+.m-float-input{width:100%;padding:14px 16px;background:#12100e;border:1px solid rgba(255,255,255,.06);border-radius:10px;color:#fff;font-size:14px;font-family:'DM Sans',sans-serif}
+.m-float-input:focus{outline:none;border-color:#d97706;box-shadow:0 0 0 3px rgba(217,119,6,.15)}
+.m-float-input::placeholder{color:transparent}
+.m-float-input.valid{border-color:#22c55e}
+.m-float-input.invalid{border-color:#ef4444}
+.m-val-btn{padding:14px 16px;background:rgba(217,119,6,.15);border:1px solid rgba(217,119,6,.3);border-radius:10px;color:#f59e0b;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;font-family:'DM Sans',sans-serif}
+.m-val-btn:hover{background:rgba(217,119,6,.25)}
+.m-val-btn:disabled{opacity:.5;cursor:not-allowed}
+.m-val-btn .spinner{width:14px;height:14px;border:2px solid transparent;border-top-color:#f59e0b;border-radius:50%;animation:spin .8s linear infinite;display:none}
+.m-val-btn.loading .spinner{display:block}
+.m-val-btn.loading .btn-icon{display:none}
+.m-val-status{padding:10px 12px;border-radius:8px;font-size:12px;margin-top:12px;display:none}
+.m-val-status.visible{display:flex;align-items:center;gap:8px}
+.m-val-status.success{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);color:#22c55e}
+.m-val-status.error{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#ef4444}
+.m-group{margin-bottom:14px}
+.m-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.m-input-wrap{position:relative}
+.m-input-status{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:16px}
+.m-field-error{font-size:11px;color:#ef4444;margin-top:5px;display:none}
+.m-field-error.visible{display:block}
+.m-service-grid{display:flex;flex-direction:column;gap:6px}
+.m-service-option{display:flex;align-items:center;gap:12px;padding:12px 14px;background:#12100e;border:1px solid rgba(255,255,255,.06);border-radius:10px;cursor:pointer;transition:all .2s}
+.m-service-option:hover{border-color:rgba(255,255,255,.12)}
+.m-service-option.selected{background:rgba(217,119,6,.1);border-color:#d97706}
+.m-service-check{width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:11px;color:transparent;flex-shrink:0}
+.m-service-option.selected .m-service-check{background:linear-gradient(135deg,#b45309,#f59e0b);border-color:#d97706;color:#fff;animation:checkBounce .4s}
+.m-service-name{font-size:13px;font-weight:500;color:#fff}
+.m-textarea-group{position:relative}
+.m-textarea{width:100%;padding:14px 16px;background:#12100e;border:1px solid rgba(255,255,255,.06);border-radius:10px;color:#fff;font-size:14px;font-family:'DM Sans',sans-serif;resize:vertical;min-height:80px;line-height:1.5}
+.m-textarea:focus{outline:none;border-color:#d97706}
+.m-textarea::placeholder{color:transparent}
+.m-textarea-label{position:absolute;left:14px;top:14px;font-size:13px;color:rgba(255,255,255,.55);pointer-events:none;transition:all .2s;background:#12100e;padding:0 5px}
+.m-textarea:focus~.m-textarea-label,.m-textarea:not(:placeholder-shown)~.m-textarea-label{top:-8px;font-size:10px;color:#d97706;font-weight:500}
+.m-checklist{background:rgba(217,119,6,.05);border:1px solid rgba(217,119,6,.08);border-radius:12px;padding:14px 16px;margin-bottom:16px}
+.m-checklist-title{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.55);margin-bottom:10px}
+.m-checklist-items{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.m-check-item{display:flex;align-items:center;gap:8px;font-size:11px;color:rgba(255,255,255,.35)}
+.m-check-item.checked{color:#22c55e}
+.m-check-icon{width:16px;height:16px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:9px;background:rgba(255,255,255,.05)}
+.m-check-item.checked .m-check-icon{background:#22c55e;color:#fff}
+.m-dsgvo{background:#12100e;border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:14px 16px;margin-bottom:20px}
+.m-dsgvo-row{display:flex;align-items:flex-start;gap:10px;font-size:12px;color:rgba(255,255,255,.55);cursor:pointer}
+.m-dsgvo-row input{margin-top:2px;width:16px;height:16px;accent-color:#d97706}
+.m-dsgvo-toggle{background:none;border:none;cursor:pointer;font-size:12px;color:#f59e0b;padding:0;font-family:'DM Sans',sans-serif}
+.m-dsgvo-details{display:none;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06);font-size:11px;color:rgba(255,255,255,.35)}
+.m-dsgvo-details.visible{display:block}
+.m-welcome{background:rgba(217,119,6,.1);border:1px solid rgba(217,119,6,.2);border-radius:10px;padding:12px 14px;margin-bottom:20px}
+.m-welcome p{font-size:13px;line-height:1.5;margin:0;color:rgba(255,255,255,.8)}
+.m-welcome strong{color:#f59e0b}
+.m-submit{width:100%;padding:16px;background:linear-gradient(135deg,#b45309,#d97706,#f59e0b);border:none;border-radius:12px;color:#fff;font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .3s;font-family:'DM Sans',sans-serif}
+.m-submit:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 12px 30px rgba(217,119,6,.5)}
+.m-submit:disabled{opacity:.4;cursor:not-allowed}
+.m-submit.ready{animation:orangePulse 2s infinite}
+.m-submit .spinner{width:18px;height:18px;border:2px solid transparent;border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;display:none}
+.m-submit.loading .spinner{display:block}
+.m-submit.loading .btn-text{display:none}
+.m-result{display:none}
+.m-result.visible{display:block;animation:fadeInUp .4s}
+.m-result-success{text-align:center;padding:20px 0;color:#fff}
+.m-result-icon{font-size:56px;margin-bottom:12px}
+.m-result-success h3{font-size:20px;font-weight:700;margin:0 0 6px}
+.m-result-success p{font-size:13px;color:rgba(255,255,255,.55);margin:0}
+.m-result-highlight{background:rgba(217,119,6,.1);border:1px solid rgba(217,119,6,.2);border-radius:12px;padding:16px;margin:16px 0;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;text-align:center}
+.m-result-highlight-item{display:flex;flex-direction:column;gap:3px}
+.m-result-highlight-label{font-size:10px;color:rgba(255,255,255,.55);text-transform:uppercase}
+.m-result-highlight-value{font-size:18px;font-weight:700;color:#f59e0b}
+.m-result-summary{background:#12100e;border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:16px}
+.m-result-summary-title{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#f59e0b;margin-bottom:12px}
+.m-result-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:12px;color:#fff}
+.m-result-row:last-child{border-bottom:none}
+.m-result-row .lbl{color:rgba(255,255,255,.55)}
+.m-result-row .val{font-weight:500;text-align:right;max-width:55%}
+.m-disclaimer{font-size:11px;color:rgba(255,255,255,.35);text-align:center;margin-top:16px}
+.m-file-upload{border:2px dashed rgba(217,119,6,.25);border-radius:10px;padding:20px;text-align:center;cursor:pointer;position:relative;transition:all .2s}
+.m-file-upload:hover{border-color:#d97706;background:rgba(217,119,6,.05)}
+.m-file-upload input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.m-file-upload-icon{font-size:28px;margin-bottom:6px}
+.m-file-upload-text{font-size:12px;color:rgba(255,255,255,.55)}
+.m-file-upload-hint{font-size:10px;color:rgba(255,255,255,.35);margin-top:3px}
+.m-file-list{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px}
+.m-file-item{display:flex;align-items:center;gap:5px;padding:6px 10px;background:rgba(217,119,6,.15);border-radius:6px;font-size:11px;color:#fff}
+.m-file-item-remove{cursor:pointer;color:#ef4444;font-weight:bold;margin-left:3px}
 
 /* ── ANIMATIONS ── */
-@keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-@keyframes scaleInUp { from { opacity: 0; transform: translateX(-50%) scale(0.95) translateY(10px); } to { opacity: 1; transform: translateX(-50%) scale(1) translateY(0); } }
-@keyframes spin { to { transform: rotate(360deg); } }
-@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes checkBounce { 0% { transform: scale(0); } 50% { transform: scale(1.4); } 70% { transform: scale(0.9); } 100% { transform: scale(1); } }
-@keyframes orangePulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(217,119,6,.5); } 50% { box-shadow: 0 0 20px 6px rgba(217,119,6,.5); } }
-@keyframes pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(0.8); } }
-@keyframes confetti { 0% { transform: translateY(0) rotate(0); opacity: 1; } 100% { transform: translateY(-400px) rotate(720deg); opacity: 0; } }
-@keyframes fadeToken { to { opacity: 1; } }
-@keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
-@keyframes successPulse { 0% { box-shadow: 0 0 0 0 rgba(34,197,94,.4); } 100% { box-shadow: 0 0 15px 8px rgba(34,197,94,0); } }
-
-.shake { animation: shake .5s; }
-.success-pulse { animation: successPulse .6s; }
+@keyframes scaleIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+@keyframes scaleInUp{from{opacity:0;transform:translateX(-50%) scale(.95) translateY(10px)}to{opacity:1;transform:translateX(-50%) scale(1) translateY(0)}}
+@keyframes scaleInLeft{from{opacity:0;transform:scale(.95) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes checkBounce{0%{transform:scale(0)}50%{transform:scale(1.4)}70%{transform:scale(.9)}100%{transform:scale(1)}}
+@keyframes orangePulse{0%,100%{box-shadow:0 0 0 0 rgba(217,119,6,.5)}50%{box-shadow:0 0 20px 6px rgba(217,119,6,.5)}}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.8)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+@keyframes successPulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.4)}100%{box-shadow:0 0 15px 8px rgba(34,197,94,0)}}
+@keyframes typingBounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.shake{animation:shake .5s}
+.success-pulse{animation:successPulse .6s}
 
 /* ── RESPONSIVE ── */
-@media (max-width: 768px) {
-  nav { padding: 0 20px; }
-  .nav-links { gap: 2px; }
-  .nav-link { padding: 6px 10px; font-size: 12px; }
-  .hero, .section, .article-body { padding-left: 20px; padding-right: 20px; }
-  .article-hero { padding: 60px 20px 40px; }
-  .m-row { grid-template-columns: 1fr; }
-  .summarizer-btn { font-size: 12px; padding: 11px 18px; }
+@media(max-width:768px){
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  .nav-hamburger{display:flex}
+  .hero,.section{padding-left:20px;padding-right:20px}
+  .hero{padding-top:80px;padding-bottom:60px}
+  .section{padding-top:60px;padding-bottom:60px}
+  .article-body{padding:40px 20px}
+  .article-hero{padding:60px 20px 40px}
+  .m-row{grid-template-columns:1fr}
+  .summarizer-btn{font-size:12px;padding:11px 18px}
+  .stadtbot-widget{left:10px;bottom:10px}
+  .maler-widget{right:10px;bottom:10px}
+  .summarizer-widget{bottom:10px}
+  .stadtbot-window{width:min(350px,92vw);height:min(500px,80vh)}
+  .maler-window{width:min(360px,92vw)}
 }
   </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════
-     NAVIGATION
-══════════════════════════════════════ -->
+<!-- NAV -->
 <nav>
   <div class="nav-logo">Stadt<span>Portal</span></div>
   <div class="nav-links">
@@ -402,11 +313,23 @@ nav {
     <button class="nav-link" onclick="showPage('umwelt')">Umwelt</button>
     <button class="nav-link" onclick="showPage('maler')">🎨 Malerbetrieb</button>
   </div>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Menü öffnen">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
-<!-- ══════════════════════════════════════
-     PAGE: HOME
-══════════════════════════════════════ -->
+<!-- MOBILES MENÜ -->
+<div class="mobile-nav-overlay" id="mobile-nav-overlay">
+  <button class="mobile-nav-close" id="mobile-nav-close">✕</button>
+  <button class="nav-link" onclick="showPage('home');closeMobileNav()">Übersicht</button>
+  <button class="nav-link" onclick="showPage('buerger');closeMobileNav()">Bürgerservice</button>
+  <button class="nav-link" onclick="showPage('verkehr');closeMobileNav()">Verkehr</button>
+  <button class="nav-link" onclick="showPage('kultur');closeMobileNav()">Kultur</button>
+  <button class="nav-link" onclick="showPage('umwelt');closeMobileNav()">Umwelt</button>
+  <button class="nav-link" onclick="showPage('maler');closeMobileNav()">🎨 Malerbetrieb</button>
+</div>
+
+<!-- HOME -->
 <div class="page active" id="page-home">
   <div class="hero">
     <div class="hero-tag">Willkommen im digitalen Stadtportal</div>
@@ -423,247 +346,172 @@ nav {
       <h2 class="section-title">Was können wir für Sie tun?</h2>
     </div>
     <div class="cards-grid">
-      <div class="card" onclick="showPage('buerger')">
-        <div class="card-icon">🏛️</div>
-        <div class="card-title">Bürgerservice</div>
-        <div class="card-desc">Anmeldungen, Ausweise, Formulare und Behördengänge – alles digital und ohne Wartezeit.</div>
-      </div>
-      <div class="card" onclick="showPage('verkehr')">
-        <div class="card-icon">🚌</div>
-        <div class="card-title">Verkehr & Mobilität</div>
-        <div class="card-desc">ÖPNV-Fahrpläne, Baustellen, Parkzonen und aktuelle Verkehrsmeldungen in Echtzeit.</div>
-      </div>
-      <div class="card" onclick="showPage('kultur')">
-        <div class="card-icon">🎭</div>
-        <div class="card-title">Kultur & Freizeit</div>
-        <div class="card-desc">Veranstaltungen, Museen, Sportstätten und das kulturelle Leben der Stadt auf einen Blick.</div>
-      </div>
-      <div class="card" onclick="showPage('umwelt')">
-        <div class="card-icon">🌿</div>
-        <div class="card-title">Umwelt & Nachhaltigkeit</div>
-        <div class="card-desc">Abfallentsorgung, Recycling, Grünflächen und städtische Klimaschutzinitiativen.</div>
-      </div>
+      <div class="card" onclick="showPage('buerger')"><div class="card-icon">🏛️</div><div class="card-title">Bürgerservice</div><div class="card-desc">Anmeldungen, Ausweise, Formulare und Behördengänge – alles digital und ohne Wartezeit.</div></div>
+      <div class="card" onclick="showPage('verkehr')"><div class="card-icon">🚌</div><div class="card-title">Verkehr & Mobilität</div><div class="card-desc">ÖPNV-Fahrpläne, Baustellen, Parkzonen und aktuelle Verkehrsmeldungen in Echtzeit.</div></div>
+      <div class="card" onclick="showPage('kultur')"><div class="card-icon">🎭</div><div class="card-title">Kultur & Freizeit</div><div class="card-desc">Veranstaltungen, Museen, Sportstätten und das kulturelle Leben der Stadt auf einen Blick.</div></div>
+      <div class="card" onclick="showPage('umwelt')"><div class="card-icon">🌿</div><div class="card-title">Umwelt & Nachhaltigkeit</div><div class="card-desc">Abfallentsorgung, Recycling, Grünflächen und städtische Klimaschutzinitiativen.</div></div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     PAGE: BÜRGERSERVICE
-══════════════════════════════════════ -->
+<!-- BÜRGERSERVICE -->
 <div class="page" id="page-buerger" data-content="true">
-  <div class="article-hero">
-    <div class="section-tag">Bürgerservice</div>
-    <h1>Ihre Anlaufstelle für alle Behördenangelegenheiten</h1>
-  </div>
+  <div class="article-hero"><div class="section-tag">Bürgerservice</div><h1>Ihre Anlaufstelle für alle Behördenangelegenheiten</h1></div>
   <div class="article-body">
-    <p>Der Bürgerservice der Stadt Paderborn ist Ihr zentraler Ansprechpartner für nahezu alle Verwaltungsangelegenheiten des täglichen Lebens. Ob Ummeldung, Personalausweis, Führungszeugnis oder die Beantragung eines Gewerbescheins – wir sind für Sie da, sowohl persönlich in unseren Servicezentren als auch digital über dieses Portal. Unser Anspruch ist es, Verwaltung so einfach, transparent und bürgerfreundlich wie möglich zu gestalten. Denn wir glauben: Gute Verwaltung ist kein Selbstzweck, sondern der Grundstein einer funktionierenden Stadtgesellschaft.</p>
-
+    <p>Der Bürgerservice der Stadt Paderborn ist Ihr zentraler Ansprechpartner für nahezu alle Verwaltungsangelegenheiten des täglichen Lebens. Ob Ummeldung, Personalausweis, Führungszeugnis oder die Beantragung eines Gewerbescheins – wir sind für Sie da, sowohl persönlich in unseren Servicezentren als auch digital über dieses Portal.</p>
     <h2>Meldewesen und Ausweise</h2>
-    <p>Das Meldewesen bildet die Grundlage für viele weitere Verwaltungsvorgänge. Eine fristgerechte Anmeldung innerhalb von zwei Wochen nach dem Einzug ist gesetzlich vorgeschrieben. In Paderborn können Sie Ihre Ummeldung bequem online über unser Portal vornehmen, ohne persönlich erscheinen zu müssen. Für die Erstanmeldung nach Zuzug aus einer anderen Gemeinde benötigen Sie Ihren aktuellen Personalausweis oder Reisepass, eine Wohnungsgeberbestätigung Ihres Vermieters sowie gegebenenfalls Nachweise über Familienstand oder Sorgerecht bei Anmeldung von Kindern.</p>
-    <p>Der Personalausweis ist das wichtigste Identifikationsdokument für deutsche Staatsbürgerinnen und Staatsbürger. Er wird ab dem 16. Lebensjahr Pflicht und hat eine Gültigkeitsdauer von zehn Jahren für Erwachsene und sechs Jahren für Minderjährige. Die Beantragung erfolgt persönlich beim Bürgerservice. Bringen Sie dazu ein aktuelles biometrisches Lichtbild, Ihren alten Ausweis oder eine Geburtsurkunde sowie die anfallende Gebühr mit. Der neue Ausweis wird in der Regel innerhalb von drei bis vier Wochen zugestellt. Auf Wunsch ist eine Expressbestellung möglich, die Bearbeitung dauert dann in der Regel nur drei Werktage – gegen einen Aufpreis.</p>
-    <p>Der Reisepass ist erforderlich für Reisen in Länder, die den Personalausweis nicht als Einreisedokument akzeptieren. Er ist für Erwachsene zehn Jahre gültig, für Kinder unter zwölf Jahren sechs Jahre. Auch hier ist ein persönliches Erscheinen bei der Beantragung notwendig, da Fingerabdrücke genommen werden. Kinder, die noch keinen eigenen Pass besitzen, können nicht mehr in den Reisepass der Eltern eingetragen werden – jedes Kind benötigt seit 2006 ein eigenes Dokument.</p>
-
-    <div class="info-box">
-      <p><strong>Tipp:</strong> Nutzen Sie die Online-Terminvereinbarung, um Wartezeiten zu vermeiden. Viele Leistungen können außerdem vollständig digital beantragt werden – ohne Behördengang. Termine können bis zu acht Wochen im Voraus gebucht werden.</p>
-    </div>
-
+    <p>Das Meldewesen bildet die Grundlage für viele weitere Verwaltungsvorgänge. Eine fristgerechte Anmeldung innerhalb von zwei Wochen nach dem Einzug ist gesetzlich vorgeschrieben. In Paderborn können Sie Ihre Ummeldung bequem online über unser Portal vornehmen, ohne persönlich erscheinen zu müssen.</p>
+    <p>Der Personalausweis ist das wichtigste Identifikationsdokument für deutsche Staatsbürgerinnen und Staatsbürger. Er wird ab dem 16. Lebensjahr Pflicht und hat eine Gültigkeitsdauer von zehn Jahren für Erwachsene und sechs Jahren für Minderjährige. Der neue Ausweis wird in der Regel innerhalb von drei bis vier Wochen zugestellt.</p>
+    <p>Der Reisepass ist erforderlich für Reisen in Länder, die den Personalausweis nicht als Einreisedokument akzeptieren. Er ist für Erwachsene zehn Jahre gültig, für Kinder unter zwölf Jahren sechs Jahre. Auch hier ist ein persönliches Erscheinen bei der Beantragung notwendig, da Fingerabdrücke genommen werden.</p>
+    <div class="info-box"><p><strong>Tipp:</strong> Nutzen Sie die Online-Terminvereinbarung, um Wartezeiten zu vermeiden. Viele Leistungen können außerdem vollständig digital beantragt werden – ohne Behördengang. Termine können bis zu acht Wochen im Voraus gebucht werden.</p></div>
     <h2>Gewerbeanmeldung und Unternehmensservice</h2>
-    <p>Wer in Paderborn ein Gewerbe betreiben möchte, muss dieses bei der zuständigen Behörde anmelden. Die Gewerbeanmeldung ist dabei nicht nur eine bürokratische Pflicht, sondern auch der offizielle Start Ihrer unternehmerischen Tätigkeit in der Stadt. Der Prozess ist bewusst einfach gestaltet: Sie füllen das Formular online aus, laden die erforderlichen Unterlagen hoch und erhalten innerhalb weniger Werktage Ihre Gewerbeanmeldebestätigung per Post oder digital zugestellt.</p>
-    <p>Zu den erforderlichen Unterlagen gehören ein gültiges Ausweisdokument, bei Handwerksbetrieben ein Nachweis über die entsprechende Qualifikation sowie bei bestimmten Gewerben zusätzliche Genehmigungen oder Konzessionen. Das Stadtportal führt Sie Schritt für Schritt durch den gesamten Prozess und weist Sie auf möglicherweise fehlende Dokumente hin. Die Gebühr für eine Gewerbeanmeldung beträgt in Paderborn 26 Euro, für eine Gewerbeummeldung 26 Euro und für eine Gewerbeabmeldung 26 Euro. Bei gleichzeitiger Beantragung mehrerer Leistungen können Rabatte gewährt werden.</p>
-    <p>Für Gründerinnen und Gründer bietet die Stadt Paderborn in Kooperation mit der Wirtschaftsförderungsgesellschaft kostenlose Erstberatungen an. Hier erhalten Sie Informationen zu Finanzierungsmöglichkeiten, Förderprogrammen des Landes und des Bundes sowie zur Wahl der geeigneten Rechtsform. Die Beratungsstelle ist dienstags und donnerstags von 9:00 bis 12:00 Uhr ohne Voranmeldung erreichbar, zu anderen Zeiten nach Vereinbarung.</p>
-
+    <p>Wer in Paderborn ein Gewerbe betreiben möchte, muss dieses bei der zuständigen Behörde anmelden. Der Prozess ist bewusst einfach gestaltet: Sie füllen das Formular online aus, laden die erforderlichen Unterlagen hoch und erhalten innerhalb weniger Werktage Ihre Gewerbeanmeldebestätigung. Die Gebühr für eine Gewerbeanmeldung beträgt in Paderborn 26 Euro.</p>
+    <p>Für Gründerinnen und Gründer bietet die Stadt Paderborn in Kooperation mit der Wirtschaftsförderungsgesellschaft kostenlose Erstberatungen an. Die Beratungsstelle ist dienstags und donnerstags von 9:00 bis 12:00 Uhr ohne Voranmeldung erreichbar.</p>
     <h2>Führungszeugnisse und Beglaubigungen</h2>
-    <p>Ein einfaches Führungszeugnis können Sie bequem online über das Bundeszentralregister beantragen. Die Gebühr beträgt 13 Euro und wird per Lastschrift oder Kreditkarte eingezogen. Das Führungszeugnis wird dann direkt an Ihre Meldeadresse geschickt – Sie können jedoch auch eine abweichende Versandadresse angeben. Die Bearbeitungszeit beträgt in der Regel ein bis zwei Wochen.</p>
-    <p>Für ein erweitertes Führungszeugnis, das beispielsweise bei der Arbeit mit Kindern und Jugendlichen verlangt wird, ist eine Beantragung beim Bürgerservice notwendig. Sie benötigen dafür eine Bestätigung des Arbeitgebers oder der Organisation, dass das erweiterte Führungszeugnis für die beabsichtigte Tätigkeit erforderlich ist. Ehrenamtliche erhalten das erweiterte Führungszeugnis kostenfrei. Beglaubigungen von Dokumenten und Unterschriften nehmen wir während der regulären Öffnungszeiten in allen Servicezentren vor. Bitte beachten Sie, dass für die Beglaubigung das Original des Dokuments mitgebracht werden muss.</p>
-
+    <p>Ein einfaches Führungszeugnis können Sie bequem online über das Bundeszentralregister beantragen. Die Gebühr beträgt 13 Euro. Die Bearbeitungszeit beträgt in der Regel ein bis zwei Wochen. Ehrenamtliche erhalten das erweiterte Führungszeugnis kostenfrei.</p>
     <h2>Standesamt und Personenstandswesen</h2>
-    <p>Das Standesamt ist zuständig für alle Angelegenheiten des Personenstandswesens: von der Beurkundung von Geburten und Sterbefällen über die Eheschließung bis hin zur Ausstellung von Personenstandsurkunden. Heiratswillige Paare können sich ab sechs Monate vor dem gewünschten Trautermin beim Standesamt anmelden. Paderborn bietet mehrere standesamtliche Trauorte an, darunter das historische Rathaus, den Kaisersaal und mehrere Außenstellen in den umliegenden Ortschaften.</p>
-    <p>Für die Anmeldung zur Eheschließung benötigen beide Partner einen gültigen Ausweis sowie einen beglaubigten Ausdruck aus dem Geburtenregister, der nicht älter als sechs Monate sein darf. Geschiedene Personen müssen zusätzlich das rechtskräftige Scheidungsurteil vorlegen, Verwitwete eine Sterbeurkunde des früheren Ehepartners. Ausländische Urkunden müssen in der Regel übersetzt und mit einer Apostille versehen werden.</p>
-    <p>Geburten müssen dem Standesamt innerhalb von sieben Tagen nach der Entbindung gemeldet werden. Bei Geburten in einer Klinik übernimmt in der Regel die Klinik die Meldung. Bei Hausgeburten oder Geburten in Geburtshäusern muss die Anzeige durch die Eltern oder die Hebamme erfolgen. Für die Beurkundung benötigen Sie die Geburtsbescheinigung der Hebamme oder des Arztes, Ausweisdokumente beider Elternteile sowie gegebenenfalls die Heiratsurkunde oder eine Sorgerechtserklärung.</p>
-    <p>Geburtsurkunden, Heiratsurkunden und Sterbeurkunden können sowohl persönlich als auch schriftlich, per E-Mail oder über das Onlineportal beantragt werden. Für Urkunden aus anderen Standesämtern leiten wir Ihre Anfrage gerne weiter oder beraten Sie bei der direkten Kontaktaufnahme. Die Gebühr für eine einfache Urkunde beträgt 12 Euro, für jede weitere Ausfertigung 6 Euro.</p>
-
+    <p>Das Standesamt ist zuständig für alle Angelegenheiten des Personenstandswesens: von der Beurkundung von Geburten und Sterbefällen über die Eheschließung bis hin zur Ausstellung von Personenstandsurkunden. Heiratswillige Paare können sich ab sechs Monate vor dem gewünschten Trautermin beim Standesamt anmelden.</p>
+    <p>Geburten müssen dem Standesamt innerhalb von sieben Tagen nach der Entbindung gemeldet werden. Die Gebühr für eine einfache Urkunde beträgt 12 Euro, für jede weitere Ausfertigung 6 Euro.</p>
     <h2>Kfz-Zulassung und Fahrerlaubnisbehörde</h2>
-    <p>Die Kfz-Zulassungsstelle ist für alle Angelegenheiten rund um die Zulassung von Kraftfahrzeugen zuständig. Sie können Ihr Fahrzeug anmelden, ummelden, abmelden oder auf eine andere Person umschreiben lassen. Seit Einführung des i-Kfz-Systems ist auch eine vollständig digitale Zulassung, Umschreibung und Abmeldung möglich, sofern das Fahrzeug und die Kennzeichen entsprechend ausgestattet sind. Die Kfz-Zulassungsstelle befindet sich im Technischen Rathaus in der Pontanusstraße und ist montags bis freitags von 7:30 bis 15:00 Uhr geöffnet, donnerstags bis 17:30 Uhr.</p>
-    <p>Die Fahrerlaubnisbehörde bearbeitet alle Angelegenheiten rund um den Führerschein: Neuerteilung, Umtausch ausländischer Führerscheine, Erweiterung um neue Klassen sowie Maßnahmen bei Punkteständen oder medizinischen Einschränkungen. Für den Umtausch eines alten grauen Führerscheins in den EU-Kartenführerschein gelten gestaffelte Fristen je nach Geburtsjahr. Prüfen Sie frühzeitig, ob Sie von einer Umtauschpflicht betroffen sind.</p>
-
+    <p>Die Kfz-Zulassungsstelle befindet sich im Technischen Rathaus in der Pontanusstraße und ist montags bis freitags von 7:30 bis 15:00 Uhr geöffnet, donnerstags bis 17:30 Uhr. Seit Einführung des i-Kfz-Systems ist auch eine vollständig digitale Zulassung möglich.</p>
     <h2>Sozialleistungen und Unterstützungsangebote</h2>
-    <p>Das Sozialamt der Stadt Paderborn berät und unterstützt Menschen in schwierigen Lebenslagen. Dazu gehören Leistungen der Grundsicherung im Alter und bei Erwerbsminderung, Hilfe zur Pflege, Eingliederungshilfe für Menschen mit Behinderungen sowie Hilfen in besonderen sozialen Situationen. Die Beratung ist vertraulich und kostenlos. Wer Ansprüche auf Sozialleistungen hat, sollte sich frühzeitig melden – Leistungen werden in der Regel erst ab dem Zeitpunkt der Antragstellung gewährt.</p>
-
+    <p>Das Sozialamt der Stadt Paderborn berät und unterstützt Menschen in schwierigen Lebenslagen. Dazu gehören Leistungen der Grundsicherung im Alter und bei Erwerbsminderung, Hilfe zur Pflege und Eingliederungshilfe für Menschen mit Behinderungen. Die Beratung ist vertraulich und kostenlos.</p>
     <h2>Öffnungszeiten und Kontakt</h2>
-    <p>Unsere Servicezentren sind Montag bis Freitag von 8:00 bis 16:00 Uhr geöffnet, donnerstags verlängert bis 18:00 Uhr. Samstags ist das Servicezentrum Innenstadt von 9:00 bis 12:00 Uhr geöffnet. Für dringende Angelegenheiten außerhalb dieser Zeiten steht Ihnen unser Online-Service rund um die Uhr zur Verfügung. Das Bürgertelefon unter 05251 88-0 ist werktags von 8:00 bis 17:00 Uhr erreichbar. Weitere Servicezentren befinden sich in Schloß Neuhaus, Bad Lippspringe und Delbrück.</p>
+    <p>Unsere Servicezentren sind Montag bis Freitag von 8:00 bis 16:00 Uhr geöffnet, donnerstags verlängert bis 18:00 Uhr. Samstags ist das Servicezentrum Innenstadt von 9:00 bis 12:00 Uhr geöffnet. Das Bürgertelefon unter 05251 88-0 ist werktags von 8:00 bis 17:00 Uhr erreichbar.</p>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     PAGE: VERKEHR
-══════════════════════════════════════ -->
+<!-- VERKEHR -->
 <div class="page" id="page-verkehr" data-content="true">
-  <div class="article-hero">
-    <div class="section-tag">Verkehr & Mobilität</div>
-    <h1>Paderborn bewegt sich – sicher, nachhaltig und vernetzt</h1>
-  </div>
+  <div class="article-hero"><div class="section-tag">Verkehr & Mobilität</div><h1>Paderborn bewegt sich – sicher, nachhaltig und vernetzt</h1></div>
   <div class="article-body">
-    <p>Die Mobilität in Paderborn befindet sich im Wandel. Die Stadt investiert konsequent in den Ausbau eines nachhaltigen Verkehrsnetzes, das alle Verkehrsteilnehmerinnen und Verkehrsteilnehmer gleichermaßen berücksichtigt. Ob zu Fuß, per Fahrrad, mit dem Bus oder dem Auto – Paderborn gestaltet die Mobilität der Zukunft aktiv mit und setzt dabei auf ein integriertes Konzept, das verschiedene Verkehrsträger sinnvoll miteinander verknüpft.</p>
-
+    <p>Die Mobilität in Paderborn befindet sich im Wandel. Die Stadt investiert konsequent in den Ausbau eines nachhaltigen Verkehrsnetzes, das alle Verkehrsteilnehmerinnen und Verkehrsteilnehmer gleichermaßen berücksichtigt.</p>
     <h2>Öffentlicher Personennahverkehr</h2>
-    <p>Der ÖPNV in Paderborn wird vom Nahverkehr Paderborn-Lippe (NPL) koordiniert. Das Busnetz umfasst über 30 Linien und verbindet nahezu alle Stadtteile sowie viele umliegende Gemeinden. Das Herzstück des Stadtbusnetzes ist der Hauptbahnhof, von dem aus alle wesentlichen Linien abfahren. Die Taktzeiten auf den Hauptstrecken betragen zu Stoßzeiten zehn Minuten, im Grundtakt zwanzig Minuten. In den Abendstunden und am Wochenende wird auf einen 30-Minuten-Takt umgestellt, auf Nebenstrecken auf stündliche Verbindungen.</p>
-    <p>Seit dem Fahrplanwechsel 2024 fahren mehrere Nachtbuslinien an Wochenenden und Feiertagen bis in die frühen Morgenstunden, um auch Nachtschwärmern eine sichere Heimfahrt zu ermöglichen. Die Nachtbusse verkehren in der Regel stündlich und bedienen alle größeren Stadtteile. Tickets können an Automaten an allen Haupthaltestellen, in der PaderSprinter-App oder direkt beim Fahrer erworben werden. Das Deutschlandticket gilt im gesamten Verbundnetz und kann bequem digital abonniert werden.</p>
-    <p>Für Schülerinnen und Schüler, Auszubildende und Studierende gibt es vergünstigte Zeitkarten, die für alle Linien im Stadtgebiet und im Umland gültig sind. Senioren ab 65 Jahren erhalten auf Antrag eine Seniorenkarte zu besonders günstigen Konditionen. Für Menschen mit Behinderungen sind alle modernen Busse mit Niederflurantrieb ausgestattet und verfügen über Rampen für Rollstuhlfahrer sowie Audioansagen und Fahrgastinformationssysteme.</p>
-
-    <div class="info-box">
-      <p><strong>Aktuell:</strong> Die Linie 68 wird bis Ende März 2025 aufgrund von Bauarbeiten an der Detmolder Straße umgeleitet. Bitte beachten Sie die aktuellen Aushänge und Informationen in der PaderSprinter-App.</p>
-    </div>
-
+    <p>Der ÖPNV in Paderborn wird vom Nahverkehr Paderborn-Lippe (NPL) koordiniert. Das Busnetz umfasst über 30 Linien und verbindet nahezu alle Stadtteile sowie viele umliegende Gemeinden. Die Taktzeiten auf den Hauptstrecken betragen zu Stoßzeiten zehn Minuten, im Grundtakt zwanzig Minuten.</p>
+    <p>Das Deutschlandticket gilt im gesamten Verbundnetz und kann bequem digital abonniert werden. Für Schülerinnen und Schüler, Auszubildende und Studierende gibt es vergünstigte Zeitkarten. Senioren ab 65 Jahren erhalten auf Antrag eine Seniorenkarte zu besonders günstigen Konditionen.</p>
+    <div class="info-box"><p><strong>Aktuell:</strong> Die Linie 68 wird bis Ende März 2025 aufgrund von Bauarbeiten an der Detmolder Straße umgeleitet. Bitte beachten Sie die aktuellen Aushänge und Informationen in der PaderSprinter-App.</p></div>
     <h2>Radverkehr und Fahrradinfrastruktur</h2>
-    <p>Paderborn hat sich das ehrgeizige Ziel gesetzt, bis 2030 eine der fahrradfreundlichsten Städte Nordrhein-Westfalens zu werden. Das Radwegenetz wurde in den vergangenen Jahren kontinuierlich ausgebaut und umfasst heute über 280 Kilometer ausgeschilderte Radwege, Fahrradstraßen und Schutzstreifen. Besonders die innerstädtische Anbindung wurde erheblich verbessert, sodass die meisten Ziele im Stadtgebiet sicher und komfortabel per Fahrrad erreichbar sind.</p>
-    <p>An über 50 Standorten im Stadtgebiet befinden sich überdachte Fahrradabstellanlagen, an Bahnhöfen und zentralen Plätzen auch Fahrradhäuser mit Schließfächern für Helm und Zubehör. Das Paderborn-Bike-Sharing-System bietet 200 Leihräder und 60 E-Bikes an 35 Stationen im gesamten Stadtgebiet. Die Ausleihe erfolgt unkompliziert per App oder Chipkarte. Die ersten 30 Minuten sind bei vielen Tarifen kostenfrei.</p>
-    <p>Der Radschnellweg Paderborn–Detmold befindet sich in der Planung und soll ab 2027 eine direkte, weitgehend kreuzungsfreie Radverbindung zwischen den beiden Städten ermöglichen. Auf 22 Kilometern Länge werden Pendlerinnen und Pendler in Zukunft bequem und sicher zwischen den Städten radeln können. Das Projekt wird zu 80 Prozent vom Land Nordrhein-Westfalen und vom Bund gefördert.</p>
-
+    <p>Paderborn hat sich das ehrgeizige Ziel gesetzt, bis 2030 eine der fahrradfreundlichsten Städte Nordrhein-Westfalens zu werden. Das Radwegenetz umfasst heute über 280 Kilometer ausgeschilderte Radwege, Fahrradstraßen und Schutzstreifen.</p>
+    <p>Das Paderborn-Bike-Sharing-System bietet 200 Leihräder und 60 E-Bikes an 35 Stationen im gesamten Stadtgebiet. Die Ausleihe erfolgt unkompliziert per App oder Chipkarte. Die ersten 30 Minuten sind bei vielen Tarifen kostenfrei.</p>
+    <p>Der Radschnellweg Paderborn–Detmold befindet sich in der Planung und soll ab 2027 eine direkte, weitgehend kreuzungsfreie Radverbindung zwischen den beiden Städten ermöglichen. Das Projekt wird zu 80 Prozent vom Land Nordrhein-Westfalen und vom Bund gefördert.</p>
     <h2>Aktuelle Baustellen und Verkehrsbehinderungen</h2>
-    <p>Baumaßnahmen sind notwendig, um die städtische Infrastruktur zu erhalten und zu modernisieren. Wir bemühen uns, Behinderungen so gering wie möglich zu halten und informieren Sie frühzeitig über bevorstehende Einschränkungen. Die wichtigsten aktuellen Maßnahmen umfassen die Erneuerung der Wasserleitung in der Westernstraße (voraussichtlich bis Ende April), die Brückensanierung an der Paderborner Straße mit halbseitiger Sperrung sowie die Fahrbahnmarkierungsarbeiten auf dem Westernring, die in Nachtarbeit durchgeführt werden.</p>
-    <p>Größere Bauvorhaben für 2025 sind der Umbau des Knotenpunkts Detmolder Straße/Fürstenweg zu einem Kreisverkehr, die Sanierung der Fahrbahn auf der Berliner Straße zwischen Kasseler Tor und Stadtring sowie der Neubau einer Fuß- und Radwegbrücke über die Pader im Bereich der Paderseen. Alle Baustellen werden im interaktiven Baustellenplan auf unserem Portal aktuell gehalten.</p>
-
+    <p>Die wichtigsten aktuellen Maßnahmen umfassen die Erneuerung der Wasserleitung in der Westernstraße (voraussichtlich bis Ende April), die Brückensanierung an der Paderborner Straße sowie die Fahrbahnmarkierungsarbeiten auf dem Westernring, die in Nachtarbeit durchgeführt werden. Alle Baustellen werden im interaktiven Baustellenplan auf unserem Portal aktuell gehalten.</p>
     <h2>Parken in der Innenstadt</h2>
-    <p>In der Paderborner Innenstadt stehen rund 3.500 bewirtschaftete Parkplätze in zwölf Parkhäusern und auf mehreren Freiluftparkplätzen zur Verfügung. Die Parkhäuser am Bahnhof, am Liboriberg und am Westerntor sind rund um die Uhr geöffnet. Die Parkgebühren betragen derzeit zwischen einem und zwei Euro pro Stunde, je nach Lage und Parkanlage. Für Bewohnerinnen und Bewohner der Innenstadt gibt es Anwohnerparkausweise zu günstigen Jahresgebühren.</p>
-    <p>Das digitale Parkleitsystem zeigt in Echtzeit die aktuell freien Stellplätze in allen Parkhäusern an – sowohl auf den Anzeigetafeln im Stadtgebiet als auch in der Paderborn-Navigations-App. So können Sie bereits auf der Anfahrt das geeignete Parkhaus auswählen und unnötigen Suchverkehr vermeiden. Kurzzeitparken bis zu 30 Minuten ist in mehreren Zonen der Innenstadt kostenlos, sofern eine Parkscheibe ausgelegt wird.</p>
-
+    <p>In der Paderborner Innenstadt stehen rund 3.500 bewirtschaftete Parkplätze in zwölf Parkhäusern zur Verfügung. Die Parkgebühren betragen derzeit zwischen einem und zwei Euro pro Stunde. Kurzzeitparken bis zu 30 Minuten ist in mehreren Zonen der Innenstadt kostenlos, sofern eine Parkscheibe ausgelegt wird.</p>
     <h2>Elektromobilität und Ladeinfrastruktur</h2>
-    <p>Die Stadt Paderborn treibt den Ausbau der Ladeinfrastruktur für Elektrofahrzeuge konsequent voran. Aktuell gibt es 87 öffentliche Ladepunkte im Stadtgebiet, davon 14 Schnellladepunkte mit einer Leistung von mindestens 50 Kilowatt. Bis Ende 2026 soll die Zahl der öffentlichen Ladepunkte auf 200 steigen. Eine interaktive Karte aller Ladestandorte finden Sie auf unserem Portal.</p>
-    <p>Die Stadtwerke Paderborn bieten Privatpersonen und Unternehmen Beratung zur Installation privater Ladeeinrichtungen (Wallboxen) und informieren über Fördermöglichkeiten. Der Zuschuss des Bundesamts für Wirtschaft und Ausfuhrkontrolle (BAFA) für private Wallboxen in Kombination mit einem Ökostromvertrag kann bis zu 900 Euro betragen. Auch für Wohnungseigentümergemeinschaften und Vermieter gibt es attraktive Fördermodelle.</p>
-
+    <p>Aktuell gibt es 87 öffentliche Ladepunkte im Stadtgebiet, davon 14 Schnellladepunkte mit einer Leistung von mindestens 50 Kilowatt. Bis Ende 2026 soll die Zahl der öffentlichen Ladepunkte auf 200 steigen.</p>
     <h2>Carsharing und Mobilitätsstationen</h2>
-    <p>An derzeit acht Mobilitätsstationen im Stadtgebiet sind Carsharing-Fahrzeuge, Leihräder und E-Scooter gebündelt verfügbar. Die Stationen befinden sich an gut frequentierten Punkten wie Bahnhöfen, Einkaufszentren und Hochschulen. Das Angebot soll bis 2026 auf 20 Stationen ausgebaut werden. Wer einmal bei einem der beteiligten Carsharing-Anbieter registriert ist, kann die Fahrzeuge bequem per App reservieren und öffnen – ohne Schlüsselübergabe.</p>
-
+    <p>An derzeit acht Mobilitätsstationen im Stadtgebiet sind Carsharing-Fahrzeuge, Leihräder und E-Scooter gebündelt verfügbar. Das Angebot soll bis 2026 auf 20 Stationen ausgebaut werden.</p>
     <h2>Barrierefreiheit im Verkehr</h2>
-    <p>Die Herstellung von Barrierefreiheit im öffentlichen Verkehrsraum ist eine Daueraufgabe, der sich die Stadt Paderborn konsequent widmet. Alle neu gebauten oder grundlegend sanierten Haltestellen werden barrierefrei ausgebaut, mit taktilen Leitsystemen, akustischen Signalen und ausreichend Aufstellflächen für Rollstühle und Kinderwagen. Der Umbau älterer Haltestellen wird nach einem Prioritätenplan fortgeführt, der stark frequentierte Haltestellen bevorzugt behandelt. Bis 2028 sollen alle Bushaltestellen im Stadtgebiet barrierefrei zugänglich sein.</p>
+    <p>Alle neu gebauten oder grundlegend sanierten Haltestellen werden barrierefrei ausgebaut. Bis 2028 sollen alle Bushaltestellen im Stadtgebiet barrierefrei zugänglich sein.</p>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     PAGE: KULTUR
-══════════════════════════════════════ -->
+<!-- KULTUR -->
 <div class="page" id="page-kultur" data-content="true">
-  <div class="article-hero">
-    <div class="section-tag">Kultur & Freizeit</div>
-    <h1>Paderborn – eine Stadt mit Geschichte, Herz und Kreativität</h1>
-  </div>
+  <div class="article-hero"><div class="section-tag">Kultur & Freizeit</div><h1>Paderborn – eine Stadt mit Geschichte, Herz und Kreativität</h1></div>
   <div class="article-body">
-    <p>Paderborn ist eine Stadt mit einer über 1.200-jährigen Geschichte, die in jedem Winkel des Stadtbildes spürbar ist. Vom imposanten Dom über die mittelalterliche Altstadt bis zu modernen Kulturzentren – die Stadt bietet ein außergewöhnlich vielfältiges kulturelles Leben, das weit über die Stadtgrenzen hinaus strahlt. Kunst, Geschichte, Musik und Geselligkeit bilden in Paderborn eine lebendige Einheit, die Einheimische wie Gäste gleichermaßen begeistert.</p>
-
+    <p>Paderborn ist eine Stadt mit einer über 1.200-jährigen Geschichte, die in jedem Winkel des Stadtbildes spürbar ist. Kunst, Geschichte, Musik und Geselligkeit bilden in Paderborn eine lebendige Einheit, die Einheimische wie Gäste gleichermaßen begeistert.</p>
     <h2>Museen und historische Stätten</h2>
-    <p>Das Erzbischöfliche Diözesanmuseum Paderborn beherbergt eine der bedeutendsten Sammlungen mittelalterlicher Sakralkunst in Deutschland. Herzstück ist die weltberühmte Imad-Madonna aus dem 11. Jahrhundert sowie ein umfangreiches Konvolut ottonischer Goldschmiedekunst. Das Museum ist Dienstag bis Sonntag von 10:00 bis 18:00 Uhr geöffnet, donnerstags bis 20:00 Uhr. Der Eintritt beträgt 7 Euro für Erwachsene, 5 Euro für Ermäßigte, Kinder bis 12 Jahre haben freien Eintritt.</p>
-    <p>Das Museum in der Kaiserpfalz führt Besucherinnen und Besucher durch die archäologische Geschichte Paderborns, von den frühgeschichtlichen Siedlungsspuren über die karolingische Pfalz Karls des Großen bis zur ottonischen Blütezeit. Das Museumsgelände umfasst auch die freigelegten Fundamentreste der karolingischen Pfalzanlage, die unter freiem Himmel besichtigt werden kann. Für Schulklassen bieten wir speziell ausgearbeitete pädagogische Programme an, die vorab buchbar sind.</p>
-    <p>Das Stadtmuseum Paderborn dokumentiert in seiner Dauerausstellung die Geschichte der Stadt von der frühen Neuzeit bis ins 20. Jahrhundert. Besonderes Highlight ist die originalgetreue Rekonstruktion einer bürgerlichen Wohnstube aus dem 19. Jahrhundert sowie eine umfangreiche Sammlung historischer Stadtpläne und Fotografien. Wechselausstellungen zu spezifischen Themen der Stadtgeschichte ergänzen das Programm regelmäßig.</p>
-
-    <div class="info-box">
-      <p><strong>Empfehlung:</strong> Mit dem Paderborn-Museumspass erhalten Sie freien Eintritt in alle städtischen Museen für ein ganzes Jahr zum Preis von nur 25 Euro – ein ideales Geschenk für Kulturbegeisterte.</p>
-    </div>
-
+    <p>Das Erzbischöfliche Diözesanmuseum Paderborn beherbergt eine der bedeutendsten Sammlungen mittelalterlicher Sakralkunst in Deutschland. Das Museum ist Dienstag bis Sonntag von 10:00 bis 18:00 Uhr geöffnet, donnerstags bis 20:00 Uhr. Der Eintritt beträgt 7 Euro für Erwachsene, 5 Euro für Ermäßigte, Kinder bis 12 Jahre haben freien Eintritt.</p>
+    <p>Das Museum in der Kaiserpfalz führt Besucherinnen und Besucher durch die archäologische Geschichte Paderborns, von den frühgeschichtlichen Siedlungsspuren über die karolingische Pfalz Karls des Großen bis zur ottonischen Blütezeit.</p>
+    <div class="info-box"><p><strong>Empfehlung:</strong> Mit dem Paderborn-Museumspass erhalten Sie freien Eintritt in alle städtischen Museen für ein ganzes Jahr zum Preis von nur 25 Euro – ein ideales Geschenk für Kulturbegeisterte.</p></div>
     <h2>Theater und Bühnen</h2>
-    <p>Das Theater Paderborn ist das kulturelle Flaggschiff der Stadt und bespielt drei Bühnen mit einem breiten Programm aus Schauspiel, Oper, Operette, Tanz und Kinder- und Jugendtheater. Die Spielzeit 2024/25 steht unter dem Motto „Grenzen" und umfasst über 200 Aufführungen. Höhepunkt der Saison ist die Neuproduktion von Puccinis „La Bohème" im Großen Haus sowie die Uraufführung eines zeitgenössischen Tanzstücks in Zusammenarbeit mit einem Ensemble aus Brüssel.</p>
-    <p>Die Theaterkasse ist Dienstag bis Freitag von 10:00 bis 18:00 Uhr und Samstag von 10:00 bis 14:00 Uhr geöffnet. Tickets können auch online, per Telefon oder an der Abendkasse erworben werden. Für Schülerinnen, Schüler und Studierende gibt es stark vergünstigte Karten für alle Vorstellungen – bis zu 50 Prozent Rabatt gegenüber dem regulären Preis. Das Angebot „Letzte Minute" ermöglicht den Kauf von Restkarten kurz vor der Vorstellung zu besonders günstigen Konditionen.</p>
-    <p>Neben dem städtischen Theater gibt es eine lebendige freie Szene: Das Kulturzentrum Paderhalle, das Kulturbüro und die vielen kleineren Spielstätten in der Stadt bieten das ganze Jahr über Konzerte, Lesungen, Kabarett und Kleinkunst. Besonders beliebt sind die Sommerbühne im Schloßpark und die offene Bühne im Kulturspeicher, die lokalen Künstlerinnen und Künstlern eine Plattform bietet.</p>
-
+    <p>Das Theater Paderborn bespielt drei Bühnen mit einem breiten Programm aus Schauspiel, Oper, Operette, Tanz und Kinder- und Jugendtheater. Die Spielzeit 2024/25 umfasst über 200 Aufführungen. Für Schülerinnen, Schüler und Studierende gibt es stark vergünstigte Karten – bis zu 50 Prozent Rabatt.</p>
     <h2>Stadtfeste und Veranstaltungen</h2>
-    <p>Das Libori-Fest ist das älteste und bedeutendste Volksfest Westfalens. Es findet jährlich um den 23. Juli, den Gedenktag des Heiligen Liborius, statt und zieht jedes Jahr über eine Million Besucherinnen und Besucher in die Stadt. Das einwöchige Fest vereint religiöse Feierlichkeiten, ein großes Volksvergnügen und zahlreiche kulturelle Veranstaltungen zu einem einzigartigen Erlebnis. Höhepunkte sind der feierliche Pontifikalgottesdienst im Dom, der historische Festumzug durch die Altstadt und das große Feuerwerk am letzten Abend.</p>
-    <p>Der Paderborner Weihnachtsmarkt zählt zu den schönsten in ganz Nordrhein-Westfalen. Auf dem Rathausplatz und den angrenzenden Gassen laden über 120 Stände zum Bummeln, Genießen und Verweilen ein. Handwerkskunst, regionale Spezialitäten und ein abwechslungsreiches Bühnenprogramm machen den Markt zu einem besonderen Erlebnis für die ganze Familie. Der Markt öffnet jedes Jahr am ersten Adventswochenende und ist bis zum 23. Dezember täglich von 11:00 bis 21:00 Uhr geöffnet.</p>
-    <p>Das Kulturfestival Paderborn im Juni zieht Kunstschaffende und Kulturbegeisterte aus der ganzen Region in die Stadt. An mehreren Wochenenden bespielt das Festival öffentliche Plätze, Parks und ungewöhnliche Orte mit Musik, Theater, Performances und Ausstellungen. Der Eintritt zu den meisten Veranstaltungen ist frei. Das Programm erscheint jeweils im April auf der Website des Kulturbüros.</p>
-
-    <h2>Musik und Konzerte</h2>
-    <p>Die Paderborner Musikszene ist lebendig und vielfältig. Die Stadtkapelle Paderborn, einer der ältesten Musikvereine der Stadt, gibt regelmäßig Konzerte in der Paderhalle und im Schloßpark. Das Philharmonische Orchester Südwestfalen gastiert mehrmals jährlich in Paderborn und bespielt dabei die Paderhalle mit sinfonischen Konzerten von internationalem Niveau. Kammerkonzerte finden in den historischen Räumen des Rathauses und des Diözesanmuseums statt.</p>
-    <p>Popmusik, Rock und Jazz haben in Paderborn ebenfalls eine starke Heimat. Der Kulturverein Paderborn organisiert monatlich Konzerte in verschiedenen Spielstätten der Stadt, darunter das Zakk und der Kulturspeicher. Die Jazzinitiative Paderborn veranstaltet jährlich das Jazz-Festival im Sommer, das Musikerinnen und Musiker aus ganz Deutschland nach Paderborn bringt.</p>
-
+    <p>Das Libori-Fest ist das älteste und bedeutendste Volksfest Westfalens. Es findet jährlich um den 23. Juli statt und zieht jedes Jahr über eine Million Besucherinnen und Besucher in die Stadt.</p>
+    <p>Der Paderborner Weihnachtsmarkt zählt zu den schönsten in ganz Nordrhein-Westfalen. Über 120 Stände laden zum Bummeln, Genießen und Verweilen ein. Der Markt öffnet jedes Jahr am ersten Adventswochenende und ist bis zum 23. Dezember täglich von 11:00 bis 21:00 Uhr geöffnet.</p>
     <h2>Sport und Freizeitanlagen</h2>
-    <p>Paderborn bietet ein hervorragendes Angebot an Sportanlagen und Freizeitmöglichkeiten für alle Altersgruppen. Das Sportzentrum Maspernplatz mit seinen modernen Hallen und Außenanlagen steht Vereinen und der Allgemeinheit zu erschwinglichen Tarifen zur Verfügung. Die Paderquellanlage ist ein beliebtes Naherholungsgebiet mit Laufstrecken, Liegewiesen und einem Spielplatz. Das Paderbad ist das moderne Freizeitbad der Stadt mit Saunalandschaft, Wellenbad und Outdoor-Bereich. Die Eintrittspreise betragen für Erwachsene 8 Euro, für Kinder 5 Euro, Familientageskarten sind zum Preis von 20 Euro erhältlich.</p>
-    <p>Der SC Paderborn 07 ist der bekannteste Sportverein der Stadt und spielt aktuell in der 2. Bundesliga. Heimspiele finden in der Benteler-Arena statt, die Platz für 15.000 Zuschauer bietet. Tickets sind online und an der Tageskasse erhältlich. Neben dem Profifußball gibt es in Paderborn starke Vereine in den Bereichen Handball, Basketball, Leichtathletik und Schwimmen.</p>
-
+    <p>Das Paderbad ist das moderne Freizeitbad der Stadt mit Saunalandschaft, Wellenbad und Outdoor-Bereich. Eintrittspreise: Erwachsene 8 Euro, Kinder 5 Euro, Familientageskarte 20 Euro.</p>
+    <p>Der SC Paderborn 07 spielt aktuell in der 2. Bundesliga. Heimspiele finden in der Benteler-Arena statt, die Platz für 15.000 Zuschauer bietet.</p>
     <h2>Bibliotheken und Bildungseinrichtungen</h2>
-    <p>Die Stadtbibliothek Paderborn ist mit über 180.000 Medien eine der größten öffentlichen Bibliotheken Ostwestfalens. Neben Büchern, Zeitschriften und DVDs bietet sie ein umfangreiches digitales Angebot mit E-Books, Hörbüchern und Onlinedatenbanken, das mit einem gültigen Bibliotheksausweis rund um die Uhr zugänglich ist. Die Bibliothek ist Montag bis Freitag von 10:00 bis 19:00 Uhr und Samstag von 10:00 bis 14:00 Uhr geöffnet. Der Jahresbeitrag beträgt 20 Euro, für Kinder und Jugendliche ist er kostenlos.</p>
+    <p>Die Stadtbibliothek Paderborn ist mit über 180.000 Medien eine der größten öffentlichen Bibliotheken Ostwestfalens. Geöffnet Montag bis Freitag von 10:00 bis 19:00 Uhr und Samstag von 10:00 bis 14:00 Uhr. Der Jahresbeitrag beträgt 20 Euro, für Kinder und Jugendliche ist er kostenlos.</p>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     PAGE: UMWELT
-══════════════════════════════════════ -->
+<!-- UMWELT -->
 <div class="page" id="page-umwelt" data-content="true">
-  <div class="article-hero">
-    <div class="section-tag">Umwelt & Nachhaltigkeit</div>
-    <h1>Paderborn handelt – für eine lebenswerte Stadt von morgen</h1>
-  </div>
+  <div class="article-hero"><div class="section-tag">Umwelt & Nachhaltigkeit</div><h1>Paderborn handelt – für eine lebenswerte Stadt von morgen</h1></div>
   <div class="article-body">
-    <p>Der Klimawandel ist eine der zentralen Herausforderungen unserer Zeit. Die Stadt Paderborn begegnet dieser Herausforderung mit einem umfassenden Klimaschutzkonzept, das konkrete Maßnahmen in den Bereichen Energie, Mobilität, Stadtgrün und Kreislaufwirtschaft zusammenfasst. Das Ziel: Bis 2040 soll Paderborn klimaneutral sein – ein ambitioniertes, aber erreichbares Ziel, wenn alle gesellschaftlichen Kräfte an einem Strang ziehen.</p>
-
+    <p>Der Klimawandel ist eine der zentralen Herausforderungen unserer Zeit. Die Stadt Paderborn begegnet dieser Herausforderung mit einem umfassenden Klimaschutzkonzept. Das Ziel: Bis 2040 soll Paderborn klimaneutral sein.</p>
     <h2>Abfallentsorgung und Recycling</h2>
-    <p>Eine funktionierende Kreislaufwirtschaft ist der Schlüssel zu einer nachhaltigen Stadtgesellschaft. Die Entsorgungsbetriebe Paderborn (EBP) organisieren die Abfallentsorgung für alle Haushalte und Gewerbetreibenden in der Stadt. Die Abfuhrtermine für Restmüll, Biomüll, Papiermüll und die Gelbe Tonne variieren je nach Stadtbezirk und sind im Abfuhrkalender auf unserem Portal nachzuschlagen. Der persönliche Abfuhrkalender kann auch als App auf dem Smartphone gespeichert werden, sodass Erinnerungen an Abfuhrtage automatisch angezeigt werden.</p>
-    <p>Restmüll sollte auf ein Minimum reduziert werden. Was in der Biotonne, der Papiertonne oder der Gelben Tonne entsorgt werden kann, gehört nicht in den Restmüll. Die Biotonne nimmt alle kompostierbaren Küchenabfälle auf – Obst- und Gemüsereste, Kaffeesatz, Eierschalen, Blumen und Gartenabfälle. Bitte verwenden Sie keine Plastikbeutel, auch keine als kompostierbar ausgezeichneten, da diese den Kompostierungsprozess stören. Braune Papiertüten und Zeitungspapier eignen sich hervorragend zum Einwickeln feuchter Bioabfälle.</p>
-    <p>Für Elektroschrott, Sperrmüll und gefährliche Abfälle wie Farben, Chemikalien oder Batterien gibt es spezielle Entsorgungswege. Die Wertstoffhöfe an der Stettiner Straße und am Dörener Feld nehmen diese Materialien kostenlos entgegen. Öffnungszeiten: Montag bis Freitag 7:30–17:00 Uhr, Samstag 8:00–13:00 Uhr. Sperrmüll kann einmal im Jahr kostenfrei abgeholt werden – eine Terminvereinbarung ist erforderlich und kann online erfolgen.</p>
-
-    <div class="info-box">
-      <p><strong>Neu ab April 2025:</strong> Alttextilien und Altkleider können an sechs neuen Standorten im Stadtgebiet abgegeben werden. Gut erhaltene Kleidung sollte jedoch lieber an Sozialkaufhäuser oder die Kleiderkammern der karitativen Einrichtungen gespendet werden.</p>
-    </div>
-
+    <p>Die Entsorgungsbetriebe Paderborn (EBP) organisieren die Abfallentsorgung für alle Haushalte und Gewerbetreibenden in der Stadt. Die Abfuhrtermine variieren je nach Stadtbezirk und sind im Abfuhrkalender auf unserem Portal nachzuschlagen.</p>
+    <p>Die Biotonne nimmt alle kompostierbaren Küchenabfälle auf. Bitte verwenden Sie keine Plastikbeutel. Die Wertstoffhöfe an der Stettiner Straße und am Dörener Feld nehmen Elektroschrott, Sperrmüll und gefährliche Abfälle kostenlos entgegen. Öffnungszeiten: Montag bis Freitag 7:30–17:00 Uhr, Samstag 8:00–13:00 Uhr.</p>
+    <div class="info-box"><p><strong>Neu ab April 2025:</strong> Alttextilien und Altkleider können an sechs neuen Standorten im Stadtgebiet abgegeben werden. Gut erhaltene Kleidung sollte jedoch lieber an Sozialkaufhäuser oder die Kleiderkammern der karitativen Einrichtungen gespendet werden.</p></div>
     <h2>Stadtgrün und Biodiversität</h2>
-    <p>Paderborn verfügt über rund 1.200 Hektar städtische Grünflächen, Parks, Wälder und Bachläufe. Diese Grünräume sind nicht nur Erholungsflächen für die Bevölkerung, sondern auch wichtige Lebensräume für zahlreiche Tier- und Pflanzenarten. Der städtische Grünflächenamt arbeitet daran, die Biodiversität in der Stadt systematisch zu fördern, indem artenreiche Blühflächen angelegt, standortgerechte Bäume gepflanzt und naturnahe Gewässerstrukturen erhalten werden.</p>
-    <p>Das Stadtbaumkonzept sieht vor, bis 2030 insgesamt 5.000 neue Bäume im Stadtgebiet zu pflanzen. Besonders klimaresistente Arten wie die Zierbirne, die Baumhasel und verschiedene Eichenarten sollen dabei helfen, die Stadt gegen Hitzeereignisse zu wappnen und die Luftqualität zu verbessern. Bürgerinnen und Bürger können sich aktiv am Stadtbaumkonzept beteiligen, indem sie eine Baumpatenschaft übernehmen. Paten verpflichten sich, in den ersten drei Jahren nach der Pflanzung in Trockenperioden für die Bewässerung des Baumes zu sorgen, und erhalten dafür eine Urkunde sowie einen Eintrag in das digitale Stadtbaumkataster.</p>
-    <p>Auf städtischen Grünflächen und Straßenrändern werden zunehmend extensive Wiesenflächen angelegt, die erst im Herbst gemäht werden. Diese sogenannten Blühstreifen bieten Bienen, Schmetterlingen und anderen Insekten wertvolle Lebensräume und Nahrungsquellen. Seit 2022 hat die Stadt Paderborn auf diese Weise über 40 Hektar neue Blühflächen geschaffen. Anwohnerinnen und Anwohner können beim Grünflächenamt Vorschläge für weitere Blühflächen in ihrer Nachbarschaft einreichen.</p>
-
+    <p>Paderborn verfügt über rund 1.200 Hektar städtische Grünflächen, Parks, Wälder und Bachläufe. Das Stadtbaumkonzept sieht vor, bis 2030 insgesamt 5.000 neue Bäume im Stadtgebiet zu pflanzen. Bürgerinnen und Bürger können eine Baumpatenschaft übernehmen.</p>
+    <p>Seit 2022 hat die Stadt Paderborn über 40 Hektar neue Blühflächen geschaffen, die Bienen, Schmetterlingen und anderen Insekten wertvolle Lebensräume bieten.</p>
     <h2>Energie und Klimaschutz</h2>
-    <p>Im Rahmen des Klimaschutzkonzepts wurden in den letzten Jahren zahlreiche städtische Gebäude energetisch saniert. Schulen, Sporthallen und Verwaltungsgebäude wurden gedämmt, Heizungsanlagen modernisiert und auf LED-Beleuchtung umgestellt. Dadurch konnten die Energieverbräuche der städtischen Liegenschaften in den letzten zehn Jahren um durchschnittlich 28 Prozent reduziert werden.</p>
-    <p>Die Stadtwerke Paderborn bieten Privatpersonen und Unternehmen eine kostenlose Energieberatung an, die bei der Identifikation von Einsparpotenzial und der Beantragung von Fördermitteln hilft. Die Photovoltaik-Offensive der Stadt hat bereits dazu geführt, dass über 60 städtische Gebäude mit Solaranlagen ausgestattet wurden. Zusammen erzeugen diese Anlagen jährlich rund 4.500 Megawattstunden Strom – genug für über 1.500 Haushalte.</p>
-    <p>Ein zentrales Element des Klimaschutzkonzepts ist die Wärmewende. Der Fernwärmeausbau in Paderborn schreitet voran: Bis 2028 sollen weitere 8.000 Haushalte ans Fernwärmenetz angeschlossen werden. Die Fernwärme wird zunehmend aus erneuerbaren Quellen gewonnen, darunter Abwärme aus der Industrie, Geothermie und Großwärmepumpen. Hausbesitzerinnen und Hausbesitzer, die sich ans Fernwärmenetz anschließen lassen, profitieren von einem Zuschuss von bis zu 5.000 Euro aus dem städtischen Klimaschutzfonds.</p>
-
+    <p>Im Rahmen des Klimaschutzkonzepts konnten die Energieverbräuche der städtischen Liegenschaften in den letzten zehn Jahren um durchschnittlich 28 Prozent reduziert werden. Die Photovoltaik-Offensive hat bereits dazu geführt, dass über 60 städtische Gebäude mit Solaranlagen ausgestattet wurden.</p>
+    <p>Bis 2028 sollen weitere 8.000 Haushalte ans Fernwärmenetz angeschlossen werden. Hausbesitzerinnen und Hausbesitzer profitieren von einem Zuschuss von bis zu 5.000 Euro aus dem städtischen Klimaschutzfonds.</p>
     <h2>Wasser und Gewässerschutz</h2>
-    <p>Paderborn ist bekannt für seinen Wasserreichtum – die zahlreichen Quellen der Pader machen die Stadt zu einem einzigartigen Naturraum mitten in der Innenstadt. Der Schutz und die Renaturierung der städtischen Gewässer ist daher ein besonderes Anliegen der Stadtverwaltung. In den letzten Jahren wurden mehrere Bachabschnitte renaturiert, Uferstreifen bepflanzt und Wanderhindernisse für Fische beseitigt.</p>
-    <p>Das Trinkwasser in Paderborn kommt aus dem stadtnahen Wasserwerk Haxtergrund und ist von hervorragender Qualität. Es wird regelmäßig auf über 50 Parameter untersucht und erfüllt alle gesetzlichen Anforderungen deutlich. Leitungswasser ist in Paderborn eine hervorragende Alternative zu Flaschenwasser – sowohl ökologisch als auch ökonomisch. Die jährliche Wasserqualitätsanalyse kann auf der Website der Stadtwerke eingesehen werden.</p>
-
+    <p>Das Trinkwasser in Paderborn kommt aus dem stadtnahen Wasserwerk Haxtergrund und ist von hervorragender Qualität. Es wird regelmäßig auf über 50 Parameter untersucht und erfüllt alle gesetzlichen Anforderungen deutlich.</p>
     <h2>Umweltberatung und Förderprogramme</h2>
-    <p>Die städtische Umweltberatung steht Bürgerinnen und Bürgern sowie Unternehmen kostenlos zur Verfügung. Beraterinnen und Berater informieren zu Themen wie Energiesparen, erneuerbare Energien, nachhaltige Mobilität, ökologisches Bauen und Sanieren sowie Förderprogramme des Bundes, des Landes und der Stadt. Termine können online oder telefonisch vereinbart werden. Auch Hausbesuche sind auf Anfrage möglich.</p>
-    <p>Der städtische Klimaschutzfonds fördert private und gewerbliche Projekte, die einen messbaren Beitrag zur Reduktion von Treibhausgasemissionen leisten. Gefördert werden unter anderem die Installation von Photovoltaikanlagen, der Kauf von Lastenrädern für die gewerbliche Nutzung, die Anlage von Dachbegrünungen und die Einrichtung von Gemeinschaftsgärten. Die Förderhöhe beträgt je nach Maßnahme zwischen 500 und 10.000 Euro. Anträge können jährlich bis zum 31. März für das laufende Jahr gestellt werden.</p>
+    <p>Die städtische Umweltberatung steht Bürgerinnen und Bürgern sowie Unternehmen kostenlos zur Verfügung. Der städtische Klimaschutzfonds fördert Projekte mit einem messbaren Beitrag zur Reduktion von Treibhausgasemissionen mit 500 bis 10.000 Euro. Anträge können jährlich bis zum 31. März gestellt werden.</p>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     PAGE: MALER
-══════════════════════════════════════ -->
+<!-- MALER -->
 <div class="page" id="page-maler">
   <div class="hero">
     <div class="hero-tag">Partnerseite</div>
     <h1>ProjektBau GmbH – Ihr Malerbetrieb in Paderborn</h1>
     <p>Nutzen Sie das Widget unten rechts, um eine unverbindliche Preisschätzung für Ihr Malerprojekt zu erhalten.</p>
   </div>
-  <div class="section" style="text-align:center; padding: 60px 48px;">
+  <div class="section" style="text-align:center;padding:60px 48px">
     <div class="section-tag">Ihr Angebot</div>
-    <h2 class="section-title" style="margin-bottom:20px;">Klicken Sie auf das 🎨 Widget unten rechts</h2>
-    <p style="color: var(--text-muted); font-size:16px;">Füllen Sie das Formular aus und erhalten Sie sofort eine Preisschätzung für Ihr Projekt.</p>
+    <h2 class="section-title" style="margin-bottom:20px">Klicken Sie auf das 🎨 Widget unten rechts</h2>
+    <p style="color:var(--text-muted);font-size:16px">Füllen Sie das Formular aus und erhalten Sie sofort eine Preisschätzung für Ihr Projekt.</p>
   </div>
 </div>
 
 <!-- ══════════════════════════════════════
-     MALER WIDGET (bottom right)
+     STADTBOT WIDGET (unten links)
+══════════════════════════════════════ -->
+<div class="stadtbot-widget" id="stadtbot-widget">
+  <div class="stadtbot-window" id="stadtbot-window">
+    <div class="bot-header">
+      <div class="bot-header-left">
+        <div class="bot-avatar">🏛️</div>
+        <div>
+          <div class="bot-header-name">PaderbornBot</div>
+          <div class="bot-header-status"><span class="bot-status-dot"></span> Online – bereit zu helfen</div>
+        </div>
+      </div>
+      <button class="bot-close" id="bot-close">✕</button>
+    </div>
+    <div class="bot-messages" id="bot-messages"></div>
+    <div class="bot-suggestions" id="bot-suggestions">
+      <button class="bot-suggestion" data-text="Wie beantrage ich einen Personalausweis?">🪪 Personalausweis</button>
+      <button class="bot-suggestion" data-text="Wo finde ich Infos zur Fahrradinfrastruktur?">🚲 Fahrrad</button>
+      <button class="bot-suggestion" data-text="Ich möchte einen Termin beim Bürgerservice buchen.">📅 Termin buchen</button>
+      <button class="bot-suggestion" data-text="Was kostet die Gewerbeanmeldung?">🏢 Gewerbe</button>
+    </div>
+    <div class="bot-input-area">
+      <textarea class="bot-input" id="bot-input" rows="1" placeholder="Ihre Frage an PaderbornBot …"></textarea>
+      <button class="bot-send" id="bot-send">➤</button>
+    </div>
+  </div>
+  <button class="stadtbot-toggle" id="stadtbot-toggle" aria-label="Stadtbot öffnen">
+    🏛️<span class="stadtbot-badge">!</span>
+  </button>
+</div>
+
+<!-- ══════════════════════════════════════
+     MALER WIDGET (unten rechts)
 ══════════════════════════════════════ -->
 <div class="maler-widget" id="maler-widget" style="display:none">
   <button class="maler-toggle" id="maler-toggle">🎨</button>
   <div class="maler-window" id="maler-window">
-    <div class="maler-loading" id="maler-loading">
-      <div class="maler-loading-spinner"></div>
-      <div class="maler-loading-text">Anfrage wird verarbeitet...</div>
-    </div>
+    <div class="maler-loading" id="maler-loading"><div class="maler-loading-spinner"></div><div class="maler-loading-text">Anfrage wird verarbeitet...</div></div>
     <div class="maler-header">
-      <div class="maler-header-left">
-        <div class="maler-logo">🎨</div>
-        <div>
-          <div class="maler-title">ProjektBau GmbH</div>
-          <div class="maler-subtitle">Malerbetrieb • Paderborn</div>
-        </div>
-      </div>
+      <div class="maler-header-left"><div class="maler-logo">🎨</div><div><div class="maler-title">ProjektBau GmbH</div><div class="maler-subtitle">Malerbetrieb • Paderborn</div></div></div>
       <button class="maler-close" id="maler-close">✕</button>
     </div>
     <div class="maler-progress"><div class="maler-progress-bar" id="maler-progress-bar"></div></div>
     <div class="maler-body" id="maler-body">
       <div id="maler-form-view">
-        <div class="m-welcome">
-          <p><strong>Willkommen!</strong> Füllen Sie das Formular aus und erhalten Sie sofort eine <strong>Preisschätzung</strong>.</p>
-        </div>
+        <div class="m-welcome"><p><strong>Willkommen!</strong> Füllen Sie das Formular aus und erhalten Sie sofort eine <strong>Preisschätzung</strong>.</p></div>
         <form id="maler-form">
           <div class="m-section">
             <div class="m-section-title">Kundentyp</div>
@@ -674,62 +522,25 @@ nav {
           </div>
           <div class="m-val-box" id="m-privat-box">
             <div class="m-val-row">
-              <div class="m-float-group">
-                <input type="text" class="m-float-input" id="m-location-privat" placeholder=" ">
-                <label class="m-float-label">Ort (Stadt/PLZ)<span class="req" style="color:#ef4444">*</span></label>
-              </div>
-              <button type="button" class="m-val-btn" id="m-validate-privat-btn">
-                <span class="spinner"></span><span class="btn-icon">🔍</span> Prüfen
-              </button>
+              <div class="m-float-group"><input type="text" class="m-float-input" id="m-location-privat" placeholder=" "><label class="m-float-label">Ort (Stadt/PLZ)<span class="req">*</span></label></div>
+              <button type="button" class="m-val-btn" id="m-validate-privat-btn"><span class="spinner"></span><span class="btn-icon">🔍</span> Prüfen</button>
             </div>
             <div class="m-val-status" id="m-privat-status"></div>
           </div>
           <div class="m-val-box" id="m-gewerbe-box" style="display:none">
-            <div class="m-group">
-              <div class="m-float-group">
-                <input type="text" class="m-float-input" id="m-company" placeholder=" ">
-                <label class="m-float-label">Firmenname<span class="req" style="color:#ef4444">*</span></label>
-              </div>
-            </div>
+            <div class="m-group"><div class="m-float-group"><input type="text" class="m-float-input" id="m-company" placeholder=" "><label class="m-float-label">Firmenname<span class="req">*</span></label></div></div>
             <div class="m-val-row">
-              <div class="m-float-group">
-                <input type="text" class="m-float-input" id="m-location-gewerbe" placeholder=" ">
-                <label class="m-float-label">Ort<span class="req" style="color:#ef4444">*</span></label>
-              </div>
-              <button type="button" class="m-val-btn" id="m-validate-gewerbe-btn">
-                <span class="spinner"></span><span class="btn-icon">🔍</span> Prüfen
-              </button>
+              <div class="m-float-group"><input type="text" class="m-float-input" id="m-location-gewerbe" placeholder=" "><label class="m-float-label">Ort<span class="req">*</span></label></div>
+              <button type="button" class="m-val-btn" id="m-validate-gewerbe-btn"><span class="spinner"></span><span class="btn-icon">🔍</span> Prüfen</button>
             </div>
             <div class="m-val-status" id="m-gewerbe-status"></div>
           </div>
           <div class="m-section">
             <div class="m-section-title">Kontaktdaten</div>
-            <div class="m-group">
-              <div class="m-input-wrap">
-                <div class="m-float-group">
-                  <input type="text" class="m-float-input" id="m-name" placeholder=" ">
-                  <label class="m-float-label">Ihr Name<span class="req" style="color:#ef4444">*</span></label>
-                  <span class="m-input-status" id="m-name-status"></span>
-                </div>
-              </div>
-              <div class="m-field-error" id="m-name-error"></div>
-            </div>
+            <div class="m-group"><div class="m-input-wrap"><div class="m-float-group"><input type="text" class="m-float-input" id="m-name" placeholder=" "><label class="m-float-label">Ihr Name<span class="req">*</span></label><span class="m-input-status" id="m-name-status"></span></div></div><div class="m-field-error" id="m-name-error"></div></div>
             <div class="m-row">
-              <div class="m-group">
-                <div class="m-float-group">
-                  <input type="email" class="m-float-input" id="m-email" placeholder=" ">
-                  <label class="m-float-label">E-Mail (optional)</label>
-                </div>
-              </div>
-              <div class="m-group">
-                <div class="m-input-wrap">
-                  <div class="m-float-group">
-                    <input type="tel" class="m-float-input" id="m-phone" placeholder=" ">
-                    <label class="m-float-label">Telefon<span class="req" style="color:#ef4444">*</span></label>
-                    <span class="m-input-status" id="m-phone-status"></span>
-                  </div>
-                </div>
-              </div>
+              <div class="m-group"><div class="m-float-group"><input type="email" class="m-float-input" id="m-email" placeholder=" "><label class="m-float-label">E-Mail (optional)</label></div></div>
+              <div class="m-group"><div class="m-input-wrap"><div class="m-float-group"><input type="tel" class="m-float-input" id="m-phone" placeholder=" "><label class="m-float-label">Telefon<span class="req">*</span></label><span class="m-input-status" id="m-phone-status"></span></div></div></div>
             </div>
           </div>
           <div class="m-section">
@@ -746,36 +557,16 @@ nav {
           <div class="m-section">
             <div class="m-section-title">Projektdetails</div>
             <div class="m-row">
-              <div class="m-group">
-                <div class="m-float-group">
-                  <input type="text" class="m-float-input" id="m-size" placeholder=" ">
-                  <label class="m-float-label">Größe (z.B. 50m²)<span class="req" style="color:#ef4444">*</span></label>
-                </div>
-              </div>
-              <div class="m-group">
-                <div class="m-float-group">
-                  <input type="text" class="m-float-input" id="m-timeframe" placeholder=" ">
-                  <label class="m-float-label">Zeitraum<span class="req" style="color:#ef4444">*</span></label>
-                </div>
-              </div>
+              <div class="m-group"><div class="m-float-group"><input type="text" class="m-float-input" id="m-size" placeholder=" "><label class="m-float-label">Größe (z.B. 50m²)<span class="req">*</span></label></div></div>
+              <div class="m-group"><div class="m-float-group"><input type="text" class="m-float-input" id="m-timeframe" placeholder=" "><label class="m-float-label">Zeitraum<span class="req">*</span></label></div></div>
             </div>
           </div>
           <div class="m-section">
-            <div class="m-group">
-              <div class="m-textarea-group">
-                <textarea class="m-textarea" id="m-description" placeholder=" "></textarea>
-                <label class="m-textarea-label">Beschreibung (optional)</label>
-              </div>
-            </div>
+            <div class="m-group"><div class="m-textarea-group"><textarea class="m-textarea" id="m-description" placeholder=" "></textarea><label class="m-textarea-label">Beschreibung (optional)</label></div></div>
           </div>
           <div class="m-section">
             <div class="m-section-title">Bilder (optional)</div>
-            <div class="m-file-upload">
-              <input type="file" id="m-images" multiple accept="image/*">
-              <div class="m-file-upload-icon">📷</div>
-              <div class="m-file-upload-text">Bilder hochladen</div>
-              <div class="m-file-upload-hint">JPG, PNG bis 10MB</div>
-            </div>
+            <div class="m-file-upload"><input type="file" id="m-images" multiple accept="image/*"><div class="m-file-upload-icon">📷</div><div class="m-file-upload-text">Bilder hochladen</div><div class="m-file-upload-hint">JPG, PNG bis 10MB</div></div>
             <div class="m-file-list" id="m-file-list"></div>
           </div>
           <div class="m-checklist">
@@ -795,17 +586,11 @@ nav {
             </label>
             <div class="m-dsgvo-details" id="m-dsgvo-details"><strong style="color:#f59e0b">Kurzinfo:</strong> Ihre Daten werden nur zur Bearbeitung Ihrer Anfrage verwendet.</div>
           </div>
-          <button type="submit" class="m-submit" id="m-submit" disabled>
-            <span class="spinner"></span><span class="btn-text">🚀 Anfrage absenden</span>
-          </button>
+          <button type="submit" class="m-submit" id="m-submit" disabled><span class="spinner"></span><span class="btn-text">🚀 Anfrage absenden</span></button>
         </form>
       </div>
       <div class="m-result" id="maler-result-view">
-        <div class="m-result-success">
-          <div class="m-result-icon">✅</div>
-          <h3>Anfrage erhalten!</h3>
-          <p>Wir melden uns schnellstmöglich</p>
-        </div>
+        <div class="m-result-success"><div class="m-result-icon">✅</div><h3>Anfrage erhalten!</h3><p>Wir melden uns schnellstmöglich</p></div>
         <div class="m-result-highlight">
           <div class="m-result-highlight-item"><span class="m-result-highlight-label">💰 Preis</span><span class="m-result-highlight-value" id="m-result-price">-</span></div>
           <div class="m-result-highlight-item"><span class="m-result-highlight-label">📅 Dauer</span><span class="m-result-highlight-value" id="m-result-duration">-</span></div>
@@ -830,18 +615,12 @@ nav {
 </div>
 
 <!-- ══════════════════════════════════════
-     SUMMARIZER WIDGET (bottom center)
+     SUMMARIZER WIDGET (unten mitte)
 ══════════════════════════════════════ -->
 <div class="summarizer-widget" id="summarizer-widget" style="display:none">
   <div class="summarizer-panel" id="sum-panel">
     <div class="sum-header">
-      <div class="sum-header-left">
-        <span class="sum-header-icon">🧠</span>
-        <div>
-          <div class="sum-header-title">KI-Zusammenfassung</div>
-          <div class="sum-header-sub">Diese Seite analysieren</div>
-        </div>
-      </div>
+      <div class="sum-header-left"><span class="sum-header-icon">🧠</span><div><div class="sum-header-title">KI-Zusammenfassung</div><div class="sum-header-sub">Diese Seite analysieren</div></div></div>
       <button class="sum-close" id="sum-close">✕</button>
     </div>
     <div class="sum-filter">
@@ -853,27 +632,12 @@ nav {
         <div class="filter-chip" data-filter="fristen">Fristen & Termine</div>
         <div class="filter-chip" data-filter="kosten">Kosten & Gebühren</div>
       </div>
-      <div class="filter-custom-wrap">
-        <input type="text" class="filter-custom-input" id="filter-custom" placeholder="Eigener Filter, z.B. „Voraussetzungen" oder „Dokumente" …">
-      </div>
+      <div class="filter-custom-wrap"><input type="text" class="filter-custom-input" id="filter-custom" placeholder="Eigener Filter, z.B. „Voraussetzungen" oder „Dokumente" …"></div>
     </div>
-    <div class="sum-result" id="sum-result">
-      <div class="sum-result-inner">
-        <div class="sum-result-text" id="sum-result-text"></div>
-      </div>
-    </div>
-    <div class="sum-footer">
-      <button class="sum-submit" id="sum-submit">
-        <span class="spinner"></span>
-        <span class="btn-text">✨ Zusammenfassen</span>
-      </button>
-    </div>
+    <div class="sum-result" id="sum-result"><div class="sum-result-inner"><div class="sum-result-text" id="sum-result-text"></div></div></div>
+    <div class="sum-footer"><button class="sum-submit" id="sum-submit"><span class="spinner"></span><span class="btn-text">✨ Zusammenfassen</span></button></div>
   </div>
-  <button class="summarizer-btn" id="sum-toggle">
-    <span class="s-emoji">🧠</span>
-    <span>KI-Zusammenfassung</span>
-    <span class="s-pulse"></span>
-  </button>
+  <button class="summarizer-btn" id="sum-toggle"><span class="s-emoji">🧠</span><span>KI-Zusammenfassung</span><span class="s-pulse"></span></button>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -881,292 +645,332 @@ nav {
 ══════════════════════════════════════ -->
 <script>
 (function(){
+/* ── CONFIG ── */
+// Maler: Standort-Validierung
+const WEBHOOK_VALIDATE  = 'https://seidel1502.app.n8n.cloud/webhook/3ad0bd7f-1b6e-4501-ba99-0cf05a2b4565';
+// Maler: Formular absenden → Preisschätzung + Benachrichtigung beider Seiten
+const WEBHOOK_SEND      = 'https://seidel1502.app.n8n.cloud/webhook/af4d3fcf-7cc3-48ee-b665-1b61703e678c';
+// KI-Zusammenfassung
+const WEBHOOK_SUMMARIZE = 'https://seidel1502.app.n8n.cloud/webhook/37e814a4-dd8d-49bb-95f0-b96d65bb963a';
+// Stadtbot
+const WEBHOOK_BOT       = 'https://seidel1502.app.n8n.cloud/webhook/3204d7ec-3a9a-4e60-b76d-15dda4df50df';
 
-// ── CONFIG ──
-const WEBHOOK_VALIDATE   = "https://seidel1502.app.n8n.cloud/webhook/3ad0bd7f-1b6e-4501-ba99-0cf05a2b4565";
-const WEBHOOK_CALCULATE  = "https://seidel1502.app.n8n.cloud/webhook/d71b1438-46b7-4d67-9517-c0b2d2be92bd";
-const WEBHOOK_SUMMARIZE  = "https://seidel1502.app.n8n.cloud/webhook/37e814a4-dd8d-49bb-95f0-b96d65bb963a";
-const MALER_TOKEN        = "0Xpj42sQ#g*kjpYP3cRsPawHAUH#U_&Mt&rlgnqPcnfsclT-";
-const SUMMARIZE_TOKEN    = "1Xpj42sQ#g*kjpYP3cRsPawHAUH#U_&Mt&rlgnqPcnfsclT-";
+const MALER_TOKEN     = '0Xpj42sQ#g*kjpYP3cRsPawHAUH#U_&Mt&rlgnqPcnfsclT-';
+const SUMMARIZE_TOKEN = '1Xpj42sQ#g*kjpYP3cRsPawHAUH#U_&Mt&rlgnqPcnfsclT-';
+const BOT_TOKEN       = 'cidg-pidg-12345-678910-v1v';
 
 const $ = id => document.getElementById(id);
 
-// ── AUTH FETCH HELPERS ──
-function authFetch(url, body, token) {
-  return fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
-    body: JSON.stringify(body)
-  });
+function authFetch(url, body, token){
+  return fetch(url,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify(body)});
 }
-function authFetchForm(url, formData, token) {
-  return fetch(url, {
-    method: 'POST',
-    headers: { 'Authorization': 'Bearer ' + token },
-    body: formData
-  });
+function authFetchForm(url, formData, token){
+  return fetch(url,{method:'POST',headers:{'Authorization':'Bearer '+token},body:formData});
 }
 
-// ── PAGE NAVIGATION ──
-window.showPage = function(name) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-  $('page-' + name).classList.add('active');
-  document.querySelectorAll('.nav-link').forEach(l => {
-    if(l.textContent.toLowerCase().includes(name) || (name==='home' && l.textContent==='Übersicht')) l.classList.add('active');
-  });
+/* ── MOBILE NAV ── */
+window.closeMobileNav = function(){ $('mobile-nav-overlay').classList.remove('open'); };
+$('nav-hamburger').onclick  = () => $('mobile-nav-overlay').classList.add('open');
+$('mobile-nav-close').onclick = closeMobileNav;
 
-  // Show/hide widgets based on page
-  const isMaler = name === 'maler';
+/* ── SEITEN-NAVIGATION ── */
+window.showPage = function(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+  $('page-'+name).classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(l=>{
+    if(l.textContent.toLowerCase().includes(name)||(name==='home'&&l.textContent==='Übersicht'))
+      l.classList.add('active');
+  });
+  const isMaler  = name==='maler';
   const hasContent = !!$('page-'+name)?.dataset.content;
-  $('maler-widget').style.display = isMaler ? 'block' : 'none';
-  $('summarizer-widget').style.display = hasContent ? 'flex' : 'none';
-
-  // Close panels when switching
+  $('maler-widget').style.display      = isMaler?'block':'none';
+  $('summarizer-widget').style.display = hasContent?'flex':'none';
   $('sum-panel').classList.remove('open');
   $('maler-window').classList.remove('open');
   window.scrollTo(0,0);
 };
 
-// ── SUMMARIZER ──
-let activeFilter = null;
+/* ══════════════════════════════════════
+   STADTBOT
+══════════════════════════════════════ */
+const botMessages = $('bot-messages');
+const botInput    = $('bot-input');
+const botSend     = $('bot-send');
+let   botOpen     = false;
 
-document.querySelectorAll('.filter-chip').forEach(chip => {
-  chip.onclick = () => {
-    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-    if(activeFilter === chip.dataset.filter) {
-      activeFilter = null;
-    } else {
-      chip.classList.add('active');
-      activeFilter = chip.dataset.filter;
-      $('filter-custom').value = ''; // clear custom input when chip selected
-    }
+// Mapping Schlüssel → Seiten für clickbare Chips im Chat
+const PAGE_MAP = {
+  buerger:{ label:'🏛️ Bürgerservice öffnen', page:'buerger' },
+  verkehr:{ label:'🚌 Verkehr & Mobilität öffnen', page:'verkehr' },
+  kultur :{ label:'🎭 Kultur & Freizeit öffnen', page:'kultur'  },
+  umwelt :{ label:'🌿 Umwelt & Nachhaltigkeit öffnen', page:'umwelt' },
+  maler  :{ label:'🎨 Malerbetrieb öffnen', page:'maler' },
+};
+
+function botAddMessage(role, text, chips){
+  const wrap   = document.createElement('div');
+  wrap.className = 'bot-msg'+(role==='user'?' user':'');
+  const av     = document.createElement('div');
+  av.className = 'bot-msg-avatar';
+  av.textContent = role==='user'?'👤':'🏛️';
+  const bubble = document.createElement('div');
+  bubble.className = 'bot-msg-bubble';
+  bubble.innerHTML = text.replace(/\n/g,'<br>');
+  if(chips&&chips.length){
+    const cw = document.createElement('div');
+    cw.className = 'bot-page-chip-wrap';
+    chips.forEach(key=>{
+      if(!PAGE_MAP[key]) return;
+      const btn = document.createElement('button');
+      btn.className   = 'bot-page-chip';
+      btn.textContent = PAGE_MAP[key].label;
+      btn.onclick = ()=>{ showPage(PAGE_MAP[key].page); $('stadtbot-window').classList.remove('open'); botOpen=false; };
+      cw.appendChild(btn);
+    });
+    bubble.appendChild(cw);
+  }
+  wrap.appendChild(av); wrap.appendChild(bubble);
+  botMessages.appendChild(wrap);
+  botMessages.scrollTop = botMessages.scrollHeight;
+}
+
+function botShowTyping(){
+  const wrap = document.createElement('div');
+  wrap.className='bot-msg'; wrap.id='bot-typing-indicator';
+  const av=document.createElement('div'); av.className='bot-msg-avatar'; av.textContent='🏛️';
+  const t=document.createElement('div'); t.className='bot-typing';
+  t.innerHTML='<span></span><span></span><span></span>';
+  wrap.appendChild(av); wrap.appendChild(t);
+  botMessages.appendChild(wrap);
+  botMessages.scrollTop=botMessages.scrollHeight;
+}
+function botHideTyping(){ const el=$('bot-typing-indicator'); if(el)el.remove(); }
+
+async function botSendMessage(text){
+  if(!text.trim()) return;
+  botAddMessage('user',text);
+  botInput.value=''; botInput.style.height='auto';
+  botSend.disabled=true;
+  $('bot-suggestions').style.display='none';
+  botShowTyping();
+  try{
+    const r = await authFetch(WEBHOOK_BOT,{
+      message:text,
+      timestamp:new Date().toISOString(),
+      currentPage:document.querySelector('.page.active')?.id||'unknown'
+    },BOT_TOKEN);
+    const d = await r.json();
+    botHideTyping();
+    const reply = d.reply||d.text||d.message||'Ich konnte keine Antwort ermitteln. Bitte versuchen Sie es erneut.';
+    const chips = Array.isArray(d.pages)?d.pages:[];
+    botAddMessage('bot',reply,chips);
+  }catch(err){
+    botHideTyping();
+    botAddMessage('bot','⚠️ Es gab einen Verbindungsfehler. Bitte prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.');
+  }
+  botSend.disabled=false;
+}
+
+$('stadtbot-toggle').onclick = ()=>{
+  botOpen=!botOpen;
+  $('stadtbot-window').classList.toggle('open',botOpen);
+  if(botOpen){ $('stadtbot-toggle').querySelector('.stadtbot-badge').style.display='none'; botMessages.scrollTop=botMessages.scrollHeight; }
+};
+$('bot-close').onclick = ()=>{ botOpen=false; $('stadtbot-window').classList.remove('open'); };
+botSend.onclick = ()=>botSendMessage(botInput.value);
+botInput.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();botSendMessage(botInput.value);} });
+botInput.addEventListener('input',()=>{ botInput.style.height='auto'; botInput.style.height=Math.min(botInput.scrollHeight,80)+'px'; });
+document.querySelectorAll('.bot-suggestion').forEach(btn=>btn.onclick=()=>botSendMessage(btn.dataset.text));
+
+// Willkommensnachricht
+botAddMessage('bot','Hallo! 👋 Ich bin der PaderbornBot. Ich helfe Ihnen, die richtige Stelle auf diesem Portal zu finden, beantworte Fragen zu städtischen Leistungen und kann Sie direkt zur passenden Seite weiterleiten. Was kann ich für Sie tun?');
+
+/* ══════════════════════════════════════
+   SUMMARIZER
+══════════════════════════════════════ */
+let activeFilter=null;
+
+document.querySelectorAll('.filter-chip').forEach(chip=>{
+  chip.onclick=()=>{
+    document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+    if(activeFilter===chip.dataset.filter){ activeFilter=null; }
+    else{ chip.classList.add('active'); activeFilter=chip.dataset.filter; $('filter-custom').value=''; }
   };
 });
+$('filter-custom').oninput=e=>{ if(e.target.value.trim()){ document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active')); activeFilter=null; } };
+$('sum-toggle').onclick=()=>$('sum-panel').classList.toggle('open');
+$('sum-close').onclick=()=>$('sum-panel').classList.remove('open');
 
-$('filter-custom').oninput = e => {
-  if(e.target.value.trim()) {
-    // deselect chips when typing custom
-    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-    activeFilter = null;
-  }
-};
-
-$('sum-toggle').onclick = () => {
-  const panel = $('sum-panel');
-  panel.classList.toggle('open');
-};
-
-$('sum-close').onclick = () => {
-  $('sum-panel').classList.remove('open');
-};
-
-$('sum-submit').onclick = async () => {
-  const btn = $('sum-submit');
+$('sum-submit').onclick=async()=>{
+  const btn=$('sum-submit');
   btn.classList.add('loading');
-
-  const customFilter = $('filter-custom').value.trim();
-  const filterToSend = customFilter || activeFilter || 'alles';
-  const activePage = document.querySelector('.page.active');
-  const articleBody = activePage.querySelector('.article-body');
-  const hero = activePage.querySelector('.article-hero h1');
-  const pageText = (hero ? hero.innerText + '\n\n' : '') + (articleBody ? articleBody.innerText : '');
-
-  // Show result area
-  const resultArea = $('sum-result');
-  const resultText = $('sum-result-text');
-  resultText.innerHTML = '';
+  const customFilter=$('filter-custom').value.trim();
+  const filterToSend=customFilter||activeFilter||'alles';
+  const activePage=document.querySelector('.page.active');
+  const articleBody=activePage.querySelector('.article-body');
+  const hero=activePage.querySelector('.article-hero h1');
+  const pageText=(hero?hero.innerText+'\n\n':'')+(articleBody?articleBody.innerText:'');
+  const resultArea=$('sum-result');
+  const resultText=$('sum-result-text');
+  resultText.innerHTML='';
   resultArea.classList.add('visible');
-
-  try {
-    const r = await authFetch(WEBHOOK_SUMMARIZE, {
-      text: pageText,
-      filter: filterToSend,
-      url: window.location.href
-    }, SUMMARIZE_TOKEN);
-
-    const d = await r.json();
-    const text = d.summary || d.text || d.result || 'Keine Zusammenfassung erhalten.';
-
-    // Markdown → HTML konvertieren und Zeile für Zeile einblenden
-    function markdownToHtml(md) {
-      return md
-        .split('\n')
-        .map(line => {
-          if (line.startsWith('**') && line.endsWith('**')) {
-            return `<div class="sum-heading">${line.replace(/\*\*/g,'')}</div>`;
-          }
-          if (/^\*\*(.+)\*\*/.test(line)) {
-            line = line.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-          }
-          if (line.startsWith('• ') || line.startsWith('- ')) {
-            return `<div class="sum-bullet">${line.replace(/^[•\-]\s/,'')}</div>`;
-          }
-          if (line.trim() === '') return '<div class="sum-spacer"></div>';
-          return `<div class="sum-line">${line}</div>`;
-        })
-        .join('');
-    }
-
-    resultText.innerHTML = '';
-    const lines = text.split('\n');
-    let i = 0;
-    function nextLine() {
-      if(i < lines.length) {
-        const line = lines[i];
-        const div = document.createElement('div');
-        if (line.startsWith('**') && line.endsWith('**')) {
-          div.className = 'sum-heading sum-fade';
-          div.textContent = line.replace(/\*\*/g,'');
-        } else if (line.startsWith('• ') || line.startsWith('- ')) {
-          div.className = 'sum-bullet sum-fade';
-          div.innerHTML = line.replace(/^[•\-]\s/,'').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
-        } else if (line.trim() === '') {
-          div.className = 'sum-spacer';
+  try{
+    const r=await authFetch(WEBHOOK_SUMMARIZE,{text:pageText,filter:filterToSend,url:window.location.href},SUMMARIZE_TOKEN);
+    const d=await r.json();
+    const text=d.summary||d.text||d.result||'Keine Zusammenfassung erhalten.';
+    // FIX Doppelstrich: "- Text" wird als .sum-bullet gerendert.
+    // CSS ::before erzeugt einen kleinen Punkt (kein Strich) – das Präfix wird weggeschnitten.
+    // So erscheint das Bullet-Zeichen nur einmal (vom Dot via CSS), kein doppelter Strich.
+    const lines=text.split('\n');
+    let i=0;
+    function nextLine(){
+      if(i<lines.length){
+        const line=lines[i];
+        const div=document.createElement('div');
+        if(line.startsWith('**')&&line.endsWith('**')){
+          div.className='sum-heading sum-fade';
+          div.textContent=line.replace(/\*\*/g,'');
+        } else if(line.startsWith('- ')||line.startsWith('• ')){
+          // Strich/Bullet-Zeichen abschneiden; CSS ::before zeigt einen goldenen Punkt
+          div.className='sum-bullet sum-fade';
+          div.innerHTML=line.replace(/^[-•]\s/,'').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+        } else if(line.trim()===''){
+          div.className='sum-spacer';
         } else {
-          div.className = 'sum-line sum-fade';
-          div.innerHTML = line.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+          div.className='sum-line sum-fade';
+          div.innerHTML=line.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
         }
-        resultText.appendChild(div);
-        i++;
-        setTimeout(nextLine, 60);
+        resultText.appendChild(div); i++;
+        setTimeout(nextLine,60);
       }
     }
     nextLine();
-
-  } catch(e) {
-    resultText.textContent = 'Fehler beim Laden der Zusammenfassung. Bitte versuchen Sie es erneut.';
+  }catch(e){
+    resultText.textContent='Fehler beim Laden der Zusammenfassung. Bitte versuchen Sie es erneut.';
   }
-
   btn.classList.remove('loading');
 };
 
-// ── MALER WIDGET ──
-$('maler-toggle').onclick = () => $('maler-window').classList.add('open');
-$('maler-close').onclick  = () => $('maler-window').classList.remove('open');
+/* ══════════════════════════════════════
+   MALER WIDGET
+══════════════════════════════════════ */
+$('maler-toggle').onclick=()=>$('maler-window').classList.add('open');
+$('maler-close').onclick=()=>$('maler-window').classList.remove('open');
 
-const SERVICE_NAMES = {1:'Innenwände streichen',2:'Fassade streichen',3:'Tapezieren',4:'Türen/Fenster lackieren',5:'Verputzen/Grundieren',6:'Dekorative Techniken'};
-const BLOCKED = ['arsch','wichser','hurensohn','fotze','fick','scheiße','scheisse','hure','nutte','bastard','idiot','depp','nazi','hitler','fuck','shit','asshole','bitch','cunt'];
-const FAKE    = ['brad pitt','angelina jolie','tom cruise','angela merkel','elon musk','harry potter','max mustermann','john doe','test test'];
+const SERVICE_NAMES={1:'Innenwände streichen',2:'Fassade streichen',3:'Tapezieren',4:'Türen/Fenster lackieren',5:'Verputzen/Grundieren',6:'Dekorative Techniken'};
+const BLOCKED=['arsch','wichser','hurensohn','fotze','fick','scheiße','scheisse','hure','nutte','bastard','idiot','depp','nazi','hitler','fuck','shit','asshole','bitch','cunt'];
+const FAKE=['brad pitt','angelina jolie','tom cruise','angela merkel','elon musk','harry potter','max mustermann','john doe','test test'];
 
-function validateName(n) {
-  const t = n.trim(), l = t.toLowerCase();
-  if(t.length < 3) return {v:false, m:'Name zu kurz'};
-  if(t.split(/\s+/).filter(x=>x).length < 2) return {v:false, m:'Vor- und Nachname'};
-  if(/\d/.test(t)) return {v:false, m:'Keine Zahlen'};
-  for(const b of BLOCKED) if(l.includes(b)) return {v:false, m:'Bitte echten Namen'};
-  for(const f of FAKE)    if(l.includes(f)) return {v:false, m:'Bitte echten Namen'};
-  return {v:true, m:''};
+function validateName(n){
+  const t=n.trim(),l=t.toLowerCase();
+  if(t.length<3) return{v:false,m:'Name zu kurz'};
+  if(t.split(/\s+/).filter(x=>x).length<2) return{v:false,m:'Vor- und Nachname'};
+  if(/\d/.test(t)) return{v:false,m:'Keine Zahlen'};
+  for(const b of BLOCKED) if(l.includes(b)) return{v:false,m:'Bitte echten Namen'};
+  for(const f of FAKE)    if(l.includes(f)) return{v:false,m:'Bitte echten Namen'};
+  return{v:true,m:''};
 }
-function validatePhone(p) { return /^(\+49|0)[1-9]\d{8,11}$/.test(p.replace(/[\s\-]/g,'')); }
+function validatePhone(p){ return /^(\+49|0)[1-9]\d{8,11}$/.test(p.replace(/[\s\-]/g,'')); }
 
-const ms = {type:'privat', locationValid:false, nameValid:false, phoneValid:false, service:null, dsgvo:false, distance:null};
-let mFiles = [];
+const ms={type:'privat',locationValid:false,nameValid:false,phoneValid:false,service:null,dsgvo:false,distance:null};
+let mFiles=[];
 
-function mUpdateProgress() {
-  const ok = $('m-size').value.trim() && $('m-timeframe').value.trim();
-  const done = [ms.locationValid, ms.nameValid, ms.phoneValid, ms.service!==null, ok].filter(Boolean).length;
-  $('maler-progress-bar').style.width = (done/5*100) + '%';
+function mUpdateProgress(){
+  const ok=$('m-size').value.trim()&&$('m-timeframe').value.trim();
+  const done=[ms.locationValid,ms.nameValid,ms.phoneValid,ms.service!==null,!!ok].filter(Boolean).length;
+  $('maler-progress-bar').style.width=(done/5*100)+'%';
 }
-function mUpdateUI() {
-  const ok = $('m-size').value.trim() && $('m-timeframe').value.trim();
-  [{id:'m-check-location',v:ms.locationValid},{id:'m-check-name',v:ms.nameValid},{id:'m-check-phone',v:ms.phoneValid},{id:'m-check-service',v:ms.service!==null},{id:'m-check-details',v:ok}].forEach(c => {
-    const el = $(c.id);
-    el.className = c.v ? 'm-check-item checked' : 'm-check-item';
-    el.querySelector('.m-check-icon').textContent = c.v ? '✓' : '○';
-  });
+function mUpdateUI(){
+  const ok=$('m-size').value.trim()&&$('m-timeframe').value.trim();
+  [{id:'m-check-location',v:ms.locationValid},{id:'m-check-name',v:ms.nameValid},{id:'m-check-phone',v:ms.phoneValid},{id:'m-check-service',v:ms.service!==null},{id:'m-check-details',v:!!ok}]
+    .forEach(c=>{ const el=$(c.id); el.className=c.v?'m-check-item checked':'m-check-item'; el.querySelector('.m-check-icon').textContent=c.v?'✓':'○'; });
   mUpdateProgress();
-  const ready = ms.locationValid && ms.nameValid && ms.phoneValid && ms.service!==null && ok && ms.dsgvo;
-  $('m-submit').disabled = !ready;
-  $('m-submit').classList.toggle('ready', ready);
+  const ready=ms.locationValid&&ms.nameValid&&ms.phoneValid&&ms.service!==null&&ok&&ms.dsgvo;
+  $('m-submit').disabled=!ready;
+  $('m-submit').classList.toggle('ready',ready);
 }
 
-document.querySelectorAll('.m-type-btn').forEach(btn => {
-  btn.onclick = () => {
-    document.querySelectorAll('.m-type-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    ms.type = btn.dataset.type;
-    ms.locationValid = false;
-    $('m-privat-box').style.display  = ms.type==='privat' ? 'block' : 'none';
-    $('m-gewerbe-box').style.display = ms.type==='gewerbe' ? 'block' : 'none';
-    $('m-privat-status').className  = 'm-val-status';
-    $('m-gewerbe-status').className = 'm-val-status';
+document.querySelectorAll('.m-type-btn').forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll('.m-type-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active'); ms.type=btn.dataset.type; ms.locationValid=false;
+    $('m-privat-box').style.display=ms.type==='privat'?'block':'none';
+    $('m-gewerbe-box').style.display=ms.type==='gewerbe'?'block':'none';
+    $('m-privat-status').className='m-val-status'; $('m-gewerbe-status').className='m-val-status';
     mUpdateUI();
   };
 });
 
-$('m-validate-privat-btn').onclick = async () => {
-  const l = $('m-location-privat').value.trim();
-  const box = $('m-privat-box');
+$('m-validate-privat-btn').onclick=async()=>{
+  const l=$('m-location-privat').value.trim(), box=$('m-privat-box');
   if(!l){ $('m-privat-status').className='m-val-status visible error'; $('m-privat-status').textContent='❌ Bitte Ort eingeben'; box.classList.add('shake'); setTimeout(()=>box.classList.remove('shake'),500); return; }
-  const btn = $('m-validate-privat-btn'); btn.classList.add('loading'); btn.disabled = true;
-  try {
-    const r = await authFetch(WEBHOOK_VALIDATE, {type:'privat', location:l}, MALER_TOKEN);
-    const d = await r.json(); const x = Array.isArray(d)?d[0]:d;
+  const btn=$('m-validate-privat-btn'); btn.classList.add('loading'); btn.disabled=true;
+  try{
+    const r=await authFetch(WEBHOOK_VALIDATE,{type:'privat',location:l},MALER_TOKEN);
+    const d=await r.json(); const x=Array.isArray(d)?d[0]:d;
     if(x.valid){ ms.locationValid=true; ms.distance=x.distance; $('m-privat-status').className='m-val-status visible success'; $('m-privat-status').textContent='✅ Im Gebiet – '+x.distance+'km'; box.classList.add('success-pulse'); setTimeout(()=>box.classList.remove('success-pulse'),600); }
-    else { ms.locationValid=false; $('m-privat-status').className='m-val-status visible error'; $('m-privat-status').textContent=x.message||'❌ Außerhalb des Gebiets'; box.classList.add('shake'); setTimeout(()=>box.classList.remove('shake'),500); }
-  } catch(e){ $('m-privat-status').className='m-val-status visible error'; $('m-privat-status').textContent='❌ Fehler'; }
+    else{ ms.locationValid=false; $('m-privat-status').className='m-val-status visible error'; $('m-privat-status').textContent=x.message||'❌ Außerhalb des Gebiets'; box.classList.add('shake'); setTimeout(()=>box.classList.remove('shake'),500); }
+  }catch(e){ $('m-privat-status').className='m-val-status visible error'; $('m-privat-status').textContent='❌ Verbindungsfehler'; }
   btn.classList.remove('loading'); btn.disabled=false; mUpdateUI();
 };
 
-$('m-validate-gewerbe-btn').onclick = async () => {
-  const c = $('m-company').value.trim(), l = $('m-location-gewerbe').value.trim();
-  const box = $('m-gewerbe-box');
+$('m-validate-gewerbe-btn').onclick=async()=>{
+  const c=$('m-company').value.trim(), l=$('m-location-gewerbe').value.trim(), box=$('m-gewerbe-box');
   if(!c||!l){ $('m-gewerbe-status').className='m-val-status visible error'; $('m-gewerbe-status').textContent='❌ Firma und Ort eingeben'; box.classList.add('shake'); setTimeout(()=>box.classList.remove('shake'),500); return; }
-  const btn = $('m-validate-gewerbe-btn'); btn.classList.add('loading'); btn.disabled=true;
-  try {
-    const r = await authFetch(WEBHOOK_VALIDATE, {type:'gewerbe', company:c, location:l}, MALER_TOKEN);
-    const d = await r.json(); const x = Array.isArray(d)?d[0]:d;
+  const btn=$('m-validate-gewerbe-btn'); btn.classList.add('loading'); btn.disabled=true;
+  try{
+    const r=await authFetch(WEBHOOK_VALIDATE,{type:'gewerbe',company:c,location:l},MALER_TOKEN);
+    const d=await r.json(); const x=Array.isArray(d)?d[0]:d;
     if(x.valid){ ms.locationValid=true; ms.distance=x.distance; $('m-gewerbe-status').className='m-val-status visible success'; $('m-gewerbe-status').textContent='✅ '+(x.companyInfo||c)+' – '+x.distance+'km'; box.classList.add('success-pulse'); setTimeout(()=>box.classList.remove('success-pulse'),600); }
-    else { ms.locationValid=false; $('m-gewerbe-status').className='m-val-status visible error'; $('m-gewerbe-status').textContent=x.message||'❌ Nicht gefunden'; box.classList.add('shake'); setTimeout(()=>box.classList.remove('shake'),500); }
-  } catch(e){ $('m-gewerbe-status').className='m-val-status visible error'; $('m-gewerbe-status').textContent='❌ Fehler'; }
+    else{ ms.locationValid=false; $('m-gewerbe-status').className='m-val-status visible error'; $('m-gewerbe-status').textContent=x.message||'❌ Nicht gefunden'; box.classList.add('shake'); setTimeout(()=>box.classList.remove('shake'),500); }
+  }catch(e){ $('m-gewerbe-status').className='m-val-status visible error'; $('m-gewerbe-status').textContent='❌ Verbindungsfehler'; }
   btn.classList.remove('loading'); btn.disabled=false; mUpdateUI();
 };
 
-$('m-name').oninput = e => {
+$('m-name').oninput=e=>{
   const n=e.target.value, r=validateName(n);
   $('m-name').classList.toggle('valid',r.v); $('m-name').classList.toggle('invalid',!r.v&&n.trim().length>=3);
-  $('m-name-status').textContent = n.length===0?'':r.v?'✅':n.trim().length>=3?'❌':'';
-  $('m-name-error').textContent = !r.v&&n.trim().length>=3?r.m:'';
+  $('m-name-status').textContent=n.length===0?'':r.v?'✅':n.trim().length>=3?'❌':'';
+  $('m-name-error').textContent=!r.v&&n.trim().length>=3?r.m:'';
   $('m-name-error').classList.toggle('visible',!r.v&&n.trim().length>=3);
   ms.nameValid=r.v; mUpdateUI();
 };
 
-$('m-phone').oninput = e => {
+$('m-phone').oninput=e=>{
   const p=e.target.value, ok=validatePhone(p);
   $('m-phone').classList.toggle('valid',ok); $('m-phone').classList.toggle('invalid',p.length>=6&&!ok);
-  $('m-phone-status').textContent = p.length===0?'':ok?'✅':p.length>=6?'❌':'';
+  $('m-phone-status').textContent=p.length===0?'':ok?'✅':p.length>=6?'❌':'';
   ms.phoneValid=ok; mUpdateUI();
 };
 
-document.querySelectorAll('#m-services .m-service-option').forEach(o => {
-  o.onclick = () => {
-    document.querySelectorAll('#m-services .m-service-option').forEach(x=>x.classList.remove('selected'));
-    o.classList.add('selected'); ms.service=parseInt(o.dataset.service); mUpdateUI();
-  };
+document.querySelectorAll('#m-services .m-service-option').forEach(o=>{
+  o.onclick=()=>{ document.querySelectorAll('#m-services .m-service-option').forEach(x=>x.classList.remove('selected')); o.classList.add('selected'); ms.service=parseInt(o.dataset.service); mUpdateUI(); };
 });
 
-$('m-size').oninput = ()=>mUpdateUI();
-$('m-timeframe').oninput = ()=>mUpdateUI();
-$('m-dsgvo').onchange = e=>{ ms.dsgvo=e.target.checked; mUpdateUI(); };
-$('m-dsgvo-toggle').onclick = e=>{ e.preventDefault(); e.stopPropagation(); $('m-dsgvo-details').classList.toggle('visible'); };
+$('m-size').oninput=()=>mUpdateUI();
+$('m-timeframe').oninput=()=>mUpdateUI();
+$('m-dsgvo').onchange=e=>{ ms.dsgvo=e.target.checked; mUpdateUI(); };
+$('m-dsgvo-toggle').onclick=e=>{ e.preventDefault(); e.stopPropagation(); $('m-dsgvo-details').classList.toggle('visible'); };
 
-$('m-images').onchange = e => {
-  Array.from(e.target.files).forEach(f=>{ if(f.size>10*1024*1024)return alert('Max 10MB'); mFiles.push(f); });
+$('m-images').onchange=e=>{
+  Array.from(e.target.files).forEach(f=>{ if(f.size>10*1024*1024){alert('Max. 10 MB pro Bild');return;} mFiles.push(f); });
   renderMFiles(); e.target.value='';
 };
 function renderMFiles(){
-  $('m-file-list').innerHTML = mFiles.map((f,i)=>`<div class="m-file-item">📷 ${f.name.slice(0,15)}...<span class="m-file-item-remove" data-i="${i}">✕</span></div>`).join('');
+  $('m-file-list').innerHTML=mFiles.map((f,i)=>`<div class="m-file-item">📷 ${f.name.slice(0,15)}…<span class="m-file-item-remove" data-i="${i}">✕</span></div>`).join('');
   $('m-file-list').querySelectorAll('.m-file-item-remove').forEach(b=>b.onclick=e=>{mFiles.splice(+e.target.dataset.i,1);renderMFiles();});
 }
 
-$('maler-form').onsubmit = async e => {
+/* Formular absenden → WEBHOOK_SEND (sendet Daten an n8n;
+   n8n-Flow ist zuständig für: Preisschätzung berechnen + beide Seiten benachrichtigen) */
+$('maler-form').onsubmit=async e=>{
   e.preventDefault();
   $('maler-loading').classList.add('visible');
   $('m-submit').classList.add('loading');
-  const isG = ms.type==='gewerbe';
-  const sNum = parseFloat($('m-size').value.replace(/[^\d.,]/g,'').replace(',','.'))||30;
-  const fd = {
+  const isG=ms.type==='gewerbe';
+  const sNum=parseFloat($('m-size').value.replace(/[^\d.,]/g,'').replace(',','.'))||30;
+  const fd={
     customerType:ms.type, company:isG?$('m-company').value:'',
     name:$('m-name').value, email:$('m-email').value.trim(), phone:$('m-phone').value,
     location:isG?$('m-location-gewerbe').value:$('m-location-privat').value,
@@ -1175,38 +979,33 @@ $('maler-form').onsubmit = async e => {
     description:$('m-description').value.trim(), imagesCount:mFiles.length,
     dsgvoAccepted:true, timestamp:new Date().toISOString()
   };
-  try {
-    const fm = new FormData();
-    fm.append('formData', JSON.stringify(fd));
+  try{
+    const fm=new FormData();
+    fm.append('formData',JSON.stringify(fd));
     mFiles.forEach((f,i)=>fm.append('image_'+i,f));
-    const r = await authFetchForm(WEBHOOK_CALCULATE, fm, MALER_TOKEN);
-    const d = await r.json();
-    $('m-result-price').textContent   = d.price    ? 'ca. '+d.price.toLocaleString('de-DE')+' €' : '-';
+    const r=await authFetchForm(WEBHOOK_SEND,fm,MALER_TOKEN);
+    const d=await r.json();
+    $('m-result-price').textContent    = d.price    ? 'ca. '+Number(d.price).toLocaleString('de-DE')+' €' : '-';
     $('m-result-duration').textContent = d.duration || '-';
     $('m-result-workers').textContent  = d.workers  || '-';
-  } catch(x){ $('m-result-price').textContent='-'; $('m-result-duration').textContent='-'; $('m-result-workers').textContent='-'; }
-  $('m-result-type').textContent = fd.customerType==='gewerbe'?'Gewerblich 🏢':'Privat 🏠';
-  $('m-result-company-row').style.display = fd.company?'flex':'none';
-  $('m-result-company').textContent = fd.company;
-  $('m-result-name').textContent    = fd.name;
-  $('m-result-email-row').style.display = fd.email?'flex':'none';
-  $('m-result-email').textContent   = fd.email;
-  $('m-result-phone').textContent   = fd.phone;
-  $('m-result-location').textContent = fd.location+(fd.distance?' ('+fd.distance+'km)':'');
-  $('m-result-service').textContent  = fd.serviceName;
-  $('m-result-size').textContent     = fd.size;
-  $('m-result-timeframe').textContent = fd.timeframe;
-  setTimeout(()=>{
-    $('maler-loading').classList.remove('visible');
-    $('maler-form-view').style.display='none';
-    $('maler-result-view').classList.add('visible');
-    $('maler-body').scrollTop=0;
-  },1500);
+  }catch(err){
+    $('m-result-price').textContent='-'; $('m-result-duration').textContent='-'; $('m-result-workers').textContent='-';
+  }
+  $('m-result-type').textContent=fd.customerType==='gewerbe'?'Gewerblich 🏢':'Privat 🏠';
+  $('m-result-company-row').style.display=fd.company?'flex':'none';
+  $('m-result-company').textContent=fd.company;
+  $('m-result-name').textContent=fd.name;
+  $('m-result-email-row').style.display=fd.email?'flex':'none';
+  $('m-result-email').textContent=fd.email;
+  $('m-result-phone').textContent=fd.phone;
+  $('m-result-location').textContent=fd.location+(fd.distance?' ('+fd.distance+'km)':'');
+  $('m-result-service').textContent=fd.serviceName;
+  $('m-result-size').textContent=fd.size;
+  $('m-result-timeframe').textContent=fd.timeframe;
+  setTimeout(()=>{ $('maler-loading').classList.remove('visible'); $('maler-form-view').style.display='none'; $('maler-result-view').classList.add('visible'); $('maler-body').scrollTop=0; },1500);
 };
 
-// Init
 mUpdateProgress();
-
 })();
 </script>
 </body>
