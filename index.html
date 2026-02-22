@@ -62,8 +62,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--nav-h);backgro
 .stadtbot-toggle{width:64px;height:64px;background:var(--bg-dark);border:2px solid var(--accent);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 8px 32px rgba(0,0,0,.3);transition:all .25s;position:relative}
 .stadtbot-toggle:hover{transform:scale(1.08);box-shadow:0 12px 40px rgba(200,169,110,.35);border-color:var(--accent-dark)}
 .stadtbot-badge{position:absolute;top:-4px;right:-4px;width:18px;height:18px;background:#22c55e;border-radius:50%;border:2px solid var(--bg);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;animation:pulse-dot 2s infinite}
-.stadtbot-window{position:absolute;bottom:76px;left:0;width:min(400px,92vw);height:min(560px,80vh);background:#fff;border-radius:20px;border:1px solid var(--border);box-shadow:0 25px 60px rgba(0,0,0,.15);display:none;flex-direction:column;overflow:hidden}
+.stadtbot-window{position:absolute;bottom:76px;left:0;width:min(400px,92vw);background:#fff;border-radius:20px;border:1px solid var(--border);box-shadow:0 25px 60px rgba(0,0,0,.15);display:none;flex-direction:column;overflow:hidden}
 .stadtbot-window.open{display:flex;animation:scaleInLeft .3s ease-out}
+
+/* Bot Header */
 .bot-header{padding:16px 20px;background:var(--bg-dark);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .bot-header-left{display:flex;align-items:center;gap:12px}
 .bot-avatar{width:38px;height:38px;background:linear-gradient(135deg,var(--accent-dark),var(--accent));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
@@ -72,14 +74,32 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--nav-h);backgro
 .bot-status-dot{width:6px;height:6px;background:#22c55e;border-radius:50%;display:inline-block;animation:pulse-dot 2s infinite}
 .bot-close{background:none;border:none;color:rgba(255,255,255,.5);font-size:20px;cursor:pointer;padding:4px;line-height:1}
 .bot-close:hover{color:#fff}
-.bot-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;background:var(--bg)}
+
+/* Fortschrittsstrahl */
+.bot-progress-bar-wrap{height:3px;background:rgba(200,169,110,.15);flex-shrink:0;display:none}
+.bot-progress-bar-wrap.visible{display:block}
+.bot-progress-bar-inner{height:100%;background:linear-gradient(90deg,var(--accent-dark),var(--accent));width:0;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.bot-steps-row{display:flex;align-items:center;justify-content:center;gap:0;padding:10px 20px 8px;background:#faf9f7;border-bottom:1px solid var(--border);flex-shrink:0;display:none}
+.bot-steps-row.visible{display:flex}
+.bot-step{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);font-weight:500;white-space:nowrap}
+.bot-step-dot{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--text-muted);transition:all .3s;flex-shrink:0}
+.bot-step.active .bot-step-dot{border-color:var(--accent);background:var(--accent);color:#fff}
+.bot-step.done .bot-step-dot{border-color:#22c55e;background:#22c55e;color:#fff}
+.bot-step.active .bot-step-label{color:var(--accent-dark);font-weight:600}
+.bot-step.done .bot-step-label{color:#22c55e}
+.bot-step-label{font-size:10px}
+.bot-step-sep{width:24px;height:2px;background:var(--border);margin:0 4px;flex-shrink:0;transition:background .3s}
+.bot-step-sep.done{background:#22c55e}
+
+/* Chat-Bereich */
+.bot-messages{overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;background:var(--bg);min-height:160px;max-height:320px}
 .bot-messages::-webkit-scrollbar{width:4px}
 .bot-messages::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
 .bot-msg{display:flex;gap:8px;animation:fadeInUp .25s ease-out}
 .bot-msg.user{flex-direction:row-reverse}
 .bot-msg-avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--accent-dark),var(--accent));display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;margin-top:2px}
 .bot-msg.user .bot-msg-avatar{background:#e2ddd6;font-size:16px}
-.bot-msg-bubble{max-width:80%;padding:10px 14px;border-radius:16px;font-size:13px;line-height:1.6;color:var(--text);background:#fff;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.bot-msg-bubble{max-width:82%;padding:10px 14px;border-radius:16px;font-size:13px;line-height:1.6;color:var(--text);background:#fff;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.04)}
 .bot-msg.user .bot-msg-bubble{background:var(--bg-dark);color:#fff;border:none;border-radius:16px 16px 4px 16px}
 .bot-msg:not(.user) .bot-msg-bubble{border-radius:4px 16px 16px 16px}
 .bot-page-chip{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:7px 14px;background:rgba(200,169,110,.1);border:1px solid rgba(200,169,110,.35);border-radius:20px;font-size:12px;font-weight:600;color:var(--accent-dark);cursor:pointer;transition:all .2s;white-space:nowrap}
@@ -89,6 +109,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--nav-h);backgro
 .bot-typing span{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:typingBounce 1.2s infinite}
 .bot-typing span:nth-child(2){animation-delay:.2s}
 .bot-typing span:nth-child(3){animation-delay:.4s}
+
+/* Auswahl-Panel (ersetzt suggestions+input in Guided-Mode) */
+.bot-choice-panel{padding:14px 16px 16px;background:#fff;border-top:1px solid var(--border);flex-shrink:0}
+.bot-choice-label{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;text-align:center}
+.bot-choice-grid{display:flex;flex-direction:column;gap:8px}
+.bot-choice-btn{width:100%;padding:11px 16px;background:var(--bg);border:1.5px solid var(--border);border-radius:12px;font-size:13px;font-weight:500;color:var(--text);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;text-align:left;display:flex;align-items:center;gap:10px}
+.bot-choice-btn:hover{border-color:var(--accent);background:rgba(200,169,110,.06);color:var(--accent-dark);transform:translateX(3px)}
+.bot-choice-btn .choice-icon{font-size:16px;flex-shrink:0}
+.bot-choice-btn .choice-arrow{margin-left:auto;color:var(--accent);opacity:0;transition:opacity .2s}
+.bot-choice-btn:hover .choice-arrow{opacity:1}
+
+/* Normaler Chat-Input (Info-Mode) */
 .bot-suggestions{padding:10px 16px 6px;display:flex;flex-wrap:wrap;gap:6px;border-top:1px solid var(--border);background:#fff;flex-shrink:0}
 .bot-suggestion{padding:6px 12px;background:var(--bg);border:1px solid var(--border);border-radius:20px;font-size:12px;font-weight:500;color:var(--text-muted);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
 .bot-suggestion:hover{border-color:var(--accent);color:var(--accent-dark)}
@@ -470,6 +502,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--nav-h);backgro
 ══════════════════════════════════════ -->
 <div class="stadtbot-widget" id="stadtbot-widget">
   <div class="stadtbot-window" id="stadtbot-window">
+
+    <!-- Header -->
     <div class="bot-header">
       <div class="bot-header-left">
         <div class="bot-avatar">🏛️</div>
@@ -480,17 +514,37 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--nav-h);backgro
       </div>
       <button class="bot-close" id="bot-close">✕</button>
     </div>
+
+    <!-- Fortschrittsstrahl -->
+    <div class="bot-progress-bar-wrap" id="bot-progress-bar-wrap">
+      <div class="bot-progress-bar-inner" id="bot-progress-bar-inner"></div>
+    </div>
+
+    <!-- Schritt-Indikatoren -->
+    <div class="bot-steps-row" id="bot-steps-row">
+      <!-- Wird per JS befüllt -->
+    </div>
+
+    <!-- Chat-Nachrichten -->
     <div class="bot-messages" id="bot-messages"></div>
-    <div class="bot-suggestions" id="bot-suggestions">
-      <button class="bot-suggestion" data-text="Wie beantrage ich einen Personalausweis?">🪪 Personalausweis</button>
+
+    <!-- Auswahl-Panel (Guided Mode) -->
+    <div class="bot-choice-panel" id="bot-choice-panel" style="display:none">
+      <div class="bot-choice-label" id="bot-choice-label">Bitte wählen Sie</div>
+      <div class="bot-choice-grid" id="bot-choice-grid"></div>
+    </div>
+
+    <!-- Normaler Chat-Input (Info Mode) -->
+    <div class="bot-suggestions" id="bot-suggestions" style="display:none">
+      <button class="bot-suggestion" data-text="Wo finde ich Infos zum Personalausweis?">🪪 Personalausweis</button>
       <button class="bot-suggestion" data-text="Wo finde ich Infos zur Fahrradinfrastruktur?">🚲 Fahrrad</button>
-      <button class="bot-suggestion" data-text="Ich möchte einen Termin beim Bürgerservice buchen.">📅 Termin buchen</button>
       <button class="bot-suggestion" data-text="Was kostet die Gewerbeanmeldung?">🏢 Gewerbe</button>
     </div>
-    <div class="bot-input-area">
+    <div class="bot-input-area" id="bot-input-area" style="display:none">
       <textarea class="bot-input" id="bot-input" rows="1" placeholder="Ihre Frage an PaderbornBot …"></textarea>
       <button class="bot-send" id="bot-send">➤</button>
     </div>
+
   </div>
   <button class="stadtbot-toggle" id="stadtbot-toggle" aria-label="Stadtbot öffnen">
     🏛️<span class="stadtbot-badge">!</span>
@@ -692,12 +746,9 @@ window.showPage = function(name){
 };
 
 /* ══════════════════════════════════════
-   STADTBOT
+   STADTBOT – Guided Flow + Info Chat
 ══════════════════════════════════════ */
-const botMessages = $('bot-messages');
-const botInput    = $('bot-input');
-const botSend     = $('bot-send');
-let   botOpen     = false;
+const SESSION_ID = 'bot_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
 
 // Mapping Schlüssel → Seiten für clickbare Chips im Chat
 const PAGE_MAP = {
@@ -708,83 +759,293 @@ const PAGE_MAP = {
   maler  :{ label:'🎨 Malerbetrieb öffnen', page:'maler' },
 };
 
+const botMessages   = $('bot-messages');
+const botChoicePanel= $('bot-choice-panel');
+const botChoiceGrid = $('bot-choice-grid');
+const botChoiceLabel= $('bot-choice-label');
+const botInput      = $('bot-input');
+const botSend       = $('bot-send');
+let   botOpen       = false;
+
+/* ── Termin-Kategorien ── */
+const TERMIN_KATEGORIEN = {
+  meldewesen: {
+    label:'🏠 Meldewesen', icon:'🏠',
+    sub:[
+      {label:'Anmeldung / Ummeldung', key:'anmeldung'},
+      {label:'Abmeldung', key:'abmeldung'},
+    ]
+  },
+  ausweise: {
+    label:'🪪 Ausweise & Pässe', icon:'🪪',
+    sub:[
+      {label:'Personalausweis beantragen', key:'personalausweis'},
+      {label:'Reisepass beantragen', key:'reisepass'},
+      {label:'Kinderreisepass', key:'kinderreisepass'},
+    ]
+  },
+  kfz: {
+    label:'🚗 Führerschein & Kfz', icon:'🚗',
+    sub:[
+      {label:'Führerschein beantragen', key:'fuehrerschein'},
+      {label:'Kfz-Zulassung', key:'kfz_zulassung'},
+      {label:'Kfz-Abmeldung', key:'kfz_abmeldung'},
+    ]
+  },
+  standesamt: {
+    label:'💍 Standesamt', icon:'💍',
+    sub:[
+      {label:'Eheschließung anmelden', key:'heirat'},
+      {label:'Geburtsurkunde beantragen', key:'geburtsurkunde'},
+      {label:'Sterbeurkunde beantragen', key:'sterbeurkunde'},
+    ]
+  },
+  gewerbe: {
+    label:'🏢 Gewerbe', icon:'🏢',
+    sub:[
+      {label:'Gewerbeanmeldung', key:'gewerbeanmeldung'},
+      {label:'Gewerbeabmeldung', key:'gewerbeabmeldung'},
+    ]
+  },
+  sonstiges: {
+    label:'📋 Sonstiges', icon:'📋',
+    sub:[
+      {label:'Führungszeugnis (erweitertes)', key:'fuehrungszeugnis'},
+      {label:'Beglaubigungen', key:'beglaubigung'},
+    ]
+  }
+};
+
+/* ── Schritt-Definitionen ── */
+const STEPS_INFO   = [{label:'Info'}];
+const STEPS_TERMIN = [{label:'Kategorie'},{label:'Leistung'},{label:'Termin'}];
+
+let botMode       = 'start';   // start | info | termin-kat | termin-sub | termin-chat
+let botTerminKat  = null;
+let botTerminSub  = null;
+let currentSteps  = null;
+let currentStepIdx= 0;
+
+/* ── Fortschrittsanzeige ── */
+function showSteps(steps, activeIdx){
+  currentSteps   = steps;
+  currentStepIdx = activeIdx;
+  const wrap = $('bot-steps-row');
+  const bar  = $('bot-progress-bar-wrap');
+  wrap.innerHTML = '';
+  wrap.classList.add('visible');
+  bar.classList.add('visible');
+  steps.forEach((s, i)=>{
+    const el = document.createElement('div');
+    el.className = 'bot-step' + (i < activeIdx ? ' done' : i === activeIdx ? ' active' : '');
+    el.innerHTML = `<div class="bot-step-dot">${i < activeIdx ? '✓' : i+1}</div><span class="bot-step-label">${s.label}</span>`;
+    wrap.appendChild(el);
+    if(i < steps.length-1){
+      const sep = document.createElement('div');
+      sep.className = 'bot-step-sep' + (i < activeIdx ? ' done' : '');
+      wrap.appendChild(sep);
+    }
+  });
+  const pct = steps.length > 1 ? (activeIdx / (steps.length-1)) * 100 : activeIdx === 0 ? 50 : 100;
+  $('bot-progress-bar-inner').style.width = pct + '%';
+}
+function hideSteps(){
+  $('bot-steps-row').classList.remove('visible');
+  $('bot-progress-bar-wrap').classList.remove('visible');
+}
+
+/* ── Nachrichten ── */
 function botAddMessage(role, text, chips){
   const wrap   = document.createElement('div');
-  wrap.className = 'bot-msg'+(role==='user'?' user':'');
-  const av     = document.createElement('div');
-  av.className = 'bot-msg-avatar';
-  av.textContent = role==='user'?'👤':'🏛️';
-  const bubble = document.createElement('div');
-  bubble.className = 'bot-msg-bubble';
-  bubble.innerHTML = text.replace(/\n/g,'<br>');
-  if(chips&&chips.length){
-    const cw = document.createElement('div');
-    cw.className = 'bot-page-chip-wrap';
+  wrap.className = 'bot-msg' + (role==='user' ? ' user' : '');
+  const av  = document.createElement('div'); av.className='bot-msg-avatar';
+  av.textContent = role==='user' ? '👤' : '🏛️';
+  const bub = document.createElement('div'); bub.className='bot-msg-bubble';
+  bub.innerHTML = text.replace(/\n/g,'<br>');
+  if(chips && chips.length){
+    const cw = document.createElement('div'); cw.className='bot-page-chip-wrap';
     chips.forEach(key=>{
       if(!PAGE_MAP[key]) return;
-      const btn = document.createElement('button');
-      btn.className   = 'bot-page-chip';
-      btn.textContent = PAGE_MAP[key].label;
-      btn.onclick = ()=>{ showPage(PAGE_MAP[key].page); $('stadtbot-window').classList.remove('open'); botOpen=false; };
+      const btn=document.createElement('button'); btn.className='bot-page-chip';
+      btn.textContent=PAGE_MAP[key].label;
+      btn.onclick=()=>{ showPage(PAGE_MAP[key].page); $('stadtbot-window').classList.remove('open'); botOpen=false; };
       cw.appendChild(btn);
     });
-    bubble.appendChild(cw);
+    bub.appendChild(cw);
   }
-  wrap.appendChild(av); wrap.appendChild(bubble);
+  wrap.appendChild(av); wrap.appendChild(bub);
   botMessages.appendChild(wrap);
   botMessages.scrollTop = botMessages.scrollHeight;
 }
 
 function botShowTyping(){
-  const wrap = document.createElement('div');
-  wrap.className='bot-msg'; wrap.id='bot-typing-indicator';
+  const wrap=document.createElement('div'); wrap.className='bot-msg'; wrap.id='bot-typing-indicator';
   const av=document.createElement('div'); av.className='bot-msg-avatar'; av.textContent='🏛️';
   const t=document.createElement('div'); t.className='bot-typing';
   t.innerHTML='<span></span><span></span><span></span>';
   wrap.appendChild(av); wrap.appendChild(t);
-  botMessages.appendChild(wrap);
-  botMessages.scrollTop=botMessages.scrollHeight;
+  botMessages.appendChild(wrap); botMessages.scrollTop=botMessages.scrollHeight;
 }
-function botHideTyping(){ const el=$('bot-typing-indicator'); if(el)el.remove(); }
+function botHideTyping(){ const el=$('bot-typing-indicator'); if(el) el.remove(); }
 
-async function botSendMessage(text){
-  if(!text.trim()) return;
-  botAddMessage('user',text);
-  botInput.value=''; botInput.style.height='auto';
-  botSend.disabled=true;
-  $('bot-suggestions').style.display='none';
+/* ── Auswahl-Panel rendern ── */
+function showChoices(label, items){
+  botChoiceLabel.textContent = label;
+  botChoiceGrid.innerHTML = '';
+  items.forEach(item=>{
+    const btn = document.createElement('button');
+    btn.className = 'bot-choice-btn';
+    btn.innerHTML = `<span class="choice-icon">${item.icon||'→'}</span><span>${item.label}</span><span class="choice-arrow">›</span>`;
+    btn.onclick = () => item.onClick();
+    botChoiceGrid.appendChild(btn);
+  });
+  botChoicePanel.style.display = 'block';
+}
+function hideChoices(){ botChoicePanel.style.display='none'; }
+
+/* ── Eingabe-Bereich ── */
+function showInputArea(){
+  $('bot-suggestions').style.display = 'flex';
+  $('bot-input-area').style.display  = 'flex';
+}
+function hideInputArea(){
+  $('bot-suggestions').style.display = 'none';
+  $('bot-input-area').style.display  = 'none';
+}
+
+/* ══ FLOW-STEUERUNG ══ */
+
+function botStart(){
+  botMode = 'start';
+  hideSteps();
+  hideInputArea();
+  showChoices('Was kann ich für Sie tun?', [
+    { icon:'ℹ️', label:'Informationen & Auskünfte', onClick: ()=>botGoInfo() },
+    { icon:'📅', label:'Termin buchen',             onClick: ()=>botGoTerminKat() },
+  ]);
+}
+
+/* ── INFO-Zweig ── */
+function botGoInfo(){
+  hideChoices();
+  botAddMessage('user','ℹ️ Informationen & Auskünfte');
+  showSteps(STEPS_INFO, 0);
+  botMode = 'info';
+  setTimeout(()=>{
+    botAddMessage('bot','Gerne beantworte ich Ihre Fragen rund um städtische Leistungen in Paderborn. Was möchten Sie wissen?');
+    showInputArea();
+    document.querySelectorAll('.bot-suggestion').forEach(b=>b.onclick=()=>botSendMessage(b.dataset.text));
+  }, 300);
+}
+
+/* ── TERMIN Schritt 1: Kategorie ── */
+function botGoTerminKat(){
+  hideChoices();
+  botAddMessage('user','📅 Termin buchen');
+  showSteps(STEPS_TERMIN, 0);
+  botMode = 'termin-kat';
+  setTimeout(()=>{
+    botAddMessage('bot','Um welches Anliegen handelt es sich? Bitte wählen Sie eine Kategorie:');
+    showChoices('Kategorie wählen', Object.entries(TERMIN_KATEGORIEN).map(([key, kat])=>({
+      icon: kat.icon, label: kat.label.replace(kat.icon+' ',''),
+      onClick: ()=>botGoTerminSub(key, kat)
+    })));
+  }, 300);
+}
+
+/* ── TERMIN Schritt 2: Leistung ── */
+function botGoTerminSub(katKey, kat){
+  botTerminKat = katKey;
+  hideChoices();
+  botAddMessage('user', kat.icon + ' ' + kat.label.replace(kat.icon+' ',''));
+  showSteps(STEPS_TERMIN, 1);
+  botMode = 'termin-sub';
+  setTimeout(()=>{
+    botAddMessage('bot', `Welche Leistung benötigen Sie im Bereich <strong>${kat.label}</strong>?`);
+    showChoices('Leistung wählen', kat.sub.map(s=>({
+      icon:'→', label: s.label,
+      onClick: ()=>botGoTerminChat(s)
+    })));
+  }, 300);
+}
+
+/* ── TERMIN Schritt 3: Webhook + Chat ── */
+async function botGoTerminChat(sub){
+  botTerminSub = sub.key;
+  hideChoices();
+  botAddMessage('user', sub.label);
+  showSteps(STEPS_TERMIN, 2);
+  botMode = 'termin-chat';
   botShowTyping();
   try{
-    const r = await authFetch(WEBHOOK_BOT,{
-      message:text,
-      timestamp:new Date().toISOString(),
-      currentPage:document.querySelector('.page.active')?.id||'unknown'
-    },BOT_TOKEN);
+    const r = await authFetch(WEBHOOK_BOT, {
+      mode:        'termin',
+      sessionId:   SESSION_ID,
+      kategorie:   botTerminKat,
+      leistung:    sub.key,
+      leistungName:sub.label,
+      message:     'Ich möchte einen Termin für folgende Leistung buchen: ' + sub.label,
+      timestamp:   new Date().toISOString(),
+      currentDateTime: new Date().toLocaleString('de-DE',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}),
+      currentPage: document.querySelector('.page.active')?.id||'unknown'
+    }, BOT_TOKEN);
     const d = await r.json();
     botHideTyping();
-    const reply = d.reply||d.text||d.message||'Ich konnte keine Antwort ermitteln. Bitte versuchen Sie es erneut.';
-    const chips = Array.isArray(d.pages)?d.pages:[];
-    botAddMessage('bot',reply,chips);
-  }catch(err){
+    const reply = d.reply||d.text||d.message||'Ich bin bereit, Ihren Termin zu buchen. Wie ist Ihr Name?';
+    botAddMessage('bot', reply, Array.isArray(d.pages)?d.pages:[]);
+  } catch(e){
     botHideTyping();
-    botAddMessage('bot','⚠️ Es gab einen Verbindungsfehler. Bitte prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.');
+    botAddMessage('bot','⚠️ Verbindungsfehler. Bitte versuchen Sie es erneut.');
   }
-  botSend.disabled=false;
+  showInputArea();
+  document.querySelectorAll('.bot-suggestion').forEach(b=>b.onclick=()=>botSendMessage(b.dataset.text));
 }
 
+/* ── Info-Chat: Nachricht senden ── */
+async function botSendMessage(text){
+  if(!text.trim()) return;
+  botAddMessage('user', text);
+  botInput.value=''; botInput.style.height='auto';
+  botSend.disabled=true;
+  hideInputArea();
+  botShowTyping();
+  try{
+    const r = await authFetch(WEBHOOK_BOT, {
+      mode:        botMode,
+      sessionId:   SESSION_ID,
+      message:     text,
+      kategorie:   botTerminKat||null,
+      leistung:    botTerminSub||null,
+      timestamp:   new Date().toISOString(),
+      currentDateTime: new Date().toLocaleString('de-DE',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}),
+      currentPage: document.querySelector('.page.active')?.id||'unknown'
+    }, BOT_TOKEN);
+    const d = await r.json();
+    botHideTyping();
+    const reply = d.reply||d.text||d.message||'Ich konnte keine Antwort ermitteln.';
+    botAddMessage('bot', reply, Array.isArray(d.pages)?d.pages:[]);
+  } catch(err){
+    botHideTyping();
+    botAddMessage('bot','⚠️ Verbindungsfehler. Bitte prüfen Sie Ihre Internetverbindung.');
+  }
+  botSend.disabled=false;
+  showInputArea();
+}
+
+/* ── Toggle ── */
 $('stadtbot-toggle').onclick = ()=>{
   botOpen=!botOpen;
-  $('stadtbot-window').classList.toggle('open',botOpen);
+  $('stadtbot-window').classList.toggle('open', botOpen);
   if(botOpen){ $('stadtbot-toggle').querySelector('.stadtbot-badge').style.display='none'; botMessages.scrollTop=botMessages.scrollHeight; }
 };
 $('bot-close').onclick = ()=>{ botOpen=false; $('stadtbot-window').classList.remove('open'); };
 botSend.onclick = ()=>botSendMessage(botInput.value);
 botInput.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();botSendMessage(botInput.value);} });
 botInput.addEventListener('input',()=>{ botInput.style.height='auto'; botInput.style.height=Math.min(botInput.scrollHeight,80)+'px'; });
-document.querySelectorAll('.bot-suggestion').forEach(btn=>btn.onclick=()=>botSendMessage(btn.dataset.text));
 
-// Willkommensnachricht
-botAddMessage('bot','Hallo! 👋 Ich bin der PaderbornBot. Ich helfe Ihnen, die richtige Stelle auf diesem Portal zu finden, beantworte Fragen zu städtischen Leistungen und kann Sie direkt zur passenden Seite weiterleiten. Was kann ich für Sie tun?');
+/* ── Start ── */
+botAddMessage('bot','Hallo! 👋 Ich bin der PaderbornBot – Ihr digitaler Assistent für das Stadtportal Paderborn.\n\nWas kann ich für Sie tun?');
+setTimeout(botStart, 400);
 
 /* ══════════════════════════════════════
    SUMMARIZER
