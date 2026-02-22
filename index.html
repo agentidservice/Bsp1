@@ -72,8 +72,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--nav-h);backgro
 .bot-header-name{font-size:15px;font-weight:600;color:#fff}
 .bot-header-status{font-size:11px;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:5px;margin-top:2px}
 .bot-status-dot{width:6px;height:6px;background:#22c55e;border-radius:50%;display:inline-block;animation:pulse-dot 2s infinite}
-.bot-close{background:none;border:none;color:rgba(255,255,255,.5);font-size:20px;cursor:pointer;padding:4px;line-height:1}
-.bot-close:hover{color:#fff}
+.bot-reset{background:none;border:1px solid rgba(255,255,255,.2);border-radius:8px;color:rgba(255,255,255,.6);font-size:11px;font-weight:500;cursor:pointer;padding:5px 10px;font-family:'DM Sans',sans-serif;transition:all .2s;display:none;white-space:nowrap}
+.bot-reset:hover{border-color:var(--accent);color:var(--accent)}
+.bot-reset.visible{display:block}
 
 /* Fortschrittsstrahl */
 .bot-progress-bar-wrap{height:3px;background:rgba(200,169,110,.15);flex-shrink:0;display:none}
@@ -512,10 +513,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--nav-h);backgro
           <div class="bot-header-status"><span class="bot-status-dot"></span> Online – bereit zu helfen</div>
         </div>
       </div>
-      <button class="bot-close" id="bot-close">✕</button>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="bot-reset" id="bot-reset">↩ Neu starten</button>
+        <button class="bot-close" id="bot-close">✕</button>
+      </div>
     </div>
-
-    <!-- Fortschrittsstrahl -->
     <div class="bot-progress-bar-wrap" id="bot-progress-bar-wrap">
       <div class="bot-progress-bar-inner" id="bot-progress-bar-inner"></div>
     </div>
@@ -900,6 +902,8 @@ function showChoices(label, items){
     botChoiceGrid.appendChild(btn);
   });
   botChoicePanel.style.display = 'block';
+  // Auto-scroll chat to bottom so new message + choices are visible
+  setTimeout(()=>{ botMessages.scrollTop = botMessages.scrollHeight; }, 50);
 }
 function hideChoices(){ botChoicePanel.style.display='none'; }
 
@@ -931,6 +935,7 @@ function botGoInfo(){
   hideChoices();
   botAddMessage('user','ℹ️ Informationen & Auskünfte');
   showSteps(STEPS_INFO, 0);
+  showReset();
   botMode = 'info';
   setTimeout(()=>{
     botAddMessage('bot','Gerne beantworte ich Ihre Fragen rund um städtische Leistungen in Paderborn. Was möchten Sie wissen?');
@@ -944,6 +949,7 @@ function botGoTerminKat(){
   hideChoices();
   botAddMessage('user','📅 Termin buchen');
   showSteps(STEPS_TERMIN, 0);
+  showReset();
   botMode = 'termin-kat';
   setTimeout(()=>{
     botAddMessage('bot','Um welches Anliegen handelt es sich? Bitte wählen Sie eine Kategorie:');
@@ -1033,8 +1039,23 @@ async function botSendMessage(text){
   showInputArea();
 }
 
-/* ── Toggle ── */
-$('stadtbot-toggle').onclick = ()=>{
+/* ── Reset-Button ── */
+function showReset(){ $('bot-reset').classList.add('visible'); }
+function hideReset(){ $('bot-reset').classList.remove('visible'); }
+
+$('bot-reset').onclick = ()=>{
+  // Alles zurücksetzen
+  botMessages.innerHTML = '';
+  botMode      = 'start';
+  botTerminKat = null;
+  botTerminSub = null;
+  hideSteps();
+  hideChoices();
+  hideInputArea();
+  hideReset();
+  botAddMessage('bot','Hallo! 👋 Ich bin der PaderbornBot – Ihr digitaler Assistent für das Stadtportal Paderborn.\n\nWas kann ich für Sie tun?');
+  setTimeout(botStart, 400);
+}; = ()=>{
   botOpen=!botOpen;
   $('stadtbot-window').classList.toggle('open', botOpen);
   if(botOpen){ $('stadtbot-toggle').querySelector('.stadtbot-badge').style.display='none'; botMessages.scrollTop=botMessages.scrollHeight; }
