@@ -112,7 +112,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--nav-h);backgro
 .bot-typing span:nth-child(3){animation-delay:.4s}
 
 /* Auswahl-Panel (ersetzt suggestions+input in Guided-Mode) */
-.bot-choice-panel{padding:14px 16px 16px;background:#fff;border-top:1px solid var(--border);flex-shrink:0}
+.bot-choice-panel{padding:14px 16px 16px;background:#fff;border-top:1px solid var(--border);flex-shrink:0;overflow-y:auto;max-height:calc(min(580px,80vh) - 120px)}
 .bot-choice-label{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;text-align:center}
 .bot-choice-grid{display:flex;flex-direction:column;gap:8px}
 .bot-choice-btn{width:100%;padding:11px 16px;background:var(--bg);border:1.5px solid var(--border);border-radius:12px;font-size:13px;font-weight:500;color:var(--text);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;text-align:left;display:flex;align-items:center;gap:10px}
@@ -902,15 +902,21 @@ function showChoices(label, items){
     botChoiceGrid.appendChild(btn);
   });
   botChoicePanel.style.display = 'block';
-  // Auto-scroll chat to bottom so new message + choices are visible
+  // Auf Mobile: Chat ausblenden damit mehr Platz für Optionen
+  if(window.innerWidth <= 768) botMessages.style.display = 'none';
   setTimeout(()=>{ botMessages.scrollTop = botMessages.scrollHeight; }, 50);
 }
-function hideChoices(){ botChoicePanel.style.display='none'; }
+function hideChoices(){
+  botChoicePanel.style.display='none';
+  botMessages.style.display = 'flex';
+}
 
 /* ── Eingabe-Bereich ── */
 function showInputArea(){
-  // Suggestions nur im Info-Modus zeigen, nicht beim Termin-Chat
-  $('bot-suggestions').style.display = (botMode === 'info') ? 'flex' : 'none';
+  // Suggestions: nur Info-Modus, nur solange noch keine User-Nachricht gesendet wurde
+  const userMsgCount = botMessages.querySelectorAll('.bot-msg.user').length;
+  const showSugg = botMode === 'info' && userMsgCount === 0;
+  $('bot-suggestions').style.display = showSugg ? 'flex' : 'none';
   $('bot-input-area').style.display  = 'flex';
 }
 function hideInputArea(){
