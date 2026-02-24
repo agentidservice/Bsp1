@@ -750,7 +750,7 @@ window.showPage = function(name, anchor){
   if(anchor){
     setTimeout(()=>{
       const el = document.getElementById(anchor);
-      if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+      if(el) el.scrollIntoView({behavior:'smooth', block:'center'});
     }, 80);
   } else {
     window.scrollTo(0,0);
