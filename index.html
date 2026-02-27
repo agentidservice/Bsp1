@@ -1024,8 +1024,8 @@ async function botGoTerminChat(sub){
       currentPage: document.querySelector('.page.active')?.id||'unknown'
     }, BOT_TOKEN);
     const d = await r.json();
-    botHideTyping();
-    const reply = d.reply||d.text||d.message||'Ich bin bereit, Ihren Termin zu buchen. Wie ist Ihr Name?';
+const data = Array.isArray(d) ? d[0] : d;
+const reply = data.reply || data.text || data.message || '...';'Ich bin bereit, Ihren Termin zu buchen. Wie ist Ihr Name?';
     botAddMessage('bot', reply, Array.isArray(d.pages)?d.pages:[]);
   } catch(e){
     botHideTyping();
@@ -1055,8 +1055,8 @@ async function botSendMessage(text){
       currentPage: document.querySelector('.page.active')?.id||'unknown'
     }, BOT_TOKEN);
     const d = await r.json();
-    botHideTyping();
-    const reply = d.reply||d.text||d.message||'Ich konnte keine Antwort ermitteln.';
+const data = Array.isArray(d) ? d[0] : d;
+const reply = data.reply || data.text || data.message || '...';'Ich konnte keine Antwort ermitteln.';
     botAddMessage('bot', reply, Array.isArray(d.pages)?d.pages:[]);
   } catch(err){
     botHideTyping();
