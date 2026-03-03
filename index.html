@@ -2875,7 +2875,7 @@ fm.append('formData',JSON.stringify(fd));
 mFiles.forEach((f,i)=>fm.append('image_'+i,f));
 const r=await authFetchForm(WEBHOOK_SEND,fm,MALER_TOKEN);
 const d=await r.json();
-$('m-result-price').textContent = d.price ? 'ca. '+Number(d.price).toLocaleString('de-DE')+' €' : '-';
+$('m-result-price').textContent = d.price ? 'ca. '+Number(d.price).toLocaleString('de-DE', {minimumFractionDigits:2, maximumFractionDigits:2})+' €' : '-';
 $('m-result-duration').textContent = d.duration || '-';
 $('m-result-workers').textContent = d.workers || '-';
 }
