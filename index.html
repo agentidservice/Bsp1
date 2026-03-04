@@ -2026,24 +2026,31 @@ margin-left:3px
 .bot-action-btn.danger:hover{background:#fee2e2}
 .bot-action-btn.primary-btn{background:var(--bg-dark);border-color:var(--bg-dark);color:#fff}
 .bot-action-btn.primary-btn:hover{background:var(--accent-dark);border-color:var(--accent-dark)}
-.bot-cal{background:#fff;border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-top:6px}
-.bot-cal-header{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:#faf9f7;border-bottom:1px solid var(--border)}
-.bot-cal-nav{background:none;border:none;width:26px;height:26px;border-radius:7px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:var(--text-muted);transition:all .2s}
+.bot-cal{background:#fff;border:1.5px solid var(--border);border-radius:14px;overflow:hidden;margin-top:6px;box-shadow:0 4px 16px rgba(0,0,0,.06)}
+.bot-cal-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:var(--bg-dark)}
+.bot-cal-nav{background:rgba(255,255,255,.1);border:none;width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.7);transition:all .2s}
 .bot-cal-nav:hover{background:var(--accent);color:#fff}
-.bot-cal-month{font-size:12px;font-weight:600;color:var(--text)}
-.bot-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;padding:6px}
-.bot-cal-day-name{text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:3px 0}
-.bot-cal-day{text-align:center;padding:6px 2px;border-radius:7px;font-size:11px;cursor:pointer;color:var(--text);transition:all .15s}
-.bot-cal-day:hover:not(.disabled):not(.empty){background:rgba(200,169,110,.15);color:var(--accent-dark)}
-.bot-cal-day.selected{background:var(--bg-dark);color:#fff;font-weight:600}
-.bot-cal-day.today{color:var(--accent-dark);font-weight:700}
-.bot-cal-day.disabled{color:#ccc;cursor:not-allowed}
+.bot-cal-month{font-size:13px;font-weight:700;color:#fff;letter-spacing:.3px}
+.bot-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;padding:10px 8px 6px}
+.bot-cal-day-name{text-align:center;font-size:9px;font-weight:700;color:var(--text-muted);padding:4px 0;text-transform:uppercase;letter-spacing:.5px}
+.bot-cal-day{text-align:center;padding:7px 2px;border-radius:8px;font-size:12px;cursor:pointer;color:var(--text);transition:all .15s;font-weight:500}
+.bot-cal-day:hover:not(.disabled):not(.empty){background:rgba(200,169,110,.18);color:var(--accent-dark)}
+.bot-cal-day.selected{background:var(--bg-dark);color:#fff;font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.bot-cal-day.today{color:var(--accent-dark);font-weight:800;position:relative}
+.bot-cal-day.today::after{content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--accent)}
+.bot-cal-day.disabled{color:#d0ccc6;cursor:not-allowed;font-weight:400}
 .bot-cal-day.empty{cursor:default}
-.bot-time-row{display:flex;gap:5px;flex-wrap:wrap;padding:8px 10px;border-top:1px solid var(--border)}
-.bot-time-slot{padding:5px 9px;border:1.5px solid var(--border);border-radius:7px;font-size:11px;font-weight:500;cursor:pointer;color:var(--text-muted);transition:all .15s}
-.bot-time-slot:hover{border-color:var(--accent);color:var(--accent-dark)}
-.bot-time-slot.selected{background:var(--bg-dark);border-color:var(--bg-dark);color:#fff}
-.upd-info-box{display:none;padding:8px 12px;background:rgba(200,169,110,.1);border:1px solid rgba(200,169,110,.3);border-radius:8px;font-size:12px;color:var(--accent-dark);margin-top:6px}
+.bot-time-section{padding:10px 10px 12px;border-top:1px solid var(--border);background:#faf9f7}
+.bot-time-label{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}
+.bot-time-row{display:flex;gap:5px;flex-wrap:wrap}
+.bot-time-slot{padding:6px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;color:var(--text-muted);transition:all .15s;background:#fff}
+.bot-time-slot:hover{border-color:var(--accent);color:var(--accent-dark);background:rgba(200,169,110,.06)}
+.bot-time-slot.selected{background:var(--bg-dark);border-color:var(--bg-dark);color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.upd-info-box{display:none;padding:9px 13px;background:rgba(200,169,110,.1);border:1px solid rgba(200,169,110,.3);border-radius:8px;font-size:12px;color:var(--accent-dark);margin-top:8px}
+.bot-stelle-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.bot-stelle-btn{padding:8px 10px;border:1.5px solid var(--border);border-radius:10px;font-size:11px;font-weight:500;cursor:pointer;color:var(--text-muted);transition:all .15s;background:#fff;text-align:center;font-family:'DM Sans',sans-serif;line-height:1.3}
+.bot-stelle-btn:hover{border-color:var(--accent);color:var(--accent-dark);background:rgba(200,169,110,.06)}
+.bot-stelle-btn.selected{background:var(--bg-dark);border-color:var(--bg-dark);color:#fff;font-weight:600}
 
 /* ── ANIMATIONS ── */ @keyframes scaleIn {
 from {
@@ -2967,27 +2974,52 @@ function botGoTerminAendern(){
   },300);
 }
 
+const TA_STELLEN=[
+  {icon:'🏠',label:'Meldewesen',key:'meldewesen'},
+  {icon:'🪪',label:'Ausweise & Pässe',key:'ausweise'},
+  {icon:'🚗',label:'Führerschein & Kfz',key:'kfz'},
+  {icon:'💍',label:'Standesamt',key:'standesamt'},
+  {icon:'🏢',label:'Gewerbe',key:'gewerbe'},
+  {icon:'📋',label:'Sonstiges',key:'sonstiges'}
+];
+let taStelle=null;
+
 function showTerminAendernForm(){
+  taStelle=null;
   botChoiceLabel.textContent='Termindetails eingeben';
   botChoiceGrid.innerHTML=`
     <div class="bot-ta-form">
       <div class="bot-ta-field"><label class="bot-ta-label">📛 Name</label>
         <input class="bot-ta-input" id="ta-name" placeholder="Vor- und Nachname"></div>
-      <div class="bot-ta-field"><label class="bot-ta-label">🏛️ Stelle / Leistung</label>
-        <input class="bot-ta-input" id="ta-stelle" placeholder="z.B. Personalausweis"></div>
+      <div class="bot-ta-field"><label class="bot-ta-label">🏛️ Stelle / Bereich</label>
+        <div class="bot-stelle-grid">${TA_STELLEN.map(s=>`<button class="bot-stelle-btn" data-key="${s.key}" onclick="selectTaStelle('${s.key}',this)">${s.icon}<br>${s.label}</button>`).join('')}</div></div>
       <div class="bot-ta-field"><label class="bot-ta-label">📅 Datum des Termins</label>
         <input class="bot-ta-input" id="ta-datum" type="date"></div>
       <div class="bot-ta-field"><label class="bot-ta-label">🔐 Sicherheitscode</label>
-        <input class="bot-ta-input" id="ta-code" placeholder="z.B. bruecke847"></div>
+        <input class="bot-ta-input" id="ta-code" placeholder="000-000-000" maxlength="11" oninput="formatTaCode(this)"></div>
       <button class="bot-ta-submit" id="ta-submit" onclick="submitTerminAendern()">🔍 Termin prüfen</button>
     </div>`;
   botChoicePanel.style.display='block';
   botMessages.classList.add('collapsed');
 }
 
+window.selectTaStelle=function(key,el){
+  taStelle=key;
+  document.querySelectorAll('.bot-stelle-btn').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+};
+
+window.formatTaCode=function(input){
+  let v=input.value.replace(/\D/g,'');
+  if(v.length>9)v=v.slice(0,9);
+  if(v.length>6) v=v.slice(0,3)+'-'+v.slice(3,6)+'-'+v.slice(6);
+  else if(v.length>3) v=v.slice(0,3)+'-'+v.slice(3);
+  input.value=v;
+};
+
 window.submitTerminAendern=async function(){
-  const name=$('ta-name').value.trim(),stelle=$('ta-stelle').value.trim(),datum=$('ta-datum').value,code=$('ta-code').value.trim();
-  if(!name||!stelle||!datum||!code){
+  const name=$('ta-name').value.trim(),stelle=taStelle,datum=$('ta-datum').value,code=$('ta-code').value.trim();
+  if(!name||!stelle||!datum||!code||code.length<11){
     const btn=$('ta-submit');
     btn.textContent='⚠️ Alle Felder ausfüllen';
     setTimeout(()=>{btn.textContent='🔍 Termin prüfen';},2000);
@@ -3077,10 +3109,7 @@ function renderCalendar(){
     const cls=['bot-cal-day',isSel?'selected':'',isToday?'today':'',(isPast||isWE)?'disabled':''].filter(Boolean).join(' ');
     days+=`<div class="${cls}"${!(isPast||isWE)?` onclick="selectCalDay('${ds}')"`:''}>${d}</div>`;
   }
-  let timeHTML='';
-  if(calState.selectedDate){
-    timeHTML=`<div class="bot-time-row">${TIME_SLOTS.map(t=>`<div class="bot-time-slot${calState.selectedTime===t?' selected':''}" onclick="selectTimeSlot('${t}')">${t}</div>`).join('')}</div>`;
-  }
+  const timeHTML='';
   cont.innerHTML=`<div class="bot-cal">
     <div class="bot-cal-header">
       <button class="bot-cal-nav" onclick="calNav(-1)">‹</button>
@@ -3101,30 +3130,27 @@ window.selectTimeSlot=function(t){calState.selectedTime=t;renderCalendar();updat
 
 function updateUpdInfo(){
   const info=$('upd-info'),sub=$('upd-submit');if(!info||!sub)return;
-  if(calState.selectedDate&&calState.selectedTime){
+  if(calState.selectedDate){
     const [y2,m2,d2]=calState.selectedDate.split('-');
     info.style.display='block';
-    info.innerHTML=`✅ <strong>${d2}.${m2}.${y2}</strong> um <strong>${calState.selectedTime} Uhr</strong>`;
+    info.innerHTML=`✅ <strong>${d2}.${m2}.${y2}</strong>`;
     sub.disabled=false;
-  } else if(calState.selectedDate){
-    const [y2,m2,d2]=calState.selectedDate.split('-');
-    info.style.display='block';info.innerHTML=`📅 ${d2}.${m2}.${y2} – bitte Uhrzeit wählen`;sub.disabled=true;
   } else {info.style.display='none';sub.disabled=true;}
 }
 
 window.submitUpdate=async function(){
   const stelle=$('upd-stelle')?.value;
-  if(!stelle||!calState.selectedDate||!calState.selectedTime)return;
+  if(!stelle||!calState.selectedDate)return;
   const [y2,m2,d2]=calState.selectedDate.split('-');
   const fmt=`${d2}.${m2}.${y2}`;
   hideChoices();
-  botAddMessage('user',`📅 ${stelle} – ${fmt} ${calState.selectedTime} Uhr`);
+  botAddMessage('user',`📅 ${stelle} – ${fmt}`);
   botShowTyping();
   try{
-    const r=await authFetch(WEBHOOK_TA_UPDATE,{...taData,newStelle:stelle,newDate:calState.selectedDate,newTime:calState.selectedTime,newDateTime:`${calState.selectedDate}T${calState.selectedTime}:00`,timestamp:new Date().toISOString()},TA_TOKEN);
+    const r=await authFetch(WEBHOOK_TA_UPDATE,{...taData,newStelle:stelle,newDate:calState.selectedDate,timestamp:new Date().toISOString()},TA_TOKEN);
     const d=await r.json();const data=Array.isArray(d)?d[0]:d;
     botHideTyping();showSteps(STEPS_AENDERN,2);
-    botAddMessage('bot',data.reply||data.message||`✅ Ihr Termin wurde erfolgreich auf ${fmt} um ${calState.selectedTime} Uhr verschoben!`);
+    botAddMessage('bot',data.reply||data.message||`✅ Ihr Termin wurde erfolgreich auf ${fmt} verschoben!`);
   }catch(e){botHideTyping();botAddMessage('bot','⚠️ Verbindungsfehler beim Aktualisieren.');}
 };
 
