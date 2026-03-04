@@ -2416,7 +2416,12 @@ av.className='bot-msg-avatar';
 av.textContent = role==='user' ? '👤' : '🏛️';
 const bub = document.createElement('div');
 bub.className='bot-msg-bubble';
-bub.innerHTML = text.replace(/\n/g,'<br>');
+bub.innerHTML = text
+  .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+  .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+  .replace(/\*(.+?)\*/g,'<em>$1</em>')
+  .replace(/`(.+?)`/g,'<code style="background:rgba(0,0,0,.07);padding:1px 5px;border-radius:4px;font-size:12px">$1</code>')
+  .replace(/\n/g,'<br>');
 if(chips && chips.length){
 const cw = document.createElement('div');
 cw.className='bot-page-chip-wrap';
