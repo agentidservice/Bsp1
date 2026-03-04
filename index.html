@@ -2009,6 +2009,41 @@ font-weight:bold;
 margin-left:3px
 }
 
+
+/* ── TERMIN ÄNDERN ── */
+.bot-ta-form{padding:0 2px}
+.bot-ta-field{margin-bottom:11px}
+.bot-ta-label{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:5px;display:block}
+.bot-ta-input,.bot-stelle-select{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--text);background:#faf9f7;outline:none;transition:border-color .2s}
+.bot-ta-input:focus,.bot-stelle-select:focus{border-color:var(--accent)}
+.bot-stelle-select{appearance:none;cursor:pointer}
+.bot-ta-submit{width:100%;padding:11px;background:var(--bg-dark);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;margin-top:4px;font-family:'DM Sans',sans-serif;transition:all .2s}
+.bot-ta-submit:hover{background:var(--accent-dark)}
+.bot-ta-submit:disabled{opacity:.4;cursor:not-allowed}
+.bot-action-btn{width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:10px;transition:all .2s;margin-bottom:8px;background:#fff}
+.bot-action-btn.danger{background:#fef2f2;border-color:#fca5a5;color:#dc2626}
+.bot-action-btn.danger:hover{background:#fee2e2}
+.bot-action-btn.primary-btn{background:var(--bg-dark);border-color:var(--bg-dark);color:#fff}
+.bot-action-btn.primary-btn:hover{background:var(--accent-dark);border-color:var(--accent-dark)}
+.bot-cal{background:#fff;border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-top:6px}
+.bot-cal-header{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:#faf9f7;border-bottom:1px solid var(--border)}
+.bot-cal-nav{background:none;border:none;width:26px;height:26px;border-radius:7px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:var(--text-muted);transition:all .2s}
+.bot-cal-nav:hover{background:var(--accent);color:#fff}
+.bot-cal-month{font-size:12px;font-weight:600;color:var(--text)}
+.bot-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;padding:6px}
+.bot-cal-day-name{text-align:center;font-size:9px;font-weight:600;color:var(--text-muted);padding:3px 0}
+.bot-cal-day{text-align:center;padding:6px 2px;border-radius:7px;font-size:11px;cursor:pointer;color:var(--text);transition:all .15s}
+.bot-cal-day:hover:not(.disabled):not(.empty){background:rgba(200,169,110,.15);color:var(--accent-dark)}
+.bot-cal-day.selected{background:var(--bg-dark);color:#fff;font-weight:600}
+.bot-cal-day.today{color:var(--accent-dark);font-weight:700}
+.bot-cal-day.disabled{color:#ccc;cursor:not-allowed}
+.bot-cal-day.empty{cursor:default}
+.bot-time-row{display:flex;gap:5px;flex-wrap:wrap;padding:8px 10px;border-top:1px solid var(--border)}
+.bot-time-slot{padding:5px 9px;border:1.5px solid var(--border);border-radius:7px;font-size:11px;font-weight:500;cursor:pointer;color:var(--text-muted);transition:all .15s}
+.bot-time-slot:hover{border-color:var(--accent);color:var(--accent-dark)}
+.bot-time-slot.selected{background:var(--bg-dark);border-color:var(--bg-dark);color:#fff}
+.upd-info-box{display:none;padding:8px 12px;background:rgba(200,169,110,.1);border:1px solid rgba(200,169,110,.3);border-radius:8px;font-size:12px;color:var(--accent-dark);margin-top:6px}
+
 /* ── ANIMATIONS ── */ @keyframes scaleIn {
 from {
 opacity:0;
@@ -2903,5 +2938,187 @@ $('maler-body').scrollTop=0;
 },1500);
 };
 mUpdateProgress();
+
+/* ══════════════════════════════════════ TERMIN ÄNDERN ══════════════════════════════════════ */
+const STEPS_AENDERN=[{label:'Prüfen'},{label:'Aktion'},{label:'Fertig'}];
+let taData={};
+let calState={year:new Date().getFullYear(),month:new Date().getMonth(),selectedDate:null,selectedTime:null};
+const STELLE_OPTIONS=['Anmeldung / Ummeldung','Abmeldung','Personalausweis','Reisepass','Kinderreisepass','Führerschein','Kfz-Zulassung','Kfz-Abmeldung','Eheschließung','Geburtsurkunde','Sterbeurkunde','Gewerbeanmeldung','Gewerbeabmeldung','Führungszeugnis','Beglaubigung'];
+const TIME_SLOTS=['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30'];
+
+function botGoTerminAendern(){
+  hideChoices();
+  $('stadtbot-window').classList.add('expanded');
+  botAddMessage('user','✏️ Termin ändern / Stornieren');
+  showSteps(STEPS_AENDERN,0);
+  showReset();
+  botMode='termin-aendern';
+  setTimeout(()=>{
+    botAddMessage('bot','Bitte füllen Sie das Formular aus, damit wir Ihren Termin finden können:');
+    showTerminAendernForm();
+  },300);
+}
+
+function showTerminAendernForm(){
+  botChoiceLabel.textContent='Termindetails eingeben';
+  botChoiceGrid.innerHTML=`
+    <div class="bot-ta-form">
+      <div class="bot-ta-field"><label class="bot-ta-label">📛 Name</label>
+        <input class="bot-ta-input" id="ta-name" placeholder="Vor- und Nachname"></div>
+      <div class="bot-ta-field"><label class="bot-ta-label">🏛️ Stelle / Leistung</label>
+        <input class="bot-ta-input" id="ta-stelle" placeholder="z.B. Personalausweis"></div>
+      <div class="bot-ta-field"><label class="bot-ta-label">📅 Datum des Termins</label>
+        <input class="bot-ta-input" id="ta-datum" type="date"></div>
+      <div class="bot-ta-field"><label class="bot-ta-label">🔐 Sicherheitscode</label>
+        <input class="bot-ta-input" id="ta-code" placeholder="z.B. bruecke847"></div>
+      <button class="bot-ta-submit" id="ta-submit" onclick="submitTerminAendern()">🔍 Termin prüfen</button>
+    </div>`;
+  botChoicePanel.style.display='block';
+  botMessages.classList.add('collapsed');
+}
+
+window.submitTerminAendern=async function(){
+  const name=$('ta-name').value.trim(),stelle=$('ta-stelle').value.trim(),datum=$('ta-datum').value,code=$('ta-code').value.trim();
+  if(!name||!stelle||!datum||!code){
+    const btn=$('ta-submit');
+    btn.textContent='⚠️ Alle Felder ausfüllen';
+    setTimeout(()=>{btn.textContent='🔍 Termin prüfen';},2000);
+    return;
+  }
+  taData={name,stelle,datum,code};
+  $('ta-submit').disabled=true;$('ta-submit').textContent='⏳ Wird geprüft...';
+  hideChoices();
+  botAddMessage('user',`🔍 ${name} · ${stelle} · ${datum.split('-').reverse().join('.')}`);
+  botShowTyping();
+  try{
+    const r=await authFetch(WEBHOOK_BOT,{mode:'termin-aendern-check',sessionId:SESSION_ID,name,stelle,datum,code,timestamp:new Date().toISOString()},BOT_TOKEN);
+    const d=await r.json();const data=Array.isArray(d)?d[0]:d;
+    botHideTyping();
+    if(data.found||data.valid){
+      taData.eventId=data.eventId||null;
+      showSteps(STEPS_AENDERN,1);
+      botAddMessage('bot','✅ Termin gefunden!\n\n'+(data.eventDetails||stelle+' am '+datum.split('-').reverse().join('.'))+'\n\nWas möchten Sie tun?');
+      showAktionChoice();
+    } else {
+      showSteps(STEPS_AENDERN,0);
+      botAddMessage('bot','❌ '+(data.message||'Termin nicht gefunden. Bitte überprüfen Sie Ihre Angaben.'));
+      setTimeout(()=>showTerminAendernForm(),400);
+    }
+  }catch(e){botHideTyping();botAddMessage('bot','⚠️ Verbindungsfehler. Bitte erneut versuchen.');setTimeout(()=>showTerminAendernForm(),400);}
+};
+
+function showAktionChoice(){
+  botChoiceLabel.textContent='Was möchten Sie tun?';
+  botChoiceGrid.innerHTML=`
+    <button class="bot-action-btn primary-btn" onclick="botGoUpdaten()"><span>🔄</span><span>Termin verschieben</span></button>
+    <button class="bot-action-btn danger" onclick="botGoStornieren()"><span>🗑️</span><span>Termin stornieren</span></button>`;
+  botChoicePanel.style.display='block';
+  botMessages.classList.add('collapsed');
+}
+
+window.botGoStornieren=async function(){
+  hideChoices();
+  botAddMessage('user','🗑️ Termin stornieren');
+  botShowTyping();
+  try{
+    const r=await authFetch(WEBHOOK_BOT,{mode:'termin-stornieren',sessionId:SESSION_ID,...taData,timestamp:new Date().toISOString()},BOT_TOKEN);
+    const d=await r.json();const data=Array.isArray(d)?d[0]:d;
+    botHideTyping();showSteps(STEPS_AENDERN,2);
+    botAddMessage('bot',data.reply||data.message||'✅ Ihr Termin wurde erfolgreich storniert.');
+  }catch(e){botHideTyping();botAddMessage('bot','⚠️ Verbindungsfehler beim Stornieren.');}
+};
+
+window.botGoUpdaten=function(){
+  hideChoices();
+  botAddMessage('user','🔄 Termin verschieben');
+  botMode='termin-updaten';
+  calState={year:new Date().getFullYear(),month:new Date().getMonth(),selectedDate:null,selectedTime:null};
+  setTimeout(()=>{botAddMessage('bot','Bitte wählen Sie die neue Stelle und das neue Datum:');showUpdateForm();},300);
+};
+
+function showUpdateForm(){
+  botChoiceLabel.textContent='Neuen Termin wählen';
+  botChoiceGrid.innerHTML=`<div class="bot-ta-form">
+    <div class="bot-ta-field"><label class="bot-ta-label">🏛️ Stelle / Leistung</label>
+      <select class="bot-stelle-select" id="upd-stelle">${STELLE_OPTIONS.map(s=>`<option value="${s}"${s===taData.stelle?' selected':''}>${s}</option>`).join('')}</select></div>
+    <div class="bot-ta-field"><label class="bot-ta-label">📅 Neues Datum & Uhrzeit</label>
+      <div id="bot-cal-container"></div></div>
+    <div class="upd-info-box" id="upd-info"></div>
+    <button class="bot-ta-submit" id="upd-submit" onclick="submitUpdate()" disabled>📅 Termin ändern</button>
+  </div>`;
+  botChoicePanel.style.display='block';
+  botMessages.classList.add('collapsed');
+  renderCalendar();
+}
+
+function renderCalendar(){
+  const cont=$('bot-cal-container');if(!cont)return;
+  const now=new Date(),y=calState.year,m=calState.month;
+  const mNames=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+  const dNames=['Mo','Di','Mi','Do','Fr','Sa','So'];
+  const firstDay=new Date(y,m,1).getDay(),firstMon=(firstDay+6)%7,dim=new Date(y,m+1,0).getDate();
+  let days=dNames.map(d=>`<div class="bot-cal-day-name">${d}</div>`).join('');
+  for(let i=0;i<firstMon;i++)days+=`<div class="bot-cal-day empty"></div>`;
+  for(let d=1;d<=dim;d++){
+    const date=new Date(y,m,d);
+    const isToday=date.toDateString()===now.toDateString();
+    const isPast=date<new Date(now.getFullYear(),now.getMonth(),now.getDate());
+    const isWE=date.getDay()===0||date.getDay()===6;
+    const ds=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isSel=calState.selectedDate===ds;
+    const cls=['bot-cal-day',isSel?'selected':'',isToday?'today':'',(isPast||isWE)?'disabled':''].filter(Boolean).join(' ');
+    days+=`<div class="${cls}"${!(isPast||isWE)?` onclick="selectCalDay('${ds}')"`:''}>${d}</div>`;
+  }
+  let timeHTML='';
+  if(calState.selectedDate){
+    timeHTML=`<div class="bot-time-row">${TIME_SLOTS.map(t=>`<div class="bot-time-slot${calState.selectedTime===t?' selected':''}" onclick="selectTimeSlot('${t}')">${t}</div>`).join('')}</div>`;
+  }
+  cont.innerHTML=`<div class="bot-cal">
+    <div class="bot-cal-header">
+      <button class="bot-cal-nav" onclick="calNav(-1)">‹</button>
+      <span class="bot-cal-month">${mNames[m]} ${y}</span>
+      <button class="bot-cal-nav" onclick="calNav(1)">›</button>
+    </div>
+    <div class="bot-cal-grid">${days}</div>${timeHTML}</div>`;
+}
+
+window.calNav=function(dir){
+  calState.month+=dir;
+  if(calState.month>11){calState.month=0;calState.year++;}
+  if(calState.month<0){calState.month=11;calState.year--;}
+  renderCalendar();
+};
+window.selectCalDay=function(ds){calState.selectedDate=ds;calState.selectedTime=null;renderCalendar();updateUpdInfo();};
+window.selectTimeSlot=function(t){calState.selectedTime=t;renderCalendar();updateUpdInfo();};
+
+function updateUpdInfo(){
+  const info=$('upd-info'),sub=$('upd-submit');if(!info||!sub)return;
+  if(calState.selectedDate&&calState.selectedTime){
+    const [y2,m2,d2]=calState.selectedDate.split('-');
+    info.style.display='block';
+    info.innerHTML=`✅ <strong>${d2}.${m2}.${y2}</strong> um <strong>${calState.selectedTime} Uhr</strong>`;
+    sub.disabled=false;
+  } else if(calState.selectedDate){
+    const [y2,m2,d2]=calState.selectedDate.split('-');
+    info.style.display='block';info.innerHTML=`📅 ${d2}.${m2}.${y2} – bitte Uhrzeit wählen`;sub.disabled=true;
+  } else {info.style.display='none';sub.disabled=true;}
+}
+
+window.submitUpdate=async function(){
+  const stelle=$('upd-stelle')?.value;
+  if(!stelle||!calState.selectedDate||!calState.selectedTime)return;
+  const [y2,m2,d2]=calState.selectedDate.split('-');
+  const fmt=`${d2}.${m2}.${y2}`;
+  hideChoices();
+  botAddMessage('user',`📅 ${stelle} – ${fmt} ${calState.selectedTime} Uhr`);
+  botShowTyping();
+  try{
+    const r=await authFetch(WEBHOOK_BOT,{mode:'termin-update',sessionId:SESSION_ID,...taData,newStelle:stelle,newDate:calState.selectedDate,newTime:calState.selectedTime,newDateTime:`${calState.selectedDate}T${calState.selectedTime}:00`,timestamp:new Date().toISOString()},BOT_TOKEN);
+    const d=await r.json();const data=Array.isArray(d)?d[0]:d;
+    botHideTyping();showSteps(STEPS_AENDERN,2);
+    botAddMessage('bot',data.reply||data.message||`✅ Ihr Termin wurde erfolgreich auf ${fmt} um ${calState.selectedTime} Uhr verschoben!`);
+  }catch(e){botHideTyping();botAddMessage('bot','⚠️ Verbindungsfehler beim Aktualisieren.');}
+};
+
 })();
 </script> </body> </html>
