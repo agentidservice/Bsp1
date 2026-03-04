@@ -353,8 +353,8 @@ color:var(--accent-dark)
 
 /* ── STADTBOT (unten links) ── */ .stadtbot-widget {
 position:fixed;
-left:20px;
-bottom:20px;
+left:16px;
+bottom:16px;
 z-index:900;
 display:flex;
 flex-direction:column;
@@ -402,10 +402,10 @@ animation:pulse-dot 2s infinite
 }
 
 .stadtbot-window {
-position:absolute;
-bottom:76px;
-left:0;
-width:min(400px,92vw);
+position:fixed;
+bottom:96px;
+left:16px;
+width:min(400px,calc(100vw - 32px));
 background:#fff;
 border-radius:20px;
 border:1px solid var(--border);
@@ -413,7 +413,7 @@ box-shadow:0 25px 60px rgba(0,0,0,.15);
 display:none;
 flex-direction:column;
 overflow:hidden;
-height:auto
+max-height:calc(100vh - 112px)
 }
 
 .stadtbot-window.open {
@@ -422,7 +422,8 @@ animation:scaleInLeft .3s ease-out
 }
 
 .stadtbot-window.expanded {
-height:min(580px,80vh)
+height:auto;
+max-height:calc(100vh - 112px)
 }
 
 /* Bot Header */ .bot-header {
@@ -2251,8 +2252,10 @@ bottom:10px
 }
 
 .stadtbot-window {
-width:min(350px,92vw);
-height:min(500px,80vh)
+width:calc(100vw - 24px);
+left:12px;
+bottom:88px;
+max-height:calc(100vh - 104px)
 }
 
 .maler-window {
@@ -2269,6 +2272,10 @@ const WEBHOOK_BOT = 'https://seidel1502.app.n8n.cloud/webhook/bc482480-47c0-4914
 const MALER_TOKEN = '0Xpj42sQ#g*kjpYP3cRsPawHAUH#U_&Mt&rlgnqPcnfsclT-';
 const SUMMARIZE_TOKEN = '1Xpj42sQ#g*kjpYP3cRsPawHAUH#U_&Mt&rlgnqPcnfsclT-';
 const BOT_TOKEN = 'cidg-pidg-12345-678910-v1v';
+const TA_TOKEN = 'jghdjscdcjsbsjfsjk-127653286412';
+const WEBHOOK_TA_VALIDATE = 'https://seidel1502.app.n8n.cloud/webhook/7b1ef35c-358d-412a-b22d-d76a2ad9729a';
+const WEBHOOK_TA_UPDATE = 'https://seidel1502.app.n8n.cloud/webhook/84fbb548-4f5d-4eda-8cf8-b1acf6747297';
+const WEBHOOK_TA_STORNIEREN = 'https://seidel1502.app.n8n.cloud/webhook-test/6b88924a-c283-446f-8961-9e0065f4beb9';
 const $ = id => document.getElementById(id);
 function authFetch(url, body, token){
 return fetch(url,{
@@ -2481,7 +2488,8 @@ hideSteps();
 hideInputArea();
 showChoices('Was kann ich für Sie tun?', [ {
 icon:'ℹ️', label:'Informationen & Auskünfte', onClick: ()=>botGoInfo() }, {
-icon:'📅', label:'Termin buchen', onClick: ()=>botGoTerminKat() }, ]);
+icon:'📅', label:'Termin buchen', onClick: ()=>botGoTerminKat() }, {
+icon:'✏️', label:'Termin ändern / Stornieren', onClick: ()=>botGoTerminAendern() }, ]);
 }
 function botGoInfo(){
 hideChoices();
@@ -2991,7 +2999,7 @@ window.submitTerminAendern=async function(){
   botAddMessage('user',`🔍 ${name} · ${stelle} · ${datum.split('-').reverse().join('.')}`);
   botShowTyping();
   try{
-    const r=await authFetch(WEBHOOK_BOT,{mode:'termin-aendern-check',sessionId:SESSION_ID,name,stelle,datum,code,timestamp:new Date().toISOString()},BOT_TOKEN);
+    const r=await authFetch(WEBHOOK_TA_VALIDATE,{name,stelle,datum,code,timestamp:new Date().toISOString()},TA_TOKEN);
     const d=await r.json();const data=Array.isArray(d)?d[0]:d;
     botHideTyping();
     if(data.found||data.valid){
@@ -3021,7 +3029,7 @@ window.botGoStornieren=async function(){
   botAddMessage('user','🗑️ Termin stornieren');
   botShowTyping();
   try{
-    const r=await authFetch(WEBHOOK_BOT,{mode:'termin-stornieren',sessionId:SESSION_ID,...taData,timestamp:new Date().toISOString()},BOT_TOKEN);
+    const r=await authFetch(WEBHOOK_TA_STORNIEREN,{...taData,timestamp:new Date().toISOString()},TA_TOKEN);
     const d=await r.json();const data=Array.isArray(d)?d[0]:d;
     botHideTyping();showSteps(STEPS_AENDERN,2);
     botAddMessage('bot',data.reply||data.message||'✅ Ihr Termin wurde erfolgreich storniert.');
@@ -3113,7 +3121,7 @@ window.submitUpdate=async function(){
   botAddMessage('user',`📅 ${stelle} – ${fmt} ${calState.selectedTime} Uhr`);
   botShowTyping();
   try{
-    const r=await authFetch(WEBHOOK_BOT,{mode:'termin-update',sessionId:SESSION_ID,...taData,newStelle:stelle,newDate:calState.selectedDate,newTime:calState.selectedTime,newDateTime:`${calState.selectedDate}T${calState.selectedTime}:00`,timestamp:new Date().toISOString()},BOT_TOKEN);
+    const r=await authFetch(WEBHOOK_TA_UPDATE,{...taData,newStelle:stelle,newDate:calState.selectedDate,newTime:calState.selectedTime,newDateTime:`${calState.selectedDate}T${calState.selectedTime}:00`,timestamp:new Date().toISOString()},TA_TOKEN);
     const d=await r.json();const data=Array.isArray(d)?d[0]:d;
     botHideTyping();showSteps(STEPS_AENDERN,2);
     botAddMessage('bot',data.reply||data.message||`✅ Ihr Termin wurde erfolgreich auf ${fmt} um ${calState.selectedTime} Uhr verschoben!`);
