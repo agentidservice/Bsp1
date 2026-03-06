@@ -1208,7 +1208,7 @@ margin-bottom:4px;
 letter-spacing:.3px
 }
 
-/* FIX: CSS erzeugt kein eigenes Bullet mehr – n8n liefert das Zeichen bereits */ .sum-bullet {
+.sum-bullet {
 padding-left:14px;
 position:relative;
 color:rgba(255,255,255,.8);
@@ -2048,7 +2048,7 @@ margin-left:3px
 .bot-time-slot.selected{background:var(--bg-dark);border-color:var(--bg-dark);color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.15)}
 .upd-info-box{display:none;padding:9px 13px;background:rgba(200,169,110,.1);border:1px solid rgba(200,169,110,.3);border-radius:8px;font-size:12px;color:var(--accent-dark);margin-top:8px}
 .bot-stelle-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.bot-stelle-btn{padding:8px 10px;border:1.5px solid var(--border);border-radius:10px;font-size:11px;font-weight:500;cursor:pointer;color:var(--text-muted);transition:all .15s;background:#fff;text-align:center;font-family:'DM Sans',sans-serif;line-height:1.3}
+.bot-stelle-btn{padding:8px 10px;border:1.5px solid var(--border);border-radius:10px;font-size:11px;font-weight:500;cursor:pointer;color:var(--text-muted);transition:all .15px;background:#fff;text-align:center;font-family:'DM Sans',sans-serif;line-height:1.3}
 .bot-stelle-btn:hover{border-color:var(--accent);color:var(--accent-dark);background:rgba(200,169,110,.06)}
 .bot-stelle-btn.selected{background:var(--bg-dark);border-color:var(--bg-dark);color:#fff;font-weight:600}
 
@@ -2270,9 +2270,9 @@ width:min(360px,92vw)
 }
 
 }
-</style> </head> <body> <!-- NAV --> <nav> <div class="nav-logo">Stadt<span>Portal</span></div> <div class="nav-links"> <button class="nav-link active" onclick="showPage('home')">Übersicht</button> <button class="nav-link" onclick="showPage('buerger')">Bürgerservice</button> <button class="nav-link" onclick="showPage('verkehr')">Verkehr</button> <button class="nav-link" onclick="showPage('kultur')">Kultur</button> <button class="nav-link" onclick="showPage('umwelt')">Umwelt</button> <button class="nav-link" onclick="showPage('maler')">🎨 Malerbetrieb</button> </div> <button class="nav-hamburger" id="nav-hamburger" aria-label="Menü öffnen"> <span></span><span></span><span></span> </button> </nav> <!-- MOBILES MENÜ --> <div class="mobile-nav-overlay" id="mobile-nav-overlay"> <button class="mobile-nav-close" id="mobile-nav-close">✕</button> <button class="nav-link" onclick="showPage('home');closeMobileNav()">Übersicht</button> <button class="nav-link" onclick="showPage('buerger');closeMobileNav()">Bürgerservice</button> <button class="nav-link" onclick="showPage('verkehr');closeMobileNav()">Verkehr</button> <button class="nav-link" onclick="showPage('kultur');closeMobileNav()">Kultur</button> <button class="nav-link" onclick="showPage('umwelt');closeMobileNav()">Umwelt</button> <button class="nav-link" onclick="showPage('maler');closeMobileNav()">🎨 Malerbetrieb</button> </div> <!-- HOME --> <div class="page active" id="page-home"> <div class="hero"> <div class="hero-tag">Willkommen im digitalen Stadtportal</div> <h1>Paderborn.<br>Einfach. Digital. Nah.</h1> <p>Ihr zentraler Anlaufpunkt für alle städtischen Dienstleistungen, Informationen und Bürgeranliegen – übersichtlich, schnell und rund um die Uhr erreichbar.</p> <div class="hero-btns"> <button class="btn-primary" onclick="showPage('buerger')">Bürgerservice entdecken</button> <button class="btn-secondary" onclick="showPage('verkehr')">Verkehr & Mobilität</button> </div> </div> <div class="section"> <div class="section-header"> <div class="section-tag">Unsere Leistungen</div> <h2 class="section-title">Was können wir für Sie tun?</h2> </div> <div class="cards-grid"> <div class="card" onclick="showPage('buerger')"><div class="card-icon">🏛️</div><div class="card-title">Bürgerservice</div><div class="card-desc">Anmeldungen, Ausweise, Formulare und Behördengänge – alles digital und ohne Wartezeit.</div></div> <div class="card" onclick="showPage('verkehr')"><div class="card-icon">🚌</div><div class="card-title">Verkehr & Mobilität</div><div class="card-desc">ÖPNV-Fahrpläne, Baustellen, Parkzonen und aktuelle Verkehrsmeldungen in Echtzeit.</div></div> <div class="card" onclick="showPage('kultur')"><div class="card-icon">🎭</div><div class="card-title">Kultur & Freizeit</div><div class="card-desc">Veranstaltungen, Museen, Sportstätten und das kulturelle Leben der Stadt auf einen Blick.</div></div> <div class="card" onclick="showPage('umwelt')"><div class="card-icon">🌿</div><div class="card-title">Umwelt & Nachhaltigkeit</div><div class="card-desc">Abfallentsorgung, Recycling, Grünflächen und städtische Klimaschutzinitiativen.</div></div> </div> </div> </div> <!-- BÜRGERSERVICE --> <div class="page" id="page-buerger" data-content="true"> <div class="article-hero"><div class="section-tag">Bürgerservice</div><h1>Ihre Anlaufstelle für alle Behördenangelegenheiten</h1></div> <div class="article-body"> <p>Der Bürgerservice der Stadt Paderborn ist Ihr zentraler Ansprechpartner für nahezu alle Verwaltungsangelegenheiten des täglichen Lebens. Ob Ummeldung, Personalausweis, Führungszeugnis oder die Beantragung eines Gewerbescheins – wir sind für Sie da, sowohl persönlich in unseren Servicezentren als auch digital über dieses Portal.</p> <h2 id="anker-meldewesen">Meldewesen und Ausweise</h2> <p>Das Meldewesen bildet die Grundlage für viele weitere Verwaltungsvorgänge. Eine fristgerechte Anmeldung innerhalb von zwei Wochen nach dem Einzug ist gesetzlich vorgeschrieben. In Paderborn können Sie Ihre Ummeldung bequem online über unser Portal vornehmen, ohne persönlich erscheinen zu müssen.</p> <p>Der Personalausweis ist das wichtigste Identifikationsdokument für deutsche Staatsbürgerinnen und Staatsbürger. Er wird ab dem 16. Lebensjahr Pflicht und hat eine Gültigkeitsdauer von zehn Jahren für Erwachsene und sechs Jahren für Minderjährige. Der neue Ausweis wird in der Regel innerhalb von drei bis vier Wochen zugestellt.</p> <p>Der Reisepass ist erforderlich für Reisen in Länder, die den Personalausweis nicht als Einreisedokument akzeptieren. Er ist für Erwachsene zehn Jahre gültig, für Kinder unter zwölf Jahren sechs Jahre. Auch hier ist ein persönliches Erscheinen bei der Beantragung notwendig, da Fingerabdrücke genommen werden.</p> <div class="info-box"><p><strong>Tipp:</strong> Nutzen Sie die Online-Terminvereinbarung, um Wartezeiten zu vermeiden. Viele Leistungen können außerdem vollständig digital beantragt werden – ohne Behördengang. Termine können bis zu acht Wochen im Voraus gebucht werden.</p></div> <h2 id="anker-gewerbe">Gewerbeanmeldung und Unternehmensservice</h2> <p>Wer in Paderborn ein Gewerbe betreiben möchte, muss dieses bei der zuständigen Behörde anmelden. Der Prozess ist bewusst einfach gestaltet: Sie füllen das Formular online aus, laden die erforderlichen Unterlagen hoch und erhalten innerhalb weniger Werktage Ihre Gewerbeanmeldebestätigung. Die Gebühr für eine Gewerbeanmeldung beträgt in Paderborn 26 Euro.</p> <p>Für Gründerinnen und Gründer bietet die Stadt Paderborn in Kooperation mit der Wirtschaftsförderungsgesellschaft kostenlose Erstberatungen an. Die Beratungsstelle ist dienstags und donnerstags von 9:00 bis 12:00 Uhr ohne Voranmeldung erreichbar.</p> <h2 id="anker-fuehrungszeugnis">Führungszeugnisse und Beglaubigungen</h2> <p>Ein einfaches Führungszeugnis können Sie bequem online über das Bundeszentralregister beantragen. Die Gebühr beträgt 13 Euro. Die Bearbeitungszeit beträgt in der Regel ein bis zwei Wochen. Ehrenamtliche erhalten das erweiterte Führungszeugnis kostenfrei.</p> <h2 id="anker-standesamt">Standesamt und Personenstandswesen</h2> <p>Das Standesamt ist zuständig für alle Angelegenheiten des Personenstandswesens: von der Beurkundung von Geburten und Sterbefällen über die Eheschließung bis hin zur Ausstellung von Personenstandsurkunden. Heiratswillige Paare können sich ab sechs Monate vor dem gewünschten Trautermin beim Standesamt anmelden.</p> <p>Geburten müssen dem Standesamt innerhalb von sieben Tagen nach der Entbindung gemeldet werden. Die Gebühr für eine einfache Urkunde beträgt 12 Euro, für jede weitere Ausfertigung 6 Euro.</p> <h2 id="anker-kfz">Kfz-Zulassung und Fahrerlaubnisbehörde</h2> <p>Die Kfz-Zulassungsstelle befindet sich im Technischen Rathaus in der Pontanusstraße und ist montags bis freitags von 7:30 bis 15:00 Uhr geöffnet, donnerstags bis 17:30 Uhr. Seit Einführung des i-Kfz-Systems ist auch eine vollständig digitale Zulassung möglich.</p> <h2>Sozialleistungen und Unterstützungsangebote</h2> <p>Das Sozialamt der Stadt Paderborn berät und unterstützt Menschen in schwierigen Lebenslagen. Dazu gehören Leistungen der Grundsicherung im Alter und bei Erwerbsminderung, Hilfe zur Pflege und Eingliederungshilfe für Menschen mit Behinderungen. Die Beratung ist vertraulich und kostenlos.</p> <h2>Öffnungszeiten und Kontakt</h2> <p>Unsere Servicezentren sind Montag bis Freitag von 8:00 bis 16:00 Uhr geöffnet, donnerstags verlängert bis 18:00 Uhr. Samstags ist das Servicezentrum Innenstadt von 9:00 bis 12:00 Uhr geöffnet. Das Bürgertelefon unter 05251 88-0 ist werktags von 8:00 bis 17:00 Uhr erreichbar.</p> </div> </div> <!-- VERKEHR --> <div class="page" id="page-verkehr" data-content="true"> <div class="article-hero"><div class="section-tag">Verkehr & Mobilität</div><h1>Paderborn bewegt sich – sicher, nachhaltig und vernetzt</h1></div> <div class="article-body"> <p>Die Mobilität in Paderborn befindet sich im Wandel. Die Stadt investiert konsequent in den Ausbau eines nachhaltigen Verkehrsnetzes, das alle Verkehrsteilnehmerinnen und Verkehrsteilnehmer gleichermaßen berücksichtigt.</p> <h2 id="anker-oepnv">Öffentlicher Personennahverkehr</h2> <p>Der ÖPNV in Paderborn wird vom Nahverkehr Paderborn-Lippe (NPL) koordiniert. Das Busnetz umfasst über 30 Linien und verbindet nahezu alle Stadtteile sowie viele umliegende Gemeinden. Die Taktzeiten auf den Hauptstrecken betragen zu Stoßzeiten zehn Minuten, im Grundtakt zwanzig Minuten.</p> <p>Das Deutschlandticket gilt im gesamten Verbundnetz und kann bequem digital abonniert werden. Für Schülerinnen und Schüler, Auszubildende und Studierende gibt es vergünstigte Zeitkarten. Senioren ab 65 Jahren erhalten auf Antrag eine Seniorenkarte zu besonders günstigen Konditionen.</p> <div class="info-box"><p><strong>Aktuell:</strong> Die Linie 68 wird bis Ende März 2025 aufgrund von Bauarbeiten an der Detmolder Straße umgeleitet. Bitte beachten Sie die aktuellen Aushänge und Informationen in der PaderSprinter-App.</p></div> <h2 id="anker-fahrrad">Radverkehr und Fahrradinfrastruktur</h2> <p>Paderborn hat sich das ehrgeizige Ziel gesetzt, bis 2030 eine der fahrradfreundlichsten Städte Nordrhein-Westfalens zu werden. Das Radwegenetz umfasst heute über 280 Kilometer ausgeschilderte Radwege, Fahrradstraßen und Schutzstreifen.</p> <p>Das Paderborn-Bike-Sharing-System bietet 200 Leihräder und 60 E-Bikes an 35 Stationen im gesamten Stadtgebiet. Die Ausleihe erfolgt unkompliziert per App oder Chipkarte. Die ersten 30 Minuten sind bei vielen Tarifen kostenfrei.</p> <p>Der Radschnellweg Paderborn–Detmold befindet sich in der Planung und soll ab 2027 eine direkte, weitgehend kreuzungsfreie Radverbindung zwischen den beiden Städten ermöglichen. Das Projekt wird zu 80 Prozent vom Land Nordrhein-Westfalen und vom Bund gefördert.</p> <h2>Aktuelle Baustellen und Verkehrsbehinderungen</h2> <p>Die wichtigsten aktuellen Maßnahmen umfassen die Erneuerung der Wasserleitung in der Westernstraße (voraussichtlich bis Ende April), die Brückensanierung an der Paderborner Straße sowie die Fahrbahnmarkierungsarbeiten auf dem Westernring, die in Nachtarbeit durchgeführt werden. Alle Baustellen werden im interaktiven Baustellenplan auf unserem Portal aktuell gehalten.</p> <h2>Parken in der Innenstadt</h2> <p>In der Paderborner Innenstadt stehen rund 3.500 bewirtschaftete Parkplätze in zwölf Parkhäusern zur Verfügung. Die Parkgebühren betragen derzeit zwischen einem und zwei Euro pro Stunde. Kurzzeitparken bis zu 30 Minuten ist in mehreren Zonen der Innenstadt kostenlos, sofern eine Parkscheibe ausgelegt wird.</p> <h2>Elektromobilität und Ladeinfrastruktur</h2> <p>Aktuell gibt es 87 öffentliche Ladepunkte im Stadtgebiet, davon 14 Schnellladepunkte mit einer Leistung von mindestens 50 Kilowatt. Bis Ende 2026 soll die Zahl der öffentlichen Ladepunkte auf 200 steigen.</p> <h2>Carsharing und Mobilitätsstationen</h2> <p>An derzeit acht Mobilitätsstationen im Stadtgebiet sind Carsharing-Fahrzeuge, Leihräder und E-Scooter gebündelt verfügbar. Das Angebot soll bis 2026 auf 20 Stationen ausgebaut werden.</p> <h2>Barrierefreiheit im Verkehr</h2> <p>Alle neu gebauten oder grundlegend sanierten Haltestellen werden barrierefrei ausgebaut. Bis 2028 sollen alle Bushaltestellen im Stadtgebiet barrierefrei zugänglich sein.</p> </div> </div> <!-- KULTUR --> <div class="page" id="page-kultur" data-content="true"> <div class="article-hero"><div class="section-tag">Kultur & Freizeit</div><h1>Paderborn – eine Stadt mit Geschichte, Herz und Kreativität</h1></div> <div class="article-body"> <p>Paderborn ist eine Stadt mit einer über 1.200-jährigen Geschichte, die in jedem Winkel des Stadtbildes spürbar ist. Kunst, Geschichte, Musik und Geselligkeit bilden in Paderborn eine lebendige Einheit, die Einheimische wie Gäste gleichermaßen begeistert.</p> <h2>Museen und historische Stätten</h2> <p>Das Erzbischöfliche Diözesanmuseum Paderborn beherbergt eine der bedeutendsten Sammlungen mittelalterlicher Sakralkunst in Deutschland. Das Museum ist Dienstag bis Sonntag von 10:00 bis 18:00 Uhr geöffnet, donnerstags bis 20:00 Uhr. Der Eintritt beträgt 7 Euro für Erwachsene, 5 Euro für Ermäßigte, Kinder bis 12 Jahre haben freien Eintritt.</p> <p>Das Museum in der Kaiserpfalz führt Besucherinnen und Besucher durch die archäologische Geschichte Paderborns, von den frühgeschichtlichen Siedlungsspuren über die karolingische Pfalz Karls des Großen bis zur ottonischen Blütezeit.</p> <div class="info-box"><p><strong>Empfehlung:</strong> Mit dem Paderborn-Museumspass erhalten Sie freien Eintritt in alle städtischen Museen für ein ganzes Jahr zum Preis von nur 25 Euro – ein ideales Geschenk für Kulturbegeisterte.</p></div> <h2>Theater und Bühnen</h2> <p>Das Theater Paderborn bespielt drei Bühnen mit einem breiten Programm aus Schauspiel, Oper, Operette, Tanz und Kinder- und Jugendtheater. Die Spielzeit 2024/25 umfasst über 200 Aufführungen. Für Schülerinnen, Schüler und Studierende gibt es stark vergünstigte Karten – bis zu 50 Prozent Rabatt.</p> <h2>Stadtfeste und Veranstaltungen</h2> <p>Das Libori-Fest ist das älteste und bedeutendste Volksfest Westfalens. Es findet jährlich um den 23. Juli statt und zieht jedes Jahr über eine Million Besucherinnen und Besucher in die Stadt.</p> <p>Der Paderborner Weihnachtsmarkt zählt zu den schönsten in ganz Nordrhein-Westfalen. Über 120 Stände laden zum Bummeln, Genießen und Verweilen ein. Der Markt öffnet jedes Jahr am ersten Adventswochenende und ist bis zum 23. Dezember täglich von 11:00 bis 21:00 Uhr geöffnet.</p> <h2>Sport und Freizeitanlagen</h2> <p>Das Paderbad ist das moderne Freizeitbad der Stadt mit Saunalandschaft, Wellenbad und Outdoor-Bereich. Eintrittspreise: Erwachsene 8 Euro, Kinder 5 Euro, Familientageskarte 20 Euro.</p> <p>Der SC Paderborn 07 spielt aktuell in der 2. Bundesliga. Heimspiele finden in der Benteler-Arena statt, die Platz für 15.000 Zuschauer bietet.</p> <h2>Bibliotheken und Bildungseinrichtungen</h2> <p>Die Stadtbibliothek Paderborn ist mit über 180.000 Medien eine der größten öffentlichen Bibliotheken Ostwestfalens. Geöffnet Montag bis Freitag von 10:00 bis 19:00 Uhr und Samstag von 10:00 bis 14:00 Uhr. Der Jahresbeitrag beträgt 20 Euro, für Kinder und Jugendliche ist er kostenlos.</p> </div> </div> <!-- UMWELT --> <div class="page" id="page-umwelt" data-content="true"> <div class="article-hero"><div class="section-tag">Umwelt & Nachhaltigkeit</div><h1>Paderborn handelt – für eine lebenswerte Stadt von morgen</h1></div> <div class="article-body"> <p>Der Klimawandel ist eine der zentralen Herausforderungen unserer Zeit. Die Stadt Paderborn begegnet dieser Herausforderung mit einem umfassenden Klimaschutzkonzept. Das Ziel: Bis 2040 soll Paderborn klimaneutral sein.</p> <h2>Abfallentsorgung und Recycling</h2> <p>Die Entsorgungsbetriebe Paderborn (EBP) organisieren die Abfallentsorgung für alle Haushalte und Gewerbetreibenden in der Stadt. Die Abfuhrtermine variieren je nach Stadtbezirk und sind im Abfuhrkalender auf unserem Portal nachzuschlagen.</p> <p>Die Biotonne nimmt alle kompostierbaren Küchenabfälle auf. Bitte verwenden Sie keine Plastikbeutel. Die Wertstoffhöfe an der Stettiner Straße und am Dörener Feld nehmen Elektroschrott, Sperrmüll und gefährliche Abfälle kostenlos entgegen. Öffnungszeiten: Montag bis Freitag 7:30–17:00 Uhr, Samstag 8:00–13:00 Uhr.</p> <div class="info-box"><p><strong>Neu ab April 2025:</strong> Alttextilien und Altkleider können an sechs neuen Standorten im Stadtgebiet abgegeben werden. Gut erhaltene Kleidung sollte jedoch lieber an Sozialkaufhäuser oder die Kleiderkammern der karitativen Einrichtungen gespendet werden.</p></div> <h2>Stadtgrün und Biodiversität</h2> <p>Paderborn verfügt über rund 1.200 Hektar städtische Grünflächen, Parks, Wälder und Bachläufe. Das Stadtbaumkonzept sieht vor, bis 2030 insgesamt 5.000 neue Bäume im Stadtgebiet zu pflanzen. Bürgerinnen und Bürger können eine Baumpatenschaft übernehmen.</p> <p>Seit 2022 hat die Stadt Paderborn über 40 Hektar neue Blühflächen geschaffen, die Bienen, Schmetterlingen und anderen Insekten wertvolle Lebensräume bieten.</p> <h2>Energie und Klimaschutz</h2> <p>Im Rahmen des Klimaschutzkonzepts konnten die Energieverbräuche der städtischen Liegenschaften in den letzten zehn Jahren um durchschnittlich 28 Prozent reduziert werden. Die Photovoltaik-Offensive hat bereits dazu geführt, dass über 60 städtische Gebäude mit Solaranlagen ausgestattet wurden.</p> <p>Bis 2028 sollen weitere 8.000 Haushalte ans Fernwärmenetz angeschlossen werden. Hausbesitzerinnen und Hausbesitzer profitieren von einem Zuschuss von bis zu 5.000 Euro aus dem städtischen Klimaschutzfonds.</p> <h2>Wasser und Gewässerschutz</h2> <p>Das Trinkwasser in Paderborn kommt aus dem stadtnahen Wasserwerk Haxtergrund und ist von hervorragender Qualität. Es wird regelmäßig auf über 50 Parameter untersucht und erfüllt alle gesetzlichen Anforderungen deutlich.</p> <h2>Umweltberatung und Förderprogramme</h2> <p>Die städtische Umweltberatung steht Bürgerinnen und Bürgern sowie Unternehmen kostenlos zur Verfügung. Der städtische Klimaschutzfonds fördert Projekte mit einem messbaren Beitrag zur Reduktion von Treibhausgasemissionen mit 500 bis 10.000 Euro. Anträge können jährlich bis zum 31. März gestellt werden.</p> </div> </div> <!-- MALER --> <div class="page" id="page-maler"> <div class="hero"> <div class="hero-tag">Partnerseite</div> <h1>ProjektBau GmbH – Ihr Malerbetrieb in Paderborn</h1> <p>Nutzen Sie das Widget unten rechts, um eine unverbindliche Preisschätzung für Ihr Malerprojekt zu erhalten.</p> </div> <div class="section" style="text-align:center;padding:60px 48px"> <div class="section-tag">Ihr Angebot</div> <h2 class="section-title" style="margin-bottom:20px">Klicken Sie auf das 🎨 Widget unten rechts</h2> <p style="color:var(--text-muted);font-size:16px">Füllen Sie das Formular aus und erhalten Sie sofort eine Preisschätzung für Ihr Projekt.</p> </div> </div> <!-- ══════════════════════════════════════ STADTBOT WIDGET (unten links) ══════════════════════════════════════ --> <div class="stadtbot-widget" id="stadtbot-widget"> <div class="stadtbot-window" id="stadtbot-window"> <!-- Header --> <div class="bot-header"> <div class="bot-header-left"> <div class="bot-avatar">🏛️</div> <div> <div class="bot-header-name">PaderbornBot</div> <div class="bot-header-status"><span class="bot-status-dot"></span> Online – bereit zu helfen</div> </div> </div> <div style="display:flex;align-items:center;gap:8px"> <button class="bot-reset" id="bot-reset">↩ Neu starten</button> <button class="bot-close" id="bot-close">✕</button> </div> </div> <div class="bot-progress-bar-wrap" id="bot-progress-bar-wrap"> <div class="bot-progress-bar-inner" id="bot-progress-bar-inner"></div> </div> <!-- Schritt-Indikatoren --> <div class="bot-steps-row" id="bot-steps-row"> <!-- Wird per JS befüllt --> </div> <!-- Chat-Nachrichten --> <div class="bot-messages" id="bot-messages"></div> <!-- Auswahl-Panel (Guided Mode) --> <div class="bot-choice-panel" id="bot-choice-panel" style="display:none"> <div class="bot-choice-label" id="bot-choice-label">Bitte wählen Sie</div> <div class="bot-choice-grid" id="bot-choice-grid"></div> </div> <!-- Normaler Chat-Input (Info Mode) --> <div class="bot-suggestions" id="bot-suggestions" style="display:none"> <button class="bot-suggestion" data-text="Wo finde ich Infos zum Personalausweis?">🪪 Personalausweis</button> <button class="bot-suggestion" data-text="Wo finde ich Infos zur Fahrradinfrastruktur?">🚲 Fahrrad</button> <button class="bot-suggestion" data-text="Was kostet die Gewerbeanmeldung?">🏢 Gewerbe</button> </div> <div class="bot-input-area" id="bot-input-area" style="display:none"> <textarea class="bot-input" id="bot-input" rows="1" placeholder="Ihre Frage an PaderbornBot ..."></textarea> <button class="bot-send" id="bot-send">➤</button> </div> </div> <button class="stadtbot-toggle" id="stadtbot-toggle" aria-label="Stadtbot öffnen"> 🏛️<span class="stadtbot-badge">!</span> </button> </div> <!-- ══════════════════════════════════════ MALER WIDGET (unten rechts) ══════════════════════════════════════ --> <div class="maler-widget" id="maler-widget" style="display:none"> <button class="maler-toggle" id="maler-toggle">🎨</button> <div class="maler-window" id="maler-window"> <div class="maler-loading" id="maler-loading"><div class="maler-loading-spinner"></div><div class="maler-loading-text">Anfrage wird verarbeitet...</div></div> <div class="maler-header"> <div class="maler-header-left"><div class="maler-logo">🎨</div><div><div class="maler-title">ProjektBau GmbH</div><div class="maler-subtitle">Malerbetrieb • Paderborn</div></div></div> <button class="maler-close" id="maler-close">✕</button> </div> <div class="maler-progress"><div class="maler-progress-bar" id="maler-progress-bar"></div></div> <div class="maler-body" id="maler-body"> <div id="maler-form-view"> <div class="m-welcome"><p><strong>Willkommen!</strong> Füllen Sie das Formular aus und erhalten Sie sofort eine <strong>Preisschätzung</strong>.</p></div> <form id="maler-form"> <div class="m-section"> <div class="m-section-title">Kundentyp</div> <div class="m-type-toggle"> <button type="button" class="m-type-btn active" data-type="privat">🏠 Privat</button> <button type="button" class="m-type-btn" data-type="gewerbe">🏢 Gewerblich</button> </div> </div> <div class="m-val-box" id="m-privat-box"> <div class="m-val-row"> <div class="m-float-group"><input type="text" class="m-float-input" id="m-location-privat" placeholder=" "><label class="m-float-label">Ort (Stadt/PLZ)<span class="req">*</span></label></div> <button type="button" class="m-val-btn" id="m-validate-privat-btn"><span class="spinner"></span><span class="btn-icon">🔍</span> Prüfen</button> </div> <div class="m-val-status" id="m-privat-status"></div> </div> <div class="m-val-box" id="m-gewerbe-box" style="display:none"> <div class="m-group"><div class="m-float-group"><input type="text" class="m-float-input" id="m-company" placeholder=" "><label class="m-float-label">Firmenname<span class="req">*</span></label></div></div> <div class="m-val-row"> <div class="m-float-group"><input type="text" class="m-float-input" id="m-location-gewerbe" placeholder=" "><label class="m-float-label">Ort<span class="req">*</span></label></div> <button type="button" class="m-val-btn" id="m-validate-gewerbe-btn"><span class="spinner"></span><span class="btn-icon">🔍</span> Prüfen</button> </div> <div class="m-val-status" id="m-gewerbe-status"></div> </div> <div class="m-section"> <div class="m-section-title">Kontaktdaten</div> <div class="m-group"><div class="m-input-wrap"><div class="m-float-group"><input type="text" class="m-float-input" id="m-name" placeholder=" "><label class="m-float-label">Ihr Name<span class="req">*</span></label><span class="m-input-status" id="m-name-status"></span></div></div><div class="m-field-error" id="m-name-error"></div></div> <div class="m-row"> <div class="m-group"><div class="m-float-group"><input type="email" class="m-float-input" id="m-email" placeholder=" "><label class="m-float-label">E-Mail (optional)</label></div></div> <div class="m-group"><div class="m-input-wrap"><div class="m-float-group"><input type="tel" class="m-float-input" id="m-phone" placeholder=" "><label class="m-float-label">Telefon<span class="req">*</span></label><span class="m-input-status" id="m-phone-status"></span></div></div></div> </div> </div> <div class="m-section"> <div class="m-section-title">Gewünschte Leistung</div> <div class="m-service-grid" id="m-services"> <div class="m-service-option" data-service="1"><div class="m-service-check">✓</div><span class="m-service-name">🖌️ Innenwände streichen</span></div> <div class="m-service-option" data-service="2"><div class="m-service-check">✓</div><span class="m-service-name">🏠 Fassade streichen</span></div> <div class="m-service-option" data-service="3"><div class="m-service-check">✓</div><span class="m-service-name">📜 Tapezieren</span></div> <div class="m-service-option" data-service="4"><div class="m-service-check">✓</div><span class="m-service-name">🚪 Türen/Fenster lackieren</span></div> <div class="m-service-option" data-service="5"><div class="m-service-check">✓</div><span class="m-service-name">🧱 Verputzen/Grundieren</span></div> <div class="m-service-option" data-service="6"><div class="m-service-check">✓</div><span class="m-service-name">✨ Dekorative Techniken</span></div> </div> </div> <div class="m-section"> <div class="m-section-title">Projektdetails</div> <div class="m-row"> <div class="m-group"><div class="m-float-group"><input type="text" class="m-float-input" id="m-size" placeholder=" "><label class="m-float-label">Größe (z.B. 50m2)<span class="req">*</span></label></div></div> <div class="m-group"><div class="m-float-group"><input type="text" class="m-float-input" id="m-timeframe" placeholder=" "><label class="m-float-label">Zeitraum<span class="req">*</span></label></div></div> </div> </div> <div class="m-section"> <div class="m-group"><div class="m-textarea-group"><textarea class="m-textarea" id="m-description" placeholder=" "></textarea><label class="m-textarea-label">Beschreibung (optional)</label></div></div> </div> <div class="m-section"> <div class="m-section-title">Bilder (optional)</div> <div class="m-file-upload"><input type="file" id="m-images" multiple accept="image/*"><div class="m-file-upload-icon">📷</div><div class="m-file-upload-text">Bilder hochladen</div><div class="m-file-upload-hint">JPG, PNG bis 10MB</div></div> <div class="m-file-list" id="m-file-list"></div> </div> <div class="m-checklist"> <div class="m-checklist-title">Checkliste</div> <div class="m-checklist-items"> <div class="m-check-item" id="m-check-location"><span class="m-check-icon">○</span><span>Standort geprüft</span></div> <div class="m-check-item" id="m-check-name"><span class="m-check-icon">○</span><span>Name gültig</span></div> <div class="m-check-item" id="m-check-phone"><span class="m-check-icon">○</span><span>Telefon gültig</span></div> <div class="m-check-item" id="m-check-service"><span class="m-check-icon">○</span><span>Leistung gewählt</span></div> <div class="m-check-item" id="m-check-details"><span class="m-check-icon">○</span><span>Details ausgefüllt</span></div> </div> </div> <div class="m-dsgvo"> <label class="m-dsgvo-row" for="m-dsgvo"> <input type="checkbox" id="m-dsgvo"> <span>Ich stimme der <button type="button" class="m-dsgvo-toggle" id="m-dsgvo-toggle">Datenschutzerklärung</button> zu.</span> </label> <div class="m-dsgvo-details" id="m-dsgvo-details"><strong style="color:#f59e0b">Kurzinfo:</strong> Ihre Daten werden nur zur Bearbeitung Ihrer Anfrage verwendet.</div> </div> <button type="submit" class="m-submit" id="m-submit" disabled><span class="spinner"></span><span class="btn-text">🚀 Anfrage absenden</span></button> </form> </div> <div class="m-result" id="maler-result-view"> <div class="m-result-success"><div class="m-result-icon">✅</div><h3>Anfrage erhalten!</h3><p>Wir melden uns schnellstmöglich</p></div> <div class="m-result-highlight"> <div class="m-result-highlight-item"><span class="m-result-highlight-label">💰 Preis</span><span class="m-result-highlight-value" id="m-result-price">-</span></div> <div class="m-result-highlight-item"><span class="m-result-highlight-label">📅 Dauer</span><span class="m-result-highlight-value" id="m-result-duration">-</span></div> <div class="m-result-highlight-item"><span class="m-result-highlight-label">👷 MA</span><span class="m-result-highlight-value" id="m-result-workers">-</span></div> </div> <div class="m-result-summary"> <div class="m-result-summary-title">📋 Ihre Anfrage</div> <div class="m-result-row"><span class="lbl">Kundentyp</span><span class="val" id="m-result-type">-</span></div> <div class="m-result-row" id="m-result-company-row" style="display:none"><span class="lbl">Firma</span><span class="val" id="m-result-company">-</span></div> <div class="m-result-row"><span class="lbl">Name</span><span class="val" id="m-result-name">-</span></div> <div class="m-result-row" id="m-result-email-row" style="display:none"><span class="lbl">E-Mail</span><span class="val" id="m-result-email">-</span></div> <div class="m-result-row"><span class="lbl">Telefon</span><span class="val" id="m-result-phone">-</span></div> <div class="m-result-row"><span class="lbl">Standort</span><span class="val" id="m-result-location">-</span></div> <div class="m-result-row"><span class="lbl">Leistung</span><span class="val" id="m-result-service">-</span></div> <div class="m-result-row"><span class="lbl">Umfang</span><span class="val" id="m-result-size">-</span></div> <div class="m-result-row"><span class="lbl">Zeitraum</span><span class="val" id="m-result-timeframe">-</span></div> </div> <p class="m-disclaimer">Unverbindliche Schätzung. Abweichung ±15–20% möglich.</p> </div> </div> </div> </div> <!-- ══════════════════════════════════════ SUMMARIZER WIDGET (unten mitte) ══════════════════════════════════════ --> <div class="summarizer-widget" id="summarizer-widget" style="display:none"> <div class="summarizer-panel" id="sum-panel"> <div class="sum-header"> <div class="sum-header-left"><span class="sum-header-icon">🧠</span><div><div class="sum-header-title">KI-Zusammenfassung</div><div class="sum-header-sub">Diese Seite analysieren</div></div></div> <button class="sum-close" id="sum-close">✕</button> </div> <div class="sum-filter"> <div class="sum-filter-label">Filtern nach <span class="filter-optional">(optional)</span></div> <div class="sum-filter-row"> <div class="filter-chip" data-filter="alles">Alles</div> <div class="filter-chip" data-filter="wichtigste">Wichtigstes</div> <div class="filter-chip" data-filter="kontakt">Kontakt & Zeiten</div> <div class="filter-chip" data-filter="fristen">Fristen & Termine</div> <div class="filter-chip" data-filter="kosten">Kosten & Gebühren</div> </div> <div class="filter-custom-wrap"><input type="text" class="filter-custom-input" id="filter-custom" placeholder="Eigener Filter, z.B. „Voraussetzungen" oder „Dokumente" ..."></div> </div> <div class="sum-result" id="sum-result"><div class="sum-result-inner"><div class="sum-result-text" id="sum-result-text"></div></div></div> <div class="sum-footer"><button class="sum-submit" id="sum-submit"><span class="spinner"></span><span class="btn-text">✨ Zusammenfassen</span></button></div> </div> <button class="summarizer-btn" id="sum-toggle"><span class="s-emoji">🧠</span><span>KI-Zusammenfassung</span><span class="s-pulse"></span></button> </div> <!-- ══════════════════════════════════════ JAVASCRIPT ══════════════════════════════════════ --> <script>
+</style> </head> <body> <!-- NAV --> <nav> <div class="nav-logo">Stadt<span>Portal</span></div> <div class="nav-links"> <button class="nav-link active" onclick="showPage('home')">Übersicht</button> <button class="nav-link" onclick="showPage('buerger')">Bürgerservice</button> <button class="nav-link" onclick="showPage('verkehr')">Verkehr</button> <button class="nav-link" onclick="showPage('kultur')">Kultur</button> <button class="nav-link" onclick="showPage('umwelt')">Umwelt</button> <button class="nav-link" onclick="showPage('maler')">🎨 Malerbetrieb</button> </div> <button class="nav-hamburger" id="nav-hamburger" aria-label="Menü öffnen"> <span></span><span></span><span></span> </button> </nav> <!-- MOBILES MENÜ --> <div class="mobile-nav-overlay" id="mobile-nav-overlay"> <button class="mobile-nav-close" id="mobile-nav-close">✕</button> <button class="nav-link" onclick="showPage('home');closeMobileNav()">Übersicht</button> <button class="nav-link" onclick="showPage('buerger');closeMobileNav()">Bürgerservice</button> <button class="nav-link" onclick="showPage('verkehr');closeMobileNav()">Verkehr</button> <button class="nav-link" onclick="showPage('kultur');closeMobileNav()">Kultur</button> <button class="nav-link" onclick="showPage('umwelt');closeMobileNav()">Umwelt</button> <button class="nav-link" onclick="showPage('maler');closeMobileNav()">🎨 Malerbetrieb</button> </div> <!-- HOME --> <div class="page active" id="page-home"> <div class="hero"> <div class="hero-tag">Willkommen im digitalen Stadtportal</div> <h1>Paderborn.<br>Einfach. Digital. Nah.</h1> <p>Ihr zentraler Anlaufpunkt für alle städtischen Dienstleistungen, Informationen und Bürgeranliegen – übersichtlich, schnell und rund um die Uhr erreichbar.</p> <div class="hero-btns"> <button class="btn-primary" onclick="showPage('buerger')">Bürgerservice entdecken</button> <button class="btn-secondary" onclick="showPage('verkehr')">Verkehr & Mobilität</button> </div> </div> <div class="section"> <div class="section-header"> <div class="section-tag">Unsere Leistungen</div> <h2 class="section-title">Was können wir für Sie tun?</h2> </div> <div class="cards-grid"> <div class="card" onclick="showPage('buerger')"><div class="card-icon">🏛️</div><div class="card-title">Bürgerservice</div><div class="card-desc">Anmeldungen, Ausweise, Formulare und Behördengänge – alles digital und ohne Wartezeit.</div></div> <div class="card" onclick="showPage('verkehr')"><div class="card-icon">🚌</div><div class="card-title">Verkehr & Mobilität</div><div class="card-desc">ÖPNV-Fahrpläne, Baustellen, Parkzonen und aktuelle Verkehrsmeldungen in Echtzeit.</div></div> <div class="card" onclick="showPage('kultur')"><div class="card-icon">🎭</div><div class="card-title">Kultur & Freizeit</div><div class="card-desc">Veranstaltungen, Museen, Sportstätten und das kulturelle Leben der Stadt auf einen Blick.</div></div> <div class="card" onclick="showPage('umwelt')"><div class="card-icon">🌿</div><div class="card-title">Umwelt & Nachhaltigkeit</div><div class="card-desc">Abfallentsorgung, Recycling, Grünflächen und städtische Klimaschutzinitiativen.</div></div> </div> </div> </div> <!-- BÜRGERSERVICE --> <div class="page" id="page-buerger" data-content="true"> <div class="article-hero"><div class="section-tag">Bürgerservice</div><h1>Ihre Anlaufstelle für alle Behördenangelegenheiten</h1></div> <div class="article-body"> <p>Der Bürgerservice der Stadt Paderborn ist Ihr zentraler Ansprechpartner für nahezu alle Verwaltungsangelegenheiten des täglichen Lebens. Ob Ummeldung, Personalausweis, Führungszeugnis oder die Beantragung eines Gewerbescheins – wir sind für Sie da, sowohl persönlich in unseren Servicezentren als auch digital über dieses Portal.</p> <h2 id="anker-meldewesen">Meldewesen und Ausweise</h2> <p>Das Meldewesen bildet die Grundlage für viele weitere Verwaltungsvorgänge. Eine fristgerechte Anmeldung innerhalb von zwei Wochen nach dem Einzug ist gesetzlich vorgeschrieben. In Paderborn können Sie Ihre Ummeldung bequem online über unser Portal vornehmen, ohne persönlich erscheinen zu müssen.</p> <p>Der Personalausweis ist das wichtigste Identifikationsdokument für deutsche Staatsbürgerinnen und Staatsbürger. Er wird ab dem 16. Lebensjahr Pflicht und hat eine Gültigkeitsdauer von zehn Jahren für Erwachsene und sechs Jahren für Minderjährige. Der neue Ausweis wird in der Regel innerhalb von drei bis vier Wochen zugestellt.</p> <p>Der Reisepass ist erforderlich für Reisen in Länder, die den Personalausweis nicht als Einreisedokument akzeptieren. Er ist für Erwachsene zehn Jahre gültig, für Kinder unter zwölf Jahren sechs Jahre. Auch hier ist ein persönliches Erscheinen bei der Beantragung notwendig, da Fingerabdrücke genommen werden.</p> <div class="info-box"><p><strong>Tipp:</strong> Nutzen Sie die Online-Terminvereinbarung, um Wartezeiten zu vermeiden. Viele Leistungen können außerdem vollständig digital beantragt werden – ohne Behördengang. Termine können bis zu acht Wochen im Voraus gebucht werden.</p></div> <h2 id="anker-gewerbe">Gewerbeanmeldung und Unternehmensservice</h2> <p>Wer in Paderborn ein Gewerbe betreiben möchte, muss dieses bei der zuständigen Behörde anmelden. Der Prozess ist bewusst einfach gestaltet: Sie füllen das Formular online aus, laden die erforderlichen Unterlagen hoch und erhalten innerhalb weniger Werktage Ihre Gewerbeanmeldebestätigung. Die Gebühr für eine Gewerbeanmeldung beträgt in Paderborn 26 Euro.</p> <p>Für Gründerinnen und Gründer bietet die Stadt Paderborn in Kooperation mit der Wirtschaftsförderungsgesellschaft kostenlose Erstberatungen an. Die Beratungsstelle ist dienstags und donnerstags von 9:00 bis 12:00 Uhr ohne Voranmeldung erreichbar.</p> <h2 id="anker-fuehrungszeugnis">Führungszeugnisse und Beglaubigungen</h2> <p>Ein einfaches Führungszeugnis können Sie bequem online über das Bundeszentralregister beantragen. Die Gebühr beträgt 13 Euro. Die Bearbeitungszeit beträgt in der Regel ein bis zwei Wochen. Ehrenamtliche erhalten das erweiterte Führungszeugnis kostenfrei.</p> <h2 id="anker-standesamt">Standesamt und Personenstandswesen</h2> <p>Das Standesamt ist zuständig für alle Angelegenheiten des Personenstandswesens: von der Beurkundung von Geburten und Sterbefällen über die Eheschließung bis hin zur Ausstellung von Personenstandsurkunden. Heiratswillige Paare können sich ab sechs Monate vor dem gewünschten Trautermin beim Standesamt anmelden.</p> <p>Geburten müssen dem Standesamt innerhalb von sieben Tagen nach der Entbindung gemeldet werden. Die Gebühr für eine einfache Urkunde beträgt 12 Euro, für jede weitere Ausfertigung 6 Euro.</p> <h2 id="anker-kfz">Kfz-Zulassung und Fahrerlaubnisbehörde</h2> <p>Die Kfz-Zulassungsstelle befindet sich im Technischen Rathaus in der Pontanusstraße und ist montags bis freitags von 7:30 bis 15:00 Uhr geöffnet, donnerstags bis 17:30 Uhr. Seit Einführung des i-Kfz-Systems ist auch eine vollständig digitale Zulassung möglich.</p> <h2>Sozialleistungen und Unterstützungsangebote</h2> <p>Das Sozialamt der Stadt Paderborn berät und unterstützt Menschen in schwierigen Lebenslagen. Dazu gehören Leistungen der Grundsicherung im Alter und bei Erwerbsminderung, Hilfe zur Pflege und Eingliederungshilfe für Menschen mit Behinderungen. Die Beratung ist vertraulich und kostenlos.</p> <h2>Öffnungszeiten und Kontakt</h2> <p>Unsere Servicezentren sind Montag bis Freitag von 8:00 bis 16:00 Uhr geöffnet, donnerstags verlängert bis 18:00 Uhr. Samstags ist das Servicezentrum Innenstadt von 9:00 bis 12:00 Uhr geöffnet. Das Bürgertelefon unter 05251 88-0 ist werktags von 8:00 bis 17:00 Uhr erreichbar.</p> </div> </div> <!-- VERKEHR --> <div class="page" id="page-verkehr" data-content="true"> <div class="article-hero"><div class="section-tag">Verkehr & Mobilität</div><h1>Paderborn bewegt sich – sicher, nachhaltig und vernetzt</h1></div> <div class="article-body"> <p>Die Mobilität in Paderborn befindet sich im Wandel. Die Stadt investiert konsequent in den Ausbau eines nachhaltigen Verkehrsnetzes, das alle Verkehrsteilnehmerinnen und Verkehrsteilnehmer gleichermaßen berücksichtigt.</p> <h2 id="anker-oepnv">Öffentlicher Personennahverkehr</h2> <p>Der ÖPNV in Paderborn wird vom Nahverkehr Paderborn-Lippe (NPL) koordiniert. Das Busnetz umfasst über 30 Linien und verbindet nahezu alle Stadtteile sowie viele umliegende Gemeinden. Die Taktzeiten auf den Hauptstrecken betragen zu Stoßzeiten zehn Minuten, im Grundtakt zwanzig Minuten.</p> <p>Das Deutschlandticket gilt im gesamten Verbundnetz und kann bequem digital abonniert werden. Für Schülerinnen und Schüler, Auszubildende und Studierende gibt es vergünstigte Zeitkarten. Senioren ab 65 Jahren erhalten auf Antrag eine Seniorenkarte zu besonders günstigen Konditionen.</p> <div class="info-box"><p><strong>Aktuell:</strong> Die Linie 68 wird bis Ende März 2025 aufgrund von Bauarbeiten an der Detmolder Straße umgeleitet. Bitte beachten Sie die aktuellen Aushänge und Informationen in der PaderSprinter-App.</p></div> <h2 id="anker-fahrrad">Radverkehr und Fahrradinfrastruktur</h2> <p>Paderborn hat sich das ehrgeizige Ziel gesetzt, bis 2030 eine der fahrradfreundlichsten Städte Nordrhein-Westfalens zu werden. Das Radwegenetz umfasst heute über 280 Kilometer ausgeschilderte Radwege, Fahrradstraßen und Schutzstreifen.</p> <p>Das Paderborn-Bike-Sharing-System bietet 200 Leihräder und 60 E-Bikes an 35 Stationen im gesamten Stadtgebiet. Die Ausleihe erfolgt unkompliziert per App oder Chipkarte. Die ersten 30 Minuten sind bei vielen Tarifen kostenfrei.</p> <p>Der Radschnellweg Paderborn–Detmold befindet sich in der Planung und soll ab 2027 eine direkte, weitgehend kreuzungsfreie Radverbindung zwischen den beiden Städten ermöglichen. Das Projekt wird zu 80 Prozent vom Land Nordrhein-Westfalen und vom Bund gefördert.</p> <h2>Aktuelle Baustellen und Verkehrsbehinderungen</h2> <p>Die wichtigsten aktuellen Maßnahmen umfassen die Erneuerung der Wasserleitung in der Westernstraße (voraussichtlich bis Ende April), die Brückensanierung an der Paderborner Straße sowie die Fahrbahnmarkierungsarbeiten auf dem Westernring, die in Nachtarbeit durchgeführt werden. Alle Baustellen werden im interaktiven Baustellenplan auf unserem Portal aktuell gehalten.</p> <h2>Parken in der Innenstadt</h2> <p>In der Paderborner Innenstadt stehen rund 3.500 bewirtschaftete Parkplätze in zwölf Parkhäusern zur Verfügung. Die Parkgebühren betragen derzeit zwischen einem und zwei Euro pro Stunde. Kurzzeitparken bis zu 30 Minuten ist in mehreren Zonen der Innenstadt kostenlos, sofern eine Parkscheibe ausgelegt wird.</p> <h2>Elektromobilität und Ladeinfrastruktur</h2> <p>Aktuell gibt es 87 öffentliche Ladepunkte im Stadtgebiet, davon 14 Schnellladepunkte mit einer Leistung von mindestens 50 Kilowatt. Bis Ende 2026 soll die Zahl der öffentlichen Ladepunkte auf 200 steigen.</p> <h2>Carsharing und Mobilitätsstationen</h2> <p>An derzeit acht Mobilitätsstationen im Stadtgebiet sind Carsharing-Fahrzeuge, Leihräder und E-Scooter gebündelt verfügbar. Das Angebot soll bis 2026 auf 20 Stationen ausgebaut werden.</p> <h2>Barrierefreiheit im Verkehr</h2> <p>Alle neu gebauten oder grundlegend sanierten Haltestellen werden barrierefrei ausgebaut. Bis 2028 sollen alle Bushaltestellen im Stadtgebiet barrierefrei zugänglich sein.</p> </div> </div> <!-- KULTUR --> <div class="page" id="page-kultur" data-content="true"> <div class="article-hero"><div class="section-tag">Kultur & Freizeit</div><h1>Paderborn – eine Stadt mit Geschichte, Herz und Kreativität</h1></div> <div class="article-body"> <p>Paderborn ist eine Stadt mit einer über 1.200-jährigen Geschichte, die in jedem Winkel des Stadtbildes spürbar ist. Kunst, Geschichte, Musik und Geselligkeit bilden in Paderborn eine lebendige Einheit, die Einheimische wie Gäste gleichermaßen begeistert.</p> <h2>Museen und historische Stätten</h2> <p>Das Erzbischöfliche Diözesanmuseum Paderborn beherbergt eine der bedeutendsten Sammlungen mittelalterlicher Sakralkunst in Deutschland. Das Museum ist Dienstag bis Sonntag von 10:00 bis 18:00 Uhr geöffnet, donnerstags bis 20:00 Uhr. Der Eintritt beträgt 7 Euro für Erwachsene, 5 Euro für Ermäßigte, Kinder bis 12 Jahre haben freien Eintritt.</p> <p>Das Museum in der Kaiserpfalz führt Besucherinnen und Besucher durch die archäologische Geschichte Paderborns, von den frühgeschichtlichen Siedlungsspuren über die karolingische Pfalz Karls des Großen bis zur ottonischen Blütezeit.</p> <div class="info-box"><p><strong>Empfehlung:</strong> Mit dem Paderborn-Museumspass erhalten Sie freien Eintritt in alle städtischen Museen für ein ganzes Jahr zum Preis von nur 25 Euro – ein ideales Geschenk für Kulturbegeisterte.</p></div> <h2>Theater und Bühnen</h2> <p>Das Theater Paderborn bespielt drei Bühnen mit einem breiten Programm aus Schauspiel, Oper, Operette, Tanz und Kinder- und Jugendtheater. Die Spielzeit 2024/25 umfasst über 200 Aufführungen. Für Schülerinnen, Schüler und Studierende gibt es stark vergünstigte Karten – bis zu 50 Prozent Rabatt.</p> <h2>Stadtfeste und Veranstaltungen</h2> <p>Das Libori-Fest ist das älteste und bedeutendste Volksfest Westfalens. Es findet jährlich um den 23. Juli statt und zieht jedes Jahr über eine Million Besucherinnen und Besucher in die Stadt.</p> <p>Der Paderborner Weihnachtsmarkt zählt zu den schönsten in ganz Nordrhein-Westfalen. Über 120 Stände laden zum Bummeln, Genießen und Verweilen ein. Der Markt öffnet jedes Jahr am ersten Adventswochenende und ist bis zum 23. Dezember täglich von 11:00 bis 21:00 Uhr geöffnet.</p> <h2>Sport und Freizeitanlagen</h2> <p>Das Paderbad ist das moderne Freizeitbad der Stadt mit Saunalandschaft, Wellenbad und Outdoor-Bereich. Eintrittspreise: Erwachsene 8 Euro, Kinder 5 Euro, Familientageskarte 20 Euro.</p> <p>Der SC Paderborn 07 spielt aktuell in der 2. Bundesliga. Heimspiele finden in der Benteler-Arena statt, die Platz für 15.000 Zuschauer bietet.</p> <h2>Bibliotheken und Bildungseinrichtungen</h2> <p>Die Stadtbibliothek Paderborn ist mit über 180.000 Medien eine der größten öffentlichen Bibliotheken Ostwestfalens. Geöffnet Montag bis Freitag von 10:00 bis 19:00 Uhr und Samstag von 10:00 bis 14:00 Uhr. Der Jahresbeitrag beträgt 20 Euro, für Kinder und Jugendliche ist er kostenlos.</p> </div> </div> <!-- UMWELT --> <div class="page" id="page-umwelt" data-content="true"> <div class="article-hero"><div class="section-tag">Umwelt & Nachhaltigkeit</div><h1>Paderborn handelt – für eine lebenswerte Stadt von morgen</h1></div> <div class="article-body"> <p>Der Klimawandel ist eine der zentralen Herausforderungen unserer Zeit. Die Stadt Paderborn begegnet dieser Herausforderung mit einem umfassenden Klimaschutzkonzept. Das Ziel: Bis 2040 soll Paderborn klimaneutral sein.</p> <h2>Abfallentsorgung und Recycling</h2> <p>Die Entsorgungsbetriebe Paderborn (EBP) organisieren die Abfallentsorgung für alle Haushalte und Gewerbetreibenden in der Stadt. Die Abfuhrtermine variieren je nach Stadtbezirk und sind im Abfuhrkalender auf unserem Portal nachzuschlagen.</p> <p>Die Biotonne nimmt alle kompostierbaren Küchenabfälle auf. Bitte verwenden Sie keine Plastikbeutel. Die Wertstoffhöfe an der Stettiner Straße und am Dörener Feld nehmen Elektroschrott, Sperrmüll und gefährliche Abfälle kostenlos entgegen. Öffnungszeiten: Montag bis Freitag 7:30–17:00 Uhr, Samstag 8:00–13:00 Uhr.</p> <div class="info-box"><p><strong>Neu ab April 2025:</strong> Alttextilien und Altkleider können an sechs neuen Standorten im Stadtgebiet abgegeben werden. Gut erhaltene Kleidung sollte jedoch lieber an Sozialkaufhäuser oder die Kleiderkammern der karitativen Einrichtungen gespendet werden.</p></div> <h2>Stadtgrün und Biodiversität</h2> <p>Paderborn verfügt über rund 1.200 Hektar städtische Grünflächen, Parks, Wälder und Bachläufe. Das Stadtbaumkonzept sieht vor, bis 2030 insgesamt 5.000 neue Bäume im Stadtgebiet zu pflanzen. Bürgerinnen und Bürger können eine Baumpatenschaft übernehmen.</p> <p>Seit 2022 hat die Stadt Paderborn über 40 Hektar neue Blühflächen geschaffen, die Bienen, Schmetterlingen und anderen Insekten wertvolle Lebensräume bieten.</p> <h2>Energie und Klimaschutz</h2> <p>Im Rahmen des Klimaschutzkonzepts konnten die Energieverbräuche der städtischen Liegenschaften in den letzten zehn Jahren um durchschnittlich 28 Prozent reduziert werden. Die Photovoltaik-Offensive hat bereits dazu geführt, dass über 60 städtische Gebäude mit Solaranlagen ausgestattet wurden.</p> <p>Bis 2028 sollen weitere 8.000 Haushalte ans Fernwärmenetz angeschlossen werden. Hausbesitzerinnen und Hausbesitzer profitieren von einem Zuschuss von bis zu 5.000 Euro aus dem städtischen Klimaschutzfonds.</p> <h2>Wasser und Gewässerschutz</h2> <p>Das Trinkwasser in Paderborn kommt aus dem stadtnahen Wasserwerk Haxtergrund und ist von hervorragender Qualität. Es wird regelmäßig auf über 50 Parameter untersucht und erfüllt alle gesetzlichen Anforderungen deutlich.</p> <h2>Umweltberatung und Förderprogramme</h2> <p>Die städtische Umweltberatung steht Bürgerinnen und Bürgern sowie Unternehmen kostenlos zur Verfügung. Der städtische Klimaschutzfonds fördert Projekte mit einem messbaren Beitrag zur Reduktion von Treibhausgasemissionen mit 500 bis 10.000 Euro. Anträge können jährlich bis zum 31. März gestellt werden.</p> </div> </div> <!-- MALER --> <div class="page" id="page-maler"> <div class="hero"> <div class="hero-tag">Partnerseite</div> <h1>ProjektBau GmbH – Ihr Malerbetrieb in Paderborn</h1> <p>Nutzen Sie das Widget unten rechts, um eine unverbindliche Preisschätzung für Ihr Malerprojekt zu erhalten.</p> </div> <div class="section" style="text-align:center;padding:60px 48px"> <div class="section-tag">Ihr Angebot</div> <h2 class="section-title" style="margin-bottom:20px">Klicken Sie auf das 🎨 Widget unten rechts</h2> <p style="color:var(--text-muted);font-size:16px">Füllen Sie das Formular aus und erhalten Sie sofort eine Preisschätzung für Ihr Projekt.</p> </div> </div> <!-- STADTBOT WIDGET --> <div class="stadtbot-widget" id="stadtbot-widget"> <div class="stadtbot-window" id="stadtbot-window"> <div class="bot-header"> <div class="bot-header-left"> <div class="bot-avatar">🏛️</div> <div> <div class="bot-header-name">PaderbornBot</div> <div class="bot-header-status"><span class="bot-status-dot"></span> Online – bereit zu helfen</div> </div> </div> <div style="display:flex;align-items:center;gap:8px"> <button class="bot-reset" id="bot-reset">↩ Neu starten</button> <button class="bot-close" id="bot-close">✕</button> </div> </div> <div class="bot-progress-bar-wrap" id="bot-progress-bar-wrap"> <div class="bot-progress-bar-inner" id="bot-progress-bar-inner"></div> </div> <div class="bot-steps-row" id="bot-steps-row"></div> <div class="bot-messages" id="bot-messages"></div> <div class="bot-choice-panel" id="bot-choice-panel" style="display:none"> <div class="bot-choice-label" id="bot-choice-label">Bitte wählen Sie</div> <div class="bot-choice-grid" id="bot-choice-grid"></div> </div> <div class="bot-suggestions" id="bot-suggestions" style="display:none"> <button class="bot-suggestion" data-text="Wo finde ich Infos zum Personalausweis?">🪪 Personalausweis</button> <button class="bot-suggestion" data-text="Wo finde ich Infos zur Fahrradinfrastruktur?">🚲 Fahrrad</button> <button class="bot-suggestion" data-text="Was kostet die Gewerbeanmeldung?">🏢 Gewerbe</button> </div> <div class="bot-input-area" id="bot-input-area" style="display:none"> <textarea class="bot-input" id="bot-input" rows="1" placeholder="Ihre Frage an PaderbornBot ..."></textarea> <button class="bot-send" id="bot-send">➤</button> </div> </div> <button class="stadtbot-toggle" id="stadtbot-toggle" aria-label="Stadtbot öffnen"> 🏛️<span class="stadtbot-badge">!</span> </button> </div> <!-- MALER WIDGET --> <div class="maler-widget" id="maler-widget" style="display:none"> <button class="maler-toggle" id="maler-toggle">🎨</button> <div class="maler-window" id="maler-window"> <div class="maler-loading" id="maler-loading"><div class="maler-loading-spinner"></div><div class="maler-loading-text">Anfrage wird verarbeitet...</div></div> <div class="maler-header"> <div class="maler-header-left"><div class="maler-logo">🎨</div><div><div class="maler-title">ProjektBau GmbH</div><div class="maler-subtitle">Malerbetrieb • Paderborn</div></div></div> <button class="maler-close" id="maler-close">✕</button> </div> <div class="maler-progress"><div class="maler-progress-bar" id="maler-progress-bar"></div></div> <div class="maler-body" id="maler-body"> <div id="maler-form-view"> <div class="m-welcome"><p><strong>Willkommen!</strong> Füllen Sie das Formular aus und erhalten Sie sofort eine <strong>Preisschätzung</strong>.</p></div> <form id="maler-form"> <div class="m-section"> <div class="m-section-title">Kundentyp</div> <div class="m-type-toggle"> <button type="button" class="m-type-btn active" data-type="privat">🏠 Privat</button> <button type="button" class="m-type-btn" data-type="gewerbe">🏢 Gewerblich</button> </div> </div> <div class="m-val-box" id="m-privat-box"> <div class="m-val-row"> <div class="m-float-group"><input type="text" class="m-float-input" id="m-location-privat" placeholder=" "><label class="m-float-label">Ort (Stadt/PLZ)<span class="req">*</span></label></div> <button type="button" class="m-val-btn" id="m-validate-privat-btn"><span class="spinner"></span><span class="btn-icon">🔍</span> Prüfen</button> </div> <div class="m-val-status" id="m-privat-status"></div> </div> <div class="m-val-box" id="m-gewerbe-box" style="display:none"> <div class="m-group"><div class="m-float-group"><input type="text" class="m-float-input" id="m-company" placeholder=" "><label class="m-float-label">Firmenname<span class="req">*</span></label></div></div> <div class="m-val-row"> <div class="m-float-group"><input type="text" class="m-float-input" id="m-location-gewerbe" placeholder=" "><label class="m-float-label">Ort<span class="req">*</span></label></div> <button type="button" class="m-val-btn" id="m-validate-gewerbe-btn"><span class="spinner"></span><span class="btn-icon">🔍</span> Prüfen</button> </div> <div class="m-val-status" id="m-gewerbe-status"></div> </div> <div class="m-section"> <div class="m-section-title">Kontaktdaten</div> <div class="m-group"><div class="m-input-wrap"><div class="m-float-group"><input type="text" class="m-float-input" id="m-name" placeholder=" "><label class="m-float-label">Ihr Name<span class="req">*</span></label><span class="m-input-status" id="m-name-status"></span></div></div><div class="m-field-error" id="m-name-error"></div></div> <div class="m-row"> <div class="m-group"><div class="m-float-group"><input type="email" class="m-float-input" id="m-email" placeholder=" "><label class="m-float-label">E-Mail (optional)</label></div></div> <div class="m-group"><div class="m-input-wrap"><div class="m-float-group"><input type="tel" class="m-float-input" id="m-phone" placeholder=" "><label class="m-float-label">Telefon<span class="req">*</span></label><span class="m-input-status" id="m-phone-status"></span></div></div></div> </div> </div> <div class="m-section"> <div class="m-section-title">Gewünschte Leistung</div> <div class="m-service-grid" id="m-services"> <div class="m-service-option" data-service="1"><div class="m-service-check">✓</div><span class="m-service-name">🖌️ Innenwände streichen</span></div> <div class="m-service-option" data-service="2"><div class="m-service-check">✓</div><span class="m-service-name">🏠 Fassade streichen</span></div> <div class="m-service-option" data-service="3"><div class="m-service-check">✓</div><span class="m-service-name">📜 Tapezieren</span></div> <div class="m-service-option" data-service="4"><div class="m-service-check">✓</div><span class="m-service-name">🚪 Türen/Fenster lackieren</span></div> <div class="m-service-option" data-service="5"><div class="m-service-check">✓</div><span class="m-service-name">🧱 Verputzen/Grundieren</span></div> <div class="m-service-option" data-service="6"><div class="m-service-check">✓</div><span class="m-service-name">✨ Dekorative Techniken</span></div> </div> </div> <div class="m-section"> <div class="m-section-title">Projektdetails</div> <div class="m-row"> <div class="m-group"><div class="m-float-group"><input type="text" class="m-float-input" id="m-size" placeholder=" "><label class="m-float-label">Größe (z.B. 50m2)<span class="req">*</span></label></div></div> <div class="m-group"><div class="m-float-group"><input type="text" class="m-float-input" id="m-timeframe" placeholder=" "><label class="m-float-label">Zeitraum<span class="req">*</span></label></div></div> </div> </div> <div class="m-section"> <div class="m-group"><div class="m-textarea-group"><textarea class="m-textarea" id="m-description" placeholder=" "></textarea><label class="m-textarea-label">Beschreibung (optional)</label></div></div> </div> <div class="m-section"> <div class="m-section-title">Bilder (optional)</div> <div class="m-file-upload"><input type="file" id="m-images" multiple accept="image/*"><div class="m-file-upload-icon">📷</div><div class="m-file-upload-text">Bilder hochladen</div><div class="m-file-upload-hint">JPG, PNG bis 10MB</div></div> <div class="m-file-list" id="m-file-list"></div> </div> <div class="m-checklist"> <div class="m-checklist-title">Checkliste</div> <div class="m-checklist-items"> <div class="m-check-item" id="m-check-location"><span class="m-check-icon">○</span><span>Standort geprüft</span></div> <div class="m-check-item" id="m-check-name"><span class="m-check-icon">○</span><span>Name gültig</span></div> <div class="m-check-item" id="m-check-phone"><span class="m-check-icon">○</span><span>Telefon gültig</span></div> <div class="m-check-item" id="m-check-service"><span class="m-check-icon">○</span><span>Leistung gewählt</span></div> <div class="m-check-item" id="m-check-details"><span class="m-check-icon">○</span><span>Details ausgefüllt</span></div> </div> </div> <div class="m-dsgvo"> <label class="m-dsgvo-row" for="m-dsgvo"> <input type="checkbox" id="m-dsgvo"> <span>Ich stimme der <button type="button" class="m-dsgvo-toggle" id="m-dsgvo-toggle">Datenschutzerklärung</button> zu.</span> </label> <div class="m-dsgvo-details" id="m-dsgvo-details"><strong style="color:#f59e0b">Kurzinfo:</strong> Ihre Daten werden nur zur Bearbeitung Ihrer Anfrage verwendet.</div> </div> <button type="submit" class="m-submit" id="m-submit" disabled><span class="spinner"></span><span class="btn-text">🚀 Anfrage absenden</span></button> </form> </div> <div class="m-result" id="maler-result-view"> <div class="m-result-success"><div class="m-result-icon">✅</div><h3>Anfrage erhalten!</h3><p>Wir melden uns schnellstmöglich</p></div> <div class="m-result-highlight"> <div class="m-result-highlight-item"><span class="m-result-highlight-label">💰 Preis</span><span class="m-result-highlight-value" id="m-result-price">-</span></div> <div class="m-result-highlight-item"><span class="m-result-highlight-label">📅 Dauer</span><span class="m-result-highlight-value" id="m-result-duration">-</span></div> <div class="m-result-highlight-item"><span class="m-result-highlight-label">👷 MA</span><span class="m-result-highlight-value" id="m-result-workers">-</span></div> </div> <div class="m-result-summary"> <div class="m-result-summary-title">📋 Ihre Anfrage</div> <div class="m-result-row"><span class="lbl">Kundentyp</span><span class="val" id="m-result-type">-</span></div> <div class="m-result-row" id="m-result-company-row" style="display:none"><span class="lbl">Firma</span><span class="val" id="m-result-company">-</span></div> <div class="m-result-row"><span class="lbl">Name</span><span class="val" id="m-result-name">-</span></div> <div class="m-result-row" id="m-result-email-row" style="display:none"><span class="lbl">E-Mail</span><span class="val" id="m-result-email">-</span></div> <div class="m-result-row"><span class="lbl">Telefon</span><span class="val" id="m-result-phone">-</span></div> <div class="m-result-row"><span class="lbl">Standort</span><span class="val" id="m-result-location">-</span></div> <div class="m-result-row"><span class="lbl">Leistung</span><span class="val" id="m-result-service">-</span></div> <div class="m-result-row"><span class="lbl">Umfang</span><span class="val" id="m-result-size">-</span></div> <div class="m-result-row"><span class="lbl">Zeitraum</span><span class="val" id="m-result-timeframe">-</span></div> </div> <p class="m-disclaimer">Unverbindliche Schätzung. Abweichung ±15–20% möglich.</p> </div> </div> </div> </div> <!-- SUMMARIZER WIDGET --> <div class="summarizer-widget" id="summarizer-widget" style="display:none"> <div class="summarizer-panel" id="sum-panel"> <div class="sum-header"> <div class="sum-header-left"><span class="sum-header-icon">🧠</span><div><div class="sum-header-title">KI-Zusammenfassung</div><div class="sum-header-sub">Diese Seite analysieren</div></div></div> <button class="sum-close" id="sum-close">✕</button> </div> <div class="sum-filter"> <div class="sum-filter-label">Filtern nach <span class="filter-optional">(optional)</span></div> <div class="sum-filter-row"> <div class="filter-chip" data-filter="alles">Alles</div> <div class="filter-chip" data-filter="wichtigste">Wichtigstes</div> <div class="filter-chip" data-filter="kontakt">Kontakt & Zeiten</div> <div class="filter-chip" data-filter="fristen">Fristen & Termine</div> <div class="filter-chip" data-filter="kosten">Kosten & Gebühren</div> </div> <div class="filter-custom-wrap"><input type="text" class="filter-custom-input" id="filter-custom" placeholder="Eigener Filter, z.B. „Voraussetzungen" oder „Dokumente" ..."></div> </div> <div class="sum-result" id="sum-result"><div class="sum-result-inner"><div class="sum-result-text" id="sum-result-text"></div></div></div> <div class="sum-footer"><button class="sum-submit" id="sum-submit"><span class="spinner"></span><span class="btn-text">✨ Zusammenfassen</span></button></div> </div> <button class="summarizer-btn" id="sum-toggle"><span class="s-emoji">🧠</span><span>KI-Zusammenfassung</span><span class="s-pulse"></span></button> </div> <script>
 (function(){
-/* ── CONFIG ── */ const WEBHOOK_VALIDATE = 'https://seidel1502.app.n8n.cloud/webhook/3ad0bd7f-1b6e-4501-ba99-0cf05a2b4565';
+const WEBHOOK_VALIDATE = 'https://seidel1502.app.n8n.cloud/webhook/3ad0bd7f-1b6e-4501-ba99-0cf05a2b4565';
 const WEBHOOK_SEND = 'https://seidel1502.app.n8n.cloud/webhook/af4d3fcf-7cc3-48ee-b665-1b61703e678c';
 const WEBHOOK_SUMMARIZE = 'https://seidel1502.app.n8n.cloud/webhook/37e814a4-dd8d-49bb-95f0-b96d65bb963a';
 const WEBHOOK_BOT = 'https://seidel1502.app.n8n.cloud/webhook/bc482480-47c0-4914-b1e6-67b0809a9c68';
@@ -2285,59 +2285,40 @@ const WEBHOOK_TA_UPDATE = 'https://seidel1502.app.n8n.cloud/webhook/84fbb548-4f5
 const WEBHOOK_TA_STORNIEREN = 'https://seidel1502.app.n8n.cloud/webhook-test/6b88924a-c283-446f-8961-9e0065f4beb9';
 const $ = id => document.getElementById(id);
 function authFetch(url, body, token){
-return fetch(url,{
-method:'POST',headers:{
-'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify(body)});
-}
+return fetch(url,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify(body)});}
 function authFetchForm(url, formData, token){
-return fetch(url,{
-method:'POST',headers:{
-'Authorization':'Bearer '+token},body:formData});
-}
-/* ── MOBILE NAV ── */ window.closeMobileNav = function(){
-$('mobile-nav-overlay').classList.remove('open');
-};
+return fetch(url,{method:'POST',headers:{'Authorization':'Bearer '+token},body:formData});}
+window.closeMobileNav = function(){$('mobile-nav-overlay').classList.remove('open');};
 $('nav-hamburger').onclick = () => $('mobile-nav-overlay').classList.add('open');
 $('mobile-nav-close').onclick = closeMobileNav;
-/* ── SEITEN-NAVIGATION ── */ window.showPage = function(name, anchor){
+window.showPage = function(name, anchor){
 document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
 document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
 $('page-'+name).classList.add('active');
 document.querySelectorAll('.nav-link').forEach(l=>{
-if(l.textContent.toLowerCase().includes(name)||(name==='home'&&l.textContent==='Übersicht')) l.classList.add('active');
-});
+if(l.textContent.toLowerCase().includes(name)||(name==='home'&&l.textContent==='Übersicht')) l.classList.add('active');});
 const isMaler = name==='maler';
 const hasContent = !!$('page-'+name)?.dataset.content;
 $('maler-widget').style.display = isMaler?'block':'none';
 $('summarizer-widget').style.display = hasContent?'flex':'none';
 $('sum-panel').classList.remove('open');
 $('maler-window').classList.remove('open');
-if(anchor){
-setTimeout(()=>{
-const el = document.getElementById(anchor);
-if(el) el.scrollIntoView({
-behavior:'smooth', block:'center'});
-}, 80);
-}
-else {
-window.scrollTo(0,0);
-}
-};
-/* ══════════════════════════════════════ STADTBOT ══════════════════════════════════════ */ const SESSION_ID = 'bot_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
+if(anchor){setTimeout(()=>{const el=document.getElementById(anchor);if(el) el.scrollIntoView({behavior:'smooth',block:'center'});},80);}
+else{window.scrollTo(0,0);}};
+const SESSION_ID = 'bot_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
 const PAGE_MAP = {
-buerger: {
-label:'🏛️ Bürgerservice öffnen', page:'buerger', anchor:null }, buerger_meldewesen:{
-label:'🏠 Meldewesen & Ausweise', page:'buerger', anchor:'anker-meldewesen' }, buerger_gewerbe: {
-label:'🏢 Gewerbeanmeldung', page:'buerger', anchor:'anker-gewerbe' }, buerger_standesamt:{
-label:'💍 Standesamt', page:'buerger', anchor:'anker-standesamt' }, buerger_kfz: {
-label:'🚗 Kfz-Zulassung & Führerschein', page:'buerger', anchor:'anker-kfz' }, buerger_fuehrungszeugnis:{
-label:'📋 Führungszeugnisse', page:'buerger', anchor:'anker-fuehrungszeugnis' }, verkehr: {
-label:'🚌 Verkehr & Mobilität öffnen', page:'verkehr', anchor:null }, verkehr_oepnv: {
-label:'🚌 ÖPNV & Buslinien', page:'verkehr', anchor:'anker-oepnv' }, verkehr_fahrrad: {
-label:'🚲 Fahrradinfrastruktur', page:'verkehr', anchor:'anker-fahrrad' }, kultur: {
-label:'🎭 Kultur & Freizeit öffnen', page:'kultur', anchor:null }, umwelt: {
-label:'🌿 Umwelt & Nachhaltigkeit öffnen', page:'umwelt', anchor:null }, maler: {
-label:'🎨 Malerbetrieb öffnen', page:'maler', anchor:null }, };
+buerger:{label:'🏛️ Bürgerservice öffnen',page:'buerger',anchor:null},
+buerger_meldewesen:{label:'🏠 Meldewesen & Ausweise',page:'buerger',anchor:'anker-meldewesen'},
+buerger_gewerbe:{label:'🏢 Gewerbeanmeldung',page:'buerger',anchor:'anker-gewerbe'},
+buerger_standesamt:{label:'💍 Standesamt',page:'buerger',anchor:'anker-standesamt'},
+buerger_kfz:{label:'🚗 Kfz-Zulassung & Führerschein',page:'buerger',anchor:'anker-kfz'},
+buerger_fuehrungszeugnis:{label:'📋 Führungszeugnisse',page:'buerger',anchor:'anker-fuehrungszeugnis'},
+verkehr:{label:'🚌 Verkehr & Mobilität öffnen',page:'verkehr',anchor:null},
+verkehr_oepnv:{label:'🚌 ÖPNV & Buslinien',page:'verkehr',anchor:'anker-oepnv'},
+verkehr_fahrrad:{label:'🚲 Fahrradinfrastruktur',page:'verkehr',anchor:'anker-fahrrad'},
+kultur:{label:'🎭 Kultur & Freizeit öffnen',page:'kultur',anchor:null},
+umwelt:{label:'🌿 Umwelt & Nachhaltigkeit öffnen',page:'umwelt',anchor:null},
+maler:{label:'🎨 Malerbetrieb öffnen',page:'maler',anchor:null},};
 const botMessages = $('bot-messages');
 const botChoicePanel= $('bot-choice-panel');
 const botChoiceGrid = $('bot-choice-grid');
@@ -2346,619 +2327,162 @@ const botInput = $('bot-input');
 const botSend = $('bot-send');
 let botOpen = false;
 const TERMIN_KATEGORIEN = {
-meldewesen: {
-label:'🏠 Meldewesen', icon:'🏠', sub:[ {
-label:'Anmeldung / Ummeldung', key:'anmeldung'}, {
-label:'Abmeldung', key:'abmeldung'}, ] }, ausweise: {
-label:'🪪 Ausweise & Pässe', icon:'🪪', sub:[ {
-label:'Personalausweis beantragen', key:'personalausweis'}, {
-label:'Reisepass beantragen', key:'reisepass'}, {
-label:'Kinderreisepass', key:'kinderreisepass'}, ] }, kfz: {
-label:'🚗 Führerschein & Kfz', icon:'🚗', sub:[ {
-label:'Führerschein beantragen', key:'fuehrerschein'}, {
-label:'Kfz-Zulassung', key:'kfz_zulassung'}, {
-label:'Kfz-Abmeldung', key:'kfz_abmeldung'}, ] }, standesamt: {
-label:'💍 Standesamt', icon:'💍', sub:[ {
-label:'Eheschließung anmelden', key:'heirat'}, {
-label:'Geburtsurkunde beantragen', key:'geburtsurkunde'}, {
-label:'Sterbeurkunde beantragen', key:'sterbeurkunde'}, ] }, gewerbe: {
-label:'🏢 Gewerbe', icon:'🏢', sub:[ {
-label:'Gewerbeanmeldung', key:'gewerbeanmeldung'}, {
-label:'Gewerbeabmeldung', key:'gewerbeabmeldung'}, ] }, sonstiges: {
-label:'📋 Sonstiges', icon:'📋', sub:[ {
-label:'Führungszeugnis (erweitertes)', key:'fuehrungszeugnis'}, {
-label:'Beglaubigungen', key:'beglaubigung'}, ] }
-};
-const STEPS_INFO = [{
-label:'Info'}
-];
-const STEPS_TERMIN = [{
-label:'Kategorie'},{
-label:'Leistung'},{
-label:'Termin'}
-];
+meldewesen:{label:'🏠 Meldewesen',icon:'🏠',sub:[{label:'Anmeldung / Ummeldung',key:'anmeldung'},{label:'Abmeldung',key:'abmeldung'}]},
+ausweise:{label:'🪪 Ausweise & Pässe',icon:'🪪',sub:[{label:'Personalausweis beantragen',key:'personalausweis'},{label:'Reisepass beantragen',key:'reisepass'},{label:'Kinderreisepass',key:'kinderreisepass'}]},
+kfz:{label:'🚗 Führerschein & Kfz',icon:'🚗',sub:[{label:'Führerschein beantragen',key:'fuehrerschein'},{label:'Kfz-Zulassung',key:'kfz_zulassung'},{label:'Kfz-Abmeldung',key:'kfz_abmeldung'}]},
+standesamt:{label:'💍 Standesamt',icon:'💍',sub:[{label:'Eheschließung anmelden',key:'heirat'},{label:'Geburtsurkunde beantragen',key:'geburtsurkunde'},{label:'Sterbeurkunde beantragen',key:'sterbeurkunde'}]},
+gewerbe:{label:'🏢 Gewerbe',icon:'🏢',sub:[{label:'Gewerbeanmeldung',key:'gewerbeanmeldung'},{label:'Gewerbeabmeldung',key:'gewerbeabmeldung'}]},
+sonstiges:{label:'📋 Sonstiges',icon:'📋',sub:[{label:'Führungszeugnis (erweitertes)',key:'fuehrungszeugnis'},{label:'Beglaubigungen',key:'beglaubigung'}]}};
+const STEPS_INFO = [{label:'Info'}];
+const STEPS_TERMIN = [{label:'Kategorie'},{label:'Leistung'},{label:'Termin'}];
 let botMode = 'start';
 let botTerminKat = null;
 let botTerminSub = null;
 let currentSteps = null;
 let currentStepIdx= 0;
 function showSteps(steps, activeIdx){
-currentSteps = steps;
-currentStepIdx = activeIdx;
-const wrap = $('bot-steps-row');
-const bar = $('bot-progress-bar-wrap');
-wrap.innerHTML = '';
-wrap.classList.add('visible');
-bar.classList.add('visible');
-steps.forEach((s, i)=>{
-const el = document.createElement('div');
-el.className = 'bot-step' + (i < activeIdx ? ' done' : i === activeIdx ? ' active' : '');
-el.innerHTML = `<div class="bot-step-dot">${i < activeIdx ? '✓' : i+1}</div><span class="bot-step-label">${s.label}</span>`;
+currentSteps=steps;currentStepIdx=activeIdx;
+const wrap=$('bot-steps-row');const bar=$('bot-progress-bar-wrap');
+wrap.innerHTML='';wrap.classList.add('visible');bar.classList.add('visible');
+steps.forEach((s,i)=>{
+const el=document.createElement('div');
+el.className='bot-step'+(i<activeIdx?' done':i===activeIdx?' active':'');
+el.innerHTML=`<div class="bot-step-dot">${i<activeIdx?'✓':i+1}</div><span class="bot-step-label">${s.label}</span>`;
 wrap.appendChild(el);
-if(i < steps.length-1){
-const sep = document.createElement('div');
-sep.className = 'bot-step-sep' + (i < activeIdx ? ' done' : '');
-wrap.appendChild(sep);
-}
-});
-const pct = steps.length > 1 ? (activeIdx / (steps.length-1)) * 100 : activeIdx === 0 ? 50 : 100;
-$('bot-progress-bar-inner').style.width = pct + '%';
-}
-function hideSteps(){
-$('bot-steps-row').classList.remove('visible');
-$('bot-progress-bar-wrap').classList.remove('visible');
-}
-function botAddMessage(role, text, chips){
-const wrap = document.createElement('div');
-wrap.className = 'bot-msg' + (role==='user' ? ' user' : '');
-const av = document.createElement('div');
-av.className='bot-msg-avatar';
-av.textContent = role==='user' ? '👤' : '🏛️';
-const bub = document.createElement('div');
-bub.className='bot-msg-bubble';
-bub.innerHTML = text
-  .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
-  .replace(/\*(.+?)\*/g,'<em>$1</em>')
-  .replace(/`(.+?)`/g,'<code style="background:rgba(0,0,0,.07);padding:1px 5px;border-radius:4px;font-size:12px">$1</code>')
-  .replace(/\n/g,'<br>');
-if(chips && chips.length){
-const cw = document.createElement('div');
-cw.className='bot-page-chip-wrap';
-chips.forEach(key=>{
-if(!PAGE_MAP[key]) return;
-const btn=document.createElement('button');
-btn.className='bot-page-chip';
-btn.textContent=PAGE_MAP[key].label;
-btn.onclick=()=>{
-showPage(PAGE_MAP[key].page, PAGE_MAP[key].anchor);
-$('stadtbot-window').classList.remove('open');
-botOpen=false;
-};
-cw.appendChild(btn);
-});
-bub.appendChild(cw);
-}
-wrap.appendChild(av);
-wrap.appendChild(bub);
-botMessages.appendChild(wrap);
-botMessages.scrollTop = botMessages.scrollHeight;
-}
-function botShowTyping(){
-const wrap=document.createElement('div');
-wrap.className='bot-msg';
-wrap.id='bot-typing-indicator';
-const av=document.createElement('div');
-av.className='bot-msg-avatar';
-av.textContent='🏛️';
-const t=document.createElement('div');
-t.className='bot-typing';
-t.innerHTML='<span></span><span></span><span></span>';
-wrap.appendChild(av);
-wrap.appendChild(t);
-botMessages.appendChild(wrap);
-botMessages.scrollTop=botMessages.scrollHeight;
-}
-function botHideTyping(){
-const el=$('bot-typing-indicator');
-if(el) el.remove();
-}
-function showChoices(label, items){
-botChoiceLabel.textContent = label;
-botChoiceGrid.innerHTML = '';
-items.forEach(item=>{
-const btn = document.createElement('button');
-btn.className = 'bot-choice-btn';
-btn.innerHTML = `<span class="choice-icon">${item.icon||'→'}</span><span>${item.label}</span><span class="choice-arrow">›</span>`;
-btn.onclick = () => item.onClick();
-botChoiceGrid.appendChild(btn);
-});
-botChoicePanel.style.display = 'block';
-botMessages.classList.add('collapsed');
-setTimeout(()=>{
-botMessages.scrollTop = botMessages.scrollHeight;
-}, 50);
-}
-function hideChoices(){
-botChoicePanel.style.display='none';
-botMessages.classList.remove('collapsed');
-botMessages.style.display = 'flex';
-}
+if(i<steps.length-1){const sep=document.createElement('div');sep.className='bot-step-sep'+(i<activeIdx?' done':'');wrap.appendChild(sep);}});
+const pct=steps.length>1?(activeIdx/(steps.length-1))*100:activeIdx===0?50:100;
+$('bot-progress-bar-inner').style.width=pct+'%';}
+function hideSteps(){$('bot-steps-row').classList.remove('visible');$('bot-progress-bar-wrap').classList.remove('visible');}
+function botAddMessage(role,text,chips){
+const wrap=document.createElement('div');wrap.className='bot-msg'+(role==='user'?' user':'');
+const av=document.createElement('div');av.className='bot-msg-avatar';av.textContent=role==='user'?'👤':'🏛️';
+const bub=document.createElement('div');bub.className='bot-msg-bubble';
+bub.innerHTML=text.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>').replace(/`(.+?)`/g,'<code style="background:rgba(0,0,0,.07);padding:1px 5px;border-radius:4px;font-size:12px">$1</code>').replace(/\n/g,'<br>');
+if(chips&&chips.length){
+const cw=document.createElement('div');cw.className='bot-page-chip-wrap';
+chips.forEach(key=>{if(!PAGE_MAP[key])return;const btn=document.createElement('button');btn.className='bot-page-chip';btn.textContent=PAGE_MAP[key].label;btn.onclick=()=>{showPage(PAGE_MAP[key].page,PAGE_MAP[key].anchor);$('stadtbot-window').classList.remove('open');botOpen=false;};cw.appendChild(btn);});
+bub.appendChild(cw);}
+wrap.appendChild(av);wrap.appendChild(bub);botMessages.appendChild(wrap);botMessages.scrollTop=botMessages.scrollHeight;}
+function botShowTyping(){const wrap=document.createElement('div');wrap.className='bot-msg';wrap.id='bot-typing-indicator';const av=document.createElement('div');av.className='bot-msg-avatar';av.textContent='🏛️';const t=document.createElement('div');t.className='bot-typing';t.innerHTML='<span></span><span></span><span></span>';wrap.appendChild(av);wrap.appendChild(t);botMessages.appendChild(wrap);botMessages.scrollTop=botMessages.scrollHeight;}
+function botHideTyping(){const el=$('bot-typing-indicator');if(el)el.remove();}
+function showChoices(label,items){
+botChoiceLabel.textContent=label;botChoiceGrid.innerHTML='';
+items.forEach(item=>{const btn=document.createElement('button');btn.className='bot-choice-btn';btn.innerHTML=`<span class="choice-icon">${item.icon||'→'}</span><span>${item.label}</span><span class="choice-arrow">›</span>`;btn.onclick=()=>item.onClick();botChoiceGrid.appendChild(btn);});
+botChoicePanel.style.display='block';botMessages.classList.add('collapsed');
+setTimeout(()=>{botMessages.scrollTop=botMessages.scrollHeight;},50);}
+function hideChoices(){botChoicePanel.style.display='none';botMessages.classList.remove('collapsed');botMessages.style.display='flex';}
 function showInputArea(){
-const userMsgCount = botMessages.querySelectorAll('.bot-msg.user').length;
-const showSugg = botMode === 'info' && userMsgCount === 0;
-$('bot-suggestions').style.display = showSugg ? 'flex' : 'none';
-$('bot-input-area').style.display = 'flex';
-}
-function hideInputArea(){
-$('bot-suggestions').style.display = 'none';
-$('bot-input-area').style.display = 'none';
-}
+const userMsgCount=botMessages.querySelectorAll('.bot-msg.user').length;
+const showSugg=botMode==='info'&&userMsgCount===0;
+$('bot-suggestions').style.display=showSugg?'flex':'none';
+$('bot-input-area').style.display='flex';}
+function hideInputArea(){$('bot-suggestions').style.display='none';$('bot-input-area').style.display='none';}
 function botStart(){
-botMode = 'start';
-hideSteps();
-hideInputArea();
-showChoices('Was kann ich für Sie tun?', [ {
-icon:'ℹ️', label:'Informationen & Auskünfte', onClick: ()=>botGoInfo() }, {
-icon:'📅', label:'Termin buchen', onClick: ()=>botGoTerminKat() }, {
-icon:'✏️', label:'Termin ändern / Stornieren', onClick: ()=>botGoTerminAendern() }, ]);
-}
+botMode='start';hideSteps();hideInputArea();
+showChoices('Was kann ich für Sie tun?',[
+{icon:'ℹ️',label:'Informationen & Auskünfte',onClick:()=>botGoInfo()},
+{icon:'📅',label:'Termin buchen',onClick:()=>botGoTerminKat()},
+{icon:'✏️',label:'Termin ändern / Stornieren',onClick:()=>botGoTerminAendern()}]);}
 function botGoInfo(){
-hideChoices();
-$('stadtbot-window').classList.add('expanded');
+hideChoices();$('stadtbot-window').classList.add('expanded');
 botAddMessage('user','ℹ️ Informationen & Auskünfte');
-showSteps(STEPS_INFO, 0);
-showReset();
-botMode = 'info';
-setTimeout(()=>{
-botAddMessage('bot','Gerne beantworte ich Ihre Fragen rund um städtische Leistungen in Paderborn. Was möchten Sie wissen?');
-showInputArea();
-document.querySelectorAll('.bot-suggestion').forEach(b=>b.onclick=()=>botSendMessage(b.dataset.text));
-}, 300);
-}
+showSteps(STEPS_INFO,0);showReset();botMode='info';
+setTimeout(()=>{botAddMessage('bot','Gerne beantworte ich Ihre Fragen rund um städtische Leistungen in Paderborn. Was möchten Sie wissen?');showInputArea();document.querySelectorAll('.bot-suggestion').forEach(b=>b.onclick=()=>botSendMessage(b.dataset.text));},300);}
 function botGoTerminKat(){
-hideChoices();
-$('stadtbot-window').classList.add('expanded');
-botAddMessage('user','📅 Termin buchen');
-showSteps(STEPS_TERMIN, 0);
-showReset();
-botMode = 'termin-kat';
-setTimeout(()=>{
-botAddMessage('bot','Um welches Anliegen handelt es sich? Bitte wählen Sie eine Kategorie:');
-showChoices('Kategorie wählen', Object.entries(TERMIN_KATEGORIEN).map(([key, kat])=>({
-icon: kat.icon, label: kat.label.replace(kat.icon+' ',''), onClick: ()=>botGoTerminSub(key, kat) })));
-}, 300);
-}
-function botGoTerminSub(katKey, kat){
-botTerminKat = katKey;
-hideChoices();
-botAddMessage('user', kat.icon + ' ' + kat.label.replace(kat.icon+' ',''));
-showSteps(STEPS_TERMIN, 1);
-botMode = 'termin-sub';
-setTimeout(()=>{
-botAddMessage('bot', `Welche Leistung benötigen Sie im Bereich <strong>${kat.label}</strong>?`);
-showChoices('Leistung wählen', kat.sub.map(s=>({
-icon:'→', label: s.label, onClick: ()=>botGoTerminChat(s) })));
-}, 300);
-}
-/* ── TERMIN Schritt 3: Webhook + Chat – FIX: Array-Antwort abfangen ── */ async function botGoTerminChat(sub){
-botTerminSub = sub.key;
-hideChoices();
-botAddMessage('user', sub.label);
-showSteps(STEPS_TERMIN, 2);
-botMode = 'termin-chat';
-botShowTyping();
+hideChoices();$('stadtbot-window').classList.add('expanded');
+botAddMessage('user','📅 Termin buchen');showSteps(STEPS_TERMIN,0);showReset();botMode='termin-kat';
+setTimeout(()=>{botAddMessage('bot','Um welches Anliegen handelt es sich? Bitte wählen Sie eine Kategorie:');showChoices('Kategorie wählen',Object.entries(TERMIN_KATEGORIEN).map(([key,kat])=>({icon:kat.icon,label:kat.label.replace(kat.icon+' ',''),onClick:()=>botGoTerminSub(key,kat)})));},300);}
+function botGoTerminSub(katKey,kat){
+botTerminKat=katKey;hideChoices();botAddMessage('user',kat.icon+' '+kat.label.replace(kat.icon+' ',''));showSteps(STEPS_TERMIN,1);botMode='termin-sub';
+setTimeout(()=>{botAddMessage('bot',`Welche Leistung benötigen Sie im Bereich <strong>${kat.label}</strong>?`);showChoices('Leistung wählen',kat.sub.map(s=>({icon:'→',label:s.label,onClick:()=>botGoTerminChat(s)})));},300);}
+async function botGoTerminChat(sub){
+botTerminSub=sub.key;hideChoices();botAddMessage('user',sub.label);showSteps(STEPS_TERMIN,2);botMode='termin-chat';botShowTyping();
 try{
-const r = await authFetch(WEBHOOK_BOT, {
-mode: 'termin', sessionId: SESSION_ID, kategorie: botTerminKat, leistung: sub.key, leistungName:sub.label, message: 'Ich möchte einen Termin für folgende Leistung buchen: ' + sub.label, timestamp: new Date().toISOString(), currentDateTime: new Date().toLocaleString('de-DE',{
-weekday:'long',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}), currentPage: document.querySelector('.page.active')?.id||'unknown' }, BOT_TOKEN);
-const d = await r.json();
-const data = Array.isArray(d) ? d[0] : d;
-botHideTyping();
-const reply = data.reply || data.text || data.message || 'Ich bin bereit, Ihren Termin zu buchen. Wie ist Ihr Name?';
-botAddMessage('bot', reply, Array.isArray(data.pages)?data.pages:[]);
-}
-catch(e){
-botHideTyping();
-botAddMessage('bot','⚠️ Verbindungsfehler. Bitte versuchen Sie es erneut.');
-}
-showInputArea();
-document.querySelectorAll('.bot-suggestion').forEach(b=>b.onclick=()=>botSendMessage(b.dataset.text));
-}
-/* ── Info-Chat: Nachricht senden – FIX: Array-Antwort abfangen ── */ async function botSendMessage(text){
-if(!text.trim()) return;
-botAddMessage('user', text);
-botInput.value='';
-botInput.style.height='auto';
-botSend.disabled=true;
-hideInputArea();
-botShowTyping();
+const r=await authFetch(WEBHOOK_BOT,{mode:'termin',sessionId:SESSION_ID,kategorie:botTerminKat,leistung:sub.key,leistungName:sub.label,message:'Ich möchte einen Termin für folgende Leistung buchen: '+sub.label,timestamp:new Date().toISOString(),currentDateTime:new Date().toLocaleString('de-DE',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}),currentPage:document.querySelector('.page.active')?.id||'unknown'},BOT_TOKEN);
+const d=await r.json();const data=Array.isArray(d)?d[0]:d;
+botHideTyping();const reply=data.reply||data.text||data.message||'Ich bin bereit, Ihren Termin zu buchen. Wie ist Ihr Name?';
+botAddMessage('bot',reply,Array.isArray(data.pages)?data.pages:[]);}
+catch(e){botHideTyping();botAddMessage('bot','⚠️ Verbindungsfehler. Bitte versuchen Sie es erneut.');}
+showInputArea();document.querySelectorAll('.bot-suggestion').forEach(b=>b.onclick=()=>botSendMessage(b.dataset.text));}
+async function botSendMessage(text){
+if(!text.trim())return;
+botAddMessage('user',text);botInput.value='';botInput.style.height='auto';botSend.disabled=true;hideInputArea();botShowTyping();
 try{
-const r = await authFetch(WEBHOOK_BOT, {
-mode: botMode === 'termin-chat' ? 'termin' : botMode, sessionId: SESSION_ID, message: text, kategorie: botTerminKat||null, leistung: botTerminSub||null, timestamp: new Date().toISOString(), currentDateTime: new Date().toLocaleString('de-DE',{
-weekday:'long',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}), currentPage: document.querySelector('.page.active')?.id||'unknown' }, BOT_TOKEN);
-const d = await r.json();
-const data = Array.isArray(d) ? d[0] : d;
-botHideTyping();
-const reply = data.reply || data.text || data.message || 'Ich konnte keine Antwort ermitteln.';
-botAddMessage('bot', reply, Array.isArray(data.pages)?data.pages:[]);
-}
-catch(err){
-botHideTyping();
-botAddMessage('bot','⚠️ Verbindungsfehler. Bitte prüfen Sie Ihre Internetverbindung.');
-}
-botSend.disabled=false;
-showInputArea();
-}
-function showReset(){
-$('bot-reset').classList.add('visible');
-}
-function hideReset(){
-$('bot-reset').classList.remove('visible');
-}
-$('bot-reset').onclick = ()=>{
-botMessages.innerHTML = '';
-botMode = 'start';
-botTerminKat = null;
-botTerminSub = null;
-$('stadtbot-window').classList.remove('expanded');
-hideSteps();
-hideChoices();
-hideInputArea();
-hideReset();
+const r=await authFetch(WEBHOOK_BOT,{mode:botMode==='termin-chat'?'termin':botMode,sessionId:SESSION_ID,message:text,kategorie:botTerminKat||null,leistung:botTerminSub||null,timestamp:new Date().toISOString(),currentDateTime:new Date().toLocaleString('de-DE',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}),currentPage:document.querySelector('.page.active')?.id||'unknown'},BOT_TOKEN);
+const d=await r.json();const data=Array.isArray(d)?d[0]:d;
+botHideTyping();const reply=data.reply||data.text||data.message||'Ich konnte keine Antwort ermitteln.';
+botAddMessage('bot',reply,Array.isArray(data.pages)?data.pages:[]);}
+catch(err){botHideTyping();botAddMessage('bot','⚠️ Verbindungsfehler. Bitte prüfen Sie Ihre Internetverbindung.');}
+botSend.disabled=false;showInputArea();}
+function showReset(){$('bot-reset').classList.add('visible');}
+function hideReset(){$('bot-reset').classList.remove('visible');}
+$('bot-reset').onclick=()=>{
+botMessages.innerHTML='';botMode='start';botTerminKat=null;botTerminSub=null;
+$('stadtbot-window').classList.remove('expanded');hideSteps();hideChoices();hideInputArea();hideReset();
 botAddMessage('bot','Hallo! 👋 Ich bin der PaderbornBot – Ihr digitaler Assistent für das Stadtportal Paderborn.\n\nWas kann ich für Sie tun?');
-setTimeout(botStart, 400);
-};
-const botWindow = $('stadtbot-window');
-botWindow.addEventListener('wheel', e=>{
-e.stopPropagation();
-}, {
-passive:true});
-botWindow.addEventListener('touchmove', e=>{
-e.stopPropagation();
-}, {
-passive:true});
-$('stadtbot-toggle').onclick = ()=>{
-botOpen=!botOpen;
-$('stadtbot-window').classList.toggle('open', botOpen);
-if(botOpen){
-$('stadtbot-toggle').querySelector('.stadtbot-badge').style.display='none';
-botMessages.scrollTop=botMessages.scrollHeight;
-}
-};
-$('bot-close').onclick = ()=>{
-botOpen=false;
-$('stadtbot-window').classList.remove('open');
-};
-botSend.onclick = ()=>botSendMessage(botInput.value);
-botInput.addEventListener('keydown',e=>{
-if(e.key==='Enter'&&!e.shiftKey){
-e.preventDefault();
-botSendMessage(botInput.value);
-}
-});
-botInput.addEventListener('input',()=>{
-botInput.style.height='auto';
-botInput.style.height=Math.min(botInput.scrollHeight,80)+'px';
-});
+setTimeout(botStart,400);};
+const botWindow=$('stadtbot-window');
+botWindow.addEventListener('wheel',e=>{e.stopPropagation();},{passive:true});
+botWindow.addEventListener('touchmove',e=>{e.stopPropagation();},{passive:true});
+$('stadtbot-toggle').onclick=()=>{botOpen=!botOpen;$('stadtbot-window').classList.toggle('open',botOpen);if(botOpen){$('stadtbot-toggle').querySelector('.stadtbot-badge').style.display='none';botMessages.scrollTop=botMessages.scrollHeight;}};
+$('bot-close').onclick=()=>{botOpen=false;$('stadtbot-window').classList.remove('open');};
+botSend.onclick=()=>botSendMessage(botInput.value);
+botInput.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();botSendMessage(botInput.value);}});
+botInput.addEventListener('input',()=>{botInput.style.height='auto';botInput.style.height=Math.min(botInput.scrollHeight,80)+'px';});
 botAddMessage('bot','Hallo! 👋 Ich bin der PaderbornBot – Ihr digitaler Assistent für das Stadtportal Paderborn.\n\nWas kann ich für Sie tun?');
-setTimeout(botStart, 400);
-/* ══════════════════════════════════════ SUMMARIZER ══════════════════════════════════════ */ let activeFilter=null;
-document.querySelectorAll('.filter-chip').forEach(chip=>{
-chip.onclick=()=>{
-document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
-if(activeFilter===chip.dataset.filter){
-activeFilter=null;
-}
-else{
-chip.classList.add('active');
-activeFilter=chip.dataset.filter;
-$('filter-custom').value='';
-}
-};
-});
-$('filter-custom').oninput=e=>{
-if(e.target.value.trim()){
-document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
-activeFilter=null;
-}
-};
+setTimeout(botStart,400);
+/* SUMMARIZER */
+let activeFilter=null;
+document.querySelectorAll('.filter-chip').forEach(chip=>{chip.onclick=()=>{document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));if(activeFilter===chip.dataset.filter){activeFilter=null;}else{chip.classList.add('active');activeFilter=chip.dataset.filter;$('filter-custom').value='';};};});
+$('filter-custom').oninput=e=>{if(e.target.value.trim()){document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));activeFilter=null;}};
 $('sum-toggle').onclick=()=>$('sum-panel').classList.toggle('open');
 $('sum-close').onclick=()=>$('sum-panel').classList.remove('open');
 $('sum-submit').onclick=async()=>{
-const btn=$('sum-submit');
-btn.classList.add('loading');
-const customFilter=$('filter-custom').value.trim();
-const filterToSend=customFilter||activeFilter||'alles';
-const activePage=document.querySelector('.page.active');
-const articleBody=activePage.querySelector('.article-body');
-const hero=activePage.querySelector('.article-hero h1');
+const btn=$('sum-submit');btn.classList.add('loading');
+const customFilter=$('filter-custom').value.trim();const filterToSend=customFilter||activeFilter||'alles';
+const activePage=document.querySelector('.page.active');const articleBody=activePage.querySelector('.article-body');const hero=activePage.querySelector('.article-hero h1');
 const pageText=(hero?hero.innerText+'\n\n':'')+(articleBody?articleBody.innerText:'');
-const resultArea=$('sum-result');
-const resultText=$('sum-result-text');
-resultText.innerHTML='';
-resultArea.classList.add('visible');
+const resultArea=$('sum-result');const resultText=$('sum-result-text');resultText.innerHTML='';resultArea.classList.add('visible');
 try{
-const r=await authFetch(WEBHOOK_SUMMARIZE,{
-text:pageText,filter:filterToSend,url:window.location.href},SUMMARIZE_TOKEN);
-const d=await r.json();
-const text=d.summary||d.text||d.result||'Keine Zusammenfassung erhalten.';
-const lines=text.split('\n');
-let i=0;
-function nextLine(){
-if(i<lines.length){
-const line=lines[i];
-const div=document.createElement('div');
-if(line.startsWith('**')&&line.endsWith('**')){
-div.className='sum-heading sum-fade';
-div.textContent=line.replace(/\*\*/g,'');
-}
-else if(line.startsWith('- ')||line.startsWith('• ')){
-div.className='sum-bullet sum-fade';
-div.innerHTML=line.replace(/^[-•]\s/,'').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
-}
-else if(line.trim()===''){
-div.className='sum-spacer';
-}
-else {
-div.className='sum-line sum-fade';
-div.innerHTML=line.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
-}
-resultText.appendChild(div);
-i++;
-setTimeout(nextLine,60);
-}
-}
-nextLine();
-}
-catch(e){
-resultText.textContent='Fehler beim Laden der Zusammenfassung. Bitte versuchen Sie es erneut.';
-}
-btn.classList.remove('loading');
-};
-/* ══════════════════════════════════════ MALER WIDGET ══════════════════════════════════════ */ $('maler-toggle').onclick=()=>$('maler-window').classList.add('open');
+const r=await authFetch(WEBHOOK_SUMMARIZE,{text:pageText,filter:filterToSend,url:window.location.href},SUMMARIZE_TOKEN);
+const d=await r.json();const text=d.summary||d.text||d.result||'Keine Zusammenfassung erhalten.';
+const lines=text.split('\n');let i=0;
+function nextLine(){if(i<lines.length){const line=lines[i];const div=document.createElement('div');
+if(line.startsWith('**')&&line.endsWith('**')){div.className='sum-heading sum-fade';div.textContent=line.replace(/\*\*/g,'');}
+else if(line.startsWith('- ')||line.startsWith('• ')){div.className='sum-bullet sum-fade';div.innerHTML=line.replace(/^[-•]\s/,'').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');}
+else if(line.trim()===''){div.className='sum-spacer';}
+else{div.className='sum-line sum-fade';div.innerHTML=line.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');}
+resultText.appendChild(div);i++;setTimeout(nextLine,60);}}
+nextLine();}
+catch(e){resultText.textContent='Fehler beim Laden der Zusammenfassung. Bitte versuchen Sie es erneut.';}
+btn.classList.remove('loading');};
+/* MALER */
+$('maler-toggle').onclick=()=>$('maler-window').classList.add('open');
 $('maler-close').onclick=()=>$('maler-window').classList.remove('open');
-const SERVICE_NAMES={
-1:'Innenwände streichen',2:'Fassade streichen',3:'Tapezieren',4:'Türen/Fenster lackieren',5:'Verputzen/Grundieren',6:'Dekorative Techniken'};
+const SERVICE_NAMES={1:'Innenwände streichen',2:'Fassade streichen',3:'Tapezieren',4:'Türen/Fenster lackieren',5:'Verputzen/Grundieren',6:'Dekorative Techniken'};
 const BLOCKED=['arsch','wichser','hurensohn','fotze','fick','scheiße','scheisse','hure','nutte','bastard','idiot','depp','nazi','hitler','fuck','shit','asshole','bitch','cunt'];
 const FAKE=['brad pitt','angelina jolie','tom cruise','angela merkel','elon musk','harry potter','max mustermann','john doe','test test'];
-function validateName(n){
-const t=n.trim(),l=t.toLowerCase();
-if(t.length<3) return{
-v:false,m:'Name zu kurz'};
-if(t.split(/\s+/).filter(x=>x).length<2) return{
-v:false,m:'Vor- und Nachname'};
-if(/\d/.test(t)) return{
-v:false,m:'Keine Zahlen'};
-for(const b of BLOCKED) if(l.includes(b)) return{
-v:false,m:'Bitte echten Namen'};
-for(const f of FAKE) if(l.includes(f)) return{
-v:false,m:'Bitte echten Namen'};
-return{
-v:true,m:''};
-}
-function validatePhone(p){
-return /^(\+49|0)[1-9]\d{8,11}$/.test(p.replace(/[\s\-]/g,''));
-}
-const ms={
-type:'privat',locationValid:false,nameValid:false,phoneValid:false,service:null,dsgvo:false,distance:null};
+function validateName(n){const t=n.trim(),l=t.toLowerCase();if(t.length<3)return{v:false,m:'Name zu kurz'};if(t.split(/\s+/).filter(x=>x).length<2)return{v:false,m:'Vor- und Nachname'};if(/\d/.test(t))return{v:false,m:'Keine Zahlen'};for(const b of BLOCKED)if(l.includes(b))return{v:false,m:'Bitte echten Namen'};for(const f of FAKE)if(l.includes(f))return{v:false,m:'Bitte echten Namen'};return{v:true,m:''};}
+function validatePhone(p){return /^(\+49|0)[1-9]\d{8,11}$/.test(p.replace(/[\s\-]/g,''));}
+const ms={type:'privat',locationValid:false,nameValid:false,phoneValid:false,service:null,dsgvo:false,distance:null};
 let mFiles=[];
-function mUpdateProgress(){
-const ok=$('m-size').value.trim()&&$('m-timeframe').value.trim();
-const done=[ms.locationValid,ms.nameValid,ms.phoneValid,ms.service!==null,!!ok].filter(Boolean).length;
-$('maler-progress-bar').style.width=(done/5*100)+'%';
-}
-function mUpdateUI(){
-const ok=$('m-size').value.trim()&&$('m-timeframe').value.trim();
-[{
-id:'m-check-location',v:ms.locationValid},{
-id:'m-check-name',v:ms.nameValid},{
-id:'m-check-phone',v:ms.phoneValid},{
-id:'m-check-service',v:ms.service!==null},{
-id:'m-check-details',v:!!ok}
-] .forEach(c=>{
-const el=$(c.id);
-el.className=c.v?'m-check-item checked':'m-check-item';
-el.querySelector('.m-check-icon').textContent=c.v?'✓':'○';
-});
-mUpdateProgress();
-const ready=ms.locationValid&&ms.nameValid&&ms.phoneValid&&ms.service!==null&&ok&&ms.dsgvo;
-$('m-submit').disabled=!ready;
-$('m-submit').classList.toggle('ready',ready);
-}
-document.querySelectorAll('.m-type-btn').forEach(btn=>{
-btn.onclick=()=>{
-document.querySelectorAll('.m-type-btn').forEach(b=>b.classList.remove('active'));
-btn.classList.add('active');
-ms.type=btn.dataset.type;
-ms.locationValid=false;
-$('m-privat-box').style.display=ms.type==='privat'?'block':'none';
-$('m-gewerbe-box').style.display=ms.type==='gewerbe'?'block':'none';
-$('m-privat-status').className='m-val-status';
-$('m-gewerbe-status').className='m-val-status';
-mUpdateUI();
-};
-});
-$('m-validate-privat-btn').onclick=async()=>{
-const l=$('m-location-privat').value.trim(), box=$('m-privat-box');
-if(!l){
-$('m-privat-status').className='m-val-status visible error';
-$('m-privat-status').textContent='❌ Bitte Ort eingeben';
-box.classList.add('shake');
-setTimeout(()=>box.classList.remove('shake'),500);
-return;
-}
-const btn=$('m-validate-privat-btn');
-btn.classList.add('loading');
-btn.disabled=true;
-try{
-const r=await authFetch(WEBHOOK_VALIDATE,{
-type:'privat',location:l},MALER_TOKEN);
-const d=await r.json();
-const x=Array.isArray(d)?d[0]:d;
-if(x.valid){
-ms.locationValid=true;
-ms.distance=x.distance;
-$('m-privat-status').className='m-val-status visible success';
-$('m-privat-status').textContent='✅ Im Gebiet – '+x.distance+'km';
-box.classList.add('success-pulse');
-setTimeout(()=>box.classList.remove('success-pulse'),600);
-}
-else{
-ms.locationValid=false;
-$('m-privat-status').className='m-val-status visible error';
-$('m-privat-status').textContent=x.message||'❌ Außerhalb des Gebiets';
-box.classList.add('shake');
-setTimeout(()=>box.classList.remove('shake'),500);
-}
-}
-catch(e){
-$('m-privat-status').className='m-val-status visible error';
-$('m-privat-status').textContent='❌ Verbindungsfehler';
-}
-btn.classList.remove('loading');
-btn.disabled=false;
-mUpdateUI();
-};
-$('m-validate-gewerbe-btn').onclick=async()=>{
-const c=$('m-company').value.trim(), l=$('m-location-gewerbe').value.trim(), box=$('m-gewerbe-box');
-if(!c||!l){
-$('m-gewerbe-status').className='m-val-status visible error';
-$('m-gewerbe-status').textContent='❌ Firma und Ort eingeben';
-box.classList.add('shake');
-setTimeout(()=>box.classList.remove('shake'),500);
-return;
-}
-const btn=$('m-validate-gewerbe-btn');
-btn.classList.add('loading');
-btn.disabled=true;
-try{
-const r=await authFetch(WEBHOOK_VALIDATE,{
-type:'gewerbe',company:c,location:l},MALER_TOKEN);
-const d=await r.json();
-const x=Array.isArray(d)?d[0]:d;
-if(x.valid){
-ms.locationValid=true;
-ms.distance=x.distance;
-$('m-gewerbe-status').className='m-val-status visible success';
-$('m-gewerbe-status').textContent='✅ '+(x.companyInfo||c)+' – '+x.distance+'km';
-box.classList.add('success-pulse');
-setTimeout(()=>box.classList.remove('success-pulse'),600);
-}
-else{
-ms.locationValid=false;
-$('m-gewerbe-status').className='m-val-status visible error';
-$('m-gewerbe-status').textContent=x.message||'❌ Nicht gefunden';
-box.classList.add('shake');
-setTimeout(()=>box.classList.remove('shake'),500);
-}
-}
-catch(e){
-$('m-gewerbe-status').className='m-val-status visible error';
-$('m-gewerbe-status').textContent='❌ Verbindungsfehler';
-}
-btn.classList.remove('loading');
-btn.disabled=false;
-mUpdateUI();
-};
-$('m-name').oninput=e=>{
-const n=e.target.value, r=validateName(n);
-$('m-name').classList.toggle('valid',r.v);
-$('m-name').classList.toggle('invalid',!r.v&&n.trim().length>=3);
-$('m-name-status').textContent=n.length===0?'':r.v?'✅':n.trim().length>=3?'❌':'';
-$('m-name-error').textContent=!r.v&&n.trim().length>=3?r.m:'';
-$('m-name-error').classList.toggle('visible',!r.v&&n.trim().length>=3);
-ms.nameValid=r.v;
-mUpdateUI();
-};
-$('m-phone').oninput=e=>{
-const p=e.target.value, ok=validatePhone(p);
-$('m-phone').classList.toggle('valid',ok);
-$('m-phone').classList.toggle('invalid',p.length>=6&&!ok);
-$('m-phone-status').textContent=p.length===0?'':ok?'✅':p.length>=6?'❌':'';
-ms.phoneValid=ok;
-mUpdateUI();
-};
-document.querySelectorAll('#m-services .m-service-option').forEach(o=>{
-o.onclick=()=>{
-document.querySelectorAll('#m-services .m-service-option').forEach(x=>x.classList.remove('selected'));
-o.classList.add('selected');
-ms.service=parseInt(o.dataset.service);
-mUpdateUI();
-};
-});
-$('m-size').oninput=()=>mUpdateUI();
-$('m-timeframe').oninput=()=>mUpdateUI();
-$('m-dsgvo').onchange=e=>{
-ms.dsgvo=e.target.checked;
-mUpdateUI();
-};
-$('m-dsgvo-toggle').onclick=e=>{
-e.preventDefault();
-e.stopPropagation();
-$('m-dsgvo-details').classList.toggle('visible');
-};
-$('m-images').onchange=e=>{
-Array.from(e.target.files).forEach(f=>{
-if(f.size>10*1024*1024){
-alert('Max. 10 MB pro Bild');
-return;
-}
-mFiles.push(f);
-});
-renderMFiles();
-e.target.value='';
-};
-function renderMFiles(){
-$('m-file-list').innerHTML=mFiles.map((f,i)=>`<div class="m-file-item">📷 ${f.name.slice(0,15)}...<span class="m-file-item-remove" data-i="${i}">✕</span></div>`).join('');
-$('m-file-list').querySelectorAll('.m-file-item-remove').forEach(b=>b.onclick=e=>{
-mFiles.splice(+e.target.dataset.i,1);
-renderMFiles();
-});
-}
-$('maler-form').onsubmit=async e=>{
-e.preventDefault();
-$('maler-loading').classList.add('visible');
-$('m-submit').classList.add('loading');
-const isG=ms.type==='gewerbe';
-const sNum=parseFloat($('m-size').value.replace(/[^\d.,]/g,'').replace(',','.'))||30;
-const fd={
-customerType:ms.type, company:isG?$('m-company').value:'', name:$('m-name').value, email:$('m-email').value.trim(), phone:$('m-phone').value, location:isG?$('m-location-gewerbe').value:$('m-location-privat').value, distance:ms.distance, serviceId:ms.service, serviceName:SERVICE_NAMES[ms.service]||'', size:$('m-size').value, sizeNumber:sNum, timeframe:$('m-timeframe').value, description:$('m-description').value.trim(), imagesCount:mFiles.length, dsgvoAccepted:true, timestamp:new Date().toISOString() };
-try{
-const fm=new FormData();
-fm.append('formData',JSON.stringify(fd));
-mFiles.forEach((f,i)=>fm.append('image_'+i,f));
-const r=await authFetchForm(WEBHOOK_SEND,fm,MALER_TOKEN);
-const d=await r.json();
-$('m-result-price').textContent = d.price ? 'ca. '+Number(d.price).toLocaleString('de-DE', {minimumFractionDigits:2, maximumFractionDigits:2})+' €' : '-';
-$('m-result-duration').textContent = d.duration || '-';
-$('m-result-workers').textContent = d.workers || '-';
-}
-catch(err){
-$('m-result-price').textContent='-';
-$('m-result-duration').textContent='-';
-$('m-result-workers').textContent='-';
-}
-$('m-result-type').textContent=fd.customerType==='gewerbe'?'Gewerblich 🏢':'Privat 🏠';
-$('m-result-company-row').style.display=fd.company?'flex':'none';
-$('m-result-company').textContent=fd.company;
-$('m-result-name').textContent=fd.name;
-$('m-result-email-row').style.display=fd.email?'flex':'none';
-$('m-result-email').textContent=fd.email;
-$('m-result-phone').textContent=fd.phone;
-$('m-result-location').textContent=fd.location+(fd.distance?' ('+fd.distance+'km)':'');
-$('m-result-service').textContent=fd.serviceName;
-$('m-result-size').textContent=fd.size;
-$('m-result-timeframe').textContent=fd.timeframe;
-setTimeout(()=>{
-$('maler-loading').classList.remove('visible');
-$('maler-form-view').style.display='none';
-$('maler-result-view').classList.add('visible');
-$('maler-body').scrollTop=0;
-},1500);
-};
+function mUpdateProgress(){const ok=$('m-size').value.trim()&&$('m-timeframe').value.trim();const done=[ms.locationValid,ms.nameValid,ms.phoneValid,ms.service!==null,!!ok].filter(Boolean).length;$('maler-progress-bar').style.width=(done/5*100)+'%';}
+function mUpdateUI(){const ok=$('m-size').value.trim()&&$('m-timeframe').value.trim();[{id:'m-check-location',v:ms.locationValid},{id:'m-check-name',v:ms.nameValid},{id:'m-check-phone',v:ms.phoneValid},{id:'m-check-service',v:ms.service!==null},{id:'m-check-details',v:!!ok}].forEach(c=>{const el=$(c.id);el.className=c.v?'m-check-item checked':'m-check-item';el.querySelector('.m-check-icon').textContent=c.v?'✓':'○';});mUpdateProgress();const ready=ms.locationValid&&ms.nameValid&&ms.phoneValid&&ms.service!==null&&ok&&ms.dsgvo;$('m-submit').disabled=!ready;$('m-submit').classList.toggle('ready',ready);}
+document.querySelectorAll('.m-type-btn').forEach(btn=>{btn.onclick=()=>{document.querySelectorAll('.m-type-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');ms.type=btn.dataset.type;ms.locationValid=false;$('m-privat-box').style.display=ms.type==='privat'?'block':'none';$('m-gewerbe-box').style.display=ms.type==='gewerbe'?'block':'none';$('m-privat-status').className='m-val-status';$('m-gewerbe-status').className='m-val-status';mUpdateUI();};});
+$('m-validate-privat-btn').onclick=async()=>{const l=$('m-location-privat').value.trim(),box=$('m-privat-box');if(!l){$('m-privat-status').className='m-val-status visible error';$('m-privat-status').textContent='❌ Bitte Ort eingeben';box.classList.add('shake');setTimeout(()=>box.classList.remove('shake'),500);return;}const btn=$('m-validate-privat-btn');btn.classList.add('loading');btn.disabled=true;try{const r=await authFetch(WEBHOOK_VALIDATE,{type:'privat',location:l},MALER_TOKEN);const d=await r.json();const x=Array.isArray(d)?d[0]:d;if(x.valid){ms.locationValid=true;ms.distance=x.distance;$('m-privat-status').className='m-val-status visible success';$('m-privat-status').textContent='✅ Im Gebiet – '+x.distance+'km';box.classList.add('success-pulse');setTimeout(()=>box.classList.remove('success-pulse'),600);}else{ms.locationValid=false;$('m-privat-status').className='m-val-status visible error';$('m-privat-status').textContent=x.message||'❌ Außerhalb des Gebiets';box.classList.add('shake');setTimeout(()=>box.classList.remove('shake'),500);}}catch(e){$('m-privat-status').className='m-val-status visible error';$('m-privat-status').textContent='❌ Verbindungsfehler';}btn.classList.remove('loading');btn.disabled=false;mUpdateUI();};
+$('m-validate-gewerbe-btn').onclick=async()=>{const c=$('m-company').value.trim(),l=$('m-location-gewerbe').value.trim(),box=$('m-gewerbe-box');if(!c||!l){$('m-gewerbe-status').className='m-val-status visible error';$('m-gewerbe-status').textContent='❌ Firma und Ort eingeben';box.classList.add('shake');setTimeout(()=>box.classList.remove('shake'),500);return;}const btn=$('m-validate-gewerbe-btn');btn.classList.add('loading');btn.disabled=true;try{const r=await authFetch(WEBHOOK_VALIDATE,{type:'gewerbe',company:c,location:l},MALER_TOKEN);const d=await r.json();const x=Array.isArray(d)?d[0]:d;if(x.valid){ms.locationValid=true;ms.distance=x.distance;$('m-gewerbe-status').className='m-val-status visible success';$('m-gewerge-status').textContent='✅ '+(x.companyInfo||c)+' – '+x.distance+'km';box.classList.add('success-pulse');setTimeout(()=>box.classList.remove('success-pulse'),600);}else{ms.locationValid=false;$('m-gewerbe-status').className='m-val-status visible error';$('m-gewerbe-status').textContent=x.message||'❌ Nicht gefunden';box.classList.add('shake');setTimeout(()=>box.classList.remove('shake'),500);}}catch(e){$('m-gewerbe-status').className='m-val-status visible error';$('m-gewerbe-status').textContent='❌ Verbindungsfehler';}btn.classList.remove('loading');btn.disabled=false;mUpdateUI();};
+$('m-name').oninput=e=>{const n=e.target.value,r=validateName(n);$('m-name').classList.toggle('valid',r.v);$('m-name').classList.toggle('invalid',!r.v&&n.trim().length>=3);$('m-name-status').textContent=n.length===0?'':r.v?'✅':n.trim().length>=3?'❌':'';$('m-name-error').textContent=!r.v&&n.trim().length>=3?r.m:'';$('m-name-error').classList.toggle('visible',!r.v&&n.trim().length>=3);ms.nameValid=r.v;mUpdateUI();};
+$('m-phone').oninput=e=>{const p=e.target.value,ok=validatePhone(p);$('m-phone').classList.toggle('valid',ok);$('m-phone').classList.toggle('invalid',p.length>=6&&!ok);$('m-phone-status').textContent=p.length===0?'':ok?'✅':p.length>=6?'❌':'';ms.phoneValid=ok;mUpdateUI();};
+document.querySelectorAll('#m-services .m-service-option').forEach(o=>{o.onclick=()=>{document.querySelectorAll('#m-services .m-service-option').forEach(x=>x.classList.remove('selected'));o.classList.add('selected');ms.service=parseInt(o.dataset.service);mUpdateUI();};});
+$('m-size').oninput=()=>mUpdateUI();$('m-timeframe').oninput=()=>mUpdateUI();
+$('m-dsgvo').onchange=e=>{ms.dsgvo=e.target.checked;mUpdateUI();};
+$('m-dsgvo-toggle').onclick=e=>{e.preventDefault();e.stopPropagation();$('m-dsgvo-details').classList.toggle('visible');};
+$('m-images').onchange=e=>{Array.from(e.target.files).forEach(f=>{if(f.size>10*1024*1024){alert('Max. 10 MB pro Bild');return;}mFiles.push(f);});renderMFiles();e.target.value='';};
+function renderMFiles(){$('m-file-list').innerHTML=mFiles.map((f,i)=>`<div class="m-file-item">📷 ${f.name.slice(0,15)}...<span class="m-file-item-remove" data-i="${i}">✕</span></div>`).join('');$('m-file-list').querySelectorAll('.m-file-item-remove').forEach(b=>b.onclick=e=>{mFiles.splice(+e.target.dataset.i,1);renderMFiles();});}
+$('maler-form').onsubmit=async e=>{e.preventDefault();$('maler-loading').classList.add('visible');$('m-submit').classList.add('loading');const isG=ms.type==='gewerbe';const sNum=parseFloat($('m-size').value.replace(/[^\d.,]/g,'').replace(',','.'))||30;const fd={customerType:ms.type,company:isG?$('m-company').value:'',name:$('m-name').value,email:$('m-email').value.trim(),phone:$('m-phone').value,location:isG?$('m-location-gewerbe').value:$('m-location-privat').value,distance:ms.distance,serviceId:ms.service,serviceName:SERVICE_NAMES[ms.service]||'',size:$('m-size').value,sizeNumber:sNum,timeframe:$('m-timeframe').value,description:$('m-description').value.trim(),imagesCount:mFiles.length,dsgvoAccepted:true,timestamp:new Date().toISOString()};try{const fm=new FormData();fm.append('formData',JSON.stringify(fd));mFiles.forEach((f,i)=>fm.append('image_'+i,f));const r=await authFetchForm(WEBHOOK_SEND,fm,MALER_TOKEN);const d=await r.json();$('m-result-price').textContent=d.price?'ca. '+Number(d.price).toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €':'-';$('m-result-duration').textContent=d.duration||'-';$('m-result-workers').textContent=d.workers||'-';}catch(err){$('m-result-price').textContent='-';$('m-result-duration').textContent='-';$('m-result-workers').textContent='-';}$('m-result-type').textContent=fd.customerType==='gewerbe'?'Gewerblich 🏢':'Privat 🏠';$('m-result-company-row').style.display=fd.company?'flex':'none';$('m-result-company').textContent=fd.company;$('m-result-name').textContent=fd.name;$('m-result-email-row').style.display=fd.email?'flex':'none';$('m-result-email').textContent=fd.email;$('m-result-phone').textContent=fd.phone;$('m-result-location').textContent=fd.location+(fd.distance?' ('+fd.distance+'km)':'');$('m-result-service').textContent=fd.serviceName;$('m-result-size').textContent=fd.size;$('m-result-timeframe').textContent=fd.timeframe;setTimeout(()=>{$('maler-loading').classList.remove('visible');$('maler-form-view').style.display='none';$('maler-result-view').classList.add('visible');$('maler-body').scrollTop=0;},1500);};
 mUpdateProgress();
 
-/* ══════════════════════════════════════ TERMIN ÄNDERN ══════════════════════════════════════ */
+/* TERMIN ÄNDERN */
 const STEPS_AENDERN=[{label:'Prüfen'},{label:'Aktion'},{label:'Fertig'}];
 let taData={};
 let calState={year:new Date().getFullYear(),month:new Date().getMonth(),selectedDate:null,selectedTime:null};
@@ -2966,17 +2490,10 @@ const STELLE_OPTIONS=['Anmeldung / Ummeldung','Abmeldung','Personalausweis','Rei
 const TIME_SLOTS=['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30'];
 
 function botGoTerminAendern(){
-  hideChoices();
-  $('stadtbot-window').classList.add('expanded');
+  hideChoices();$('stadtbot-window').classList.add('expanded');
   botAddMessage('user','✏️ Termin ändern / Stornieren');
-  showSteps(STEPS_AENDERN,0);
-  showReset();
-  botMode='termin-aendern';
-  setTimeout(()=>{
-    botAddMessage('bot','Bitte füllen Sie das Formular aus, damit wir Ihren Termin finden können:');
-    showTerminAendernForm();
-  },300);
-}
+  showSteps(STEPS_AENDERN,0);showReset();botMode='termin-aendern';
+  setTimeout(()=>{botAddMessage('bot','Bitte füllen Sie das Formular aus, damit wir Ihren Termin finden können:');showTerminAendernForm();},300);}
 
 const TA_STELLEN=[
   {icon:'🏠',label:'Meldewesen',key:'meldewesen'},
@@ -2984,8 +2501,7 @@ const TA_STELLEN=[
   {icon:'🚗',label:'Führerschein & Kfz',key:'kfz'},
   {icon:'💍',label:'Standesamt',key:'standesamt'},
   {icon:'🏢',label:'Gewerbe',key:'gewerbe'},
-  {icon:'📋',label:'Sonstiges',key:'sonstiges'}
-];
+  {icon:'📋',label:'Sonstiges',key:'sonstiges'}];
 let taStelle=null;
 
 function showTerminAendernForm(){
@@ -3003,82 +2519,49 @@ function showTerminAendernForm(){
         <input class="bot-ta-input" id="ta-code" placeholder="000-000-000" maxlength="11" oninput="formatTaCode(this)"></div>
       <button class="bot-ta-submit" id="ta-submit" onclick="submitTerminAendern()">🔍 Termin prüfen</button>
     </div>`;
-  botChoicePanel.style.display='block';
-  botMessages.classList.add('collapsed');
-}
+  botChoicePanel.style.display='block';botMessages.classList.add('collapsed');}
 
-window.selectTaStelle=function(key,el){
-  taStelle=key;
-  document.querySelectorAll('.bot-stelle-btn').forEach(b=>b.classList.remove('selected'));
-  el.classList.add('selected');
-};
-
-window.formatTaCode=function(input){
-  let v=input.value.replace(/\D/g,'');
-  if(v.length>9)v=v.slice(0,9);
-  if(v.length>6) v=v.slice(0,3)+'-'+v.slice(3,6)+'-'+v.slice(6);
-  else if(v.length>3) v=v.slice(0,3)+'-'+v.slice(3);
-  input.value=v;
-};
+window.selectTaStelle=function(key,el){taStelle=key;document.querySelectorAll('.bot-stelle-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');};
+window.formatTaCode=function(input){let v=input.value.replace(/\D/g,'');if(v.length>9)v=v.slice(0,9);if(v.length>6)v=v.slice(0,3)+'-'+v.slice(3,6)+'-'+v.slice(6);else if(v.length>3)v=v.slice(0,3)+'-'+v.slice(3);input.value=v;};
 
 window.submitTerminAendern=async function(){
   const name=$('ta-name').value.trim(),stelle=taStelle,datum=$('ta-datum').value,code=$('ta-code').value.trim();
-  if(!name||!stelle||!datum||!code||code.length<11){
-    const btn=$('ta-submit');
-    btn.textContent='⚠️ Alle Felder ausfüllen';
-    setTimeout(()=>{btn.textContent='🔍 Termin prüfen';},2000);
-    return;
-  }
+  if(!name||!stelle||!datum||!code||code.length<11){const btn=$('ta-submit');btn.textContent='⚠️ Alle Felder ausfüllen';setTimeout(()=>{btn.textContent='🔍 Termin prüfen';},2000);return;}
   taData={name,stelle,datum,code};
   $('ta-submit').disabled=true;$('ta-submit').textContent='⏳ Wird geprüft...';
-  hideChoices();
-  botAddMessage('user',`🔍 ${name} · ${stelle} · ${datum.split('-').reverse().join('.')}`);
-  botShowTyping();
+  hideChoices();botAddMessage('user',`🔍 ${name} · ${stelle} · ${datum.split('-').reverse().join('.')}`);botShowTyping();
   try{
     const r=await authFetch(WEBHOOK_TA_VALIDATE,{name,stelle,datum,code,timestamp:new Date().toISOString()},TA_TOKEN);
+    if(r.status===404||r.status===500||r.status===502){botHideTyping();botAddMessage('bot','⚠️ Service momentan nicht verfügbar. Bitte versuchen Sie es später erneut.');setTimeout(()=>showTerminAendernForm(),400);return;}
     const d=await r.json();const data=Array.isArray(d)?d[0]:d;
     botHideTyping();
     if(data.found||data.valid){
-      taData.eventId=data.eventId||null;
-      showSteps(STEPS_AENDERN,1);
+      taData.eventId=data.eventId||null;showSteps(STEPS_AENDERN,1);
       botAddMessage('bot','✅ Termin gefunden!\n\n'+(data.eventDetails||stelle+' am '+datum.split('-').reverse().join('.'))+'\n\nWas möchten Sie tun?');
       showAktionChoice();
-    } else {
-      showSteps(STEPS_AENDERN,0);
-      botAddMessage('bot','❌ '+(data.message||'Termin nicht gefunden. Bitte überprüfen Sie Ihre Angaben.'));
-      setTimeout(()=>showTerminAendernForm(),400);
-    }
-  }catch(e){botHideTyping();botAddMessage('bot','⚠️ Verbindungsfehler. Bitte erneut versuchen.');setTimeout(()=>showTerminAendernForm(),400);}
-};
+    }else{showSteps(STEPS_AENDERN,0);botAddMessage('bot','❌ '+(data.message||'Termin nicht gefunden. Bitte überprüfen Sie Ihre Angaben.'));setTimeout(()=>showTerminAendernForm(),400);}
+  }catch(e){botHideTyping();botAddMessage('bot','⚠️ Verbindungsfehler. Bitte erneut versuchen.');setTimeout(()=>showTerminAendernForm(),400);}};
 
 function showAktionChoice(){
   botChoiceLabel.textContent='Was möchten Sie tun?';
   botChoiceGrid.innerHTML=`
     <button class="bot-action-btn primary-btn" onclick="botGoUpdaten()"><span>🔄</span><span>Termin verschieben</span></button>
     <button class="bot-action-btn danger" onclick="botGoStornieren()"><span>🗑️</span><span>Termin stornieren</span></button>`;
-  botChoicePanel.style.display='block';
-  botMessages.classList.add('collapsed');
-}
+  botChoicePanel.style.display='block';botMessages.classList.add('collapsed');}
 
 window.botGoStornieren=async function(){
-  hideChoices();
-  botAddMessage('user','🗑️ Termin stornieren');
-  botShowTyping();
+  hideChoices();botAddMessage('user','🗑️ Termin stornieren');botShowTyping();
   try{
     const r=await authFetch(WEBHOOK_TA_STORNIEREN,{...taData,timestamp:new Date().toISOString()},TA_TOKEN);
     const d=await r.json();const data=Array.isArray(d)?d[0]:d;
     botHideTyping();showSteps(STEPS_AENDERN,2);
     botAddMessage('bot',data.reply||data.message||'✅ Ihr Termin wurde erfolgreich storniert.');
-  }catch(e){botHideTyping();botAddMessage('bot','⚠️ Verbindungsfehler beim Stornieren.');}
-};
+  }catch(e){botHideTyping();botAddMessage('bot','⚠️ Verbindungsfehler beim Stornieren.');}};
 
 window.botGoUpdaten=function(){
-  hideChoices();
-  botAddMessage('user','🔄 Termin verschieben');
-  botMode='termin-updaten';
+  hideChoices();botAddMessage('user','🔄 Termin verschieben');botMode='termin-updaten';
   calState={year:new Date().getFullYear(),month:new Date().getMonth(),selectedDate:null,selectedTime:null};
-  setTimeout(()=>{botAddMessage('bot','Bitte wählen Sie die neue Stelle und das neue Datum:');showUpdateForm();},300);
-};
+  setTimeout(()=>{botAddMessage('bot','Bitte wählen Sie die neue Stelle und das neue Datum:');showUpdateForm();},300);};
 
 function showUpdateForm(){
   botChoiceLabel.textContent='Neuen Termin wählen';
@@ -3090,10 +2573,7 @@ function showUpdateForm(){
     <div class="upd-info-box" id="upd-info"></div>
     <button class="bot-ta-submit" id="upd-submit" onclick="submitUpdate()" disabled>📅 Termin ändern</button>
   </div>`;
-  botChoicePanel.style.display='block';
-  botMessages.classList.add('collapsed');
-  renderCalendar();
-}
+  botChoicePanel.style.display='block';botMessages.classList.add('collapsed');renderCalendar();}
 
 function renderCalendar(){
   const cont=$('bot-cal-container');if(!cont)return;
@@ -3104,59 +2584,38 @@ function renderCalendar(){
   let days=dNames.map(d=>`<div class="bot-cal-day-name">${d}</div>`).join('');
   for(let i=0;i<firstMon;i++)days+=`<div class="bot-cal-day empty"></div>`;
   for(let d=1;d<=dim;d++){
-    const date=new Date(y,m,d);
-    const isToday=date.toDateString()===now.toDateString();
-    const isPast=date<new Date(now.getFullYear(),now.getMonth(),now.getDate());
-    const isWE=date.getDay()===0||date.getDay()===6;
-    const ds=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const isSel=calState.selectedDate===ds;
+    const date=new Date(y,m,d);const isToday=date.toDateString()===now.toDateString();
+    const isPast=date<new Date(now.getFullYear(),now.getMonth(),now.getDate());const isWE=date.getDay()===0||date.getDay()===6;
+    const ds=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;const isSel=calState.selectedDate===ds;
     const cls=['bot-cal-day',isSel?'selected':'',isToday?'today':'',(isPast||isWE)?'disabled':''].filter(Boolean).join(' ');
-    days+=`<div class="${cls}"${!(isPast||isWE)?` onclick="selectCalDay('${ds}')"`:''}>${d}</div>`;
-  }
-  const timeHTML='';
+    days+=`<div class="${cls}"${!(isPast||isWE)?` onclick="selectCalDay('${ds}')"`:''}>${d}</div>`;}
   cont.innerHTML=`<div class="bot-cal">
     <div class="bot-cal-header">
       <button class="bot-cal-nav" onclick="calNav(-1)">‹</button>
       <span class="bot-cal-month">${mNames[m]} ${y}</span>
       <button class="bot-cal-nav" onclick="calNav(1)">›</button>
     </div>
-    <div class="bot-cal-grid">${days}</div>${timeHTML}</div>`;
-}
+    <div class="bot-cal-grid">${days}</div></div>`;}
 
-window.calNav=function(dir){
-  calState.month+=dir;
-  if(calState.month>11){calState.month=0;calState.year++;}
-  if(calState.month<0){calState.month=11;calState.year--;}
-  renderCalendar();
-};
+window.calNav=function(dir){calState.month+=dir;if(calState.month>11){calState.month=0;calState.year++;}if(calState.month<0){calState.month=11;calState.year--;}renderCalendar();};
 window.selectCalDay=function(ds){calState.selectedDate=ds;calState.selectedTime=null;renderCalendar();updateUpdInfo();};
 window.selectTimeSlot=function(t){calState.selectedTime=t;renderCalendar();updateUpdInfo();};
 
 function updateUpdInfo(){
   const info=$('upd-info'),sub=$('upd-submit');if(!info||!sub)return;
-  if(calState.selectedDate){
-    const [y2,m2,d2]=calState.selectedDate.split('-');
-    info.style.display='block';
-    info.innerHTML=`✅ <strong>${d2}.${m2}.${y2}</strong>`;
-    sub.disabled=false;
-  } else {info.style.display='none';sub.disabled=true;}
-}
+  if(calState.selectedDate){const[y2,m2,d2]=calState.selectedDate.split('-');info.style.display='block';info.innerHTML=`✅ <strong>${d2}.${m2}.${y2}</strong>`;sub.disabled=false;}
+  else{info.style.display='none';sub.disabled=true;}}
 
 window.submitUpdate=async function(){
-  const stelle=$('upd-stelle')?.value;
-  if(!stelle||!calState.selectedDate)return;
-  const [y2,m2,d2]=calState.selectedDate.split('-');
-  const fmt=`${d2}.${m2}.${y2}`;
-  hideChoices();
-  botAddMessage('user',`📅 ${stelle} – ${fmt}`);
-  botShowTyping();
+  const stelle=$('upd-stelle')?.value;if(!stelle||!calState.selectedDate)return;
+  const[y2,m2,d2]=calState.selectedDate.split('-');const fmt=`${d2}.${m2}.${y2}`;
+  hideChoices();botAddMessage('user',`📅 ${stelle} – ${fmt}`);botShowTyping();
   try{
     const r=await authFetch(WEBHOOK_TA_UPDATE,{...taData,newStelle:stelle,newDate:calState.selectedDate,timestamp:new Date().toISOString()},TA_TOKEN);
     const d=await r.json();const data=Array.isArray(d)?d[0]:d;
     botHideTyping();showSteps(STEPS_AENDERN,2);
     botAddMessage('bot',data.reply||data.message||`✅ Ihr Termin wurde erfolgreich auf ${fmt} verschoben!`);
-  }catch(e){botHideTyping();botAddMessage('bot','⚠️ Verbindungsfehler beim Aktualisieren.');}
-};
+  }catch(e){botHideTyping();botAddMessage('bot','⚠️ Verbindungsfehler beim Aktualisieren.');}};
 
 })();
 </script> </body> </html>
