@@ -2664,16 +2664,31 @@ window.showAktionChoice=window.showAktionChoice=function(){
   botChoiceLabel.textContent='Was möchten Sie tun?';
   botChoiceGrid.innerHTML=`
     <button class="bot-action-btn primary-btn" onclick="window.botGoUpdaten()"><span>🔄</span><span>Termin verschieben</span></button>
-    <button class="bot-action-btn danger" onclick="window.botGoStornieren()"><span>🗑️</span><span>Termin stornieren</span></button>`;
+    <button class="bot-action-btn danger" onclick="window.showStorniereForm()"><span>🗑️</span><span>Termin stornieren</span></button>`;
+  botChoicePanel.style.display='block';botMessages.classList.add('collapsed');}
+
+window.showStorniereForm=function(){
+  botChoiceLabel.textContent='Termin stornieren';
+  botChoiceGrid.innerHTML=`
+    <div style="text-align:center;padding:4px 0 12px">
+      <p style="font-size:12px;color:var(--text-muted);margin:0 0 14px">Für eine Bestätigung können Sie Ihre E-Mail-Adresse hinterlassen.</p>
+      <div class="bot-ta-field" style="max-width:260px;margin:0 auto 14px">
+        <label class="bot-ta-label">📧 E-Mail <span style="font-size:10px;color:#b0a99f;font-weight:400">(optional)</span></label>
+        <input class="bot-ta-input" id="storno-email" type="email" placeholder="ihre@email.de">
+      </div>
+      <button class="bot-action-btn danger" style="max-width:260px;margin:0 auto" onclick="window.botGoStornieren()"><span>🗑️</span><span>Jetzt stornieren</span></button>
+      <button class="bot-ta-submit" style="background:transparent;color:var(--text-muted);margin-top:6px;font-weight:400;font-size:12px" onclick="window.showAktionChoice()">↩ Zurück</button>
+    </div>`;
   botChoicePanel.style.display='block';botMessages.classList.add('collapsed');}
 
 window.botGoStornieren=async function(){
+  const email=$('storno-email')?.value.trim()||null;
   botChoiceGrid.innerHTML='<div style="text-align:center;padding:24px;color:var(--text-muted);font-size:13px">⏳ Termin wird storniert...</div>';
   try{
-    const r=await authFetch(WEBHOOK_TA_STORNIEREN,{...taData,timestamp:new Date().toISOString()},TA_TOKEN);
+    const r=await authFetch(WEBHOOK_TA_STORNIEREN,{...taData,email,timestamp:new Date().toISOString()},TA_TOKEN);
     const d=await r.json();const data=Array.isArray(d)?d[0]:d;
     showSteps(STEPS_AENDERN,2);setContextLabel('✏️ Termin storniert');
-    showResultBox('success','✅ '+(data.reply||data.message||'Ihr Termin wurde erfolgreich storniert.'));
+    showResultBox('success','✅ '+(data.reply||data.message||'Ihr Termin wurde erfolgreich storniert.')+(email?'<br><small style="opacity:.7">Bestätigung wird an '+email+' gesendet.</small>':''));
   }catch(e){showResultBox('error','⚠️ Verbindungsfehler beim Stornieren.<br><br><button class="bot-ta-submit" onclick="window.showAktionChoice()" style="margin-top:8px">↩ Zurück</button>');}};
 
 window.botGoUpdaten=function(){
