@@ -732,7 +732,7 @@ animation-delay:.4s
 }
 
 /* Auswahl-Panel (ersetzt suggestions+input in Guided-Mode) */ .bot-choice-panel {
-padding:14px 16px 20px;
+padding:10px 12px 12px;
 background:#fff;
 border-top:1px solid var(--border);
 flex-shrink:0;
@@ -2012,7 +2012,7 @@ margin-left:3px
 
 
 /* ── TERMIN ÄNDERN ── */
-.bot-ta-form{padding:0 2px}
+.bot-ta-form{padding:0}
 .bot-ta-field{margin-bottom:11px}
 .bot-ta-label{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:5px;display:block}
 .bot-ta-input,.bot-stelle-select{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--text);background:#faf9f7;outline:none;transition:border-color .2s}
@@ -2276,7 +2276,7 @@ width:min(360px,92vw)
 .bot-context-label.visible{display:block}
 
 /* ── BOT FOOTER ── */
-.bot-footer{padding:4px 14px 7px;text-align:center;font-size:10px;color:#c0bab4;background:#fff;flex-shrink:0}
+.bot-footer{padding:5px 14px 6px;text-align:center;font-size:10px;color:#c0bab4;background:#fff;border-top:1px solid var(--border);flex-shrink:0;order:999}
 .bot-footer a{color:#c0bab4;text-decoration:none;transition:color .2s}
 .bot-footer a:hover{color:var(--accent-dark)}
 
@@ -2613,12 +2613,6 @@ function showTerminAendernForm(){
   botChoiceLabel.textContent='Termindetails eingeben';
   botChoiceGrid.innerHTML=`
     <div class="bot-ta-form">
-      <div class="bot-ta-field"><label class="bot-ta-label">📛 Name</label>
-        <input class="bot-ta-input" id="ta-name" placeholder="Vor- und Nachname"></div>
-      <div class="bot-ta-field"><label class="bot-ta-label">🏛️ Stelle / Bereich</label>
-        <div class="bot-stelle-grid">${TA_STELLEN.map(s=>`<button class="bot-stelle-btn" data-key="${s.key}" onclick="selectTaStelle('${s.key}',this)">${s.icon}<br>${s.label}</button>`).join('')}</div></div>
-      <div class="bot-ta-field"><label class="bot-ta-label">📅 Datum des Termins</label>
-        <input class="bot-ta-input" id="ta-datum" type="date"></div>
       <div class="bot-ta-field"><label class="bot-ta-label">🔐 Sicherheitscode</label>
         <input class="bot-ta-input" id="ta-code" placeholder="000-000-000" maxlength="11" oninput="formatTaCode(this)"></div>
       <button class="bot-ta-submit" id="ta-submit" onclick="submitTerminAendern()">🔍 Termin prüfen</button>
@@ -2629,14 +2623,13 @@ window.selectTaStelle=function(key,el){taStelle=key;document.querySelectorAll('.
 window.formatTaCode=function(input){let v=input.value.replace(/\D/g,'');if(v.length>9)v=v.slice(0,9);if(v.length>6)v=v.slice(0,3)+'-'+v.slice(3,6)+'-'+v.slice(6);else if(v.length>3)v=v.slice(0,3)+'-'+v.slice(3);input.value=v;};
 
 window.submitTerminAendern=async function(){
-  const name=$('ta-name').value.trim(),stelle=taStelle,datum=$('ta-datum').value,code=$('ta-code').value.trim();
-  if(!name||!stelle||!datum||!code||code.length<11){const btn=$('ta-submit');btn.textContent='⚠️ Alle Felder ausfüllen';setTimeout(()=>{btn.textContent='🔍 Termin prüfen';},2000);return;}
-  taData={name,stelle,datum,code};
+  const code=$('ta-code').value.trim();
+  if(!code||code.length<11){const btn=$('ta-submit');btn.textContent='⚠️ Bitte Code eingeben';setTimeout(()=>{btn.textContent='🔍 Termin prüfen';},2000);return;}
+  taData={code};
   $('ta-submit').disabled=true;$('ta-submit').textContent='⏳ Wird geprüft...';
-  /* Lade-Spinner in der Choice-Box */
   botChoiceGrid.innerHTML='<div style="text-align:center;padding:24px;color:var(--text-muted);font-size:13px">⏳ Termin wird gesucht...</div>';
   try{
-    const r=await authFetch(WEBHOOK_TA_VALIDATE,{name,stelle,datum,code,timestamp:new Date().toISOString()},TA_TOKEN);
+    const r=await authFetch(WEBHOOK_TA_VALIDATE,{code,timestamp:new Date().toISOString()},TA_TOKEN);
     if(r.status===404||r.status===500||r.status===502){
       showResultBox('error','⚠️ Service momentan nicht verfügbar. Bitte versuchen Sie es später erneut.<br><br><button class="bot-ta-submit" onclick="showTerminAendernForm()" style="margin-top:8px">↩ Zurück</button>');
       return;}
