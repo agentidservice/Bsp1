@@ -2021,6 +2021,9 @@ margin-left:3px
 .bot-ta-submit{width:100%;padding:11px;background:var(--bg-dark);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;margin-top:4px;font-family:'DM Sans',sans-serif;transition:all .2s}
 .bot-ta-submit:hover{background:var(--accent-dark)}
 .bot-ta-submit:disabled{opacity:.4;cursor:not-allowed}
+.bot-ta-code-error{display:none;margin-top:10px;padding:12px 14px;background:#fef2f2;border:1px solid #fca5a5;border-radius:10px;font-size:12px;color:#dc2626;line-height:1.5}
+.bot-ta-code-error.visible{display:block;animation:fadeInUp .3s ease-out}
+.bot-ta-input.shake-input{animation:shake .4s ease-out;border-color:#ef4444}
 .bot-action-btn{width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:10px;transition:all .2s;margin-bottom:8px;background:#fff}
 .bot-action-btn.danger{background:#fef2f2;border-color:#fca5a5;color:#dc2626}
 .bot-action-btn.danger:hover{background:#fee2e2}
@@ -2299,7 +2302,7 @@ const BOT_TOKEN = 'cidg-pidg-12345-678910-v1v';
 const TA_TOKEN = 'jghdjscdcjsbsjfsjk127653286412';
 const WEBHOOK_TA_VALIDATE = 'https://seidel1502.app.n8n.cloud/webhook/7b1ef35c-358d-412a-b22d-d76a2ad9729a';
 const WEBHOOK_TA_UPDATE = 'https://seidel1502.app.n8n.cloud/webhook/84fbb548-4f5d-4eda-8cf8-b1acf6747297';
-const WEBHOOK_TA_STORNIEREN = 'https://seidel1502.app.n8n.cloud/webhook-test/6b88924a-c283-446f-8961-9e0065f4beb9';
+const WEBHOOK_TA_STORNIEREN = 'https://seidel1502.app.n8n.cloud/webhook/6b88924a-c283-446f-8961-9e0065f4beb9';
 const $ = id => document.getElementById(id);
 function authFetch(url, body, token){
 return fetch(url,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify(body)});}
@@ -2615,18 +2618,24 @@ function showTerminAendernForm(){
     <div class="bot-ta-form">
       <div class="bot-ta-field"><label class="bot-ta-label">🔐 Sicherheitscode</label>
         <input class="bot-ta-input" id="ta-code" placeholder="000-000-000" maxlength="11" oninput="formatTaCode(this)"></div>
-      <button class="bot-ta-submit" id="ta-submit" onclick="submitTerminAendern()">🔍 Termin prüfen</button>
+      <div class="bot-ta-code-error" id="ta-code-error">🔒 Sicherheitscode nicht gefunden. Wenden Sie sich bitte an unser Personal.</div>
+      <button class="bot-ta-submit" id="ta-submit" onclick="window.submitTerminAendern()">🔍 Termin prüfen</button>
     </div>`;
-  botChoicePanel.style.display='block';botMessages.classList.add('collapsed');}
+  botChoicePanel.style.display='block';
+  botMessages.classList.add('collapsed');}
 
 window.selectTaStelle=function(key,el){taStelle=key;document.querySelectorAll('.bot-stelle-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');};
 window.formatTaCode=function(input){let v=input.value.replace(/\D/g,'');if(v.length>9)v=v.slice(0,9);if(v.length>6)v=v.slice(0,3)+'-'+v.slice(3,6)+'-'+v.slice(6);else if(v.length>3)v=v.slice(0,3)+'-'+v.slice(3);input.value=v;};
 
 window.submitTerminAendern=async function(){
   const code=$('ta-code').value.trim();
-  if(!code||code.length<11){const btn=$('ta-submit');btn.textContent='⚠️ Bitte Code eingeben';setTimeout(()=>{btn.textContent='🔍 Termin prüfen';},2000);return;}
+  if(!code||code.length<11){
+    const inp=$('ta-code');if(inp){inp.classList.add('shake-input');setTimeout(()=>inp.classList.remove('shake-input'),500);}
+    const btn=$('ta-submit');if(btn){btn.textContent='⚠️ Bitte Code eingeben';setTimeout(()=>{btn.textContent='🔍 Termin prüfen';},2000);}
+    return;}
   taData={code};
-  $('ta-submit').disabled=true;$('ta-submit').textContent='⏳ Wird geprüft...';
+  const btn=$('ta-submit');if(btn){btn.disabled=true;btn.textContent='⏳ Wird geprüft...';}
+  const errBox=$('ta-code-error');if(errBox)errBox.classList.remove('visible');
   botChoiceGrid.innerHTML='<div style="text-align:center;padding:24px;color:var(--text-muted);font-size:13px">⏳ Termin wird gesucht...</div>';
   try{
     const r=await authFetch(WEBHOOK_TA_VALIDATE,{code,timestamp:new Date().toISOString()},TA_TOKEN);
@@ -2636,11 +2645,16 @@ window.submitTerminAendern=async function(){
     const d=await r.json();const data=Array.isArray(d)?d[0]:d;
     if(data.found||data.valid){
       taData.eventId=data.eventId||null;showSteps(STEPS_AENDERN,1);
-      const dateFmt=datum.split('-').reverse().join('.');
-      showResultBox('success',`✅ <strong>Termin gefunden</strong><br>${data.eventDetails||stelle+' am '+dateFmt}<br><br>Was möchten Sie tun?`);
+      const dateFmt=data.startTime?new Date(data.startTime).toLocaleDateString('de-DE',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric'}):'';
+      showResultBox('success',`✅ <strong>Termin gefunden</strong><br>${data.eventDetails||dateFmt}<br><br>Was möchten Sie tun?`);
       setTimeout(showAktionChoice,1200);
     }else{
-      showResultBox('error','❌ '+(data.message||'Termin nicht gefunden. Bitte überprüfen Sie Ihre Angaben.')+'<br><br><button class="bot-ta-submit" onclick="showTerminAendernForm()" style="margin-top:8px">↩ Erneut versuchen</button>');
+      /* Shake + Error-Box */
+      showTerminAendernForm();
+      setTimeout(()=>{
+        const inp=$('ta-code');if(inp){inp.value=code;inp.classList.add('shake-input');setTimeout(()=>inp.classList.remove('shake-input'),500);}
+        const err=$('ta-code-error');if(err)err.classList.add('visible');
+      },50);
     }
   }catch(e){
     showResultBox('error','⚠️ Verbindungsfehler.<br><br><button class="bot-ta-submit" onclick="showTerminAendernForm()" style="margin-top:8px">↩ Zurück</button>');
