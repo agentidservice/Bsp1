@@ -2296,6 +2296,7 @@ const WEBHOOK_VALIDATE = 'https://seidel1502.app.n8n.cloud/webhook/3ad0bd7f-1b6e
 const WEBHOOK_SEND = 'https://seidel1502.app.n8n.cloud/webhook/af4d3fcf-7cc3-48ee-b665-1b61703e678c';
 const WEBHOOK_SUMMARIZE = 'https://seidel1502.app.n8n.cloud/webhook/37e814a4-dd8d-49bb-95f0-b96d65bb963a';
 const WEBHOOK_BOT = 'https://seidel1502.app.n8n.cloud/webhook/bc482480-47c0-4914-b1e6-67b0809a9c68';
+const WEBHOOK_BOT_FORMULAR = 'https://seidel1502.app.n8n.cloud/webhook/7463a41c-ba56-4259-9613-268112b04d8b';
 const MALER_TOKEN = '0Xpj42sQ#g*kjpYP3cRsPawHAUH#U_&Mt&rlgnqPcnfsclT-';
 const SUMMARIZE_TOKEN = '1Xpj42sQ#g*kjpYP3cRsPawHAUH#U_&Mt&rlgnqPcnfsclT-';
 const BOT_TOKEN = 'cidg-pidg-12345-678910-v1v';
@@ -2374,7 +2375,7 @@ gewerbe:{label:'🏢 Gewerbe',icon:'🏢',sub:[{label:'Gewerbeanmeldung',key:'ge
 sonstiges:{label:'📋 Sonstiges',icon:'📋',sub:[{label:'Führungszeugnis (erweitertes)',key:'fuehrungszeugnis'},{label:'Beglaubigungen',key:'beglaubigung'}]}};
 
 const STEPS_INFO = [{label:'Info'}];
-const STEPS_TERMIN = [{label:'Kategorie'},{label:'Leistung'},{label:'Termin'}];
+const STEPS_TERMIN = [{label:'Kategorie'},{label:'Leistung'},{label:'Art'},{label:'Termin'}];
 let botMode = 'start';
 let botTerminKat = null;
 let botTerminSub = null;
@@ -2491,12 +2492,117 @@ function botGoTerminSub(katKey,kat){
 botTerminKat=katKey;hideChoices();
 showSteps(STEPS_TERMIN,1);botMode='termin-sub';
 setContextLabel('📅 '+kat.label.replace(kat.icon+' ',''));
-showChoices('Leistung wählen',kat.sub.map(s=>({icon:'→',label:s.label,onClick:()=>botGoTerminChat(s)})));}
+showChoices('Leistung wählen',kat.sub.map(s=>({icon:'→',label:s.label,onClick:()=>botGoTerminArt(s)})));}
+
+function botGoTerminArt(sub){
+botTerminSub=sub.key;hideChoices();
+showSteps(STEPS_TERMIN,2);botMode='termin-art';
+setContextLabel(TERMIN_KATEGORIEN[botTerminKat]?.label.replace(/\S+\s/,'')+' · '+sub.label);
+botChoiceLabel.textContent='Wie möchten Sie buchen?';
+botChoiceGrid.innerHTML=`
+  <button class="bot-action-btn primary-btn" onclick="window.botGoTerminFormular('${sub.key}','${sub.label.replace(/'/g,"\\'")}')">
+    <span>📝</span><span>Formular</span>
+  </button>
+  <button class="bot-action-btn" onclick="window.botGoTerminChatFromArt('${sub.key}','${sub.label.replace(/'/g,"\\'")}')">
+    <span>💬</span><span>Chat</span>
+  </button>`;
+botChoicePanel.style.display='block';botMessages.classList.add('collapsed');}
+
+window.botGoTerminChatFromArt=function(key,label){
+botGoTerminChat({key,label});};
+
+window.botGoTerminFormular=function(key,label){
+botTerminSub=key;hideChoices();
+showSteps(STEPS_TERMIN,3);botMode='termin-formular';
+setContextLabel(TERMIN_KATEGORIEN[botTerminKat]?.label.replace(/\S+\s/,'')+' · '+label);
+const calS={year:new Date().getFullYear(),month:new Date().getMonth(),selectedDate:null};
+window._formCalState=calS;
+function renderFormCal(){
+  const cont=document.getElementById('form-cal-container');if(!cont)return;
+  const now=new Date(),y=calS.year,m=calS.month;
+  const mNames=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+  const dNames=['Mo','Di','Mi','Do','Fr','Sa','So'];
+  const firstDay=new Date(y,m,1).getDay(),firstMon=(firstDay+6)%7,dim=new Date(y,m+1,0).getDate();
+  let days=dNames.map(d=>`<div class="bot-cal-day-name">${d}</div>`).join('');
+  for(let i=0;i<firstMon;i++)days+=`<div class="bot-cal-day empty"></div>`;
+  for(let d=1;d<=dim;d++){
+    const date=new Date(y,m,d);
+    const isPast=date<new Date(now.getFullYear(),now.getMonth(),now.getDate());
+    const isWE=date.getDay()===0||date.getDay()===6;
+    const isToday=date.toDateString()===now.toDateString();
+    const ds=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isSel=calS.selectedDate===ds;
+    const cls=['bot-cal-day',isSel?'selected':'',isToday?'today':'',(isPast||isWE)?'disabled':''].filter(Boolean).join(' ');
+    days+=`<div class="${cls}"${!(isPast||isWE)?` onclick="window.selectFormCalDay('${ds}')"`:''}>${d}</div>`;}
+  cont.innerHTML=`<div class="bot-cal">
+    <div class="bot-cal-header">
+      <button class="bot-cal-nav" onclick="window.formCalNav(-1)">‹</button>
+      <span class="bot-cal-month">${mNames[m]} ${y}</span>
+      <button class="bot-cal-nav" onclick="window.formCalNav(1)">›</button>
+    </div>
+    <div class="bot-cal-grid">${days}</div></div>`;}
+
+botChoiceLabel.textContent='Termin buchen';
+botChoiceGrid.innerHTML=`
+  <div class="bot-ta-form">
+    <div class="bot-ta-field">
+      <label class="bot-ta-label">👤 Name</label>
+      <input class="bot-ta-input" id="form-name" placeholder="Vor- und Nachname">
+    </div>
+    <div class="bot-ta-field">
+      <label class="bot-ta-label">📧 E-Mail <span style="font-size:10px;color:#b0a99f;font-weight:400">(optional)</span></label>
+      <input class="bot-ta-input" id="form-email" type="email" placeholder="ihre@email.de">
+      <div style="font-size:10px;color:#b0a99f;margin-top:4px">⚠️ Wichtig für spätere Terminänderung oder Stornierung</div>
+    </div>
+    <div class="bot-ta-field">
+      <label class="bot-ta-label">📅 Datum wählen</label>
+      <div id="form-cal-container"></div>
+    </div>
+    <div id="form-date-info" style="display:none;font-size:12px;color:var(--accent-dark);padding:6px 0;font-weight:500"></div>
+    <button class="bot-ta-submit" id="form-submit" onclick="window.submitTerminFormular('${key}','${label.replace(/'/g,"\\'")}')">📅 Termin buchen</button>
+  </div>`;
+botChoicePanel.style.display='block';botMessages.classList.add('collapsed');
+setTimeout(renderFormCal,10);
+window._renderFormCal=renderFormCal;};
+
+window.formCalNav=function(dir){
+const s=window._formCalState;if(!s)return;
+s.month+=dir;if(s.month>11){s.month=0;s.year++;}if(s.month<0){s.month=11;s.year--;}
+window._renderFormCal&&window._renderFormCal();};
+
+window.selectFormCalDay=function(ds){
+const s=window._formCalState;if(!s)return;
+s.selectedDate=ds;
+window._renderFormCal&&window._renderFormCal();
+const[y,m,d]=ds.split('-');
+const info=document.getElementById('form-date-info');
+if(info){info.style.display='block';info.textContent=`✅ ${d}.${m}.${y} ausgewählt`;}};
+
+window.submitTerminFormular=async function(key,label){
+const name=document.getElementById('form-name')?.value.trim();
+const email=document.getElementById('form-email')?.value.trim()||null;
+const date=window._formCalState?.selectedDate;
+if(!name||name.split(' ').length<2){
+  const inp=document.getElementById('form-name');if(inp){inp.style.borderColor='#ef4444';}
+  const btn=document.getElementById('form-submit');if(btn){btn.textContent='⚠️ Vor- und Nachname eingeben';setTimeout(()=>{btn.textContent='📅 Termin buchen';},2000);}return;}
+if(!date){
+  const btn=document.getElementById('form-submit');if(btn){btn.textContent='⚠️ Bitte Datum wählen';setTimeout(()=>{btn.textContent='📅 Termin buchen';},2000);}return;}
+const btn=document.getElementById('form-submit');if(btn){btn.disabled=true;btn.textContent='⏳ Wird gebucht...';}
+botChoiceGrid.innerHTML='<div style="text-align:center;padding:24px;color:var(--text-muted);font-size:13px">⏳ Termin wird gebucht...</div>';
+try{
+const r=await authFetch(WEBHOOK_BOT_FORMULAR,{name,email,datum:date,kategorie:botTerminKat,leistung:key,leistungName:label,sessionId:SESSION_ID,timestamp:new Date().toISOString()},BOT_TOKEN);
+const d=await r.json();const data=Array.isArray(d)?d[0]:d;
+showSteps(STEPS_TERMIN,3);
+const[y2,m2,d2]=date.split('-');
+showResultBox('success',`✅ <strong>Termin gebucht!</strong><br>${label} am ${d2}.${m2}.${y2}<br><small style="opacity:.7">Name: ${name}</small>${email?`<br><small style="opacity:.7">Bestätigung → ${email}</small>`:''}<br><br><small style="color:var(--text-muted)">Ihren Sicherheitscode erhalten Sie per E-Mail oder notieren Sie ihn.</small>`);
+}catch(e){
+showResultBox('error',`⚠️ Verbindungsfehler beim Buchen.<br><br><button class="bot-ta-submit" onclick="window.botGoTerminFormular('${key}','${label}')" style="margin-top:8px">↩ Zurück</button>`);
+}};
 
 /* ── TERMIN BUCHEN: Echter Chat startet hier ── */
 async function botGoTerminChat(sub){
 botTerminSub=sub.key;hideChoices();
-showSteps(STEPS_TERMIN,2);botMode='termin-chat';
+showSteps(STEPS_TERMIN,3);botMode='termin-chat';
 setContextLabel(TERMIN_KATEGORIEN[botTerminKat]?.label.replace(/\S+\s/,'')+' · '+sub.label);
 botShowTyping();
 try{
