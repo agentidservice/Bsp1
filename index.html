@@ -2274,8 +2274,21 @@ width:min(360px,92vw)
 
 }
 
-/* ── CONTEXT LABEL ── */
-.bot-context-label{display:none;text-align:center;font-size:10px;color:#b0a99f;padding:5px 16px;background:#faf9f7;border-bottom:1px solid var(--border);letter-spacing:.5px;flex-shrink:0}
+/* ── APPLE TIME PICKER ── */
+.time-picker-wrap{margin-top:2px}
+.time-picker-label{font-size:11px;color:var(--text-muted);margin-bottom:6px}
+.time-picker-loading{text-align:center;padding:12px;font-size:12px;color:var(--text-muted)}
+.time-picker{position:relative;height:150px;overflow:hidden;border-radius:12px;background:#f5f3f0;cursor:grab;user-select:none}
+.time-picker::before,.time-picker::after{content:'';position:absolute;left:0;right:0;height:55px;z-index:2;pointer-events:none}
+.time-picker::before{top:0;background:linear-gradient(to bottom,#f5f3f0 0%,transparent 100%)}
+.time-picker::after{bottom:0;background:linear-gradient(to top,#f5f3f0 0%,transparent 100%)}
+.time-picker-selector{position:absolute;top:50%;left:8px;right:8px;transform:translateY(-50%);height:38px;border-radius:8px;background:rgba(200,169,110,.15);border:1.5px solid rgba(200,169,110,.4);pointer-events:none;z-index:1}
+.time-picker-list{position:absolute;width:100%;transition:transform .15s cubic-bezier(.25,.46,.45,.94)}
+.time-picker-item{height:38px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;color:var(--text-muted);transition:all .2s;font-family:'DM Sans',sans-serif}
+.time-picker-item.selected{color:var(--bg-dark);font-weight:700;font-size:15px}
+.time-picker-item.blocked{color:#d1ccc7;text-decoration:line-through;font-weight:400}
+
+/* ── CONTEXT LABEL ── */;text-align:center;font-size:10px;color:#b0a99f;padding:5px 16px;background:#faf9f7;border-bottom:1px solid var(--border);letter-spacing:.5px;flex-shrink:0}
 .bot-context-label.visible{display:block}
 
 /* ── BOT FOOTER ── */
@@ -2297,6 +2310,7 @@ const WEBHOOK_SEND = 'https://seidel1502.app.n8n.cloud/webhook/af4d3fcf-7cc3-48e
 const WEBHOOK_SUMMARIZE = 'https://seidel1502.app.n8n.cloud/webhook/37e814a4-dd8d-49bb-95f0-b96d65bb963a';
 const WEBHOOK_BOT = 'https://seidel1502.app.n8n.cloud/webhook/bc482480-47c0-4914-b1e6-67b0809a9c68';
 const WEBHOOK_BOT_FORMULAR = 'https://seidel1502.app.n8n.cloud/webhook/7463a41c-ba56-4259-9613-268112b04d8b';
+const WEBHOOK_TIMESLOTS = 'https://seidel1502.app.n8n.cloud/webhook/7f342be0-d7bc-4be9-800c-08da3f797ba7';
 const MALER_TOKEN = '0Xpj42sQ#g*kjpYP3cRsPawHAUH#U_&Mt&rlgnqPcnfsclT-';
 const SUMMARIZE_TOKEN = '1Xpj42sQ#g*kjpYP3cRsPawHAUH#U_&Mt&rlgnqPcnfsclT-';
 const BOT_TOKEN = 'cidg-pidg-12345-678910-v1v';
@@ -2515,7 +2529,8 @@ window.botGoTerminFormular=function(key,label){
 botTerminSub=key;hideChoices();
 showSteps(STEPS_TERMIN,3);botMode='termin-formular';
 setContextLabel(TERMIN_KATEGORIEN[botTerminKat]?.label.replace(/\S+\s/,'')+' · '+label);
-const calS={year:new Date().getFullYear(),month:new Date().getMonth(),selectedDate:null};
+window._formKategorie=botTerminKat;
+const calS={year:new Date().getFullYear(),month:new Date().getMonth(),selectedDate:null,selectedTime:null};
 window._formCalState=calS;
 function renderFormCal(){
   const cont=document.getElementById('form-cal-container');if(!cont)return;
@@ -2558,6 +2573,10 @@ botChoiceGrid.innerHTML=`
       <label class="bot-ta-label">📅 Datum wählen</label>
       <div id="form-cal-container"></div>
     </div>
+    <div class="bot-ta-field time-picker-wrap" id="form-time-wrap" style="display:none">
+      <label class="bot-ta-label">🕐 Uhrzeit wählen</label>
+      <div id="form-time-picker-area"><div class="time-picker-loading">Bitte zuerst Datum wählen</div></div>
+    </div>
     <div id="form-date-info" style="display:none;font-size:12px;color:var(--accent-dark);padding:6px 0;font-weight:500"></div>
     <button class="bot-ta-submit" id="form-submit" onclick="window.submitTerminFormular('${key}','${label.replace(/'/g,"\\'")}')">📅 Termin buchen</button>
   </div>`;
@@ -2572,29 +2591,97 @@ window._renderFormCal&&window._renderFormCal();};
 
 window.selectFormCalDay=function(ds){
 const s=window._formCalState;if(!s)return;
-s.selectedDate=ds;
+s.selectedDate=ds;s.selectedTime=null;
 window._renderFormCal&&window._renderFormCal();
 const[y,m,d]=ds.split('-');
 const info=document.getElementById('form-date-info');
-if(info){info.style.display='block';info.textContent=`✅ ${d}.${m}.${y} ausgewählt`;}};
+if(info){info.style.display='block';info.textContent=`📅 ${d}.${m}.${y}`;}
+// Zeitslots laden
+const wrap=document.getElementById('form-time-wrap');
+const area=document.getElementById('form-time-picker-area');
+if(wrap)wrap.style.display='block';
+if(area)area.innerHTML='<div class="time-picker-loading">⏳ Verfügbare Zeiten werden geladen...</div>';
+authFetch(WEBHOOK_TIMESLOTS,{datum:ds,kategorie:window._formKategorie||''},BOT_TOKEN)
+  .then(r=>r.json())
+  .then(raw=>{
+    const data=Array.isArray(raw)?raw[0]:raw;
+    const blocked=data.blocked||data.bookedTimes||[];
+    buildTimePicker(area,blocked,s);
+  })
+  .catch(()=>{
+    // Fallback: alle Zeiten verfügbar
+    buildTimePicker(area,[],s);
+  });};
+
+function buildTimePicker(area,blocked,calState){
+  // Slots 08:00–16:30 in 30min Schritten
+  const slots=[];
+  for(let h=8;h<=16;h++){
+    slots.push(`${String(h).padStart(2,'0')}:00`);
+    if(h<16)slots.push(`${String(h).padStart(2,'0')}:30`);
+  }
+  const ITEM_H=38;
+  const startIdx=slots.findIndex(s=>!blocked.includes(s));
+  calState.selectedTime=startIdx>=0?slots[startIdx]:null;
+  let currentIdx=startIdx>=0?startIdx:0;
+
+  area.innerHTML=`<div class="time-picker"><div class="time-picker-selector"></div><div class="time-picker-list" id="tp-list"></div></div>`;
+  const list=area.querySelector('#tp-list');
+
+  function render(idx){
+    currentIdx=idx;
+    calState.selectedTime=blocked.includes(slots[idx])?null:slots[idx];
+    // Padding oben/unten damit mittig scrollbar
+    list.innerHTML='<div style="height:56px"></div>'+
+      slots.map((t,i)=>`<div class="time-picker-item${i===idx?' selected':''}${blocked.includes(t)?' blocked':''}">${t}</div>`).join('')+
+      '<div style="height:56px"></div>';
+    list.style.transform=`translateY(${-idx*ITEM_H}px)`;
+    // date-info updaten
+    const info=document.getElementById('form-date-info');
+    if(info&&calState.selectedDate){
+      const[y,m,d]=calState.selectedDate.split('-');
+      info.textContent=calState.selectedTime?`📅 ${d}.${m}.${y} · 🕐 ${calState.selectedTime}`:`📅 ${d}.${m}.${y} · ⚠️ Gebuchte Zeit`;
+    }
+  }
+
+  render(currentIdx);
+
+  // Touch / Mouse scroll
+  const picker=area.querySelector('.time-picker');
+  let startY=0,startIdx2=0,dragging=false;
+
+  function snapTo(idx){
+    idx=Math.max(0,Math.min(slots.length-1,idx));
+    render(idx);}
+
+  picker.addEventListener('mousedown',e=>{startY=e.clientY;startIdx2=currentIdx;dragging=true;picker.style.cursor='grabbing';});
+  window.addEventListener('mousemove',e=>{if(!dragging)return;const diff=Math.round((startY-e.clientY)/ITEM_H);snapTo(startIdx2+diff);});
+  window.addEventListener('mouseup',()=>{dragging=false;picker.style.cursor='grab';});
+  picker.addEventListener('touchstart',e=>{startY=e.touches[0].clientY;startIdx2=currentIdx;},{passive:true});
+  picker.addEventListener('touchmove',e=>{const diff=Math.round((startY-e.touches[0].clientY)/ITEM_H);snapTo(startIdx2+diff);e.preventDefault();},{passive:false});
+  picker.addEventListener('wheel',e=>{e.preventDefault();snapTo(currentIdx+(e.deltaY>0?1:-1));},{passive:false});
+};
 
 window.submitTerminFormular=async function(key,label){
 const name=document.getElementById('form-name')?.value.trim();
 const email=document.getElementById('form-email')?.value.trim()||null;
 const date=window._formCalState?.selectedDate;
+const time=window._formCalState?.selectedTime;
 if(!name||name.split(' ').length<2){
   const inp=document.getElementById('form-name');if(inp){inp.style.borderColor='#ef4444';}
   const btn=document.getElementById('form-submit');if(btn){btn.textContent='⚠️ Vor- und Nachname eingeben';setTimeout(()=>{btn.textContent='📅 Termin buchen';},2000);}return;}
 if(!date){
   const btn=document.getElementById('form-submit');if(btn){btn.textContent='⚠️ Bitte Datum wählen';setTimeout(()=>{btn.textContent='📅 Termin buchen';},2000);}return;}
+if(!time){
+  const btn=document.getElementById('form-submit');if(btn){btn.textContent='⚠️ Gewählte Zeit ist belegt';setTimeout(()=>{btn.textContent='📅 Termin buchen';},2000);}return;}
 const btn=document.getElementById('form-submit');if(btn){btn.disabled=true;btn.textContent='⏳ Wird gebucht...';}
 botChoiceGrid.innerHTML='<div style="text-align:center;padding:24px;color:var(--text-muted);font-size:13px">⏳ Termin wird gebucht...</div>';
 try{
-const r=await authFetch(WEBHOOK_BOT_FORMULAR,{name,email,datum:date,kategorie:botTerminKat,leistung:key,leistungName:label,sessionId:SESSION_ID,timestamp:new Date().toISOString()},BOT_TOKEN);
+const r=await authFetch(WEBHOOK_BOT_FORMULAR,{name,email,datum:date,uhrzeit:time,kategorie:botTerminKat,leistung:key,leistungName:label,sessionId:SESSION_ID,timestamp:new Date().toISOString()},BOT_TOKEN);
 const d=await r.json();const data=Array.isArray(d)?d[0]:d;
 showSteps(STEPS_TERMIN,3);
 const[y2,m2,d2]=date.split('-');
-showResultBox('success',`✅ <strong>Termin gebucht!</strong><br>${label} am ${d2}.${m2}.${y2}<br><small style="opacity:.7">Name: ${name}</small>${email?`<br><small style="opacity:.7">Bestätigung → ${email}</small>`:''}<br><br><small style="color:var(--text-muted)">Ihren Sicherheitscode erhalten Sie per E-Mail oder notieren Sie ihn.</small>`);
+showResultBox('success',`✅ <strong>Termin gebucht!</strong><br>${label} am ${d2}.${m2}.${y2} um ${time} Uhr<br><small style="opacity:.7">Name: ${name}</small>${email?`<br><small style="opacity:.7">Bestätigung → ${email}</small>`:''}<br><br><small style="color:var(--text-muted)">Ihren Sicherheitscode erhalten Sie per E-Mail oder notieren Sie ihn.</small>`);
 }catch(e){
 showResultBox('error',`⚠️ Verbindungsfehler beim Buchen.<br><br><button class="bot-ta-submit" onclick="window.botGoTerminFormular('${key}','${label}')" style="margin-top:8px">↩ Zurück</button>`);
 }};
