@@ -2625,7 +2625,7 @@ authFetch(WEBHOOK_TIMESLOTS,{datum:ds,kategorie:window._formKategorie||''},BOT_T
     buildTimePicker(area,[],s);
   });};
 
-function buildTimePicker(area,blocked,calState){
+function buildTimePicker(area,blocked,calState,onSelect){
   // Slots 08:00–16:30 in 30min Schritten
   const slots=[];
   for(let h=8;h<=16;h++){
@@ -2654,6 +2654,7 @@ function buildTimePicker(area,blocked,calState){
       const[y,m,d]=calState.selectedDate.split('-');
       info.textContent=calState.selectedTime?`📅 ${d}.${m}.${y} · 🕐 ${calState.selectedTime}`:`📅 ${d}.${m}.${y} · ⚠️ Gebuchte Zeit`;
     }
+    if(onSelect)onSelect();
   }
 
   render(currentIdx);
@@ -2906,6 +2907,10 @@ window.showUpdateForm=window.showUpdateForm=function(){
       <select class="bot-stelle-select" id="upd-stelle">${STELLE_OPTIONS.map(s=>`<option value="${s}"${s===taData.stelle?' selected':''}>${s}</option>`).join('')}</select></div>
     <div class="bot-ta-field"><label class="bot-ta-label">📅 Neues Datum</label>
       <div id="bot-cal-container"></div></div>
+    <div class="bot-ta-field time-picker-wrap" id="upd-time-wrap" style="display:none">
+      <label class="bot-ta-label">🕐 Uhrzeit wählen</label>
+      <div id="upd-time-picker-area"><div class="time-picker-loading">Bitte zuerst Datum wählen</div></div>
+    </div>
     <div class="upd-info-box" id="upd-info"></div>
     <button class="bot-ta-submit" id="upd-submit" onclick="window.submitUpdate()" disabled>📅 Termin ändern</button>
   </div>`;
@@ -2934,22 +2939,39 @@ window.renderCalendar=function(){
     <div class="bot-cal-grid">${days}</div></div>`;}
 
 window.calNav=function(dir){calState.month+=dir;if(calState.month>11){calState.month=0;calState.year++;}if(calState.month<0){calState.month=11;calState.year--;}renderCalendar();};
-window.selectCalDay=function(ds){calState.selectedDate=ds;calState.selectedTime=null;renderCalendar();updateUpdInfo();};
+
+window.selectCalDay=function(ds){
+  calState.selectedDate=ds;calState.selectedTime=null;renderCalendar();
+  const wrap=$('upd-time-wrap'),area=$('upd-time-picker-area');
+  if(wrap)wrap.style.display='block';
+  if(area)area.innerHTML='<div class="time-picker-loading">⏳ Verfügbare Zeiten werden geladen...</div>';
+  const stelle=$('upd-stelle')?.value||'buergerservice';
+  const katMap={'Anmeldung / Ummeldung':'buergerservice','Abmeldung':'buergerservice','Personalausweis beantragen':'buergerservice','Reisepass beantragen':'buergerservice','Kinderreisepass':'buergerservice','Führungszeugnis (erweitertes)':'buergerservice','Beglaubigungen':'buergerservice','Eheschließung anmelden':'standesamt_gewerbe','Geburtsurkunde beantragen':'standesamt_gewerbe','Sterbeurkunde beantragen':'standesamt_gewerbe','Gewerbeanmeldung':'standesamt_gewerbe','Gewerbeabmeldung':'standesamt_gewerbe','Führerschein beantragen':'kfz','Kfz-Zulassung':'kfz','Kfz-Abmeldung':'kfz'};
+  const kategorie=katMap[stelle]||'buergerservice';
+  authFetch(WEBHOOK_TIMESLOTS,{datum:ds,kategorie},BOT_TOKEN)
+    .then(r=>r.json())
+    .then(raw=>{const data=Array.isArray(raw)?raw[0]:raw;buildTimePicker(area,data.blocked||[],calState,()=>updateUpdInfo());})
+    .catch(()=>{buildTimePicker(area,[],calState,()=>updateUpdInfo());});};
 
 function updateUpdInfo(){
   const info=$('upd-info'),sub=$('upd-submit');if(!info||!sub)return;
-  if(calState.selectedDate){const[y2,m2,d2]=calState.selectedDate.split('-');info.style.display='block';info.innerHTML=`✅ <strong>${d2}.${m2}.${y2}</strong>`;sub.disabled=false;}
-  else{info.style.display='none';sub.disabled=true;}}
+  if(calState.selectedDate&&calState.selectedTime){
+    const[y2,m2,d2]=calState.selectedDate.split('-');
+    info.style.display='block';info.innerHTML=`✅ <strong>${d2}.${m2}.${y2} · ${calState.selectedTime} Uhr</strong>`;
+    sub.disabled=false;
+  }else{info.style.display='none';sub.disabled=true;}}
 
 window.submitUpdate=async function(){
-  const stelle=$('upd-stelle')?.value;if(!stelle||!calState.selectedDate)return;
+  const stelle=$('upd-stelle')?.value;
+  if(!stelle||!calState.selectedDate||!calState.selectedTime){
+    const btn=$('upd-submit');if(btn){btn.textContent='⚠️ Datum und Uhrzeit wählen';setTimeout(()=>{btn.textContent='📅 Termin ändern';},2000);}return;}
   const[y2,m2,d2]=calState.selectedDate.split('-');const fmt=`${d2}.${m2}.${y2}`;
   botChoiceGrid.innerHTML='<div style="text-align:center;padding:24px;color:var(--text-muted);font-size:13px">⏳ Termin wird verschoben...</div>';
   try{
-    const r=await authFetch(WEBHOOK_TA_UPDATE,{...taData,newStelle:stelle,newDate:calState.selectedDate,timestamp:new Date().toISOString()},TA_TOKEN);
+    const r=await authFetch(WEBHOOK_TA_UPDATE,{...taData,newStelle:stelle,newDate:calState.selectedDate,newTime:calState.selectedTime,timestamp:new Date().toISOString()},TA_TOKEN);
     const d=await r.json();const data=Array.isArray(d)?d[0]:d;
     showSteps(STEPS_AENDERN,2);setContextLabel('✏️ Termin verschoben');
-    showResultBox('success','✅ '+(data.reply||data.message||`Ihr Termin wurde erfolgreich auf <strong>${fmt}</strong> verschoben!`));
+    showResultBox('success',`✅ ${data.reply||data.message||`Ihr Termin wurde auf <strong>${fmt} um ${calState.selectedTime} Uhr</strong> verschoben!`}`);
   }catch(e){showResultBox('error','⚠️ Verbindungsfehler beim Aktualisieren.<br><br><button class="bot-ta-submit" onclick="window.showUpdateForm()" style="margin-top:8px">↩ Zurück</button>');}};
 
 })();
