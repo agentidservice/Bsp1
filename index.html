@@ -732,14 +732,26 @@ animation-delay:.4s
 }
 
 /* Auswahl-Panel (ersetzt suggestions+input in Guided-Mode) */ .bot-choice-panel {
-padding:10px 12px 12px;
+padding:12px 14px 16px;
 background:#fff;
 border-top:1px solid var(--border);
 flex-shrink:0;
 overflow-y:auto;
+-webkit-overflow-scrolling:touch;
+overscroll-behavior:contain;
 display:flex;
-flex-direction:column
+flex-direction:column;
+max-height:72%;
 }
+
+
+
+
+
+
+
+
+
 
 .bot-choice-label {
 font-size:10px;
@@ -2012,8 +2024,8 @@ margin-left:3px
 
 
 /* ── TERMIN ÄNDERN ── */
-.bot-ta-form{padding:0}
-.bot-ta-field{margin-bottom:11px}
+.bot-ta-form{padding:4px 2px}
+.bot-ta-field{margin-bottom:14px}
 .bot-ta-label{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:5px;display:block}
 .bot-ta-input,.bot-stelle-select{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--text);background:#faf9f7;outline:none;transition:border-color .2s}
 .bot-ta-input:focus,.bot-stelle-select:focus{border-color:var(--accent)}
@@ -2275,7 +2287,7 @@ width:min(360px,92vw)
 }
 
 /* ── APPLE TIME PICKER ── */
-.time-picker-wrap{margin-top:2px}
+.time-picker-wrap{margin-top:0px}
 .time-picker-label{font-size:11px;color:var(--text-muted);margin-bottom:6px}
 .time-picker-loading{text-align:center;padding:12px;font-size:12px;color:var(--text-muted)}
 .time-picker{position:relative;height:150px;overflow:hidden;border-radius:12px;background:#f5f3f0;cursor:grab;user-select:none}
@@ -2667,12 +2679,27 @@ function buildTimePicker(area,blocked,calState,onSelect){
     idx=Math.max(0,Math.min(slots.length-1,idx));
     render(idx);}
 
-  picker.addEventListener('mousedown',e=>{startY=e.clientY;startIdx2=currentIdx;dragging=true;picker.style.cursor='grabbing';});
-  window.addEventListener('mousemove',e=>{if(!dragging)return;const diff=Math.round((startY-e.clientY)/ITEM_H);snapTo(startIdx2+diff);});
+  // Drag – gedämpft (ITEM_H*1.8 = weniger sensitiv)
+  const DRAG_SENS=ITEM_H*1.8;
+  picker.addEventListener('mousedown',e=>{startY=e.clientY;startIdx2=currentIdx;dragging=true;picker.style.cursor='grabbing';e.preventDefault();});
+  window.addEventListener('mousemove',e=>{if(!dragging)return;const diff=Math.round((startY-e.clientY)/DRAG_SENS);snapTo(startIdx2+diff);});
   window.addEventListener('mouseup',()=>{dragging=false;picker.style.cursor='grab';});
   picker.addEventListener('touchstart',e=>{startY=e.touches[0].clientY;startIdx2=currentIdx;},{passive:true});
-  picker.addEventListener('touchmove',e=>{const diff=Math.round((startY-e.touches[0].clientY)/ITEM_H);snapTo(startIdx2+diff);e.preventDefault();},{passive:false});
+  picker.addEventListener('touchmove',e=>{const diff=Math.round((startY-e.touches[0].clientY)/DRAG_SENS);snapTo(startIdx2+diff);e.preventDefault();},{passive:false});
   picker.addEventListener('wheel',e=>{e.preventDefault();snapTo(currentIdx+(e.deltaY>0?1:-1));},{passive:false});
+  // Tastatureingabe: Zahl tippen → springt zur Stunde
+  let keyBuf='',keyTimer=null;
+  picker.setAttribute('tabindex','0');
+  picker.addEventListener('keydown',e=>{
+    if(e.key>='0'&&e.key<='9'){
+      keyBuf+=e.key;clearTimeout(keyTimer);
+      keyTimer=setTimeout(()=>{
+        const h=parseInt(keyBuf,10);keyBuf='';
+        if(h>=8&&h<=16){const idx=slots.findIndex(s=>s.startsWith(String(h).padStart(2,'0')+':00'));if(idx>=0)snapTo(idx);}
+      },600);
+    } else if(e.key==='ArrowUp'){e.preventDefault();snapTo(currentIdx-1);}
+    else if(e.key==='ArrowDown'){e.preventDefault();snapTo(currentIdx+1);}
+  });
 };
 
 window.submitTerminFormular=async function(key,label){
