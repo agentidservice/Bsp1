@@ -2381,12 +2381,24 @@ const botSend = $('bot-send');
 let botOpen = false;
 
 const TERMIN_KATEGORIEN = {
-meldewesen:{label:'🏠 Meldewesen',icon:'🏠',sub:[{label:'Anmeldung / Ummeldung',key:'anmeldung'},{label:'Abmeldung',key:'abmeldung'}]},
-ausweise:{label:'🪪 Ausweise & Pässe',icon:'🪪',sub:[{label:'Personalausweis beantragen',key:'personalausweis'},{label:'Reisepass beantragen',key:'reisepass'},{label:'Kinderreisepass',key:'kinderreisepass'}]},
-kfz:{label:'🚗 Führerschein & Kfz',icon:'🚗',sub:[{label:'Führerschein beantragen',key:'fuehrerschein'},{label:'Kfz-Zulassung',key:'kfz_zulassung'},{label:'Kfz-Abmeldung',key:'kfz_abmeldung'}]},
-standesamt:{label:'💍 Standesamt',icon:'💍',sub:[{label:'Eheschließung anmelden',key:'heirat'},{label:'Geburtsurkunde beantragen',key:'geburtsurkunde'},{label:'Sterbeurkunde beantragen',key:'sterbeurkunde'}]},
-gewerbe:{label:'🏢 Gewerbe',icon:'🏢',sub:[{label:'Gewerbeanmeldung',key:'gewerbeanmeldung'},{label:'Gewerbeabmeldung',key:'gewerbeabmeldung'}]},
-sonstiges:{label:'📋 Sonstiges',icon:'📋',sub:[{label:'Führungszeugnis (erweitertes)',key:'fuehrungszeugnis'},{label:'Beglaubigungen',key:'beglaubigung'}]}};
+buergerservice:{label:'🏛️ Bürgerservice',icon:'🏛️',kalender:'buergerservice',sub:[
+  {label:'Anmeldung / Ummeldung',key:'anmeldung'},
+  {label:'Abmeldung',key:'abmeldung'},
+  {label:'Personalausweis beantragen',key:'personalausweis'},
+  {label:'Reisepass beantragen',key:'reisepass'},
+  {label:'Kinderreisepass',key:'kinderreisepass'},
+  {label:'Führungszeugnis (erweitertes)',key:'fuehrungszeugnis'},
+  {label:'Beglaubigungen',key:'beglaubigung'}]},
+standesamt_gewerbe:{label:'💍 Standesamt & Gewerbe',icon:'💍',kalender:'standesamt_gewerbe',sub:[
+  {label:'Eheschließung anmelden',key:'heirat'},
+  {label:'Geburtsurkunde beantragen',key:'geburtsurkunde'},
+  {label:'Sterbeurkunde beantragen',key:'sterbeurkunde'},
+  {label:'Gewerbeanmeldung',key:'gewerbeanmeldung'},
+  {label:'Gewerbeabmeldung',key:'gewerbeabmeldung'}]},
+kfz:{label:'🚗 Kfz & Führerschein',icon:'🚗',kalender:'kfz',sub:[
+  {label:'Führerschein beantragen',key:'fuehrerschein'},
+  {label:'Kfz-Zulassung',key:'kfz_zulassung'},
+  {label:'Kfz-Abmeldung',key:'kfz_abmeldung'}]}};
 
 const STEPS_INFO = [{label:'Info'}];
 const STEPS_TERMIN = [{label:'Kategorie'},{label:'Leistung'},{label:'Art'},{label:'Termin'}];
@@ -2796,12 +2808,9 @@ function botGoTerminAendern(){
   showTerminAendernForm();}
 
 const TA_STELLEN=[
-  {icon:'🏠',label:'Meldewesen',key:'meldewesen'},
-  {icon:'🪪',label:'Ausweise & Pässe',key:'ausweise'},
-  {icon:'🚗',label:'Führerschein & Kfz',key:'kfz'},
-  {icon:'💍',label:'Standesamt',key:'standesamt'},
-  {icon:'🏢',label:'Gewerbe',key:'gewerbe'},
-  {icon:'📋',label:'Sonstiges',key:'sonstiges'}];
+  {icon:'🏛️',label:'Bürgerservice',key:'buergerservice'},
+  {icon:'💍',label:'Standesamt & Gewerbe',key:'standesamt_gewerbe'},
+  {icon:'🚗',label:'Kfz & Führerschein',key:'kfz'}];
 let taStelle=null;
 
 window.showTerminAendernForm=window.showTerminAendernForm=function(){
