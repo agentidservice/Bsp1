@@ -607,7 +607,8 @@ flex-direction:column;
 gap:12px;
 background:var(--bg);
 min-height:0;
-flex:1
+flex:1;
+overscroll-behavior:contain
 }
 
 .bot-messages.collapsed {
@@ -743,15 +744,6 @@ display:flex;
 flex-direction:column;
 max-height:72%;
 }
-
-
-
-
-
-
-
-
-
 
 .bot-choice-label {
 font-size:10px;
@@ -1193,7 +1185,8 @@ border-top:1px solid rgba(255,255,255,.07)
 .sum-result-inner {
 padding:20px;
 overflow-y:auto;
-max-height:400px
+max-height:400px;
+overscroll-behavior:contain
 }
 
 .sum-result-inner::-webkit-scrollbar {
@@ -1315,7 +1308,8 @@ transition:width .4s
 flex:1;
 overflow-y:auto;
 padding:20px;
-color:#fff
+color:#fff;
+overscroll-behavior:contain
 }
 
 .maler-body::-webkit-scrollbar {
@@ -2343,6 +2337,21 @@ function scrollBottom(){
   }, 30);
 }
 
+/* ── SCROLL TRAP – verhindert dass Scroll aus Widgets rausleckt ── */
+function trapScroll(el){
+  el.addEventListener('wheel', function(e){
+    const atTop = el.scrollTop === 0;
+    const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
+    if((atTop && e.deltaY < 0) || (atBottom && e.deltaY > 0)){
+      e.preventDefault();
+    }
+    e.stopPropagation();
+  }, {passive: false});
+  el.addEventListener('touchmove', function(e){
+    e.stopPropagation();
+  }, {passive: true});
+}
+
 /* ── CONTEXT LABEL ── */
 function setContextLabel(text){
   const el = $('bot-context-label');
@@ -2391,6 +2400,20 @@ const botChoiceLabel= $('bot-choice-label');
 const botInput = $('bot-input');
 const botSend = $('bot-send');
 let botOpen = false;
+
+// Scroll-Traps auf alle Widget-Scroll-Container anwenden
+trapScroll($('bot-messages'));
+trapScroll($('bot-choice-panel'));
+trapScroll(document.querySelector('.maler-body') || document.createElement('div'));
+trapScroll(document.querySelector('.sum-result-inner') || document.createElement('div'));
+
+// Globaler Wheel-Stopp für gesamte Widget-Fenster (Fallback)
+['stadtbot-window','maler-window','sum-panel'].forEach(id=>{
+  const el = $(id);
+  if(!el) return;
+  el.addEventListener('wheel', e=>e.stopPropagation(), {passive:true});
+  el.addEventListener('touchmove', e=>e.stopPropagation(), {passive:true});
+});
 
 const TERMIN_KATEGORIEN = {
 buergerservice:{label:'🏛️ Bürgerservice',icon:'🏛️',kalender:'buergerservice',sub:[
@@ -2686,7 +2709,7 @@ function buildTimePicker(area,blocked,calState,onSelect){
   window.addEventListener('mouseup',()=>{dragging=false;picker.style.cursor='grab';});
   picker.addEventListener('touchstart',e=>{startY=e.touches[0].clientY;startIdx2=currentIdx;},{passive:true});
   picker.addEventListener('touchmove',e=>{const diff=Math.round((startY-e.touches[0].clientY)/DRAG_SENS);snapTo(startIdx2+diff);e.preventDefault();},{passive:false});
-  picker.addEventListener('wheel',e=>{e.preventDefault();snapTo(currentIdx+(e.deltaY>0?1:-1));},{passive:false});
+  picker.addEventListener('wheel',e=>{e.preventDefault();e.stopPropagation();snapTo(currentIdx+(e.deltaY>0?1:-1));},{passive:false});
   // Tastatureingabe: Zahl tippen → springt zur Stunde
   let keyBuf='',keyTimer=null;
   picker.setAttribute('tabindex','0');
@@ -2761,8 +2784,6 @@ botAddMessage('bot','Hallo! 👋 Ich bin der PaderbornBot – Ihr digitaler Assi
 setTimeout(botStart,400);};
 
 const botWindow=$('stadtbot-window');
-botWindow.addEventListener('wheel',e=>{e.stopPropagation();},{passive:true});
-botWindow.addEventListener('touchmove',e=>{e.stopPropagation();},{passive:true});
 $('stadtbot-toggle').onclick=()=>{botOpen=!botOpen;$('stadtbot-window').classList.toggle('open',botOpen);if(botOpen){$('stadtbot-toggle').querySelector('.stadtbot-badge').style.display='none';scrollBottom();}};
 $('bot-close').onclick=()=>{botOpen=false;$('stadtbot-window').classList.remove('open');};
 botSend.onclick=()=>botSendMessage(botInput.value);
