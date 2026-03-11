@@ -1,4 +1,4 @@
-<!DOCTYPE html> <html lang="de"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1"> <title>Stadtportal Paderborn</title> <link rel="preconnect" href="https://fonts.googleapis.com"> <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"> <script src="https://cdn.jsdelivr.net/npm/@twemoji/api@latest/dist/twemoji.min.js" crossorigin="anonymous"></script> <style>
+<!DOCTYPE html> <html lang="de"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1"> <title>Stadtportal Paderborn</title> <link rel="preconnect" href="https://fonts.googleapis.com"> <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"> <style>
 :root {
 --bg:#f5f3ef;
 --bg-dark:#1a1a1a;
@@ -2882,13 +2882,6 @@ $('bot-close').onclick=()=>{botOpen=false;$('stadtbot-window').classList.remove(
 botSend.onclick=()=>botSendMessage(botInput.value);
 botInput.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();botSendMessage(botInput.value);}});
 botInput.addEventListener('input',()=>{botInput.style.height='auto';botInput.style.height=Math.min(botInput.scrollHeight,80)+'px';});
-
-// Twemoji – Emojis als SVG für konsistente Darstellung auf Windows/Edge
-function twparse(el){if(typeof twemoji!=='undefined'&&el)twemoji.parse(el,{folder:'svg',ext:'.svg',base:'https://cdn.jsdelivr.net/gh/jdecked/twemoji@latest/assets/'});}
-document.addEventListener('DOMContentLoaded',()=>twparse(document.body));
-// Re-parse nach jeder Nachricht
-const _origBotAdd=botAddMessage;
-window._twParseInterval=setInterval(()=>{twparse($('bot-messages'));twparse($('bot-choice-grid'));twparse($('bot-choice-label'));},1500);
 botAddMessage('bot','Hallo! 👋 Ich bin der PaderbornBot – Ihr digitaler Assistent für das Stadtportal Paderborn.\n\nWas kann ich für Sie tun?');
 setTimeout(botStart,400);
 
