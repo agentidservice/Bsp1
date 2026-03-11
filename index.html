@@ -1,4 +1,4 @@
-<!DOCTYPE html> <html lang="de"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1"> <title>Stadtportal Paderborn</title> <link rel="preconnect" href="https://fonts.googleapis.com"> <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"> <style>
+<!DOCTYPE html> <html lang="de"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1"> <title>Stadtportal Paderborn</title> <link rel="preconnect" href="https://fonts.googleapis.com"> <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"> <script src="https://cdn.jsdelivr.net/npm/@twemoji/api@latest/dist/twemoji.min.js" crossorigin="anonymous"></script> <style>
 :root {
 --bg:#f5f3ef;
 --bg-dark:#1a1a1a;
@@ -636,16 +636,18 @@ flex-direction:row-reverse
 }
 
 .bot-msg-avatar {
-width:30px;
-height:30px;
+width:32px;
+height:32px;
 border-radius:50%;
 background:linear-gradient(135deg,var(--accent-dark),var(--accent));
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:14px;
+font-size:16px;
 flex-shrink:0;
-margin-top:2px
+margin-top:2px;
+font-family:'Segoe UI Emoji','Apple Color Emoji','Noto Color Emoji',sans-serif;
+box-shadow:0 2px 6px rgba(200,169,110,.3)
 }
 
 .bot-msg.user .bot-msg-avatar {
@@ -746,13 +748,17 @@ max-height:72%;
 }
 
 .bot-choice-label {
-font-size:10px;
-font-weight:600;
-letter-spacing:1.5px;
-text-transform:uppercase;
-color:var(--text-muted);
-margin-bottom:10px;
-text-align:center
+font-family:'Playfair Display',serif;
+font-size:15px;
+font-weight:700;
+letter-spacing:0;
+text-transform:none;
+color:var(--bg-dark);
+margin-bottom:12px;
+text-align:left;
+border-left:3px solid var(--accent);
+padding-left:10px;
+line-height:1.3
 }
 
 .bot-choice-grid {
@@ -2294,8 +2300,63 @@ width:min(360px,92vw)
 .time-picker-item.selected{color:var(--bg-dark);font-weight:700;font-size:15px}
 .time-picker-item.blocked{color:#d1ccc7;text-decoration:line-through;font-weight:400}
 
-/* ── CONTEXT LABEL ── */;text-align:center;font-size:10px;color:#b0a99f;padding:5px 16px;background:#faf9f7;border-bottom:1px solid var(--border);letter-spacing:.5px;flex-shrink:0}
+/* ── CONTEXT LABEL ── */
+.bot-context-label{display:none;text-align:left;font-size:11px;font-weight:600;font-family:'DM Sans',sans-serif;color:var(--accent-dark);padding:7px 16px;background:#faf9f7;border-bottom:1px solid var(--border);letter-spacing:.1px;flex-shrink:0}
 .bot-context-label.visible{display:block}
+
+/* ── EMOJI FONT FIX (Windows/Edge) ── */
+.bot-msg-bubble, .bot-choice-btn, .bot-msg-avatar, .m-service-name,
+.bot-ta-label, .bot-ta-input, .m-float-input, .m-float-label,
+.bot-result-box, .bot-typing, .filter-chip, .sum-result-text {
+  font-family: 'DM Sans', 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+}
+
+/* ── WINDOWS/PC FORM RESET ── */
+.bot-ta-input, .m-float-input, .m-textarea {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 10px !important;
+  border: 1.5px solid var(--border) !important;
+  background: #fff !important;
+  font-family: 'DM Sans', 'Segoe UI', sans-serif !important;
+  font-size: 13px !important;
+  color: var(--text) !important;
+  outline: none !important;
+}
+.bot-ta-input:focus, .m-float-input:focus, .m-textarea:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(200,169,110,.12) !important;
+}
+
+/* Custom checkbox für Windows */
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: all .15s;
+}
+input[type="checkbox"]:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  left: 3px; top: 0px;
+  width: 5px; height: 9px;
+  border: 2px solid #fff;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
 
 /* ── BOT FOOTER ── */
 .bot-footer{padding:5px 14px 6px;text-align:center;font-size:10px;color:#c0bab4;background:#fff;border-top:1px solid var(--border);flex-shrink:0;order:999}
@@ -2339,17 +2400,12 @@ function scrollBottom(){
 
 /* ── SCROLL TRAP – verhindert dass Scroll aus Widgets rausleckt ── */
 function trapScroll(el){
+  // Vollständiger Scroll-Trap: preventDefault() immer, manuelles Scrollen
   el.addEventListener('wheel', function(e){
-    const atTop = el.scrollTop === 0;
-    const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 1;
-    if((atTop && e.deltaY < 0) || (atBottom && e.deltaY > 0)){
-      e.preventDefault();
-    }
+    e.preventDefault();
     e.stopPropagation();
+    el.scrollTop += e.deltaY;
   }, {passive: false});
-  el.addEventListener('touchmove', function(e){
-    e.stopPropagation();
-  }, {passive: true});
 }
 
 /* ── CONTEXT LABEL ── */
@@ -2407,12 +2463,22 @@ trapScroll($('bot-choice-panel'));
 trapScroll(document.querySelector('.maler-body') || document.createElement('div'));
 trapScroll(document.querySelector('.sum-result-inner') || document.createElement('div'));
 
-// Globaler Wheel-Stopp für gesamte Widget-Fenster (Fallback)
-['stadtbot-window','maler-window','sum-panel'].forEach(id=>{
+// Globaler Wheel-Intercept für das Bot-Fenster (passive:false = kann preventDefault)
+$('stadtbot-window').addEventListener('wheel', function(e){
+  e.preventDefault();
+  e.stopPropagation();
+  // Scroll in das aktive Panel leiten
+  const panel = $('bot-choice-panel');
+  const msgs  = $('bot-messages');
+  const target = (panel && panel.style.display !== 'none') ? panel : msgs;
+  if(target) target.scrollTop += e.deltaY;
+}, {passive: false});
+
+// Maler + Summarizer: stopPropagation reicht hier da overflow-hidden auf Wrapper
+['maler-window','sum-panel'].forEach(id=>{
   const el = $(id);
   if(!el) return;
   el.addEventListener('wheel', e=>e.stopPropagation(), {passive:true});
-  el.addEventListener('touchmove', e=>e.stopPropagation(), {passive:true});
 });
 
 const TERMIN_KATEGORIEN = {
@@ -2539,7 +2605,7 @@ function botGoInfo(){
 hideChoices();$('stadtbot-window').classList.add('expanded');
 botAddMessage('user','ℹ️ Informationen & Auskünfte');
 showSteps(STEPS_INFO,0);showReset();botMode='info';setContextLabel('');
-setTimeout(()=>{botAddMessage('bot','Gerne beantworte ich Ihre Fragen rund um städtische Leistungen in Paderborn. Was möchten Sie wissen?');showInputArea();document.querySelectorAll('.bot-suggestion').forEach(b=>b.onclick=()=>botSendMessage(b.dataset.text));},300);}
+showInputArea();document.querySelectorAll('.bot-suggestion').forEach(b=>b.onclick=()=>botSendMessage(b.dataset.text));}
 
 /* ── TERMIN BUCHEN: Kategorie-Auswahl (kein Chat) ── */
 function botGoTerminKat(){
@@ -2558,7 +2624,7 @@ showChoices('Leistung wählen',kat.sub.map(s=>({icon:'→',label:s.label,onClick
 function botGoTerminArt(sub){
 botTerminSub=sub.key;hideChoices();
 showSteps(STEPS_TERMIN,2);botMode='termin-art';
-setContextLabel(TERMIN_KATEGORIEN[botTerminKat]?.label.replace(/\S+\s/,'')+' · '+sub.label);
+setContextLabel(TERMIN_KATEGORIEN[botTerminKat]?.label.replace(/\S+\s/,'')+' › '+sub.label);
 botChoiceLabel.textContent='Wie möchten Sie buchen?';
 botChoiceGrid.innerHTML=`
   <button class="bot-action-btn primary-btn" onclick="window.botGoTerminFormular('${sub.key}','${sub.label.replace(/'/g,"\\'")}')">
@@ -2575,9 +2641,9 @@ botGoTerminChat({key,label});};
 window.botGoTerminFormular=function(key,label){
 botTerminSub=key;hideChoices();
 showSteps(STEPS_TERMIN,3);botMode='termin-formular';
-setContextLabel(TERMIN_KATEGORIEN[botTerminKat]?.label.replace(/\S+\s/,'')+' · '+label);
+setContextLabel(TERMIN_KATEGORIEN[botTerminKat]?.label.replace(/\S+\s/,'')+' › '+label);
 window._formKategorie=botTerminKat;
-const calS={year:new Date().getFullYear(),month:new Date().getMonth(),selectedDate:null,selectedTime:null};
+const calS={year:new Date().getFullYear(),month:new Date().getMonth(),selectedDate:null,selectedTime:null,_leistung:key};
 window._formCalState=calS;
 function renderFormCal(){
   const cont=document.getElementById('form-cal-container');if(!cont)return;
@@ -2661,56 +2727,90 @@ authFetch(WEBHOOK_TIMESLOTS,{datum:ds,kategorie:window._formKategorie||''},BOT_T
   });};
 
 function buildTimePicker(area,blocked,calState,onSelect){
-  // Slots 08:00–16:30 in 30min Schritten
+  // Leistungsdauern für smart blocking
+  const leistungDauern = {
+    anmeldung:30,abmeldung:30,personalausweis:45,reisepass:45,
+    kinderreisepass:30,fuehrerschein:60,kfz_zulassung:45,kfz_abmeldung:30,
+    heirat:90,geburtsurkunde:30,sterbeurkunde:30,
+    gewerbeanmeldung:30,gewerbeabmeldung:30,fuehrungszeugnis:30,beglaubigung:30
+  };
+  const dauer = leistungDauern[calState._leistung] || 30;
+
+  // 15min Slots 08:00–17:00 (letzter buchbarer = 16:45 - dauer)
   const slots=[];
-  for(let h=8;h<=16;h++){
-    slots.push(`${String(h).padStart(2,'0')}:00`);
-    if(h<16)slots.push(`${String(h).padStart(2,'0')}:30`);
+  for(let h=8;h<17;h++){
+    for(let min=0;min<60;min+=15){
+      slots.push(`${String(h).padStart(2,'0')}:${String(min).padStart(2,'0')}`);
+    }
   }
+
+  // Zeit in Minuten seit Mitternacht
+  function toMin(t){const[h,m]=t.split(':');return parseInt(h)*60+parseInt(m);}
+
+  // Smart blocking: slot T geblockt wenn:
+  // 1. T selbst ist gebucht
+  // 2. Ein gebuchter Termin B überschneidet sich mit [T, T+dauer)
+  //    = B < T+dauer UND B+dauer > T (angenommene gleiche Dauer für gebuchte Termine)
+  function isBlocked(t){
+    const tMin=toMin(t);
+    return blocked.some(b=>{
+      const bMin=toMin(b);
+      // Überschneidung: unser Termin [tMin, tMin+dauer) vs gebuchter [bMin, bMin+dauer)
+      return tMin < bMin+dauer && tMin+dauer > bMin;
+    });
+  }
+
+  // Letzter erlaubter Startslot: 16:00 - dauer (mind. 15min vor Schließzeit 16:00)
+  // Do: 18:00, aber wir nutzen konservativ 16:00
+  function isTooLate(t){
+    const tMin=toMin(t);
+    return tMin+dauer > 16*60; // endet nach 16:00
+  }
+
+  // Nur verfügbare Slots anzeigen
+  const available = slots.filter(t => !isBlocked(t) && !isTooLate(t));
+  const allSlots = slots.filter(t => !isTooLate(t)); // alle (für Anzeige mit durchgestrichen)
+
+  if(available.length === 0){
+    area.innerHTML='<div class="time-picker-loading" style="color:#e55;">⚠️ Keine freien Termine an diesem Tag</div>';
+    calState.selectedTime=null;
+    return;
+  }
+
   const ITEM_H=38;
-  const startIdx=slots.findIndex(s=>!blocked.includes(s));
-  calState.selectedTime=startIdx>=0?slots[startIdx]:null;
-  let currentIdx=startIdx>=0?startIdx:0;
+  calState.selectedTime=available[0];
+  let currentIdx=0; // Index in available[]
 
   area.innerHTML=`<div class="time-picker"><div class="time-picker-selector"></div><div class="time-picker-list" id="tp-list"></div></div>`;
   const list=area.querySelector('#tp-list');
 
   function render(idx){
-    currentIdx=idx;
-    calState.selectedTime=blocked.includes(slots[idx])?null:slots[idx];
-    // Padding oben/unten damit mittig scrollbar
+    currentIdx=Math.max(0,Math.min(available.length-1,idx));
+    calState.selectedTime=available[currentIdx];
     list.innerHTML='<div style="height:56px"></div>'+
-      slots.map((t,i)=>`<div class="time-picker-item${i===idx?' selected':''}${blocked.includes(t)?' blocked':''}">${t}</div>`).join('')+
+      available.map((t,i)=>`<div class="time-picker-item${i===currentIdx?' selected':''}">${t}</div>`).join('')+
       '<div style="height:56px"></div>';
-    list.style.transform=`translateY(${-idx*ITEM_H}px)`;
-    // date-info updaten
+    list.style.transform=`translateY(${-currentIdx*ITEM_H}px)`;
     const info=document.getElementById('form-date-info');
     if(info&&calState.selectedDate){
       const[y,m,d]=calState.selectedDate.split('-');
-      info.textContent=calState.selectedTime?`📅 ${d}.${m}.${y} · 🕐 ${calState.selectedTime}`:`📅 ${d}.${m}.${y} · ⚠️ Gebuchte Zeit`;
+      info.innerHTML=`📅 <strong>${d}.${m}.${y}</strong> › 🕐 <strong>${calState.selectedTime} Uhr</strong>`;
     }
     if(onSelect)onSelect();
   }
 
-  render(currentIdx);
+  render(0);
 
-  // Touch / Mouse scroll
   const picker=area.querySelector('.time-picker');
   let startY=0,startIdx2=0,dragging=false;
-
-  function snapTo(idx){
-    idx=Math.max(0,Math.min(slots.length-1,idx));
-    render(idx);}
-
-  // Drag – gedämpft (ITEM_H*1.8 = weniger sensitiv)
   const DRAG_SENS=ITEM_H*1.8;
+  function snapTo(idx){idx=Math.max(0,Math.min(available.length-1,idx));render(idx);}
   picker.addEventListener('mousedown',e=>{startY=e.clientY;startIdx2=currentIdx;dragging=true;picker.style.cursor='grabbing';e.preventDefault();});
   window.addEventListener('mousemove',e=>{if(!dragging)return;const diff=Math.round((startY-e.clientY)/DRAG_SENS);snapTo(startIdx2+diff);});
   window.addEventListener('mouseup',()=>{dragging=false;picker.style.cursor='grab';});
   picker.addEventListener('touchstart',e=>{startY=e.touches[0].clientY;startIdx2=currentIdx;},{passive:true});
   picker.addEventListener('touchmove',e=>{const diff=Math.round((startY-e.touches[0].clientY)/DRAG_SENS);snapTo(startIdx2+diff);e.preventDefault();},{passive:false});
   picker.addEventListener('wheel',e=>{e.preventDefault();e.stopPropagation();snapTo(currentIdx+(e.deltaY>0?1:-1));},{passive:false});
-  // Tastatureingabe: Zahl tippen → springt zur Stunde
   let keyBuf='',keyTimer=null;
   picker.setAttribute('tabindex','0');
   picker.addEventListener('keydown',e=>{
@@ -2718,7 +2818,7 @@ function buildTimePicker(area,blocked,calState,onSelect){
       keyBuf+=e.key;clearTimeout(keyTimer);
       keyTimer=setTimeout(()=>{
         const h=parseInt(keyBuf,10);keyBuf='';
-        if(h>=8&&h<=16){const idx=slots.findIndex(s=>s.startsWith(String(h).padStart(2,'0')+':00'));if(idx>=0)snapTo(idx);}
+        if(h>=8&&h<=16){const idx=available.findIndex(s=>s.startsWith(String(h).padStart(2,'0')+':00'));if(idx>=0)snapTo(idx);}
       },600);
     } else if(e.key==='ArrowUp'){e.preventDefault();snapTo(currentIdx-1);}
     else if(e.key==='ArrowDown'){e.preventDefault();snapTo(currentIdx+1);}
@@ -2753,14 +2853,7 @@ showResultBox('error',`⚠️ Verbindungsfehler beim Buchen.<br><br><button clas
 async function botGoTerminChat(sub){
 botTerminSub=sub.key;hideChoices();
 showSteps(STEPS_TERMIN,3);botMode='termin-chat';
-setContextLabel(TERMIN_KATEGORIEN[botTerminKat]?.label.replace(/\S+\s/,'')+' · '+sub.label);
-botShowTyping();
-try{
-const r=await authFetch(WEBHOOK_BOT,{mode:'termin',sessionId:SESSION_ID,kategorie:botTerminKat,leistung:sub.key,leistungName:sub.label,message:'Ich möchte einen Termin für folgende Leistung buchen: '+sub.label,timestamp:new Date().toISOString(),currentDateTime:new Date().toLocaleString('de-DE',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}),currentPage:document.querySelector('.page.active')?.id||'unknown'},BOT_TOKEN);
-const d=await r.json();const data=Array.isArray(d)?d[0]:d;
-botHideTyping();const reply=data.reply||data.text||data.message||'Ich bin bereit, Ihren Termin zu buchen. Wie ist Ihr Name?';
-botAddMessage('bot',reply,Array.isArray(data.pages)?data.pages:[]);}
-catch(e){botHideTyping();botAddMessage('bot','⚠️ Verbindungsfehler. Bitte versuchen Sie es erneut.');}
+setContextLabel(TERMIN_KATEGORIEN[botTerminKat]?.label.replace(/\S+\s/,'')+' › '+sub.label);
 showInputArea();document.querySelectorAll('.bot-suggestion').forEach(b=>b.onclick=()=>botSendMessage(b.dataset.text));}
 
 async function botSendMessage(text){
@@ -2789,6 +2882,13 @@ $('bot-close').onclick=()=>{botOpen=false;$('stadtbot-window').classList.remove(
 botSend.onclick=()=>botSendMessage(botInput.value);
 botInput.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();botSendMessage(botInput.value);}});
 botInput.addEventListener('input',()=>{botInput.style.height='auto';botInput.style.height=Math.min(botInput.scrollHeight,80)+'px';});
+
+// Twemoji – Emojis als SVG für konsistente Darstellung auf Windows/Edge
+function twparse(el){if(typeof twemoji!=='undefined'&&el)twemoji.parse(el,{folder:'svg',ext:'.svg',base:'https://cdn.jsdelivr.net/gh/jdecked/twemoji@latest/assets/'});}
+document.addEventListener('DOMContentLoaded',()=>twparse(document.body));
+// Re-parse nach jeder Nachricht
+const _origBotAdd=botAddMessage;
+window._twParseInterval=setInterval(()=>{twparse($('bot-messages'));twparse($('bot-choice-grid'));twparse($('bot-choice-label'));},1500);
 botAddMessage('bot','Hallo! 👋 Ich bin der PaderbornBot – Ihr digitaler Assistent für das Stadtportal Paderborn.\n\nWas kann ich für Sie tun?');
 setTimeout(botStart,400);
 
