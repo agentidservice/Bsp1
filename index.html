@@ -2790,16 +2790,15 @@ function buildTimePicker(area,blocked,calState,onSelect){
   // Zeit in Minuten seit Mitternacht
   function toMin(t){const[h,m]=t.split(':');return parseInt(h)*60+parseInt(m);}
 
-  // Smart blocking: slot T geblockt wenn:
-  // 1. T selbst ist gebucht
-  // 2. Ein gebuchter Termin B überschneidet sich mit [T, T+dauer)
-  //    = B < T+dauer UND B+dauer > T (angenommene gleiche Dauer für gebuchte Termine)
+  // Smart blocking mit echten Event-Endzeiten
   function isBlocked(t){
     const tMin=toMin(t);
+    const tEnd=tMin+dauer;
     return blocked.some(b=>{
-      const bMin=toMin(b);
-      // Überschneidung: unser Termin [tMin, tMin+dauer) vs gebuchter [bMin, bMin+dauer)
-      return tMin < bMin+dauer && tMin+dauer > bMin;
+      // b kann {start,end} oder plain string sein
+      const bStart = toMin(b.start||b);
+      const bEnd   = b.end ? toMin(b.end) : bStart+dauer;
+      return tMin < bEnd && tEnd > bStart;
     });
   }
 
