@@ -2814,15 +2814,15 @@ function buildTimePicker(area,blocked,calState,onSelect){
   // Zeit in Minuten seit Mitternacht
   function toMin(t){const[h,m]=t.split(':');return parseInt(h)*60+parseInt(m);}
 
-  // Backend liefert: start = echter Terminstart, end = Terminende +15min Puffer
-  // Frontend prüft: Slot-Ende überlappt mit bStart, Slot-Start liegt vor bEnd
+  // Backend liefert: start -15min Puffer, end +15min Puffer
+  // Frontend prüft Überlappung inkl. Berührung (>=)
   function isBlocked(t){
     const tMin=toMin(t);
     const tEnd=tMin+dauer;
     return blocked.some(b=>{
       const bStart = toMin(b.start||b);
       const bEnd   = b.end ? toMin(b.end) : bStart+30;
-      return tEnd > bStart && tMin < bEnd;
+      return tEnd >= bStart && tMin < bEnd;
     });
   }
 
