@@ -3170,7 +3170,9 @@ window.submitTerminAendern=async function(){
       return;}
     const d=await r.json();const data=Array.isArray(d)?d[0]:d;
     if(data.found||data.valid){
-      taData.eventId=data.eventId||null;showSteps(STEPS_AENDERN,1);
+      taData.eventId=data.eventId||null;
+      taData.calendarId=data.calendarId||null;
+      showSteps(STEPS_AENDERN,1);
       const dateFmt=data.startTime?new Date(data.startTime).toLocaleDateString('de-DE',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric'}):'';
       showResultBox('success',`✅ <strong>Termin gefunden</strong><br>${data.eventDetails||dateFmt}<br><br>Was möchten Sie tun?`);
       setTimeout(showAktionChoice,1200);
