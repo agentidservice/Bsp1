@@ -3229,6 +3229,8 @@ window.showUpdateForm=window.showUpdateForm=function(){
   botChoiceLabel.textContent='Neuen Termin wählen';
   botChoiceGrid.innerHTML=`<div class="bot-ta-form">
     <div class="bot-ta-fields">
+      <div class="bot-ta-field"><label class="bot-ta-label">📧 E-Mail <span style="font-size:10px;color:#b0a99f;font-weight:400">(optional – für neuen Sicherheitscode)</span></label>
+        <input class="bot-ta-input" id="upd-email" type="email" placeholder="ihre@email.de"></div>
       <div class="bot-ta-field"><label class="bot-ta-label">🏛️ Stelle / Leistung</label>
         <select class="bot-stelle-select" id="upd-stelle">${STELLE_OPTIONS.map(s=>`<option value="${s}"${s===taData.stelle?' selected':''}>${s}</option>`).join('')}</select></div>
       <div class="bot-ta-field"><label class="bot-ta-label">📅 Neues Datum</label>
@@ -3292,15 +3294,17 @@ function updateUpdInfo(){
 
 window.submitUpdate=async function(){
   const stelle=$('upd-stelle')?.value;
+  const email=$('upd-email')?.value.trim()||null;
   if(!stelle||!calState.selectedDate||!calState.selectedTime){
     const btn=$('upd-submit');if(btn){btn.textContent='⚠️ Datum und Uhrzeit wählen';setTimeout(()=>{btn.textContent='📅 Termin ändern';},2000);}return;}
   const[y2,m2,d2]=calState.selectedDate.split('-');const fmt=`${d2}.${m2}.${y2}`;
   botChoiceGrid.innerHTML='<div style="text-align:center;padding:24px;color:var(--text-muted);font-size:13px">⏳ Termin wird verschoben...</div>';
   try{
-    const r=await authFetch(WEBHOOK_TA_UPDATE,{...taData,newStelle:stelle,newDate:calState.selectedDate,newTime:calState.selectedTime,timestamp:new Date().toISOString()},TA_TOKEN);
+    const r=await authFetch(WEBHOOK_TA_UPDATE,{...taData,email,newStelle:stelle,newDate:calState.selectedDate,newTime:calState.selectedTime,timestamp:new Date().toISOString()},TA_TOKEN);
     const d=await r.json();const data=Array.isArray(d)?d[0]:d;
     showSteps(STEPS_AENDERN,2);setContextLabel('✏️ Termin verschoben');
-    showResultBox('success',`✅ ${data.reply||data.message||`Ihr Termin wurde auf <strong>${fmt} um ${calState.selectedTime} Uhr</strong> verschoben!`}`);
+    const codeHint=email?`<br><small style="color:var(--text-muted)">Ein neuer Sicherheitscode wird an ${email} gesendet.</small>`:'<br><small style="color:#e55;">⚠️ Keine E-Mail angegeben – bitte neuen Code notieren, falls Sie den Termin erneut ändern möchten.</small>';
+    showResultBox('success',`✅ ${data.reply||`Ihr Termin wurde auf <strong>${fmt} um ${calState.selectedTime} Uhr</strong> verschoben!`}${codeHint}`);
   }catch(e){showResultBox('error','⚠️ Verbindungsfehler beim Aktualisieren.<br><br><button class="bot-ta-submit" onclick="window.showUpdateForm()" style="margin-top:8px">↩ Zurück</button>');}};
 
 })();
