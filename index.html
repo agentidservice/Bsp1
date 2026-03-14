@@ -3261,7 +3261,7 @@ window.showUpdateForm=window.showUpdateForm=function(){
       <div class="bot-ta-field"><label class="bot-ta-label">📧 E-Mail <span style="font-size:10px;color:#b0a99f;font-weight:400">(optional – für neuen Sicherheitscode)</span></label>
         <input class="bot-ta-input" id="upd-email" type="email" placeholder="ihre@email.de"></div>
       <div class="bot-ta-field"><label class="bot-ta-label">🏛️ Stelle / Leistung</label>
-        <select class="bot-stelle-select" id="upd-stelle">${STELLE_OPTIONS.map(s=>`<option value="${s}"${s===taData.stelle?' selected':''}>${s}</option>`).join('')}</select></div>
+        <select class="bot-stelle-select" id="upd-stelle" onchange="window.onUpdStelleChange()">${STELLE_OPTIONS.map(s=>`<option value="${s}"${s===taData.stelle?' selected':''}>${s}</option>`).join('')}</select></div>
       <div class="bot-ta-field"><label class="bot-ta-label">📅 Neues Datum</label>
         <div id="bot-cal-container"></div></div>
       <div class="bot-ta-field time-picker-wrap" id="upd-time-wrap" style="display:none">
@@ -3275,6 +3275,45 @@ window.showUpdateForm=window.showUpdateForm=function(){
     </div>
   </div>`;
   botChoicePanel.style.display='block';botMessages.classList.add('collapsed');renderCalendar();}
+
+window.onUpdStelleChange=function(){
+  const info=$('upd-info'),sub=$('upd-submit');
+  if(info)info.style.display='none';
+  if(sub)sub.disabled=true;
+  // Wenn schon ein Datum gewählt → Timeslots neu laden
+  if(calState.selectedDate){
+    const wrap=$('upd-time-wrap'),area=$('upd-time-picker-area');
+    if(wrap)wrap.style.display='block';
+    if(area)area.innerHTML='<div class="time-picker-loading">⏳ Verfügbare Zeiten werden geladen...</div>';
+    const stelle=$('upd-stelle')?.value||'buergerservice';
+    const katMap={'Anmeldung / Ummeldung':'buergerservice','Abmeldung':'buergerservice','Personalausweis':'buergerservice','Reisepass':'buergerservice','Kinderreisepass':'buergerservice','Führungszeugnis':'buergerservice','Beglaubigung':'buergerservice','Eheschließung':'standesamt_gewerbe','Geburtsurkunde':'standesamt_gewerbe','Sterbeurkunde':'standesamt_gewerbe','Gewerbeanmeldung':'standesamt_gewerbe','Gewerbeabmeldung':'standesamt_gewerbe','Führerschein':'kfz','Kfz-Zulassung':'kfz','Kfz-Abmeldung':'kfz'};
+    const kategorie=katMap[stelle]||'buergerservice';
+    authFetch(WEBHOOK_TIMESLOTS,{datum:calState.selectedDate,kategorie},BOT_TOKEN)
+      .then(r=>r.json())
+      .then(raw=>{const data=Array.isArray(raw)?raw[0]:raw;buildTimePicker(area,data.blocked||[],calState,()=>updateUpdInfo());})
+      .catch(()=>{buildTimePicker(area,[],calState,()=>updateUpdInfo());});
+  }
+};
+  const cont=$('bot-cal-container');if(!cont)return;
+  const now=new Date(),y=calState.year,m=calState.month;
+  const mNames=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+  const dNames=['Mo','Di','Mi','Do','Fr','Sa','So'];
+  const firstDay=new Date(y,m,1).getDay(),firstMon=(firstDay+6)%7,dim=new Date(y,m+1,0).getDate();
+  let days=dNames.map(d=>`<div class="bot-cal-day-name">${d}</div>`).join('');
+  for(let i=0;i<firstMon;i++)days+=`<div class="bot-cal-day empty"></div>`;
+  for(let d=1;d<=dim;d++){
+    const date=new Date(y,m,d);const isToday=date.toDateString()===now.toDateString();
+    const isPast=date<new Date(now.getFullYear(),now.getMonth(),now.getDate());const isWE=date.getDay()===0||date.getDay()===6;
+    const ds=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;const isSel=calState.selectedDate===ds;
+    const cls=['bot-cal-day',isSel?'selected':'',isToday?'today':'',(isPast||isWE)?'disabled':''].filter(Boolean).join(' ');
+    days+=`<div class="${cls}"${!(isPast||isWE)?` onclick="window.selectCalDay('${ds}')"`:''}>${d}</div>`;}
+  cont.innerHTML=`<div class="bot-cal">
+    <div class="bot-cal-header">
+      <button class="bot-cal-nav" onclick="window.calNav(-1)">‹</button>
+      <span class="bot-cal-month">${mNames[m]} ${y}</span>
+      <button class="bot-cal-nav" onclick="window.calNav(1)">›</button>
+    </div>
+    <div class="bot-cal-grid">${days}</div></div>`;}
 
 window.renderCalendar=function(){
   const cont=$('bot-cal-container');if(!cont)return;
@@ -3296,7 +3335,7 @@ window.renderCalendar=function(){
       <span class="bot-cal-month">${mNames[m]} ${y}</span>
       <button class="bot-cal-nav" onclick="window.calNav(1)">›</button>
     </div>
-    <div class="bot-cal-grid">${days}</div></div>`;}
+    <div class="bot-cal-grid">${days}</div></div>`;};
 
 window.calNav=function(dir){calState.month+=dir;if(calState.month>11){calState.month=0;calState.year++;}if(calState.month<0){calState.month=11;calState.year--;}renderCalendar();};
 
