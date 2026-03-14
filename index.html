@@ -2814,15 +2814,13 @@ function buildTimePicker(area,blocked,calState,onSelect){
   // Zeit in Minuten seit Mitternacht
   function toMin(t){const[h,m]=t.split(':');return parseInt(h)*60+parseInt(m);}
 
-  // Smart blocking mit echten Event-Endzeiten
+  // Smart blocking – Backend hat Puffer bereits eingebaut, nur Start prüfen
   function isBlocked(t){
     const tMin=toMin(t);
-    const tEnd=tMin+dauer;
     return blocked.some(b=>{
-      // b kann {start,end} oder plain string sein
       const bStart = toMin(b.start||b);
-      const bEnd   = b.end ? toMin(b.end) : bStart+dauer;
-      return tMin < bEnd && tEnd > bStart;
+      const bEnd   = b.end ? toMin(b.end) : bStart+30;
+      return tMin >= bStart && tMin < bEnd;
     });
   }
 
