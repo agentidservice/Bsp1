@@ -355,7 +355,7 @@ color:var(--accent-dark)
 position:fixed;
 left:16px;
 bottom:16px;
-z-index:900;
+z-index:99999;
 display:flex;
 flex-direction:column;
 align-items:flex-start
@@ -403,7 +403,7 @@ animation:pulse-dot 2s infinite
 
 .stadtbot-window {
 position:fixed;
-bottom:96px;
+bottom:88px;
 left:16px;
 width:min(400px,calc(100vw - 32px));
 background:#fff;
@@ -413,7 +413,10 @@ box-shadow:0 25px 60px rgba(0,0,0,.15);
 display:none;
 flex-direction:column;
 overflow:hidden;
-max-height:calc(100vh - 112px)
+z-index:9999;
+height:min(calc(100svh - 104px), 680px);
+max-height:min(calc(100svh - 104px), 680px);
+min-height:320px
 }
 
 .stadtbot-window.open {
@@ -422,8 +425,8 @@ animation:scaleInLeft .3s ease-out
 }
 
 .stadtbot-window.expanded {
-height:auto;
-max-height:calc(100vh - 112px)
+height:min(calc(100svh - 104px), 680px);
+max-height:min(calc(100svh - 104px), 680px)
 }
 
 /* Bot Header */ .bot-header {
@@ -738,13 +741,13 @@ animation-delay:.4s
 padding:12px 14px 16px;
 background:#fff;
 border-top:1px solid var(--border);
-flex-shrink:0;
+flex:1;
+min-height:0;
 overflow-y:auto;
 -webkit-overflow-scrolling:touch;
 overscroll-behavior:contain;
 display:flex;
 flex-direction:column;
-max-height:72%;
 }
 
 .bot-choice-label {
@@ -2024,13 +2027,15 @@ margin-left:3px
 
 
 /* ── TERMIN ÄNDERN ── */
-.bot-ta-form{padding:4px 2px}
+.bot-ta-form{padding:4px 2px;display:flex;flex-direction:column;flex:1;min-height:0}
+.bot-ta-fields{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding-bottom:4px}
 .bot-ta-field{margin-bottom:14px}
 .bot-ta-label{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:5px;display:block}
 .bot-ta-input,.bot-stelle-select{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--text);background:#faf9f7;outline:none;transition:border-color .2s}
 .bot-ta-input:focus,.bot-stelle-select:focus{border-color:var(--accent)}
 .bot-stelle-select{appearance:none;cursor:pointer}
-.bot-ta-submit{width:100%;padding:11px;background:var(--bg-dark);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;margin-top:4px;font-family:'DM Sans',sans-serif;transition:all .2s}
+.bot-ta-submit-wrap{flex-shrink:0;padding-top:8px;border-top:1px solid var(--border);margin-top:4px;background:#fff}
+.bot-ta-submit{width:100%;padding:11px;background:var(--bg-dark);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
 .bot-ta-submit:hover{background:var(--accent-dark)}
 .bot-ta-submit:disabled{opacity:.4;cursor:not-allowed}
 .bot-ta-code-error{display:none;margin-top:10px;padding:12px 14px;background:#fef2f2;border:1px solid #fca5a5;border-radius:10px;font-size:12px;color:#dc2626;line-height:1.5}
@@ -2358,6 +2363,29 @@ input[type="checkbox"]:checked::after {
   transform: rotate(45deg);
 }
 
+/* ── CONSENT SCREEN ── */
+.bot-consent{padding:20px 18px 18px;display:flex;flex-direction:column;gap:14px;flex:1;justify-content:center}
+.bot-consent-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--bg-dark);line-height:1.3}
+.bot-consent-text{font-size:12px;line-height:1.7;color:var(--text-muted)}
+.bot-consent-text a{color:#2563eb;text-decoration:underline;cursor:pointer;background:none;border:none;padding:0;font-size:12px;font-family:inherit}
+.bot-consent-btns{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.bot-consent-accept{padding:12px;background:#16a34a;border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
+.bot-consent-accept:hover{background:#15803d}
+.bot-consent-decline{padding:12px;background:#dc2626;border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
+.bot-consent-decline:hover{background:#b91c1c}
+
+/* ── LEGAL MODAL ── */
+.legal-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1300;display:none;align-items:center;justify-content:center;padding:20px}
+.legal-modal-overlay.open{display:flex}
+.legal-modal{background:#fff;border-radius:16px;max-width:480px;width:100%;max-height:80dvh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 25px 60px rgba(0,0,0,.2)}
+.legal-modal-header{padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.legal-modal-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--bg-dark)}
+.legal-modal-close{background:none;border:none;font-size:18px;cursor:pointer;color:var(--text-muted);padding:4px 8px;border-radius:6px}
+.legal-modal-close:hover{background:var(--bg)}
+.legal-modal-body{padding:20px 24px;overflow-y:auto;font-size:12px;line-height:1.8;color:var(--text-muted)}
+.legal-modal-body h3{font-size:13px;font-weight:600;color:var(--bg-dark);margin:14px 0 4px}
+.legal-modal-body p{margin:0 0 10px}
+
 /* ── BOT FOOTER ── */
 .bot-footer{padding:5px 14px 6px;text-align:center;font-size:10px;color:#c0bab4;background:#fff;border-top:1px solid var(--border);flex-shrink:0;order:999}
 .bot-footer a{color:#c0bab4;text-decoration:none;transition:color .2s}
@@ -2673,25 +2701,29 @@ function renderFormCal(){
 botChoiceLabel.textContent='Termin buchen';
 botChoiceGrid.innerHTML=`
   <div class="bot-ta-form">
-    <div class="bot-ta-field">
-      <label class="bot-ta-label">👤 Name</label>
-      <input class="bot-ta-input" id="form-name" placeholder="Vor- und Nachname">
+    <div class="bot-ta-fields">
+      <div class="bot-ta-field">
+        <label class="bot-ta-label">👤 Name</label>
+        <input class="bot-ta-input" id="form-name" placeholder="Vor- und Nachname">
+      </div>
+      <div class="bot-ta-field">
+        <label class="bot-ta-label">📧 E-Mail <span style="font-size:10px;color:#b0a99f;font-weight:400">(optional)</span></label>
+        <input class="bot-ta-input" id="form-email" type="email" placeholder="ihre@email.de">
+        <div style="font-size:10px;color:#b0a99f;margin-top:4px">⚠️ Wichtig für spätere Terminänderung oder Stornierung</div>
+      </div>
+      <div class="bot-ta-field">
+        <label class="bot-ta-label">📅 Datum wählen</label>
+        <div id="form-cal-container"></div>
+      </div>
+      <div class="bot-ta-field time-picker-wrap" id="form-time-wrap" style="display:none">
+        <label class="bot-ta-label">🕐 Uhrzeit wählen</label>
+        <div id="form-time-picker-area"><div class="time-picker-loading">Bitte zuerst Datum wählen</div></div>
+      </div>
+      <div id="form-date-info" style="display:none;font-size:12px;color:var(--accent-dark);padding:6px 0;font-weight:500"></div>
     </div>
-    <div class="bot-ta-field">
-      <label class="bot-ta-label">📧 E-Mail <span style="font-size:10px;color:#b0a99f;font-weight:400">(optional)</span></label>
-      <input class="bot-ta-input" id="form-email" type="email" placeholder="ihre@email.de">
-      <div style="font-size:10px;color:#b0a99f;margin-top:4px">⚠️ Wichtig für spätere Terminänderung oder Stornierung</div>
+    <div class="bot-ta-submit-wrap">
+      <button class="bot-ta-submit" id="form-submit" onclick="window.submitTerminFormular('${key}','${label.replace(/'/g,"\\'")}')">📅 Termin buchen</button>
     </div>
-    <div class="bot-ta-field">
-      <label class="bot-ta-label">📅 Datum wählen</label>
-      <div id="form-cal-container"></div>
-    </div>
-    <div class="bot-ta-field time-picker-wrap" id="form-time-wrap" style="display:none">
-      <label class="bot-ta-label">🕐 Uhrzeit wählen</label>
-      <div id="form-time-picker-area"><div class="time-picker-loading">Bitte zuerst Datum wählen</div></div>
-    </div>
-    <div id="form-date-info" style="display:none;font-size:12px;color:var(--accent-dark);padding:6px 0;font-weight:500"></div>
-    <button class="bot-ta-submit" id="form-submit" onclick="window.submitTerminFormular('${key}','${label.replace(/'/g,"\\'")}')">📅 Termin buchen</button>
   </div>`;
 botChoicePanel.style.display='block';botMessages.classList.add('collapsed');
 setTimeout(renderFormCal,10);
@@ -2802,15 +2834,59 @@ function buildTimePicker(area,blocked,calState,onSelect){
   render(0);
 
   const picker=area.querySelector('.time-picker');
-  let startY=0,startIdx2=0,dragging=false;
-  const DRAG_SENS=ITEM_H*1.8;
+  let startY=0,startIdx2=0,dragging=false,dragMoved=false;
+
   function snapTo(idx){idx=Math.max(0,Math.min(available.length-1,idx));render(idx);}
-  picker.addEventListener('mousedown',e=>{startY=e.clientY;startIdx2=currentIdx;dragging=true;picker.style.cursor='grabbing';e.preventDefault();});
-  window.addEventListener('mousemove',e=>{if(!dragging)return;const diff=Math.round((startY-e.clientY)/DRAG_SENS);snapTo(startIdx2+diff);});
+
+  // Mouse: nur 1 Schritt pro ITEM_H px – kein Überspringen
+  picker.addEventListener('mousedown',e=>{
+    startY=e.clientY;startIdx2=currentIdx;dragging=true;dragMoved=false;
+    picker.style.cursor='grabbing';e.preventDefault();
+  });
+  window.addEventListener('mousemove',e=>{
+    if(!dragging)return;
+    const delta=startY-e.clientY;
+    const steps=Math.trunc(delta/ITEM_H);
+    const target=Math.max(0,Math.min(available.length-1,startIdx2+steps));
+    if(target!==currentIdx){dragMoved=true;snapTo(target);}
+  });
   window.addEventListener('mouseup',()=>{dragging=false;picker.style.cursor='grab';});
-  picker.addEventListener('touchstart',e=>{startY=e.touches[0].clientY;startIdx2=currentIdx;},{passive:true});
-  picker.addEventListener('touchmove',e=>{const diff=Math.round((startY-e.touches[0].clientY)/DRAG_SENS);snapTo(startIdx2+diff);e.preventDefault();},{passive:false});
-  picker.addEventListener('wheel',e=>{e.preventDefault();e.stopPropagation();snapTo(currentIdx+(e.deltaY>0?1:-1));},{passive:false});
+
+  // Touch: 1 Schritt pro ITEM_H px
+  picker.addEventListener('touchstart',e=>{
+    startY=e.touches[0].clientY;startIdx2=currentIdx;dragMoved=false;
+  },{passive:true});
+  picker.addEventListener('touchmove',e=>{
+    const delta=startY-e.touches[0].clientY;
+    const steps=Math.trunc(delta/ITEM_H);
+    const target=Math.max(0,Math.min(available.length-1,startIdx2+steps));
+    if(target!==currentIdx){dragMoved=true;snapTo(target);}
+    e.preventDefault();
+  },{passive:false});
+
+  // Wheel: Maus (großes deltaY) = Cooldown, Trackpad (kleines deltaY) = akkumulieren
+  let wheelAccum=0,wheelCooldown=false,wheelTimer=null;
+  picker.addEventListener('wheel',e=>{
+    e.preventDefault();e.stopPropagation();
+    const isMouse=Math.abs(e.deltaY)>=40;
+    if(isMouse){
+      // PC-Mausrad: genau 1 Schritt, gedrosselt
+      if(wheelCooldown)return;
+      wheelCooldown=true;
+      snapTo(currentIdx+(e.deltaY>0?1:-1));
+      setTimeout(()=>{wheelCooldown=false;},160);
+    } else {
+      // Trackpad: kleine Events akkumulieren bis Schwellwert
+      wheelAccum+=e.deltaY;
+      clearTimeout(wheelTimer);
+      if(Math.abs(wheelAccum)>=22){
+        snapTo(currentIdx+(wheelAccum>0?1:-1));
+        wheelAccum=0;
+      }
+      wheelTimer=setTimeout(()=>{wheelAccum=0;},120);
+    }
+  },{passive:false});
+
   let keyBuf='',keyTimer=null;
   picker.setAttribute('tabindex','0');
   picker.addEventListener('keydown',e=>{
@@ -2877,13 +2953,104 @@ botAddMessage('bot','Hallo! 👋 Ich bin der PaderbornBot – Ihr digitaler Assi
 setTimeout(botStart,400);};
 
 const botWindow=$('stadtbot-window');
-$('stadtbot-toggle').onclick=()=>{botOpen=!botOpen;$('stadtbot-window').classList.toggle('open',botOpen);if(botOpen){$('stadtbot-toggle').querySelector('.stadtbot-badge').style.display='none';scrollBottom();}};
+let botConsentGiven = false;
+
+function botShowConsent(){
+  botMessages.innerHTML='';
+  hideChoices();hideInputArea();hideSteps();hideReset();setContextLabel('');
+  $('stadtbot-window').classList.remove('expanded');
+  // Consent direkt in messages rendern
+  const div=document.createElement('div');
+  div.className='bot-consent';
+  div.innerHTML=`
+    <div class="bot-consent-title">Bevor wir beginnen 👋</div>
+    <div class="bot-consent-text">
+      Um diesen Service nutzen zu können, stimmen Sie bitte unseren
+      <button class="bot-consent-text" onclick="openLegalModal('agb')" style="color:#2563eb;text-decoration:underline;cursor:pointer;background:none;border:none;padding:0;font-size:12px;font-family:inherit;display:inline">Allgemeinen Geschäftsbedingungen</button>
+      und unserer
+      <button onclick="openLegalModal('dsgvo')" style="color:#2563eb;text-decoration:underline;cursor:pointer;background:none;border:none;padding:0;font-size:12px;font-family:inherit;display:inline">Datenschutzerklärung</button>
+      zu. Ihre Daten werden ausschließlich zur Terminverwaltung verwendet.
+    </div>
+    <div class="bot-consent-btns">
+      <button class="bot-consent-accept" onclick="botAcceptConsent()">✓ Akzeptieren & fortfahren</button>
+      <button class="bot-consent-decline" onclick="botDeclineConsent()">✕ Ablehnen</button>
+    </div>`;
+  botMessages.style.display='flex';
+  botMessages.appendChild(div);
+}
+
+window.botAcceptConsent=function(){
+  botConsentGiven=true;
+  botMessages.innerHTML='';
+  botAddMessage('bot','Hallo! 👋 Ich bin der PaderbornBot – Ihr digitaler Assistent für das Stadtportal Paderborn.\n\nWas kann ich für Sie tun?');
+  setTimeout(botStart,400);
+};
+
+window.botDeclineConsent=function(){
+  botConsentGiven=false;
+  botOpen=false;
+  $('stadtbot-window').classList.remove('open');
+};
+
+window.openLegalModal=function(type){
+  const modal=$('legal-modal-overlay');
+  const title=$('legal-modal-title');
+  const body=$('legal-modal-body');
+  if(type==='dsgvo'){
+    title.textContent='Datenschutzerklärung';
+    body.innerHTML=`
+      <p>Der Schutz Ihrer personenbezogenen Daten ist uns ein wichtiges Anliegen. Diese Datenschutzerklärung informiert Sie über Art, Umfang und Zweck der Verarbeitung personenbezogener Daten bei der Nutzung des PaderbornBot.</p>
+      <h3>1. Verantwortliche Stelle</h3>
+      <p>Stadt Paderborn, Rathausplatz 1, 33098 Paderborn. Datenschutzbeauftragter: datenschutz@paderborn.de</p>
+      <h3>2. Erhobene Daten</h3>
+      <p>Im Rahmen der Terminbuchung werden folgende Daten erhoben: Vor- und Nachname, E-Mail-Adresse (optional), gewählte Leistung sowie Datum und Uhrzeit des Termins.</p>
+      <h3>3. Zweck der Verarbeitung</h3>
+      <p>Die Daten werden ausschließlich zur Buchung, Verwaltung und ggf. Stornierung Ihres Termins verwendet. Eine Weitergabe an Dritte findet nicht statt.</p>
+      <h3>4. Rechtsgrundlage</h3>
+      <p>Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung) sowie Art. 6 Abs. 1 lit. e DSGVO (öffentliches Interesse).</p>
+      <h3>5. Speicherdauer</h3>
+      <p>Ihre Daten werden nach Ablauf des Termins automatisch gelöscht, sofern keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
+      <h3>6. Ihre Rechte</h3>
+      <p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung sowie Einschränkung der Verarbeitung. Wenden Sie sich hierzu an datenschutz@paderborn.de.</p>`;
+  } else {
+    title.textContent='Allgemeine Geschäftsbedingungen';
+    body.innerHTML=`
+      <p>Diese AGB gelten für die Nutzung des digitalen Terminbuchungsservices des Stadtportals Paderborn.</p>
+      <h3>1. Geltungsbereich</h3>
+      <p>Der PaderbornBot ist ein kostenloser digitaler Assistenzservice der Stadt Paderborn zur Vereinfachung der Terminbuchung bei städtischen Behörden.</p>
+      <h3>2. Nutzung des Services</h3>
+      <p>Der Service steht allen natürlichen Personen zur Verfügung. Eine missbräuchliche Nutzung, insbesondere die automatisierte Massenanfrage von Terminen, ist untersagt.</p>
+      <h3>3. Verbindlichkeit von Terminen</h3>
+      <p>Gebuchte Termine sind verbindlich. Bitte stornieren Sie nicht mehr benötigte Termine rechtzeitig über den PaderbornBot, damit diese für andere Bürgerinnen und Bürger verfügbar werden.</p>
+      <h3>4. Haftung</h3>
+      <p>Die Stadt Paderborn übernimmt keine Haftung für technische Fehlfunktionen oder Datenverluste, die durch höhere Gewalt oder Drittanbieter verursacht werden.</p>
+      <h3>5. Änderungen</h3>
+      <p>Die Stadt Paderborn behält sich vor, diese AGB jederzeit zu ändern. Die jeweils aktuelle Version ist im Stadtportal einsehbar.</p>
+      <h3>6. Anwendbares Recht</h3>
+      <p>Es gilt das Recht der Bundesrepublik Deutschland. Gerichtsstand ist Paderborn.</p>`;
+  }
+  modal.classList.add('open');
+};
+
+$('legal-modal-close').onclick=()=>$('legal-modal-overlay').classList.remove('open');
+$('legal-modal-overlay').onclick=e=>{if(e.target===$('legal-modal-overlay'))$('legal-modal-overlay').classList.remove('open');};
+
+$('stadtbot-toggle').onclick=()=>{
+  botOpen=!botOpen;
+  $('stadtbot-window').classList.toggle('open',botOpen);
+  if(botOpen){
+    $('stadtbot-toggle').querySelector('.stadtbot-badge').style.display='none';
+    if(!botConsentGiven){
+      botShowConsent();
+    } else {
+      scrollBottom();
+    }
+  }
+};
 $('bot-close').onclick=()=>{botOpen=false;$('stadtbot-window').classList.remove('open');};
 botSend.onclick=()=>botSendMessage(botInput.value);
 botInput.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();botSendMessage(botInput.value);}});
 botInput.addEventListener('input',()=>{botInput.style.height='auto';botInput.style.height=Math.min(botInput.scrollHeight,80)+'px';});
-botAddMessage('bot','Hallo! 👋 Ich bin der PaderbornBot – Ihr digitaler Assistent für das Stadtportal Paderborn.\n\nWas kann ich für Sie tun?');
-setTimeout(botStart,400);
 
 /* ══ SUMMARIZER ══ */
 let activeFilter=null;
@@ -2960,10 +3127,14 @@ window.showTerminAendernForm=window.showTerminAendernForm=function(){
   botChoiceLabel.textContent='Termindetails eingeben';
   botChoiceGrid.innerHTML=`
     <div class="bot-ta-form">
-      <div class="bot-ta-field"><label class="bot-ta-label">🔐 Sicherheitscode</label>
-        <input class="bot-ta-input" id="ta-code" placeholder="000-000-000" maxlength="11" oninput="formatTaCode(this)"></div>
-      <div class="bot-ta-code-error" id="ta-code-error">🔒 Sicherheitscode nicht gefunden. Wenden Sie sich bitte an unser Personal.</div>
-      <button class="bot-ta-submit" id="ta-submit" onclick="window.submitTerminAendern()">🔍 Termin prüfen</button>
+      <div class="bot-ta-fields">
+        <div class="bot-ta-field"><label class="bot-ta-label">🔐 Sicherheitscode</label>
+          <input class="bot-ta-input" id="ta-code" placeholder="000-000-000" maxlength="11" oninput="formatTaCode(this)"></div>
+        <div class="bot-ta-code-error" id="ta-code-error">🔒 Sicherheitscode nicht gefunden. Wenden Sie sich bitte an unser Personal.</div>
+      </div>
+      <div class="bot-ta-submit-wrap">
+        <button class="bot-ta-submit" id="ta-submit" onclick="window.submitTerminAendern()">🔍 Termin prüfen</button>
+      </div>
     </div>`;
   botChoicePanel.style.display='block';
   botMessages.classList.add('collapsed');}
@@ -3044,16 +3215,20 @@ window.botGoUpdaten=function(){
 window.showUpdateForm=window.showUpdateForm=function(){
   botChoiceLabel.textContent='Neuen Termin wählen';
   botChoiceGrid.innerHTML=`<div class="bot-ta-form">
-    <div class="bot-ta-field"><label class="bot-ta-label">🏛️ Stelle / Leistung</label>
-      <select class="bot-stelle-select" id="upd-stelle">${STELLE_OPTIONS.map(s=>`<option value="${s}"${s===taData.stelle?' selected':''}>${s}</option>`).join('')}</select></div>
-    <div class="bot-ta-field"><label class="bot-ta-label">📅 Neues Datum</label>
-      <div id="bot-cal-container"></div></div>
-    <div class="bot-ta-field time-picker-wrap" id="upd-time-wrap" style="display:none">
-      <label class="bot-ta-label">🕐 Uhrzeit wählen</label>
-      <div id="upd-time-picker-area"><div class="time-picker-loading">Bitte zuerst Datum wählen</div></div>
+    <div class="bot-ta-fields">
+      <div class="bot-ta-field"><label class="bot-ta-label">🏛️ Stelle / Leistung</label>
+        <select class="bot-stelle-select" id="upd-stelle">${STELLE_OPTIONS.map(s=>`<option value="${s}"${s===taData.stelle?' selected':''}>${s}</option>`).join('')}</select></div>
+      <div class="bot-ta-field"><label class="bot-ta-label">📅 Neues Datum</label>
+        <div id="bot-cal-container"></div></div>
+      <div class="bot-ta-field time-picker-wrap" id="upd-time-wrap" style="display:none">
+        <label class="bot-ta-label">🕐 Uhrzeit wählen</label>
+        <div id="upd-time-picker-area"><div class="time-picker-loading">Bitte zuerst Datum wählen</div></div>
+      </div>
+      <div class="upd-info-box" id="upd-info"></div>
     </div>
-    <div class="upd-info-box" id="upd-info"></div>
-    <button class="bot-ta-submit" id="upd-submit" onclick="window.submitUpdate()" disabled>📅 Termin ändern</button>
+    <div class="bot-ta-submit-wrap">
+      <button class="bot-ta-submit" id="upd-submit" onclick="window.submitUpdate()" disabled>📅 Termin ändern</button>
+    </div>
   </div>`;
   botChoicePanel.style.display='block';botMessages.classList.add('collapsed');renderCalendar();}
 
@@ -3116,4 +3291,17 @@ window.submitUpdate=async function(){
   }catch(e){showResultBox('error','⚠️ Verbindungsfehler beim Aktualisieren.<br><br><button class="bot-ta-submit" onclick="window.showUpdateForm()" style="margin-top:8px">↩ Zurück</button>');}};
 
 })();
-</script> </body> </html>
+</script>
+
+<!-- LEGAL MODALS -->
+<div class="legal-modal-overlay" id="legal-modal-overlay">
+  <div class="legal-modal">
+    <div class="legal-modal-header">
+      <div class="legal-modal-title" id="legal-modal-title"></div>
+      <button class="legal-modal-close" id="legal-modal-close">✕</button>
+    </div>
+    <div class="legal-modal-body" id="legal-modal-body"></div>
+  </div>
+</div>
+
+</body> </html>
