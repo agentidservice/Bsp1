@@ -3253,28 +3253,104 @@ window.botGoUpdaten=function(){
   setContextLabel('✏️ Termin verschieben');
   showUpdateForm();};
 
+const UPD_KATEGORIEN = {
+  buergerservice: {
+    icon:'🏛️', label:'Bürgerservice',
+    leistungen:[
+      {label:'Anmeldung / Ummeldung', key:'anmeldung'},
+      {label:'Abmeldung',             key:'abmeldung'},
+      {label:'Personalausweis',       key:'personalausweis'},
+      {label:'Reisepass',             key:'reisepass'},
+      {label:'Kinderreisepass',       key:'kinderreisepass'},
+      {label:'Führungszeugnis',       key:'fuehrungszeugnis'},
+      {label:'Beglaubigung',          key:'beglaubigung'},
+    ]
+  },
+  standesamt_gewerbe: {
+    icon:'💍', label:'Standesamt & Gewerbe',
+    leistungen:[
+      {label:'Eheschließung',     key:'heirat'},
+      {label:'Geburtsurkunde',    key:'geburtsurkunde'},
+      {label:'Sterbeurkunde',     key:'sterbeurkunde'},
+      {label:'Gewerbeanmeldung',  key:'gewerbeanmeldung'},
+      {label:'Gewerbeabmeldung',  key:'gewerbeabmeldung'},
+    ]
+  },
+  kfz: {
+    icon:'🚗', label:'Kfz & Führerschein',
+    leistungen:[
+      {label:'Führerschein',  key:'fuehrerschein'},
+      {label:'Kfz-Zulassung', key:'kfz_zulassung'},
+      {label:'Kfz-Abmeldung', key:'kfz_abmeldung'},
+    ]
+  }
+};
+
+let updKategorie = null;
+let updLeistung  = null;
+
 window.showUpdateForm=window.showUpdateForm=function(){
   setWindowCompact(false);$('stadtbot-window').classList.add('expanded');
-  botChoiceLabel.textContent='Neuen Termin wählen';
-  botChoiceGrid.innerHTML=`<div class="bot-ta-form">
-    <div class="bot-ta-fields">
-      <div class="bot-ta-field"><label class="bot-ta-label">📧 E-Mail <span style="font-size:10px;color:#b0a99f;font-weight:400">(optional – für neuen Sicherheitscode)</span></label>
-        <input class="bot-ta-input" id="upd-email" type="email" placeholder="ihre@email.de"></div>
-      <div class="bot-ta-field"><label class="bot-ta-label">🏛️ Stelle / Leistung</label>
-        <select class="bot-stelle-select" id="upd-stelle" onchange="window.onUpdStelleChange()">${STELLE_OPTIONS.map(s=>`<option value="${s}"${s===taData.stelle?' selected':''}>${s}</option>`).join('')}</select></div>
-      <div class="bot-ta-field"><label class="bot-ta-label">📅 Neues Datum</label>
-        <div id="bot-cal-container"></div></div>
-      <div class="bot-ta-field time-picker-wrap" id="upd-time-wrap" style="display:none">
-        <label class="bot-ta-label">🕐 Uhrzeit wählen</label>
-        <div id="upd-time-picker-area"><div class="time-picker-loading">Bitte zuerst Datum wählen</div></div>
+  updKategorie=null;updLeistung=null;
+  calState={year:new Date().getFullYear(),month:new Date().getMonth(),selectedDate:null,selectedTime:null};
+  showUpdKatWahl();};
+
+function showUpdKatWahl(){
+  botChoiceLabel.textContent='Neue Kategorie wählen';
+  botChoiceGrid.innerHTML=Object.entries(UPD_KATEGORIEN).map(([key,kat])=>`
+    <button class="bot-choice-btn" onclick="window.showUpdLeistungWahl('${key}')">
+      <span class="choice-icon">${kat.icon}</span>
+      <span>${kat.label}</span>
+      <span class="choice-arrow">›</span>
+    </button>`).join('');
+  botChoicePanel.style.display='block';botMessages.classList.add('collapsed');}
+
+window.showUpdLeistungWahl=function(katKey){
+  updKategorie=katKey;
+  const kat=UPD_KATEGORIEN[katKey];
+  botChoiceLabel.textContent=kat.icon+' Leistung wählen';
+  botChoiceGrid.innerHTML=`
+    <button class="bot-action-btn" style="font-size:12px;color:var(--text-muted);margin-bottom:4px" onclick="showUpdKatWahl()">‹ Zurück</button>
+    ${kat.leistungen.map(l=>`
+    <button class="bot-choice-btn" onclick="window.showUpdKalender('${katKey}','${l.key}','${l.label}')">
+      <span class="choice-icon">→</span>
+      <span>${l.label}</span>
+      <span class="choice-arrow">›</span>
+    </button>`).join('')}`;
+  botChoicePanel.style.display='block';botMessages.classList.add('collapsed');};
+
+window.showUpdKalender=function(katKey, leistungKey, leistungLabel){
+  updKategorie=katKey;
+  updLeistung={key:leistungKey, label:leistungLabel};
+  calState={year:new Date().getFullYear(),month:new Date().getMonth(),selectedDate:null,selectedTime:null,_leistung:leistungKey};
+  botChoiceLabel.textContent='📅 Neues Datum & Uhrzeit wählen';
+  botChoiceGrid.innerHTML=`
+    <div class="bot-ta-form">
+      <div class="bot-ta-fields">
+        <div style="padding:8px 12px;background:rgba(200,169,110,.08);border:1px solid rgba(200,169,110,.25);border-radius:10px;font-size:12px;font-weight:600;color:var(--accent-dark);margin-bottom:12px;">
+          ${UPD_KATEGORIEN[katKey].icon} ${UPD_KATEGORIEN[katKey].label} › ${leistungLabel}
+          <button onclick="window.showUpdLeistungWahl('${katKey}')" style="float:right;background:none;border:none;font-size:11px;color:var(--text-muted);cursor:pointer;">ändern</button>
+        </div>
+        <div class="bot-ta-field">
+          <label class="bot-ta-label">📧 E-Mail <span style="font-size:10px;color:#b0a99f;font-weight:400">(optional – für neuen Sicherheitscode)</span></label>
+          <input class="bot-ta-input" id="upd-email" type="email" placeholder="ihre@email.de">
+        </div>
+        <div class="bot-ta-field">
+          <label class="bot-ta-label">📅 Neues Datum</label>
+          <div id="bot-cal-container"></div>
+        </div>
+        <div class="bot-ta-field time-picker-wrap" id="upd-time-wrap" style="display:none">
+          <label class="bot-ta-label">🕐 Uhrzeit wählen</label>
+          <div id="upd-time-picker-area"><div class="time-picker-loading">Bitte zuerst Datum wählen</div></div>
+        </div>
+        <div class="upd-info-box" id="upd-info"></div>
       </div>
-      <div class="upd-info-box" id="upd-info"></div>
-    </div>
-    <div class="bot-ta-submit-wrap">
-      <button class="bot-ta-submit" id="upd-submit" onclick="window.submitUpdate()" disabled>📅 Termin ändern</button>
-    </div>
-  </div>`;
-  botChoicePanel.style.display='block';botMessages.classList.add('collapsed');renderCalendar();}
+      <div class="bot-ta-submit-wrap">
+        <button class="bot-ta-submit" id="upd-submit" onclick="window.submitUpdate()" disabled>📅 Termin ändern</button>
+      </div>
+    </div>`;
+  botChoicePanel.style.display='block';botMessages.classList.add('collapsed');
+  renderCalendar();};
 
 window.onUpdStelleChange=function(){
   const info=$('upd-info'),sub=$('upd-submit');
@@ -3344,9 +3420,7 @@ window.selectCalDay=function(ds){
   const wrap=$('upd-time-wrap'),area=$('upd-time-picker-area');
   if(wrap)wrap.style.display='block';
   if(area)area.innerHTML='<div class="time-picker-loading">⏳ Verfügbare Zeiten werden geladen...</div>';
-  const stelle=$('upd-stelle')?.value||'buergerservice';
-  const katMap={'Anmeldung / Ummeldung':'buergerservice','Abmeldung':'buergerservice','Personalausweis beantragen':'buergerservice','Reisepass beantragen':'buergerservice','Kinderreisepass':'buergerservice','Führungszeugnis (erweitertes)':'buergerservice','Beglaubigungen':'buergerservice','Eheschließung anmelden':'standesamt_gewerbe','Geburtsurkunde beantragen':'standesamt_gewerbe','Sterbeurkunde beantragen':'standesamt_gewerbe','Gewerbeanmeldung':'standesamt_gewerbe','Gewerbeabmeldung':'standesamt_gewerbe','Führerschein beantragen':'kfz','Kfz-Zulassung':'kfz','Kfz-Abmeldung':'kfz'};
-  const kategorie=katMap[stelle]||'buergerservice';
+  const kategorie=updKategorie||'buergerservice';
   authFetch(WEBHOOK_TIMESLOTS,{datum:ds,kategorie},BOT_TOKEN)
     .then(r=>r.json())
     .then(raw=>{const data=Array.isArray(raw)?raw[0]:raw;buildTimePicker(area,data.blocked||[],calState,()=>updateUpdInfo());})
@@ -3361,7 +3435,7 @@ function updateUpdInfo(){
   }else{info.style.display='none';sub.disabled=true;}}
 
 window.submitUpdate=async function(){
-  const stelle=$('upd-stelle')?.value;
+  const stelle=updLeistung?.label;
   const email=$('upd-email')?.value.trim()||null;
   if(!stelle||!calState.selectedDate||!calState.selectedTime){
     const btn=$('upd-submit');if(btn){btn.textContent='⚠️ Datum und Uhrzeit wählen';setTimeout(()=>{btn.textContent='📅 Termin ändern';},2000);}return;}
