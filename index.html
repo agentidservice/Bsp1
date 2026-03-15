@@ -3370,26 +3370,6 @@ window.onUpdStelleChange=function(){
       .catch(()=>{buildTimePicker(area,[],calState,()=>updateUpdInfo());});
   }
 };
-  const cont=$('bot-cal-container');if(!cont)return;
-  const now=new Date(),y=calState.year,m=calState.month;
-  const mNames=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
-  const dNames=['Mo','Di','Mi','Do','Fr','Sa','So'];
-  const firstDay=new Date(y,m,1).getDay(),firstMon=(firstDay+6)%7,dim=new Date(y,m+1,0).getDate();
-  let days=dNames.map(d=>`<div class="bot-cal-day-name">${d}</div>`).join('');
-  for(let i=0;i<firstMon;i++)days+=`<div class="bot-cal-day empty"></div>`;
-  for(let d=1;d<=dim;d++){
-    const date=new Date(y,m,d);const isToday=date.toDateString()===now.toDateString();
-    const isPast=date<new Date(now.getFullYear(),now.getMonth(),now.getDate());const isWE=date.getDay()===0||date.getDay()===6;
-    const ds=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;const isSel=calState.selectedDate===ds;
-    const cls=['bot-cal-day',isSel?'selected':'',isToday?'today':'',(isPast||isWE)?'disabled':''].filter(Boolean).join(' ');
-    days+=`<div class="${cls}"${!(isPast||isWE)?` onclick="window.selectCalDay('${ds}')"`:''}>${d}</div>`;}
-  cont.innerHTML=`<div class="bot-cal">
-    <div class="bot-cal-header">
-      <button class="bot-cal-nav" onclick="window.calNav(-1)">‹</button>
-      <span class="bot-cal-month">${mNames[m]} ${y}</span>
-      <button class="bot-cal-nav" onclick="window.calNav(1)">›</button>
-    </div>
-    <div class="bot-cal-grid">${days}</div></div>`;}
 
 window.renderCalendar=function(){
   const cont=$('bot-cal-container');if(!cont)return;
