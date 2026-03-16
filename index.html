@@ -2747,6 +2747,11 @@ botChoiceGrid.innerHTML=`
         <div style="font-size:10px;color:#b0a99f;margin-top:4px">⚠️ Wichtig für spätere Terminänderung oder Stornierung</div>
       </div>
       <div class="bot-ta-field">
+        <label class="bot-ta-label">📞 Telefonnummer <span style="font-size:10px;color:#e55;font-weight:400">*Pflichtfeld</span></label>
+        <input class="bot-ta-input" id="form-tel" type="tel" placeholder="z.B. 0151 12345678">
+        <div style="font-size:10px;color:#b0a99f;margin-top:4px">Für eventuelle Rückfragen oder Terminänderungen durch unser Personal</div>
+      </div>
+      <div class="bot-ta-field">
         <label class="bot-ta-label">📅 Datum wählen</label>
         <div id="form-cal-container"></div>
       </div>
@@ -2935,14 +2940,24 @@ function buildTimePicker(area,blocked,calState,onSelect){
   });
 };
 
+function validateFormTel(tel){
+  // Deutsche Nummern: Festnetz (0xx) und Mobil (015x/016x/017x), mit/ohne Leerzeichen/Bindestriche
+  const cleaned = tel.replace(/[\s\-\/\(\)]/g,'');
+  return /^(\+49|0049|0)[1-9]\d{8,12}$/.test(cleaned);
+}
+
 window.submitTerminFormular=async function(key,label){
 const name=document.getElementById('form-name')?.value.trim();
 const email=document.getElementById('form-email')?.value.trim()||null;
+const tel=document.getElementById('form-tel')?.value.trim()||'';
 const date=window._formCalState?.selectedDate;
 const time=window._formCalState?.selectedTime;
 if(!name||name.split(' ').length<2){
   const inp=document.getElementById('form-name');if(inp){inp.style.borderColor='#ef4444';}
   const btn=document.getElementById('form-submit');if(btn){btn.textContent='⚠️ Vor- und Nachname eingeben';setTimeout(()=>{btn.textContent='📅 Termin buchen';},2000);}return;}
+if(!validateFormTel(tel)){
+  const inp=document.getElementById('form-tel');if(inp){inp.style.borderColor='#ef4444';}
+  const btn=document.getElementById('form-submit');if(btn){btn.textContent='⚠️ Gültige deutsche Telefonnummer eingeben';setTimeout(()=>{btn.textContent='📅 Termin buchen';inp.style.borderColor='';},2500);}return;}
 if(!date){
   const btn=document.getElementById('form-submit');if(btn){btn.textContent='⚠️ Bitte Datum wählen';setTimeout(()=>{btn.textContent='📅 Termin buchen';},2000);}return;}
 if(!time){
@@ -2950,7 +2965,7 @@ if(!time){
 const btn=document.getElementById('form-submit');if(btn){btn.disabled=true;btn.textContent='⏳ Wird gebucht...';}
 botChoiceGrid.innerHTML='<div style="text-align:center;padding:24px;color:var(--text-muted);font-size:13px">⏳ Termin wird gebucht...</div>';
 try{
-const r=await authFetch(WEBHOOK_BOT_FORMULAR,{name,email,datum:date,uhrzeit:time,kategorie:botTerminKat,leistung:key,leistungName:label,sessionId:SESSION_ID,timestamp:new Date().toISOString()},BOT_TOKEN);
+const r=await authFetch(WEBHOOK_BOT_FORMULAR,{name,email,tel,datum:date,uhrzeit:time,kategorie:botTerminKat,leistung:key,leistungName:label,sessionId:SESSION_ID,timestamp:new Date().toISOString()},BOT_TOKEN);
 const d=await r.json();const data=Array.isArray(d)?d[0]:d;
 showSteps(STEPS_TERMIN,3);
 const[y2,m2,d2]=date.split('-');
