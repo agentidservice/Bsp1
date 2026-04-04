@@ -684,7 +684,8 @@ line-height:1.6;
 color:var(--text);
 background:#fff;
 border:1px solid var(--border);
-box-shadow:0 2px 8px rgba(0,0,0,.04)
+box-shadow:0 2px 8px rgba(0,0,0,.04);
+font-family:'DM Sans','Segoe UI Emoji','Apple Color Emoji','Noto Color Emoji',sans-serif
 }
 
 .bot-msg.user .bot-msg-bubble {
@@ -2980,7 +2981,8 @@ async function botGoTerminChat(sub){
 botTerminSub=sub.key;hideChoices();setWindowCompact(false);$('stadtbot-window').classList.add('expanded');
 showSteps(STEPS_TERMIN,3);botMode='termin-chat';
 setContextLabel(TERMIN_KATEGORIEN[botTerminKat]?.label.replace(/\S+\s/,'')+' › '+sub.label);
-botAddMessage('bot','Fangen Sie gerne mit dem gewünschten Datum an. 📅');
+botMessages.innerHTML='';
+botAddMessage('bot','Hallo! 👋 Ich bin der PaderbornBot – Ihr digitaler Assistent für Terminbuchungen beim Stadtportal Paderborn. Wie ist Ihr vollständiger Name? 👤');
 showInputArea();document.querySelectorAll('.bot-suggestion').forEach(b=>b.onclick=()=>botSendMessage(b.dataset.text));}
 
 async function botSendMessage(text){
